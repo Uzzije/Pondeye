@@ -1,0 +1,18 @@
+{% extends 'social/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block body %}
+{% for act in activities %}
+    <div class="row">
+        {{ act }}  start time {{ act.start }}
+    </div>
+
+{% endfor %}
+{% endblock %}
+</body>
+</html>

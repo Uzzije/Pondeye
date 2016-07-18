@@ -1,0 +1,48 @@
+{% extends 'social/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Feed</title>
+</head>
+<body>
+{% block content %}
+{% for activities in activities_todo %}
+<div class="row">
+    {{ activities.name_of_task }}
+        <div class="row">
+            {% if activities.tasks.is_completed or activities.tasks.task_failed %}
+                {% if activities.is_completed %}
+                    <div class="col-md-2">
+                        <i class="">build cred <span id="build-cred">{{ activities.build_cred_count }}</span></i>
+                    </div>
+                {% endif %}
+                {% if activities.task.task_failed %}
+                    <div class="col-md-2">
+                        <i class="btn-link">let down  <p id="let-down">{{ activities.letDown_count }}</p></i>
+                    </div>
+                {% endif %}
+                {% else %}
+                <div class="col-md-2">
+                    <button class="btn-link">vouche <span id="vouche">{{ activities.vouche_count }}</span></button>
+                </div>
+            {% endif %}
+            {% if activities.tasks.part_of_project %}
+                <div class="col-md-2">
+                    <button class="btn-link">follow <p id="follow">{{ activities.follow_count }}</p></button>
+                </div>
+            {% endif %}
+                <div class="col-md-2">
+                    <i class="btn-link">seen {{ activities.seen_count }}</i>
+                </div>
+        </div>
+        <div class="row">
+            {% for each_notific in notifciations %}
+                {{ each_notific.name }}
+                {% endfor %}
+        </div>
+</div>
+{% endfor %}
+{% endblock %}
+</body>
+</html>

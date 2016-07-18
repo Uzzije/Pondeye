@@ -1,0 +1,59 @@
+{% extends 'tasks/base.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html >
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <form method="get" action="{% url 'tasks:list_of_tasks'%}" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bar-font" placeholder="Search To Do List" name="get_tasks" id="id_q" value="">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <a href="{% url 'tasks:add_task' %}" class="btn btn-lg btn-primary">Add Tasks</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    {% if current_task %}
+
+                            {{ current_task.name_of_tasks }}
+
+                    {% else %}
+                        No current task
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    {% if todays_tasks %}
+                        {% for todo in todays_tasks %}
+                            <div class="row">
+                                {{ todo.name_of_tasks }}
+                                <div class="row">
+                                    {{ todo.start }}
+                                </div>
+                                <div class="row">
+                                    {{ todo.end }}
+                                </div>
+                            </div>
+                            <hr>
+                        {% endfor %}
+                    {% else %}
+                        No task listed for today.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+  </body>
+</html>

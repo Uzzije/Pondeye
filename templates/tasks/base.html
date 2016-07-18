@@ -1,0 +1,18 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block design %}
+        <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+        <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+        {% load i18n %}
+    {% endblock %}
+    <title>{% block title %}Title{% endblock %}</title>
+</head>
+<body>
+{% block body %}
+
+{% endblock %}
+</body>
+</html>

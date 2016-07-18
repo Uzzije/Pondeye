@@ -1,0 +1,46 @@
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Elegant Login Form</title>
+    <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+
+
+    
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css'>
+
+        <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+
+    
+    
+    
+  </head>
+
+  <body>
+
+    <form method="post">{% csrf_token %}
+  
+  <fieldset>
+    
+  	<legend class="legend">Login</legend>
+
+          {{ form.as_p }}
+    <button type="submit" class="submit">Submit</button>
+
+
+    
+  </fieldset>
+  
+  <div class="feedback">
+  	login successful <br />
+    redirecting...
+  </div>
+  
+</form>
+
+    
+  </body>
+</html>

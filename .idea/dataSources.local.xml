@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Tikedge DataSource" uuid="784817b1-9fab-4976-a9b5-e4cf73834de8">
+      <user-name>tikedge_user</user-name>
+      <user-password>dfdedfc3dfc1dfcfdfcedfcddfcfdff5dfdfdfd9dfcfdfd8</user-password>
+      <schema-pattern>tikedge_db.*</schema-pattern>
+      <default-schemas>tikedge_db.*</default-schemas>
+    </data-source>
+  </component>
+</project>

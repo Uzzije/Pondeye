@@ -1,0 +1,24 @@
+{% extends 'tasks/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block body %}
+    <div class="row container">
+{% if results %}
+    {% for res in results %}
+        {{ res.name_of_tasks }}
+    {% endfor %}
+    {% else %}
+        Sorry no results found
+{% endif %}
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'tasks:home' %}" class="btn btn-lg btn-primary">Home</a>
+    </div>
+{% endblock %}
+</body>
+</html>

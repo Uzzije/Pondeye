@@ -1,0 +1,28 @@
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    {{ form.media }}
+</head>
+<body>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <div class="row">
+        <label>Existing Projects</label>
+    <select>
+    <option></option>
+        {% for proj in existing_project %}
+            <option value="{{ proj }}">{{ proj }}</option>
+        {% endfor %}
+    </select>
+    </div>
+    <button type="submit" class="submit">Add Task</button>
+</form>
+
+</body>
+</html>
