@@ -6,7 +6,7 @@
     <title>News Feed</title>
 </head>
 <body>
-{% block content %}
+{% block body %}
 {% for activities in activities_todo %}
 <div class="row">
     {{ activities.name_of_task }}
@@ -36,13 +36,13 @@
                     <i class="btn-link">seen {{ activities.seen_count }}</i>
                 </div>
         </div>
+{% endfor %}
         <div class="row">
-            {% for each_notific in notifciations %}
+            {% for each_notific in notifications %}
                 {{ each_notific.name }}
-                {% endfor %}
+            {% endfor %}
         </div>
 </div>
-{% endfor %}
 {% endblock %}
 </body>
 </html>

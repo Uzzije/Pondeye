@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^tasks/', include('apps.tasks.urls', namespace='tasks')),
     url(r'^social/', include('apps.social.urls', namespace='social')),
-    url(r'^calendar/', include('django_bootstrap_calendar.urls')),
+    url(r'^calendar/', include('django_bootstrap_calendar.urls', namespace="django_bootstrap_calendar")),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     url(r'^friendship/', include('friendship.urls'))
 ]

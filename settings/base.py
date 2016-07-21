@@ -16,7 +16,7 @@ SITE_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+LOGIN_URL = '/tasks/login'
 
 # Application definition
 
@@ -33,7 +33,7 @@ INSTALLED_APPS = (
     'django_bootstrap_calendar',
     'easy_thumbnails',
     'image_cropping',
-    'friendship',
+'friendship',
 )
 
 MIDDLEWARE_CLASSES = (

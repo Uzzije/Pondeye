@@ -3,6 +3,8 @@ from django.db.models import Q
 from tasks_feed import TasksFeed
 from ..tasks.modules import get_query
 from friendship.models import Friend
+from models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def get_user_activities(user):
@@ -23,10 +25,19 @@ def get_users_feed(user):
 
 def find_people(query_word, user_owner):
     tkdge_users = []
-    result = get_query(query_word, ['first_name', 'username', 'last_name'])
-    for user in result:
-        friend_user = TikedgeUser.objects.get(user=user)
-        tkdge_users.append((friend_user, Friend.objects.are_friends(user_owner, user)))
+    found_result = get_query(query_word, ['first_name', 'username', 'last_name'])
+    result = User.objects.filter(found_result).filter(~Q(username=user_owner.username))
+    print result
+    if result:
+        for user in result:
+            try:
+                friend_user = TikedgeUser.objects.get(user=user)
+            except ObjectDoesNotExist:
+                friend_user = None
+            if friend_user:
+                print "I was found"
+                tkdge_users.append((friend_user, Friend.objects.are_friends(user_owner, user)))
+    print tkdge_users
     return tkdge_users
 
 

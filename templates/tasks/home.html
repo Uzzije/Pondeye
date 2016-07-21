@@ -1,4 +1,4 @@
-{% extends 'tasks/base.html' %}
+{% extends 'tasks/nav_bar.html' %}
 {% block staticfiles %}{% load static from staticfiles %}{% endblock %}
 <!DOCTYPE html>
 <html >
@@ -27,6 +27,8 @@
                     {% if current_task %}
 
                             {{ current_task.name_of_tasks }}
+                            {{ current_task.start }}
+                        {{ current_task.end }}
 
                     {% else %}
                         No current task

@@ -4,7 +4,7 @@ from forms import tasks_forms
 from models import User, TikedgeUser, Tasks, UserProject
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from modules import get_user_projects, tasks_search, get_current_todo_list, get_todays_todo_list, is_time_conflict
 from django_bootstrap_calendar.models import CalendarEvent
@@ -137,3 +137,10 @@ class AddTasks(View):
                 tasks.save()
             return HttpResponseRedirect(reverse('tasks:home'))
         return render(request, 'tasks/add_tasks.html', {'form':form, 'existing_project':get_user_projects(request.user)})
+
+
+class LogoutView(View):
+
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse('tasks:login'))

@@ -1,4 +1,4 @@
-{% extends 'tasks/base.html' %}
+{% extends 'social/base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +9,8 @@
 {% block body %}
     <div class="row container">
     <p hidden id="error-message" class="alert">Error Occured Tried Again</p>
-{% if results %}
-    {% for user, friend_status in results %}
+{% if result %}
+    {% for user, friend_status in result %}
         <div id="{{ user.user.username }}" class="row">
             <div class="col-md-3">
                {{ user.user.first_name }} {{ user.user.last_name }}
@@ -24,14 +24,14 @@
             </div>
         </div>
     {% endfor %}
-    {% else %}
+{% else %}
         Sorry no results found
 {% endif %}
     </div>
     <script>
         $('#add-friend-button').click(function(){
             var id = $(this).attr("name");
-            console.log("Friends Adding Request sent");
+            console.log("Friends Adding Request sent ", + id);
             send_friends_request(id);
         });
 
@@ -48,7 +48,7 @@
                     console.log("Successful sent request");
                 },
                 error: function(xhr){
-                    $("#error-message").text(xhr.status = ": "+ xhr.responseText);
+                    $("#error-message").text(xhr.responseText).show();
                 }
             })
         }

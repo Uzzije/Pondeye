@@ -5,7 +5,7 @@ from django.db.models import Q
 import global_variables
 
 
-class TasksFeed:
+class TasksFeed():
 
     def __init__(self, tasks):
         self.tasks = tasks
@@ -19,34 +19,32 @@ class TasksFeed:
         seensd = Seen.objects.get(tasks=self.tasks)
         count = seensd.users.count()
         return count
-    #seen_count = seens()
+
 
     def vouche(self):
         vouched = Vouche.objects.get(tasks=self.tasks)
         count = vouched.users.count()
         return count
-    #vouche_count = vouche()
+
 
     def build_cred(self):
         buildCred = BuildCred.objects.get(tasks=self.tasks)
         count = buildCred.users.count()
         return count
-    #build_cred_count = build_cred()
+
 
     def follow(self):
         follows = Follow.objects.get(tasks=self.tasks)
         count = follows.users.count()
         return count
-    #follow_count = follow()
 
     def letDown(self):
         letDown = LetDown.objects.get(tasks=self.tasks)
         count = letDown.users.count()
         return count
-    #letDown_count = letDown()
 
 
-class NotificationFeed:
+class NotificationFeed():
 
     def __init__(self, user, notifications):
         self.user = user
@@ -66,7 +64,7 @@ class NotificationFeed:
         return notification_list
 
 
-class SingleNotification:
+class SingleNotification():
 
     def __init__(self, notification_object):
         self.notif = notification_object
@@ -82,7 +80,6 @@ class SingleNotification:
         else:
             name = "New Notification"
         return name
-    #name = get_name()
 
 
 

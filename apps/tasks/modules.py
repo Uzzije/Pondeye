@@ -4,6 +4,7 @@ import re
 from django.db.models import Q
 from datetime import timedelta
 from forms import form_module
+from django.db.models import Min
 import time
 
 
@@ -42,6 +43,7 @@ def get_query(query_string, search_fields):
     query = None # Query to search for every search term
     terms = normalize_query(query_string)
     for term in terms:
+        print term
         or_query = None # Query to search for a given term in each field
         for field_name in search_fields:
             q = Q(**{"%s__icontains" % field_name: term})
@@ -65,12 +67,22 @@ def tasks_search(query, user):
 
 def get_current_todo_list(user):
     user = TikedgeUser.objects.get(user=user)
+    print user
     try:
-        result = user.tasks_set.all().filter(Q(start__lte=form_module.get_current_datetime()), Q(is_active=True))
-        for res in result:
-            if res.start.time() <= form_module.get_current_datetime().time() \
-                    and res.end.time() >= form_module.get_current_datetime().time():
-                return res
+        result = user.tasks_set.all().filter(Q(start__lte=form_module.get_current_datetime()),
+                                                  Q(task_completed=False), Q(task_failed=False), Q(is_active=True))
+        if result:
+            if len(result) == 1:
+                for res in result:
+                    return res
+            else:
+                tasks = None
+                for res in result:
+                    if tasks and tasks.start.time() > res.start.time():
+                        tasks = res
+                    if tasks is None:
+                        tasks = res
+                return tasks
     except ObjectDoesNotExist:
         result = None
     return result

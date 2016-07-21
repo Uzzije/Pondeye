@@ -3,17 +3,15 @@ from ..models import User
 from form_choices import LIST_OF_MINUTES
 from functools import partial
 from datetimewidget.widgets import DateTimeWidget
-from datetime import datetime
-from django.db.models import Q
-from django.utils import timezone
-from tzlocal import get_localzone
 from form_module import get_current_datetime
+
+
 class RegisterForm(forms.Form):
 
     user_name = forms.CharField(label='User Name', max_length=100, required=False)
     first_name = forms.CharField(label='First Name', max_length=100, required=True)
     last_name = forms.CharField(label='Last Name', max_length=100, required=True)
-    email = forms.EmailField(label='Email (ending in edu)', max_length=100, required=False)
+    email = forms.EmailField(label='Email', max_length=100, required=False)
     password = forms.CharField(label='Password', widget=forms.PasswordInput(),
                                required=True)
     verify_password = forms.CharField(label='Verify Password', widget=forms.PasswordInput(), required=True)

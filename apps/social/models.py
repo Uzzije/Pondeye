@@ -51,3 +51,6 @@ class Notification(models.Model):
     type_of_notification = models.CharField(max_length=100)
     created = models.DateTimeField(default=now)
     read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.type_of_notification
