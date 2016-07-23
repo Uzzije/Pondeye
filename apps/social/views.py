@@ -67,9 +67,6 @@ class TodoFeed(View):
         notification = Notification.objects.filter(user=request.user)
         notification = NotificationFeed(notifications=notification, user=request.user)
         unread_list = notification.get_unread_notification()
-        print unread_list
-        for each_unread in unread_list:
-            print each_unread.name
         return render(request, 'social/news_feed.html', {'activities_todo':activities_todo, 'notifications':unread_list})
 
 
@@ -91,8 +88,9 @@ class SendFriendRequestView(View):
     def post(self, request):
         user_id = request.POST.get("user_id")
         other_user = TikedgeUser.objects.get(id=int(user_id))
+        message = "Hi! %s %s would like to add you!", request.user.firstname, request.user.lastname
         try:
-            Friend.objects.add_friend(request.user, other_user.user, message="Hi! I would like to add you!")
+            Friend.objects.add_friend(request.user, other_user.user, message=message)
             friend_request = FriendshipRequest.objects.get(pk=other_user.pk)
             notification = Notification(friend_request=friend_request, user=other_user.user,
                                         type_of_notification=global_variables.FRIEND_REQUEST)
@@ -101,4 +99,43 @@ class SendFriendRequestView(View):
             pass
             print "Friends Already Exist"
         return HttpResponse('')
+
+
+class AcceptFriendRequestView(View):
+
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        request_id = request.POST.get("pk")
+        print "Request ID %s", request_id
+        friend_request = FriendshipRequest.objects.get(pk=int(request_id))
+        friend_request.accept()
+        return HttpResponse('')
+
+
+class RejectFriendRequestView(View):
+
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        request_id = request.POST.get("pk")
+        print "Request ID %s", request_id
+        friend_request = FriendshipRequest.objects.get(pk=int(request_id))
+        friend_request.reject()
+        return HttpResponse('')
+
+
+class FriendRequestView(View):
+
+    def get(self, request):
+        friend_request = Friend.objects.requests(request.user)
+        print friend_request
+        return render(request, 'social/friend_request.html', {'friend_request':friend_request})
+
+
+
+
+
 

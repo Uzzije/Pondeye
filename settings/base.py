@@ -33,7 +33,8 @@ INSTALLED_APPS = (
     'django_bootstrap_calendar',
     'easy_thumbnails',
     'image_cropping',
-'friendship',
+    'friendship',
+    'tastypie',
 )
 
 MIDDLEWARE_CLASSES = (

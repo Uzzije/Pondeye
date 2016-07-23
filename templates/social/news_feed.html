@@ -7,9 +7,9 @@
 </head>
 <body>
 {% block body %}
-{% for activities in activities_todo %}
-<div class="row">
-    {{ activities.name_of_task }}
+    <div class="row">
+    {% for activities in activities_todo %}
+        {{ activities.name_of_task }}
         <div class="row">
             {% if activities.tasks.is_completed or activities.tasks.task_failed %}
                 {% if activities.is_completed %}
@@ -36,7 +36,7 @@
                     <i class="btn-link">seen {{ activities.seen_count }}</i>
                 </div>
         </div>
-{% endfor %}
+    {% endfor %}
         <div class="row">
             {% for each_notific in notifications %}
                 {{ each_notific.name }}

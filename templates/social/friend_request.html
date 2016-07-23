@@ -1,3 +1,4 @@
+{% extends 'social/base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,80 @@
     <title>Title</title>
 </head>
 <body>
+{% block body %}
+   {% if friend_request %}
+       {% for each_req in friend_request %}
+           <div class="row">
+            <div class="col-md-3">
+                {{ each_req.message }}
+            </div>
+           <div class="col-md-3">
+               <button id="accept-request-button" name="{{ each_req.pk }}" class="btn-link">Accept Request</button>
+           </div>
+           <div class="col-md-3">
+               <button id="deny-request-button" name="{{ each_req.pk }}" class="btn-link">Deny Request</button>
+           </div>
+           </div>
+       {% endfor %}
+    {% else %}
+    {% endif %}
+    <script>
 
+        $('#accept-request-button').click(function(){
+            var pk = $(this).attr("name");
+            console.log("Accepted Friend Request ", + pk);
+            if($(this).text() !== "Friend Request Accepted"){
+                accept_friends_request(pk);
+            }
+
+        });
+
+        $('#deny-request-button').click(function(){
+            var pk = $(this).attr("name");
+            console.log("Denied Friend Request ", + pk);
+            if($(this).text() !== "Friend Request Denied!"){
+                deny_friends_request(pk);
+            }
+        });
+
+        function accept_friends_request(pk){
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+            });
+            $.ajax({
+                url: '{% url 'social:accept_friend_request' %}',
+                type: "POST",
+                data: { pk: pk  },
+                success: function(){
+                    $("#accept-request-button").text("Friend Request Accepted!");
+                    $("#deny-request-button").hide(100);
+                    console.log("Successful sent request");
+                },
+                error: function(xhr){
+                    $("#error-message").text(xhr.responseText).show();
+                }
+            })
+        }
+
+        function deny_friends_request(pk){
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+            });
+            $.ajax({
+                url: '{% url 'social:reject_friend_request' %}',
+                type: "POST",
+                data: { pk: pk  },
+                success: function(){
+                    $("#deny-request-button").text("Friend Request Denied!");
+                    $("#accept-request-button").hide(100);
+                    console.log("Successful sent request");
+                },
+                error: function(xhr){
+                    $("#error-message").text(xhr.responseText).show();
+                }
+            })
+        }
+    </script>
+{% endblock %}
 </body>
 </html>

@@ -21,6 +21,7 @@ def get_users_feed(user):
     for each_tasks in tasks_feed:
         feed = TasksFeed(each_tasks)
         list_of_feed.append(feed)
+    return list_of_feed
 
 
 def find_people(query_word, user_owner):

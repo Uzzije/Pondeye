@@ -1,11 +1,15 @@
 #!/usr/bin/python
-from models import Seen, Vouche, BuildCred, Follow, LetDown, Notification
+"""
+Feed and Notification Classes for Social News Feed of Application
+"""
+from models import Seen, Vouche, BuildCred, Follow, LetDown
 from friendship.models import FriendshipRequest
 from django.db.models import Q
 import global_variables
+from django.core.exceptions import ObjectDoesNotExist
 
 
-class TasksFeed():
+class TasksFeed:
 
     def __init__(self, tasks):
         self.tasks = tasks
@@ -14,37 +18,54 @@ class TasksFeed():
         self.build_cred_count = self.build_cred()
         self.follow_count = self.follow()
         self.letDown_count = self.letDown()
+        self.name_of_task = tasks.name_of_tasks
 
     def seens(self):
-        seensd = Seen.objects.get(tasks=self.tasks)
-        count = seensd.users.count()
+        try:
+            seensd = Seen.objects.get(tasks=self.tasks)
+            count = seensd.users.count()
+        except ObjectDoesNotExist:
+            count = 0
         return count
 
 
     def vouche(self):
-        vouched = Vouche.objects.get(tasks=self.tasks)
-        count = vouched.users.count()
+        try:
+            vouched = Vouche.objects.get(tasks=self.tasks)
+            count = vouched.users.count()
+        except ObjectDoesNotExist:
+            count = 0
         return count
 
 
     def build_cred(self):
-        buildCred = BuildCred.objects.get(tasks=self.tasks)
-        count = buildCred.users.count()
+        try:
+            buildCred = BuildCred.objects.get(tasks=self.tasks)
+            count = buildCred.users.count()
+        except ObjectDoesNotExist:
+            count = 0
         return count
 
-
     def follow(self):
-        follows = Follow.objects.get(tasks=self.tasks)
-        count = follows.users.count()
+        count = 0
+        if self.tasks.part_of_project:
+            try:
+                follows = Follow.objects.get(tasks=self.tasks.project)
+                count = follows.users.count()
+            except ObjectDoesNotExist:
+                pass
         return count
 
     def letDown(self):
-        letDown = LetDown.objects.get(tasks=self.tasks)
-        count = letDown.users.count()
+        try:
+            let_down = LetDown.objects.get(tasks=self.tasks)
+            count = let_down.users.count()
+        except ObjectDoesNotExist:
+            count = 0
         return count
 
 
-class NotificationFeed():
+class NotificationFeed:
 
     def __init__(self, user, notifications):
         self.user = user
@@ -64,7 +85,7 @@ class NotificationFeed():
         return notification_list
 
 
-class SingleNotification():
+class SingleNotification:
 
     def __init__(self, notification_object):
         self.notif = notification_object
@@ -72,7 +93,7 @@ class SingleNotification():
 
     def get_name(self):
         if self.notif.type_of_notification == global_variables.FRIEND_REQUEST:
-            name = "You have a new friend Request",
+            name = "You have a new friend Request"
         elif self.notif.type_of_notification == global_variables.REQUEST_ACCEPTED:
             name = "Your Friend Request Has Been Accepted"
         elif self.notif.type_of_notification == global_variables.REQUEST_REJECTED:
