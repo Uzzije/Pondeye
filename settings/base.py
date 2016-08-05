@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'image_cropping',
     'friendship',
     'tastypie',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
