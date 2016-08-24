@@ -1,0 +1,68 @@
+<ons-page>
+    <ons-toolbar>
+        <div style="text-align: center" class="center">Pondeye</div>
+    </ons-toolbar>
+    <div class="container">
+    <div style="text-align: center">
+        <p>Sign Up!</p>
+        <div hidden id="registerEntryError" class="alert alert-warning">
+            <strong id="registerEntryErrorMessage">Sorry login is invalid!</strong>
+        </div>
+        <br>
+        <div>
+            <div hidden id="userNameError" class="alert alert-warning">
+                <strong>Sorry username is invalid!</strong>
+            </div>
+            <p>
+                <input placeholder="Username" id="username_reg">
+            </p>
+            
+        </div>
+         <br>
+        <div>
+            <div hidden id="passwordError" class="alert alert-warning">
+                <strong>Sorry password input is invalid!</strong>
+            </div>
+            <p>
+                <input placeholder="Password" type="password" id="password_reg_one">
+            </p>
+        </div>
+        <br>
+        <div>
+            <p>
+                <input placeholder="Confirm Password" type="password" id="password_reg_two">
+            </p>
+        </div>
+         <br>
+        <div>
+            <div hidden id="emailError" class="alert alert-warning">
+                <strong>Sorry email entry is invalid!</strong>
+            </div>
+            <p>
+                <input placeholder="Email" type="email" id="email_reg">
+            </p>
+        </div>
+        <br>
+        <div>
+            <div hidden id="firstNameError" class="alert alert-warning">
+                <strong>Sorry first name entry is invalid!</strong>
+            </div>
+            <p>
+                <input placeholder="First Name" id="first_name_reg">
+            </p>
+        </div>
+        <br>
+        <div>
+            <div hidden id="lastNameError" class="alert alert-warning">
+                <strong>Sorry last name is invalid!</strong>
+            </div>
+            <p>
+                <input placeholder="Last Name" id="last_name_reg">
+            </p>
+        </div>
+        <p style="margin-top: 30px;">
+            <ons-button onclick="signUp()">Sign Up!</ons-button>
+        </p>
+    </div>
+    </div>
+</ons-page>

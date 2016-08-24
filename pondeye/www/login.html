@@ -1,0 +1,43 @@
+
+<ons-page>
+    <ons-toolbar>
+        <div class="center">Pondeye</div>
+    </ons-toolbar>
+<div class="container">
+    <div style="text-align: center">
+        <div hidden id="loginError" class="alert alert-warning">
+            <strong>Sorry login is invalid!</strong>
+        </div>
+        <br>
+        <div>
+            <ons-button
+                onclick="myNavigator.pushPage('add_new_task.html')">
+                Push Page 2
+            </ons-button>
+        </div>
+        <br>
+        <div>
+            <p>
+                <input placeholder="Username" id="userName" class="userName">
+            </p>
+        </div>
+         <br>
+        <div>
+            <p>
+                <input placeholder="Password" type="password" id="userPassword" class="userPassword">
+            </p>
+        </div>
+        <ons-row>
+        <ons-col style="margin-top: 30px;">
+            <ons-button onclick="login()">login</ons-button>
+        </ons-col>
+        <ons-col style="margin-top: 30px;">
+            <ons-button onclick="myNavigator.pushPage('register.html')">sign up!</ons-button>
+        </ons-col>
+        </ons-row>
+    </div>
+    <ons-fab position="bottom right">
+        <ons-icon icon="md-plus"></ons-icon>
+    </ons-fab>
+</div>
+</ons-page>
