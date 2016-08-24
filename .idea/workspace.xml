@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/api/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/api/views.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/celeryss.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/listener.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/middleware/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/middleware/django_crossdomainxhr_middleware.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/tasks.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/admin.py" afterPath="$PROJECT_DIR$/apps/social/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/tasks_feed.py" afterPath="$PROJECT_DIR$/apps/social/tasks_feed.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/urls.py" afterPath="$PROJECT_DIR$/apps/social/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/views.py" afterPath="$PROJECT_DIR$/apps/social/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/__init__.py" afterPath="$PROJECT_DIR$/apps/tasks/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" afterPath="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/modules.py" afterPath="$PROJECT_DIR$/apps/tasks/modules.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/serializer.py" afterPath="$PROJECT_DIR$/apps/tasks/serializer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/urls.py" afterPath="$PROJECT_DIR$/apps/tasks/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/views.py" afterPath="$PROJECT_DIR$/apps/tasks/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/__init__.py" afterPath="$PROJECT_DIR$/settings/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/base.py" afterPath="$PROJECT_DIR$/settings/base.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/social/news_feed.html" afterPath="$PROJECT_DIR$/templates/social/news_feed.html" />
-    </list>
+    <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="" />
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
