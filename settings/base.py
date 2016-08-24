@@ -14,9 +14,13 @@ SECRET_KEY = '0!meczzg54v6bydr$!k118wxz4@nltfgzar#d#-s@9h12#nb+x'
 SITE_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+XS_SHARING_ALLOWED_ORIGINS = '*'
 ALLOWED_HOSTS = []
 LOGIN_URL = '/tasks/login'
+BROKER_URL = "amqp://myuser:mypassword@localhost:5672/pondeye_host"
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 # Application definition
 
@@ -36,12 +40,15 @@ INSTALLED_APPS = (
     'friendship',
     'tastypie',
     'rest_framework',
+    'corsheaders',
+    'djcelery',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -49,7 +56,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.staticfiles.storage.StaticFilesStorage',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 
+    #custom middleware
+    'apps.tasks.middleware.django_crossdomainxhr_middleware.XsSharing',
 )
 
 THUMBNAIL_PROCESSORS = (
@@ -57,6 +68,11 @@ THUMBNAIL_PROCESSORS = (
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 ROOT_URLCONF = 'urls'
+
+CORS_URLS_REGEX = r'^/api/.*$'
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIAL = True
+CORS_REPLACE_HTTPS_REFERER = True
 
 TEMPLATES = [
     {

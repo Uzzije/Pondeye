@@ -18,7 +18,8 @@ class TasksFeed:
         self.build_cred_count = self.build_cred()
         self.follow_count = self.follow()
         self.letDown_count = self.letDown()
-        self.name_of_task = tasks.name_of_tasks
+        self.name_of_task = tasks.name_of_tasks, " from " + self.get_start_time()+ " to " + self.get_end_time()
+        self.id = tasks.id
 
     def seens(self):
         try:
@@ -28,6 +29,11 @@ class TasksFeed:
             count = 0
         return count
 
+    def get_start_time(self):
+        return self.tasks.start.strftime("%I:%M %p")
+
+    def get_end_time(self):
+        return self.tasks.end.strftime("%I:%M %p")
 
     def vouche(self):
         try:

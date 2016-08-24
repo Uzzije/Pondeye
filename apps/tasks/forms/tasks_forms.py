@@ -101,6 +101,5 @@ class AddTaskForm(forms.Form):
             else:
                 if time.date() >= get_current_datetime().date():
                     return time
-                msg = "Hey, your work is not history tough yet"
+                msg = "Hey, your work is not history yet"
                 self.add_error('start_time', msg)
-

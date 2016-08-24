@@ -3,7 +3,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import ProfileView, PictureUploadView, HomeActivityView, TodoFeed, PeopleView, SendFriendRequestView,\
-    FriendRequestView, AcceptFriendRequestView, RejectFriendRequestView
+    FriendRequestView, AcceptFriendRequestView, RejectFriendRequestView, ApiTodoFeed, ApiCreateFollow, ApiCreateVouch,\
+    ApiPeopleView, ApiSendFriendRequestView, ApiFriendRequestView, ApiRejectFriendRequestView, ApiAcceptFriendRequestView
 
 urlpatterns = [
     url(r'^profileview/$', ProfileView.as_view(), name='profile_view'),
@@ -14,8 +15,15 @@ urlpatterns = [
     url(r'^send-friend-request/$', SendFriendRequestView.as_view(), name="send_friend_request"),
     url(r'^friend-request/$', FriendRequestView.as_view(), name="friend_request"),
     url(r'^accept-friend-request/$', AcceptFriendRequestView.as_view(), name="accept_friend_request"),
-    url(r'^deny-friend-request/$', RejectFriendRequestView.as_view(), name="reject_friend_request")
-
+    url(r'^deny-friend-request/$', RejectFriendRequestView.as_view(), name="reject_friend_request"),
+    url(r'^api/newsfeed/$', ApiTodoFeed.as_view(), name='to_do_feed_api'),
+    url(r'^api/create-vouch/$', ApiCreateVouch.as_view(), name='create_vouch_api'),
+    url(r'^api/create-follow/$', ApiCreateFollow.as_view(), name='create_follow_api'),
+    url(r'^api/social-search/$', ApiPeopleView.as_view(), name='find_people_api'),
+    url(r'^api/send-friend-request/$', ApiSendFriendRequestView.as_view(), name='send_request_api'),
+    url(r'^api/friend-request/$', ApiFriendRequestView.as_view(), name='friend_request_view_api'),
+     url(r'^api/deny-friend-request/$', ApiRejectFriendRequestView.as_view(), name='deny_friend_request_view_api'),
+     url(r'^api/accept-friend-request/$', ApiAcceptFriendRequestView.as_view(), name='accept_friend_request_view_api'),
 ]
 
 

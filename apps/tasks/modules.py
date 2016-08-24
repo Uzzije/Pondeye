@@ -5,8 +5,12 @@ from django.db.models import Q
 from datetime import timedelta
 from forms import form_module
 from django.db.models import Min
+from forms.form_module import get_current_datetime
 import time
 
+DECODE_DICTIONARY = {'a':'c', 'b':'z', 'c':'g', 'd':'h', 'e':'w', 'f':'x', 'g':'a', 'h':'b', 'i':'d', 'j':'e', 'k':'f', 'l':'i', 'm':'j', 'n':'k', 'o':'l',
+                     'p':'m', 'q':'o', 'r':'p', 's':'q', 't':'r',
+                    'u':'s', 'v':'t', 'w':'y', 'x':'v', 'y':'u', 'z':'n'}
 
 def get_user_projects(user):
     try:
@@ -88,6 +92,33 @@ def get_current_todo_list(user):
     return result
 
 
+def get_current_todo_list_json_form(user):
+    todo_item = get_current_todo_list(user)
+    print todo_item
+    if not todo_item:
+        return None
+    print todo_item
+    todo_json_form = {'name_of_task':todo_item.name_of_tasks, 'start_time':todo_item.start.strftime("%B %d %Y %I:%M %p"),
+                      'end_time':todo_item.end.strftime("%B %d %Y %I:%M %p")}
+    return todo_json_form
+
+
+def get_todays_todo_list_json(user):
+    todays_list_array = []
+    todays_list = get_todays_todo_list(user)
+    print todays_list
+    if not todays_list:
+        return []
+    for item in todays_list:
+        list_to_json_form = {}
+        list_to_json_form['name_of_task'] = item.name_of_tasks
+        list_to_json_form['start'] = item.start.strftime("%I:%M %p")
+        list_to_json_form['end'] = item.end.strftime("%I:%M %p")
+        todays_list_array.append(list_to_json_form)
+    print todays_list
+    return todays_list_array
+
+
 def get_todays_todo_list(user):
     user = TikedgeUser.objects.get(user=user)
     yesterday = form_module.get_current_datetime() - timedelta(days=1)
@@ -104,11 +135,44 @@ def is_time_conflict(user, start_time, end_time):
         new_end = start_time + timedelta(minutes=int(end_time))
     else:
         new_end = start_time + timedelta(minutes=60)
+    print new_end
     yesterday = form_module.get_current_datetime() - timedelta(days=1)
     user = TikedgeUser.objects.get(user=user)
     todo_todo = user.tasks_set.all().filter(Q(start__lte=start_time), Q(start__gte=yesterday),Q(is_active=True))
+    print todo_todo
     for task in todo_todo:
         if task.start.time() <= start_time.time() and task.end.time() >= start_time.time() or \
                                 task.start.time() <= new_end.time() and task.end.time() >= new_end.time():
             return True
     return False
+
+
+def decode_password(password):
+    decoded_string =''
+    for each_word in password:
+        decode_letter = DECODE_DICTIONARY[each_word]
+        decoded_string = decoded_string.join(decode_letter)
+    return decoded_string
+
+
+def convert_html_to_datetime(date_time):
+    datetimearray = date_time.split('T')
+    date = datetimearray[0]
+   # print date
+    time = datetimearray[1]
+    new_date_time = date + ' '+time
+    print new_date_time
+    return new_date_time
+
+
+def time_has_past(time_info):
+        if time_info.time() < get_current_datetime().time():
+            if time_info.date() > get_current_datetime().date():
+                return False
+            msg = "Hey, your work is not history yet"
+        else:
+            if time_info.date() >= get_current_datetime().date():
+                return False
+            msg = "Hey, your work is not history yet"
+        return msg
+

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from tasks.models import User, TikedgeUser
+from models import User, TikedgeUser
 
 
 class UserAuthenticationSerializer(serializers.ModelSerializer):
