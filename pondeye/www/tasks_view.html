@@ -24,7 +24,9 @@
         <div>
             <small><p class="">upcoming task</p></small>
         </div>
-        <div class="row">
+        <div id="upcoming_task">
+        </div>
+        <div id="todays_task_span" class="row">
             <div class="col s4">
                 <small><p id="current_to_do"></p></small>
             </div>
@@ -36,12 +38,16 @@
             </div>
         </div>
     </div>
-
+    <div class="row">
+        <div><small>Expired Tasks</small></div>
+        <div id="expired_task_list" class="row"></div>
+    </div>
     <div class="row">
         <div class="col s3">
             <button class="waves-effect waves-light btn" id='today_list' onclick="showTodaysTasks()">today's goals</a>
         </div>
     </div>
+
     <div hidden id='todays_list' class="row"> 
         <!-- Dropdown Structure -->
         <ul  id="list_of_today" class='dropdown-content'>    
@@ -56,6 +62,11 @@
     <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
         <a class="btn-floating btn-large red" onclick="myNavigator.pushPage('new_task_form.html')">
             <i class="large material-icons">add</i>
+        </a>
+    </div>
+    <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 90px;">
+        <a class="btn-floating btn-large red" onclick="myNavigator.pushPage('new_task_form.html')">
+            <i class="large material-icons">perm_camera_mic</i>
         </a>
     </div>
     </div>

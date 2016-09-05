@@ -262,6 +262,8 @@ class ApiTaskView(CSRFExemptView):
             project = get_user_projects(user_obj)
             response['users_project'] = project
             response['status'] = "true"
+        response["exp_task"] = get_expired_tasks_json(user_obj)
+        print get_expired_tasks_json(user_obj), " expired list"
         return HttpResponse(json.dumps(response), status=201)
 
     def post(self, request, *args, **kwargs):
@@ -317,9 +319,55 @@ class ApiTaskView(CSRFExemptView):
             tasks.project = project
             tasks.part_of_project = True
             tasks.save()
-        response_data["exp_task"] = get_expired_tasks_json(user_obj)
         response_data['success'] = "true"
         return HttpResponse(json.dumps(response_data), status=201)
+
+
+class ApiCheckTaskDone(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        try:
+            username = request.POST.get('username')
+            User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response['status'] = False
+            return HttpResponse(json.dumps(response), status=201)
+        task_pk = request.POST.get("pk")
+        task = Tasks.objects.get(pk=task_pk)
+        task.task_completed = True
+        task.current_working_on_task = False
+        task.save()
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiCheckFailedTask(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        pass
+
+    def post(self, request, *args, **kwargs):
+
+        response = {}
+        try:
+            username = request.POST.get('username')
+            User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response['status'] = False
+            print "check as failure"
+            return HttpResponse(json.dumps(response), status=201)
+        task_pk = request.POST.get("pk")
+        task = Tasks.objects.get(pk=task_pk)
+        task.task_failed = True
+        task.current_working_on_task = False
+        task.save()
+        response["status"] = True
+        print "tasks is failling"
+        return HttpResponse(json.dumps(response), status=201)
 
 
 class LogoutView(View):

@@ -99,19 +99,38 @@ function showTasksInfo(){
                 var expiredTasks = statusParse["exp_task"]
                 //console.log(todaysTasks);
                 //console.log(upcomingTask.name_of_task);
-                setUpcomingTasks(upcomingTask.name_of_task, upcomingTask.start_time, upcomingTask.end_time);
-                 $("#todays_list").empty();
-                 $("#expired_task_list").empty();
+                $("#todays_list").empty();
+                $("#expired_task_list").empty();
+                if(upcomingTask){
+                    setUpcomingTasks(upcomingTask.name_of_task, upcomingTask.start_time, upcomingTask.end_time);
+                }
+                else{
+                    $("#todays_task_span").hide();
+                    $("#upcoming_task").empty();
+                    $("#upcoming_task").append("<div class='row'>no upcoming tasks</div>");
+                }
+
                 for(var index=0; index < todaysTasks.length; index++){
                     var task = todaysTasks[index].name_of_task + " "+todaysTasks[index].start+ " " +todaysTasks[index].end;
                     $("#todays_list").append('<li><small>'+task+'</small></li>');
                 }
-                for(var index=0; index < expiredTasks.length; index++){
-                    var task = expiredTasks[index].name_of_task + " "+expiredTasks[index].start+ " " +expiredTasks[index].end;
-                    $("#expired_task_list").append('<li><div class="col-md-6><small>'+task+'</small></div><div class="col-md-3><button \
-                    onclick=taskDone('+expiredTasks[index].pk+')>done</button></div><div class="col-md-3><button \
-                    onclick=taskFailed('+expiredTasks[index].pk+')>failed</button></div></li>');
-                }
+
+                if(expiredTasks.length > 0){
+                    console.log("expire tasks");
+                    for(var index=0; index < expiredTasks.length; index++){
+                        
+                        var task = expiredTasks[index].name_of_task + " "+expiredTasks[index].start+ " " +expiredTasks[index].end;
+                        $("#expired_task_list").append('<ol><li id="exp'+expiredTasks[index].pk+'"><div class="col-md-12"><small>'+task+'</small> \
+                        </div><div class="row"><div class="col-md-3"> \
+                        <button class="waves-effect waves-light btn" onclick=taskDone('+expiredTasks[index].pk+')>done</button></div><div class="col-md-3"><button \
+                        class="waves-effect waves-light btn" onclick=taskFailed('+expiredTasks[index].pk+')>failed</button></div></div></li></ol>');
+                    }
+                 }
+                 else{
+                    $("#expired_task_list").append("<small>All taking care off</small>");
+                 }
+                
+                
                 /*
                 var options = $('#new_task_existing_project').get(0).options;
                 $.each(project, function(key, value) {
@@ -134,12 +153,57 @@ function showTasksInfo(){
     });
 
 }
-function setUpcomingTasks(name_of_task, start_time, end_time){
-    $("#current_to_do").text(name_of_task);
-    console.log(name_of_task);
-    $("#start_time_todo").text(start_time);
-    $("#end_time_todo").text(end_time);
 
+function taskDone(pk){
+    var task_info = {username:localStorage.getItem('username'), pk:pk};
+   setUpAjax(); 
+   $.ajax({
+        url: 'http://localhost:8100/tasks/api/task-done-check-off/',
+        type: "POST",
+        data: task_info,
+        success: function(result){
+        var resultParse = JSON.parse(result)
+        var successStatus = resultParse["status"];
+        if(successStatus === true){
+            $("#exp"+pk).hide();
+            console.log("successfull failed tasks");
+        }
+     },
+      error: function(xhr){
+            $("#error-message").text(xhr.responseText).show();
+            console.log(xhr);
+      }
+    });
+}
+
+function taskFailed(pk){
+    var task_info = {username:localStorage.getItem('username'), pk:pk};
+   setUpAjax(); 
+   $.ajax({
+        url: 'http://localhost:8100/tasks/api/task-failed-check-off/',
+        type: "POST",
+        data: task_info,
+        success: function(result){
+        var resultParse = JSON.parse(result)
+        var successStatus = resultParse["status"];
+        if(successStatus === true){
+            $("#exp"+pk).hide();
+            console.log("successfull failed tasks");
+        }
+     },
+      error: function(xhr){
+            $("#error-message").text(xhr.responseText).show();
+            console.log(xhr);
+      }
+    });
+}
+
+function setUpcomingTasks(name_of_task, start_time, end_time){
+        $("#upcoming_task").empty();
+        $("#current_to_do").text(name_of_task);
+        console.log(name_of_task);
+        $("#start_time_todo").text(start_time);
+        $("#end_time_todo").text(end_time);
 }
 function showTodaysTasks(){
     $("#todays_list").toggle(500);

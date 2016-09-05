@@ -75,7 +75,6 @@ def tasks_search(query, user):
 
 def get_current_todo_list(user):
     user = TikedgeUser.objects.get(user=user)
-    print user
     try:
         result = user.tasks_set.all().filter(Q(start__lte=form_module.get_current_datetime()),
                                                   Q(task_completed=False), Q(task_failed=False), Q(is_active=True))
@@ -98,7 +97,7 @@ def get_current_todo_list(user):
 
 def get_current_todo_list_json_form(user):
     todo_item = get_current_todo_list(user)
-    print todo_item
+    print todo_item, " current to do list"
     if not todo_item:
         return None
     print todo_item
@@ -126,6 +125,7 @@ def get_todays_todo_list_json(user):
 def get_todays_todo_list(user):
     user = TikedgeUser.objects.get(user=user)
     yesterday = form_module.get_current_datetime() - timedelta(days=1)
+    print yesterday
     try:
         result = user.tasks_set.all().filter(Q(start__lte=form_module.get_current_datetime()),
                                              Q(start__gte=yesterday), Q(is_active=True))
@@ -151,8 +151,8 @@ def get_expired_tasks_json(user):
         for each_task in expired_tasks:
             temp_dic = {}
             temp_dic["name_of_task"] = each_task.name_of_tasks
-            temp_dic["start"] = each_task.start
-            temp_dic["end"] = each_task.end
+            temp_dic["start"] = each_task.start.strftime("%B %d %Y %I:%M %p")
+            temp_dic["end"] = each_task.end.strftime("%B %d %Y %I:%M %p")
             temp_dic["pk"] = each_task.pk
             expired_tasks_list.append(temp_dic)
     return expired_tasks_list
