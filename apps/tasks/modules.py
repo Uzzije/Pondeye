@@ -6,7 +6,11 @@ from datetime import timedelta
 from forms import form_module
 from django.db.models import Min
 from forms.form_module import get_current_datetime
+from tzlocal import get_localzone
+from django.utils import timezone
 import time
+import pytz
+from dateutil.tz import *
 
 DECODE_DICTIONARY = {'a':'c', 'b':'z', 'c':'g', 'd':'h', 'e':'w', 'f':'x', 'g':'a', 'h':'b', 'i':'d', 'j':'e', 'k':'f', 'l':'i', 'm':'j', 'n':'k', 'o':'l',
                      'p':'m', 'q':'o', 'r':'p', 's':'q', 't':'r',
@@ -130,6 +134,30 @@ def get_todays_todo_list(user):
     return result
 
 
+def get_expired_tasks(user):
+    user = TikedgeUser.objects.get(user=user)
+    try:
+        exp_tasks = user.tasks_set.all().filter(Q(is_active=False, current_working_on_task=True))
+        print "expired"
+    except ObjectDoesNotExist:
+        exp_tasks = []
+    return exp_tasks
+
+
+def get_expired_tasks_json(user):
+    expired_tasks_list = []
+    expired_tasks = get_expired_tasks(user)
+    if expired_tasks:
+        for each_task in expired_tasks:
+            temp_dic = {}
+            temp_dic["name_of_task"] = each_task.name_of_tasks
+            temp_dic["start"] = each_task.start
+            temp_dic["end"] = each_task.end
+            temp_dic["pk"] = each_task.pk
+            expired_tasks_list.append(temp_dic)
+    return expired_tasks_list
+
+
 def is_time_conflict(user, start_time, end_time):
     if end_time:
         new_end = start_time + timedelta(minutes=int(end_time))
@@ -176,3 +204,11 @@ def time_has_past(time_info):
             msg = "Hey, your work is not history yet"
         return msg
 
+
+def time_to_utc(time_to_convert):
+    loc_ndt = time_to_convert.replace(tzinfo=None)
+    loc_dt = loc_ndt.replace(tzinfo=get_localzone())
+    print loc_ndt.tzinfo, loc_dt.tzinfo
+    local = get_localzone().localize(loc_ndt).astimezone(pytz.utc)
+    print loc_ndt, "local should be this", local, " locdt", loc_dt
+    return local

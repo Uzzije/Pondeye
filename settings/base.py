@@ -3,6 +3,9 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from easy_thumbnails.conf import Settings as thumbnail_settings
+import djcelery
+djcelery.setup_loader()
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -17,7 +20,7 @@ DEBUG = True
 XS_SHARING_ALLOWED_ORIGINS = '*'
 ALLOWED_HOSTS = []
 LOGIN_URL = '/tasks/login'
-BROKER_URL = "amqp://myuser:mypassword@localhost:5672/pondeye_host"
+
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

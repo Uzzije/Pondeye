@@ -2,6 +2,7 @@ amqp==1.4.9
 anyjson==0.3.3
 billiard==3.3.0.23
 celery==3.1.23
+django-celery==3.1.17
 Django==1.8.13
 django-activity-stream==0.6.2
 django-appconf==1.0.1

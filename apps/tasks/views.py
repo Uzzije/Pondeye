@@ -7,17 +7,15 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from modules import get_user_projects, tasks_search, get_current_todo_list, get_todays_todo_list, is_time_conflict, \
-    convert_html_to_datetime, time_has_past, get_current_todo_list_json_form, get_todays_todo_list_json
+    convert_html_to_datetime, time_has_past, get_current_todo_list_json_form, get_todays_todo_list_json, time_to_utc, \
+    get_expired_tasks, get_expired_tasks_json
 from django_bootstrap_calendar.models import CalendarEvent
 from actstream import action
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from datetime import datetime
-from serializer import UserAuthenticationSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from tasks import set_reminder, set_task_active
 import json
 
 
@@ -55,7 +53,9 @@ class HomeView(View):
             return HttpResponseRedirect(reverse('tasks:login'))
         current_task = get_current_todo_list(request.user)
         todays_to_do_list = get_todays_todo_list(request.user)
-        return render(request, 'tasks/home.html', {'current_task':current_task, 'todays_tasks':todays_to_do_list})
+        expired_tasks = get_expired_tasks(request.user)
+        return render(request, 'tasks/home.html', {'current_task':current_task, 'todays_tasks':todays_to_do_list,
+                                                   'expired_tasks':expired_tasks})
 
 
 class ListOfTasksViews(View):
@@ -212,7 +212,8 @@ class AddTasks(View):
                 tasks.start = start_time
                 tasks.save()
                 if end_time:
-                    tasks.end = start_time + timedelta(minutes=int(end_time))
+                    #tasks.end = start_time + timedelta(minutes=int(end_time))
+                    tasks.end = start_time + timedelta(minutes=1)
                 else:
                     tasks.end = start_time + timedelta(minutes=60)
                 tasks.is_active = True
@@ -220,6 +221,8 @@ class AddTasks(View):
                 new_calender_event = CalendarEvent(title=name_of_task, start=start_time, end=tasks.end, css_class='event-info')
                 new_calender_event.save()
                 action.send(user, verb='Created A to do list item: ', target=tasks)
+                print time_to_utc(tasks.end), " local time"
+                print tasks.end
             if new_project:
                 if not user.userproject_set.all().filter(name_of_project=new_project):
                     project = UserProject(name_of_project=new_project, user=user)
@@ -298,6 +301,8 @@ class ApiTaskView(CSRFExemptView):
             tasks.save()
             new_calender_event = CalendarEvent(title=name_of_task, start=start_time, end=tasks.end, css_class='event-info')
             new_calender_event.save()
+            set_task_active.apply_async((tasks.pk,), eta=time_to_utc(tasks.start))
+            set_reminder.apply_async((tasks.pk,), eta=time_to_utc(tasks.end))
         if new_project:
             if not user.userproject_set.all().filter(name_of_project=new_project):
                 project = UserProject(name_of_project=new_project, user=user)
@@ -312,6 +317,7 @@ class ApiTaskView(CSRFExemptView):
             tasks.project = project
             tasks.part_of_project = True
             tasks.save()
+        response_data["exp_task"] = get_expired_tasks_json(user_obj)
         response_data['success'] = "true"
         return HttpResponse(json.dumps(response_data), status=201)
 

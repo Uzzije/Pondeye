@@ -96,13 +96,21 @@ function showTasksInfo(){
             if(successStatus === "true"){
                 var upcomingTask = statusParse["upcoming_task"];
                 var todaysTasks = statusParse["tasks"];
+                var expiredTasks = statusParse["exp_task"]
                 //console.log(todaysTasks);
                 //console.log(upcomingTask.name_of_task);
                 setUpcomingTasks(upcomingTask.name_of_task, upcomingTask.start_time, upcomingTask.end_time);
                  $("#todays_list").empty();
+                 $("#expired_task_list").empty();
                 for(var index=0; index < todaysTasks.length; index++){
                     var task = todaysTasks[index].name_of_task + " "+todaysTasks[index].start+ " " +todaysTasks[index].end;
                     $("#todays_list").append('<li><small>'+task+'</small></li>');
+                }
+                for(var index=0; index < expiredTasks.length; index++){
+                    var task = expiredTasks[index].name_of_task + " "+expiredTasks[index].start+ " " +expiredTasks[index].end;
+                    $("#expired_task_list").append('<li><div class="col-md-6><small>'+task+'</small></div><div class="col-md-3><button \
+                    onclick=taskDone('+expiredTasks[index].pk+')>done</button></div><div class="col-md-3><button \
+                    onclick=taskFailed('+expiredTasks[index].pk+')>failed</button></div></li>');
                 }
                 /*
                 var options = $('#new_task_existing_project').get(0).options;

@@ -37,6 +37,20 @@
             </div>
             <div class="row">
                 <div class="col-md-8">
+                    {% if expired_tasks %}
+                            {% for exp_task in expired_tasks %}
+                                {{ exp_task.name_of_tasks }}
+                                {{ exp_task.start }}
+                                {{ exp_task.end }}
+                            {% endfor %}
+
+                    {% else %}
+                        No lingering task
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
                     {% if todays_tasks %}
                         {% for todo in todays_tasks %}
                             <div class="row">

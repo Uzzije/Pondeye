@@ -1,10 +1,20 @@
 from __future__ import absolute_import
-from celery import Celery
-from tasks.models import Tasks
-
-app = Celery('tasks', broker='amqp://guest@localhost//')
+from celery import shared_task
+from .models import Tasks
+from scheduler.celery import app
+from .modules import time_to_utc
+from django.utils import timezone
 
 @app.task
-def print_reminder(pk):
-    task = Tasks.objects.get(pk=pk)
-    print 'mandem_sucks', task.name_of_tasks
+def set_reminder(pk):
+    tasks = Tasks.objects.get(pk=pk)
+    tasks.is_active = False
+    tasks.save()
+
+
+
+@app.task
+def set_task_active(pk):
+    tasks = Tasks.objects.get(pk=pk)
+    tasks.current_working_on_task = True
+    tasks.save()
