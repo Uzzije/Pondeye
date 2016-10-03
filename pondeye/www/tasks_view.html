@@ -65,9 +65,12 @@
         </a>
     </div>
     <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 90px;">
-        <a class="btn-floating btn-large red" onclick="myNavigator.pushPage('new_task_form.html')">
-            <i class="large material-icons">perm_camera_mic</i>
-        </a>
+        <div hidden>
+            <input class="btn-floating btn-large red" id="fileupload" type="file" name="pictureFiles[]" value="upload" multiple>
+        </div>
+            <button for="fileupload" class="btn-floating btn-large red">
+                <label for="fileupload"><i hide class="large material-icons">picture_in_picture</i></label>
+            </button>
     </div>
     </div>
 </ons-page>

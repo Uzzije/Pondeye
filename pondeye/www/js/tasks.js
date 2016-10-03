@@ -49,7 +49,7 @@ function getNewTaskView(){
     var task_info = {username:localStorage.getItem('username'), get_what:"project"};
     setUpAjax();
         $.ajax({
-        url: 'http://localhost:8100/tasks/api/tasks',
+        url: 'http://localhost:8100/social/api/tasks',
         type: "GET",
         data: task_info,
         success: function(e){
@@ -216,12 +216,25 @@ function toggleNav(){
 $(document).on('pageinit', '#tasks_page_id', function(){
    showTasksInfo();
    
-    $('.button-collapse').sideNav({// Default is 240
+  $("#upload_pic").fileupload({
+        dataType: 'json',
+        url: 'http://localhost:8100/api/upload-picture/',
+        done: function(e, data){
+            $.each(data.result.files, function(index, file){
+                $('<p/>').text(file.name).appendTo(document.body);
+                console.log("Uploaded files");
+            });
+            console.log("the e" + e, " the data" + data);
+        }
+    });
+
+    console.log("say something giving up on you");
+    
+     $('.button-collapse').sideNav({// Default is 240
       edge: 'right', // Choose the horizontal origin
       closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
     }
   );
-  
 });
 $(document).on('pageinit', '#tasks_create_form_id', function(){
     /*

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 from forms import social_forms
-from models import ProfilePictures, Notification, Vouche, Follow
+from models import ProfilePictures, Notification, Vouche, Follow, TaskPicture
 from ..tasks.models import TikedgeUser, UserProject, User, Tasks
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
@@ -16,7 +16,6 @@ from django.core.exceptions import ValidationError
 import global_variables
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 import json
-# Create your views here.
 
 
 class ProfileView(View):
@@ -85,14 +84,72 @@ class CSRFEnsureCookiesView(View):
         return super(CSRFEnsureCookiesView, self).dispatch(*args, **kwargs)
 
 
+class ApiHomeActivityView(CSRFEnsureCookiesView):
+
+    def get(self, request, *args, **kwargs):
+        response = {}
+        user = User.objects.get(username=request.GET.get("username"))
+        activities = modules.get_user_activities_in_json_format(user)
+        if activities:
+            response["status"] = True
+            response["activities"] = activities
+        else:
+            response["status"] = False
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiPictureUploadView(CSRFExemptView):
+
+    def get(self, request):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        print request
+        picture_files = request.FILES.getlist('pictureFiles[]', False)
+        print picture_files
+        username = request.POST.get("username")
+        print username
+        user = User.objects.get(username=username)
+        tkduser = TikedgeUser.objects.get(user=user)
+        response["status"] = False
+        for each_pic in picture_files:
+            picture_mod = TaskPicture(image_name=each_pic.name, task_pics=each_pic, tikede_user=tkduser)
+            picture_mod.save()
+            response["status"] = True
+            response["picture_id"] = picture_mod.id
+            response["picture_url"] = picture_mod.task_pics.url
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiAddNewPictureToTask(CSRFExemptView):
+
+    def get(self, request):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        task_id = request.POST.get('task_id')
+        picture_id = request.POST.get('pic_id')
+        try:
+            task_picture = TaskPicture.objects.get(id=int(picture_id))
+            task = Tasks.objects.get(id=int(task_id))
+            task_picture.task = task
+            task_picture.save()
+            response["status"] = True
+        except ObjectDoesNotExist:
+            response["status"] = False
+
+        return HttpResponse(json.dumps(response), status=201)
+
+
 class ApiTodoFeed(CSRFEnsureCookiesView):
 
     def get(self, request):
         response = {}
         username = request.GET.get("username")
         user = User.objects.get(username=username)
-        activities_todo = modules.get_users_feed(user)
-        feed_list = modules.transform_activities_feed_to_json(activities_todo)
+        feed_list = modules.transform_activities_feed_to_json(user)
         if feed_list:
             response['status'] = "true"
             response['feed'] = feed_list

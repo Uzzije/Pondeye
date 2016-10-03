@@ -11,8 +11,18 @@ from django.utils.timezone import now
 class ProfilePictures(models.Model):
     image_name = models.CharField(max_length=100)
     profile_pics = models.ImageField(upload_to='image/%Y/%m/%d', verbose_name="profile image")
-    cropping = ImageRatioField('profile_pics', '60x60')
-    tikede_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    cropping = ImageRatioField('profile_pics', '5x5')
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    date_uploaded =  models.DateTimeField(default=now)
+
+
+class TaskPicture(models.Model):
+    image_name = models.CharField(max_length=100)
+    task_pics = models.ImageField(upload_to='image/tasks/%Y/%m/%d', verbose_name="profile image")
+    cropping = ImageRatioField('task_pics', '5x5')
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    task = models.ForeignKey(Tasks, blank=True, null=True)
+    date_uploaded =  models.DateTimeField(default=now)
 
 
 class Friends(models.Model):
@@ -51,6 +61,8 @@ class Notification(models.Model):
     type_of_notification = models.CharField(max_length=100)
     created = models.DateTimeField(default=now)
     read = models.BooleanField(default=False)
+    picture_post = models.ForeignKey(TaskPicture, blank=True, null=True)
+    project_update = models.ForeignKey(UserProject, blank=True, null=True)
 
     def __str__(self):
         return self.type_of_notification

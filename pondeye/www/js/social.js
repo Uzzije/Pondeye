@@ -13,6 +13,11 @@ $(document).on('pageinit', '#friendship_view_id', function(){
     console.log("i am being searched!");
     getFriendShipRequest();
 });
+$(document).on('pageinit', '#social_profile_id', function(){
+    getHomeActivityFeed();
+    console.log("came here");
+});
+
 
 function getNewsFeed(){
     
@@ -71,6 +76,75 @@ function getNewsFeed(){
     });
 
 }
+
+function getHomeActivityFeed(){
+    
+        var feed_info = {username:localStorage.getItem('username'), get_what:"user_feed"};
+        setUpAjax();
+        $.ajax({
+        url: 'http://localhost:8100/social/api/get-home-activities',
+        type: "GET",
+        data: feed_info,
+        success: function(result){
+            console.log(result);
+            var statusParse = JSON.parse(result)
+            var successStatus = statusParse["status"];
+            if(successStatus === true){
+                var newsFeed = statusParse["activities"];
+                console.log(newsFeed);
+                 $("#home_activities_body_id").empty();
+                for(var index=0; index < newsFeed.length; index++){
+                    //create row div
+                    $("#home_activities_body_id").append('<div id="home'+newsFeed[index].id+'" class="row panel panel-default"></div>');
+                    var nameOfFeedH = $('#home'+newsFeed[index].id).append('<small>'+newsFeed[index].name_of_feed+'</small>');
+                    if(newsFeed[index].profile_url){
+                        var picture_url = 'http://localhost:8100'+newsFeed[index].profile_url;
+                        $('#home'+newsFeed[index].id).append('<div class="row"><img class="img-circle" style="width:80px;height:80px;" src="'+picture_url+'"></div>');
+                    }
+                    else{
+                        if(newsFeed[index].completed || newsFeed[index].task_failed){
+                            if(newsFeed[index].completed){
+                            //create div build
+                                $('#home'+newsFeed[index].id).append('<div class="col-md-1"><small>build cred '+newsFeed[index].build_cred_count+'</small></div>');
+                            }
+                            if(newsFeed[index].failed){
+                            //create div letdown
+                                $('#home'+newsFeed[index].id).append('<div class="col-md-1"><small>let downs '+newsFeed[index].letDown_count+'</small></div>');
+                            }  
+                        }
+                        else{
+                            //create vouche count
+                            var vouch_id = "vouch"+newsFeed[index].id;
+                            $('#home'+newsFeed[index].id).append('<div class="col-md-1"><small><a>vouches</a><span id="'+vouch_id+'">'+newsFeed[index].vouche_count+'</span></small></div>');
+                       }
+                        if(newsFeed[index].partOfProject){
+                        //create follow count
+                            var project_id = "project" + newsFeed[index].id;
+                            $('#home'+newsFeed[index].id).append('<div class="col-md-1"><small><a onclick="createFollow('+newsFeed[index].id+')">follows </a> <span id="'+project_id+'">'+newsFeed[index].follow_count+'</span></small></div>');
+                        }
+                    //create seen count
+                    $('#home'+newsFeed[index].id).append('<div class="col-md-1"><small>seen '+newsFeed[index].seen_count+'</small></div>');
+                }
+             }
+            }
+            else{
+                $("#loginError").show(2000);
+                console.log(successStatus); 
+            }
+        },
+                error: function(xhr){
+                $("#error-message").text(xhr.responseText).show();
+                console.log(xhr);
+        }  
+    });
+
+}
+
+
+
+
+
+
 
 function createVouch(tasks_id){
    var vouch_info = {username:localStorage.getItem('username'), task_id:tasks_id};

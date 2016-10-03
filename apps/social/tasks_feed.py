@@ -18,8 +18,10 @@ class TasksFeed:
         self.build_cred_count = self.build_cred()
         self.follow_count = self.follow()
         self.letDown_count = self.letDown()
-        self.name_of_task = tasks.name_of_tasks, " from " + self.get_start_time()+ " to " + self.get_end_time()
+        self.name_of_task = self.get_name_of_tasks()
         self.id = tasks.id
+        self.type = global_variables.NEW_TASK_FEED
+        self.created = self.get_start_time()
 
     def seens(self):
         try:
@@ -35,6 +37,12 @@ class TasksFeed:
     def get_end_time(self):
         return self.tasks.end.strftime("%I:%M %p")
 
+    def get_name_of_tasks(self):
+        try:
+            return self.tasks.name_of_tasks+ " from " + self.get_start_time()+ " to " + self.get_end_time()
+        except (KeyError, ValueError, AttributeError):
+            return None
+
     def vouche(self):
         try:
             vouched = Vouche.objects.get(tasks=self.tasks)
@@ -42,7 +50,6 @@ class TasksFeed:
         except ObjectDoesNotExist:
             count = 0
         return count
-
 
     def build_cred(self):
         try:
@@ -103,11 +110,54 @@ class SingleNotification:
         elif self.notif.type_of_notification == global_variables.REQUEST_ACCEPTED:
             name = "Your Friend Request Has Been Accepted"
         elif self.notif.type_of_notification == global_variables.REQUEST_REJECTED:
-            name = "Your Friend Request Has Been rejected"
+            name = "Your Friend Request Has Been Rejected"
+        elif self.notif.type_of_notification == global_variables.NEW_PICTURE_ADDED:
+            task_owner_name = '%s %s' % (self.notif.picture_post.task.user.first_name,
+                              self.notif.picture_post.task.user.first_name)
+            name_of_task = self.notif.picture_post.task.name_of_tasks
+            name = "%s Added a New Picture to %s task" % (task_owner_name, name_of_task)
+        elif self.notif.type_of_notification == global_variables.PROJECT_FOLLOWING_UPDATE:
+            project_owner_name = '%s %s' % (self.notif.project_update.user.first_name,
+                              self.notif.project_update.user.first_name)
+            project_name = self.notif.project_update.name_of_project
+            name = "%s Updated %s Project" % (project_owner_name, project_name)
         else:
             name = "New Notification"
         return name
 
+
+class NewPictureFeed(TasksFeed):
+
+    def __init__(self, tasks, picture):
+        TasksFeed.__init__(self, tasks)
+        self.type = global_variables.NEW_PICTURE_FEED
+        self.picture = picture
+        self.picture_url = self.get_picture_url()
+        self.created = picture.date_uploaded
+
+    def get_picture_url(self):
+        return self.picture.task_pics.url
+
+
+class NewsFeed:
+
+    def __init__(self, type_of_feed, feed_options=None):
+        self.type_of_feed = type_of_feed
+        self.feed_options = feed_options
+        self.feed = self.get_feed()
+        try:
+            self.created = self.feed.created
+        except (ObjectDoesNotExist, ValueError, AttributeError):
+            self.created = None
+
+    def get_feed(self):
+        if self.type_of_feed == global_variables.NEW_TASK_FEED:
+            return TasksFeed(self.feed_options)
+        elif self.type_of_feed == global_variables.NEW_PICTURE_FEED:
+            return NewPictureFeed(self.feed_options[0], self.feed_options[1])
+        elif self.type_of_feed == global_variables.NEW_PROFILE_PICTURE_FEED:
+            return NewPictureFeed(self.feed_options[0], self.feed_options[1])
+        return None
 
 
 

@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import ProfileView, PictureUploadView, HomeActivityView, TodoFeed, PeopleView, SendFriendRequestView,\
     FriendRequestView, AcceptFriendRequestView, RejectFriendRequestView, ApiTodoFeed, ApiCreateFollow, ApiCreateVouch,\
-    ApiPeopleView, ApiSendFriendRequestView, ApiFriendRequestView, ApiRejectFriendRequestView, ApiAcceptFriendRequestView
+    ApiPeopleView, ApiSendFriendRequestView, ApiFriendRequestView, ApiRejectFriendRequestView, ApiAcceptFriendRequestView,\
+    ApiPictureUploadView, ApiAddNewPictureToTask, ApiHomeActivityView
 
 urlpatterns = [
     url(r'^profileview/$', ProfileView.as_view(), name='profile_view'),
@@ -22,8 +23,11 @@ urlpatterns = [
     url(r'^api/social-search/$', ApiPeopleView.as_view(), name='find_people_api'),
     url(r'^api/send-friend-request/$', ApiSendFriendRequestView.as_view(), name='send_request_api'),
     url(r'^api/friend-request/$', ApiFriendRequestView.as_view(), name='friend_request_view_api'),
-     url(r'^api/deny-friend-request/$', ApiRejectFriendRequestView.as_view(), name='deny_friend_request_view_api'),
-     url(r'^api/accept-friend-request/$', ApiAcceptFriendRequestView.as_view(), name='accept_friend_request_view_api'),
+    url(r'^api/deny-friend-request/$', ApiRejectFriendRequestView.as_view(), name='deny_friend_request_view_api'),
+    url(r'^api/accept-friend-request/$', ApiAcceptFriendRequestView.as_view(), name='accept_friend_request_view_api'),
+    url(r'^api/upload-pictures/$', ApiPictureUploadView.as_view(), name='upload_pictures'),
+    url(r'api/add-new-pic-to-task', ApiAddNewPictureToTask.as_view(), name="add_pic_to_task"),
+    url(r'api/get-home-activities', ApiHomeActivityView.as_view(), name="get_home_activity_view"),
 ]
 
 

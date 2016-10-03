@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^api/tasks', ApiTaskView.as_view(), name="api_tasks"),
     url(r'^api/task-done-check-off', ApiCheckTaskDone.as_view(), name="task_done"),
     url(r'^api/task-failed-check-off', ApiCheckFailedTask.as_view(), name="task_failed"),
+
 ]
 
 

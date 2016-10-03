@@ -115,6 +115,7 @@ def get_todays_todo_list_json(user):
     for item in todays_list:
         list_to_json_form = {}
         list_to_json_form['name_of_task'] = item.name_of_tasks
+        list_to_json_form['id'] = item.id
         list_to_json_form['start'] = item.start.strftime("%I:%M %p")
         list_to_json_form['end'] = item.end.strftime("%I:%M %p")
         todays_list_array.append(list_to_json_form)
@@ -208,7 +209,6 @@ def time_has_past(time_info):
 def time_to_utc(time_to_convert):
     loc_ndt = time_to_convert.replace(tzinfo=None)
     loc_dt = loc_ndt.replace(tzinfo=get_localzone())
-    print loc_ndt.tzinfo, loc_dt.tzinfo
     local = get_localzone().localize(loc_ndt).astimezone(pytz.utc)
     print loc_ndt, "local should be this", local, " locdt", loc_dt
     return local
