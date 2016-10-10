@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from .views import RegisterView, LoginView, HomeView, AddTasks, ListOfTasksViews, LogoutView, ApiLoginView, \
-    ApiRegistrationView, ApiStartUserSession, ApiTaskView, ApiCheckFailedTask, ApiCheckTaskDone
+    ApiRegistrationView, ApiStartUserSession, ApiTaskView, ApiCheckFailedTask, ApiCheckTaskDone, IndividualTaskView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^api/tasks', ApiTaskView.as_view(), name="api_tasks"),
     url(r'^api/task-done-check-off', ApiCheckTaskDone.as_view(), name="task_done"),
     url(r'^api/task-failed-check-off', ApiCheckFailedTask.as_view(), name="task_failed"),
-
+    url(r'^api/individual-view/$', IndividualTaskView.as_view(), name="indiv_task_view")
 ]
 
 

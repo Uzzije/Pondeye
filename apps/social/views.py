@@ -114,7 +114,7 @@ class ApiPictureUploadView(CSRFExemptView):
         tkduser = TikedgeUser.objects.get(user=user)
         response["status"] = False
         for each_pic in picture_files:
-            picture_mod = TaskPicture(image_name=each_pic.name, task_pics=each_pic, tikede_user=tkduser)
+            picture_mod = TaskPicture(image_name=each_pic.name, task_pics=each_pic, tikedge_user=tkduser)
             picture_mod.save()
             response["status"] = True
             response["picture_id"] = picture_mod.id

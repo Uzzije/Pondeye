@@ -16,6 +16,7 @@ DECODE_DICTIONARY = {'a':'c', 'b':'z', 'c':'g', 'd':'h', 'e':'w', 'f':'x', 'g':'
                      'p':'m', 'q':'o', 'r':'p', 's':'q', 't':'r',
                     'u':'s', 'v':'t', 'w':'y', 'x':'v', 'y':'u', 'z':'n'}
 
+
 def get_user_projects(user):
     try:
         user = TikedgeUser.objects.get(user=user)
@@ -104,6 +105,12 @@ def get_current_todo_list_json_form(user):
     todo_json_form = {'name_of_task':todo_item.name_of_tasks, 'start_time':todo_item.start.strftime("%B %d %Y %I:%M %p"),
                       'end_time':todo_item.end.strftime("%B %d %Y %I:%M %p")}
     return todo_json_form
+
+
+def stringify_task(task):
+    task_string = '%s starts at %s, ends at %s' % (task.name_of_tasks, task.start.strftime("%B %d %Y %I:%M %p"),
+           task.end.strftime("%B %d %Y %I:%M %p"))
+    return task_string
 
 
 def get_todays_todo_list_json(user):
@@ -212,3 +219,11 @@ def time_to_utc(time_to_convert):
     local = get_localzone().localize(loc_ndt).astimezone(pytz.utc)
     print loc_ndt, "local should be this", local, " locdt", loc_dt
     return local
+
+
+def get_task_picture_urls(task):
+    pic_urls = []
+    pictures = task.taskpicture_set.all()
+    for e_pic in pictures:
+        pic_urls.append(e_pic.task_pics.url)
+    return pic_urls

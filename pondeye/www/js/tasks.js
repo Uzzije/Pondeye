@@ -49,7 +49,7 @@ function getNewTaskView(){
     var task_info = {username:localStorage.getItem('username'), get_what:"project"};
     setUpAjax();
         $.ajax({
-        url: 'http://localhost:8100/social/api/tasks',
+        url: 'http://localhost:8100/tasks/api/tasks',
         type: "GET",
         data: task_info,
         success: function(e){
@@ -78,6 +78,76 @@ function getNewTaskView(){
         }  
     });
      $("#show_new_task_options").show(500);
+}
+
+function individualTaskView(task_id, view){
+    var task_info = {username:localStorage.getItem('username'), id:task_id};
+    setUpAjax();
+        $.ajax({
+        url: 'http://localhost:8100/tasks/api/individual-view',
+        type: "GET",
+        data: task_info,
+        success: function(e){
+            console.log(e);
+            var statusParse = JSON.parse(e)
+            console.log(statusParse);
+            var successStatus = statusParse["status"];
+            console.log(successStatus);
+            if(successStatus == true){
+                var project = statusParse["project"];
+                var task_name = statusParse["task_name"];
+                var picture_urls = statusParse["picture_urls"];
+                var vouch = statusParse["vouch"];
+                var seen = statusParse["seen"];``
+                var follow = statusParse["follow"];
+                var build_cred = statusParse["build_cred"];
+                var letDown = statusParse["letDown"];
+                $("#modal-tasks-title-"+view).text(task_name);
+                console.log("baby should show" + project);
+                $('#carousel-task-id-'+view).empty();
+                $("#carousel-tasks-pic-id-"+view).empty();
+                $("#ind-view-details-"+view).empty();
+                $("#ind-goal-view-"+view).empty();
+                if(vouch === 0 && build_cred === 0){
+                    $("#ind-view-details-"+view).append('<div class="col-md-4">vouches <i class="material-icons">thumb_up</i>'+ vouch+'</div> \
+                        <div class="col-md-4"><i class="material-icons">visibility</i> views '+ seen+'</div>');
+                }
+                else if(build_cred >= 0 && letDown === 0){
+                    $("#ind-view-details-"+view).append('<div class="col-md-4">built credibility"'+ build_cred+'"</div>');
+                        
+                }
+                else{
+                    $("#ind-view-details-"+view).append('<div class="col-md-4">let downs<i class="material-icons">thumb_down</i>'+ letDown+'</div>');
+                }
+                if(project){
+                    $("#ind-goal-view-"+view).append('<div class=""><p style="white-space:normal;">part of '+ project+' being followed by '+follow+' friends</p></div>');
+                }
+               
+
+                for(var item = 0; item < picture_urls.length; item++){
+                    if(item == 0){
+                        $("#carousel-task-id-"+view).append('<li data-target ="#carousel-slider-'+view+'" data-slide-to = "'+item+'" class = "active"></li>');
+                        var ind_url = 'http://localhost:8100'+picture_urls[item];
+                        $("#carousel-tasks-pic-id-"+view).append('<div class="item active"><img src = "'+ind_url+'" alt = "First slide"></div>');
+                    }
+                    else{
+                        $("#carousel-task-id-"+view).append('<li data-target ="#carousel-slider-'+view+'" data-slide-to = "'+item+'"></li>');
+                        var ind_url = 'http://localhost:8100'+picture_urls[item];
+                        $("#carousel-tasks-pic-id-"+view).append('<div class="item"><img src = "'+ind_url+'" alt = "'+item +'slide"></div>');
+                    }    
+                }
+                //myNavigator.pushPage('new_task_form.html');         
+            }
+            else{
+                $("#loginError").show(2000);
+                console.log("craps" + successStatus); 
+            }
+        },
+                error: function(xhr){
+                $("#error-message").text(xhr.responseText).show();
+                console.log(xhr);
+        }  
+    });
 }
 
 function showTasksInfo(){
@@ -111,8 +181,12 @@ function showTasksInfo(){
                 }
 
                 for(var index=0; index < todaysTasks.length; index++){
+                    
                     var task = todaysTasks[index].name_of_task + " "+todaysTasks[index].start+ " " +todaysTasks[index].end;
-                    $("#todays_list").append('<li><small>'+task+'</small></li>');
+                    var task_id = todaysTasks[index].id;
+                    var view = 'task-home';
+                    $("#todays_list").append('<li><button type="button" class="btn-link" onclick="showTaskModal('+task_id+', \''+view+'\')"><small>'+task+'</small></button></li>');
+
                 }
 
                 if(expiredTasks.length > 0){
@@ -152,6 +226,11 @@ function showTasksInfo(){
         }  
     });
 
+}
+
+function showTaskModal(task_id, view){
+    individualTaskView(task_id, view);
+    $("#task_view_modal-"+view).modal();
 }
 
 function taskDone(pk){
@@ -236,6 +315,7 @@ $(document).on('pageinit', '#tasks_page_id', function(){
     }
   );
 });
+
 $(document).on('pageinit', '#tasks_create_form_id', function(){
     /*
      $('.button-collapse').sideNav({ // Default is 240

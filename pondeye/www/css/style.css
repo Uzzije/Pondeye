@@ -2,3 +2,94 @@
 #sidenav-overlay {
     z-index: 1;
 }
+.modal-backdrop{
+    z-index: 1;
+}
+.modal-dialog {
+  position: relative;
+  width: auto;
+  max-width: 600px;
+  margin: 10px;
+  max-height: 100px;
+}
+
+.modal-sm {
+  max-width: 300px;
+}
+.modal-lg {
+  max-width: 900px;
+}
+@media (min-width: 768px) {
+  .modal-dialog {
+    margin: 30px auto;
+  }
+}
+@media (min-width: 320px) {
+  .modal-sm {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+@media (min-width: 620px) {
+  .modal-dialog {
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .modal-lg {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}
+@media (min-width: 920px) {
+  .modal-lg {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+.modal {
+white-space: 0;
+}
+/*carousel*/
+.carousel{
+    background: black;
+    height: inherit;
+}
+/* Mobile */
+@media (max-width: 767px) {
+    .carousel-slider {
+        height: auto;
+    }
+    .carousel-slider > img {
+         width: 80%;
+    }
+}
+
+/* tablets */
+@media (max-width: 991px) and (min-width: 768px) {
+    .carousel-slider {
+        height: auto;
+    }
+    .carousel-slider > img {
+        width: 80%;
+    }
+}
+
+/* laptops */
+@media (max-width: 1023px) and (min-width: 992px) {
+    .carousel-slider {
+         height: 200px;
+    }
+    .carousel-slider > img {
+        width: 80%;
+    }
+}
+
+/* desktops */
+@media (min-width: 1024px) {
+    .carousel-slider {
+        height: 300px;
+    }
+    .carousel-slider > img {
+        width: 60%;
+    }
+}

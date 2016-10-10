@@ -21,7 +21,7 @@ class Tasks(models.Model):
     part_of_project = models.BooleanField(default=False)
     project = models.ForeignKey(UserProject, blank=True, null=True)
     user = models.ForeignKey(TikedgeUser, blank=True, null=True)
-    start = models.DateTimeField(blank=True, default=now)
+    start = models.DateTimeField(blank=True, null=True)
     end = models.DateTimeField(blank=True, default=now)
     is_active = models.BooleanField(default=False)
     task_completed = models.BooleanField(default=False)

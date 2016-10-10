@@ -2,7 +2,8 @@
 """
 Feed and Notification Classes for Social News Feed of Application
 """
-from models import Seen, Vouche, BuildCred, Follow, LetDown
+from models import Seen, Vouche, BuildCred, Follow, LetDown, ProfilePictures
+from ..tasks.models import TikedgeUser
 from friendship.models import FriendshipRequest
 from django.db.models import Q
 import global_variables
@@ -22,6 +23,8 @@ class TasksFeed:
         self.id = tasks.id
         self.type = global_variables.NEW_TASK_FEED
         self.created = self.get_start_time()
+        self.task_owner_name = self.get_name()
+        self.task_owner_profile_pic_url = self.task_owner_profile_pic_url()
 
     def seens(self):
         try:
@@ -32,22 +35,23 @@ class TasksFeed:
         return count
 
     def get_start_time(self):
-        return self.tasks.start.strftime("%I:%M %p")
+        return self.tasks.start
 
     def get_end_time(self):
-        return self.tasks.end.strftime("%I:%M %p")
+        return self.tasks.end
 
     def get_name_of_tasks(self):
         try:
-            return self.tasks.name_of_tasks+ " from " + self.get_start_time()+ " to " + self.get_end_time()
-        except (KeyError, ValueError, AttributeError):
+            return self.tasks.name_of_tasks+ " from " + self.get_start_time().strftime("%B %d %Y %I:%M %p") \
+                   + " to " + self.get_end_time().strftime("%B %d %Y %I:%M %p")
+        except (KeyError, AttributeError):
             return None
 
     def vouche(self):
         try:
             vouched = Vouche.objects.get(tasks=self.tasks)
             count = vouched.users.count()
-        except ObjectDoesNotExist:
+        except (ObjectDoesNotExist, AttributeError):
             count = 0
         return count
 
@@ -55,27 +59,44 @@ class TasksFeed:
         try:
             buildCred = BuildCred.objects.get(tasks=self.tasks)
             count = buildCred.users.count()
-        except ObjectDoesNotExist:
+        except (ObjectDoesNotExist, AttributeError):
             count = 0
         return count
 
     def follow(self):
         count = 0
-        if self.tasks.part_of_project:
-            try:
-                follows = Follow.objects.get(tasks=self.tasks.project)
-                count = follows.users.count()
-            except ObjectDoesNotExist:
-                pass
+        try:
+            if self.tasks.part_of_project:
+                try:
+                    follows = Follow.objects.get(tasks=self.tasks.project)
+                    count = follows.users.count()
+                except ObjectDoesNotExist:
+                    pass
+        except AttributeError:
+            pass
         return count
 
     def letDown(self):
         try:
             let_down = LetDown.objects.get(tasks=self.tasks)
             count = let_down.users.count()
-        except ObjectDoesNotExist:
+        except (ObjectDoesNotExist, AttributeError):
             count = 0
         return count
+
+    def get_name(self):
+        try:
+            print '%s %s from feed' % (self.tasks.user.user.first_name, self.tasks.user.user.last_name)
+            return '%s %s' % (self.tasks.user.user.first_name, self.tasks.user.user.last_name)
+        except AttributeError:
+            return None
+
+    def task_owner_profile_pic_url(self):
+        try:
+            profile_picture = ProfilePictures.objects.get(tikedge_user=self.tasks.user)
+            return profile_picture.profile_pics.url
+        except (AttributeError, ObjectDoesNotExist):
+            return None
 
 
 class NotificationFeed:

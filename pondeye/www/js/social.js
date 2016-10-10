@@ -36,16 +36,23 @@ function getNewsFeed(){
                 var todaysTasks = statusParse["tasks"];
                 console.log(newsFeed);
                  $("#feed_body_id").empty();
+                 var view = "feed-home";
                 for(var index=0; index < newsFeed.length; index++){
                     //create row div
                     $("#feed_body_id").append('<div id="'+newsFeed[index].id+'" class="row panel panel-default"></div>');
-                    var nameOfFeedH = $('#'+newsFeed[index].id).append('<small>'+newsFeed[index].name_of_feed+'</small>');
+                    var picture_url = 'http://localhost:8100'+newsFeed[index].user_profile_pic_url;
+                    $("#"+newsFeed[index].id).append('<div class="row"> \
+                    <div class="col-md-6>"<img class="img-circle" style="width:80px;height:40px;" src="'+picture_url+'"></div> \
+                    <div class="col-md-4">'+newsFeed[index].name_of_owner+'</div></div>');
+                    $('#'+newsFeed[index].id).append('<div class="row"> \
+                    <button onclick="showTaskModal('+newsFeed[index].id+', \''+view+'\')" class="btn-link"><small style="white-space:normal;">'+newsFeed[index].name_of_feed+'</small></button></div>');
+
                     if(newsFeed[index].completed || newsFeed[index].task_failed){
                         if(newsFeed[index].completed){
                             //create div build
                             $('#'+newsFeed[index].id).append('<div class="col-md-1"><small>build cred '+newsFeed[index].build_cred_count+'</small></div>');
                         }
-                        if(newsFeed[index].failed){
+                        if(newsFeed[index].task_failed){
                             //create div letdown
                             $('#'+newsFeed[index].id).append('<div class="col-md-1"><small>let downs '+newsFeed[index].letDown_count+'</small></div>');
                         }  
@@ -93,10 +100,11 @@ function getHomeActivityFeed(){
                 var newsFeed = statusParse["activities"];
                 console.log(newsFeed);
                  $("#home_activities_body_id").empty();
+                 var view = "prof";
                 for(var index=0; index < newsFeed.length; index++){
                     //create row div
-                    $("#home_activities_body_id").append('<div id="home'+newsFeed[index].id+'" class="row panel panel-default"></div>');
-                    var nameOfFeedH = $('#home'+newsFeed[index].id).append('<small>'+newsFeed[index].name_of_feed+'</small>');
+                    $("#home_activities_body_id").append('<div id="home'+newsFeed[index].id+'" class="row form-control"></div>');
+                    $('#home'+newsFeed[index].id).append('<button onclick="showTaskModal('+newsFeed[index].id+', \''+view+'\')" class="btn-link"><small>'+newsFeed[index].name_of_feed+'</small></button>');
                     if(newsFeed[index].profile_url){
                         var picture_url = 'http://localhost:8100'+newsFeed[index].profile_url;
                         $('#home'+newsFeed[index].id).append('<div class="row"><img class="img-circle" style="width:80px;height:80px;" src="'+picture_url+'"></div>');

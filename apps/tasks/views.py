@@ -6,16 +6,18 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
+from ..social.modules import get_task_feed
 from modules import get_user_projects, tasks_search, get_current_todo_list, get_todays_todo_list, is_time_conflict, \
     convert_html_to_datetime, time_has_past, get_current_todo_list_json_form, get_todays_todo_list_json, time_to_utc, \
-    get_expired_tasks, get_expired_tasks_json
+    get_expired_tasks, get_expired_tasks_json, stringify_task, get_task_picture_urls
 from django_bootstrap_calendar.models import CalendarEvent
 from actstream import action
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from datetime import datetime
-from tasks import set_reminder, set_task_active
+from django.db.models import Q
+from tasks import set_reminder, set_task_active, set_reminder_for_non_committed_tasks
 import json
 
 
@@ -138,9 +140,9 @@ class ApiStartUserSession(CSRFExemptView):
         response_data = {}
         try:
             user = User.objects.get(username=username)
-            print "should authenticate"
+
         except ObjectDoesNotExist:
-            print "not authenticated , ", username
+
             user = None
         users = authenticate(username=username, password=password)
         if users:
@@ -149,7 +151,7 @@ class ApiStartUserSession(CSRFExemptView):
             login(request, user)
             response_data['authenticate'] = "true"
         else:
-            print password
+
             response_data['authenticate'] = "false"
         return HttpResponse(json.dumps(response_data), status=201)
 
@@ -221,8 +223,6 @@ class AddTasks(View):
                 new_calender_event = CalendarEvent(title=name_of_task, start=start_time, end=tasks.end, css_class='event-info')
                 new_calender_event.save()
                 action.send(user, verb='Created A to do list item: ', target=tasks)
-                print time_to_utc(tasks.end), " local time"
-                print tasks.end
             if new_project:
                 if not user.userproject_set.all().filter(name_of_project=new_project):
                     project = UserProject(name_of_project=new_project, user=user)
@@ -254,7 +254,6 @@ class ApiTaskView(CSRFExemptView):
         if what_to_get == "tasks_info":
             current_task = get_current_todo_list_json_form(user_obj)
             todays_to_do_list = get_todays_todo_list_json(user_obj)
-            print todays_to_do_list
             response['upcoming_task'] = current_task
             response['tasks'] = todays_to_do_list
             response['status'] = "true"
@@ -263,7 +262,6 @@ class ApiTaskView(CSRFExemptView):
             response['users_project'] = project
             response['status'] = "true"
         response["exp_task"] = get_expired_tasks_json(user_obj)
-        print get_expired_tasks_json(user_obj), " expired list"
         return HttpResponse(json.dumps(response), status=201)
 
     def post(self, request, *args, **kwargs):
@@ -276,7 +274,7 @@ class ApiTaskView(CSRFExemptView):
         try:
             start_time_r = convert_html_to_datetime(request.POST.get('start_time'))
             start_time = datetime.strptime(start_time_r, '%Y-%m-%d %H:%M')
-            print start_time
+
         except (ValueError, IndexError):
             start_time = None
         new_project = request.POST.get('new_project')
@@ -284,7 +282,6 @@ class ApiTaskView(CSRFExemptView):
         tasks = Tasks(name_of_tasks=name_of_task, user=user)
         tasks.save()
         if start_time:
-            print end_time
             msg = time_has_past(start_time)
             if msg:
                 response_data['success'] = msg
@@ -305,6 +302,8 @@ class ApiTaskView(CSRFExemptView):
             new_calender_event.save()
             set_task_active.apply_async((tasks.pk,), eta=time_to_utc(tasks.start))
             set_reminder.apply_async((tasks.pk,), eta=time_to_utc(tasks.end))
+        reminder = time_to_utc(datetime.now) + timedelta(minutes=45)
+        set_reminder_for_non_committed_tasks.apply_async((tasks.pk,), eta=reminder)
         if new_project:
             if not user.userproject_set.all().filter(name_of_project=new_project):
                 project = UserProject(name_of_project=new_project, user=user)
@@ -313,7 +312,6 @@ class ApiTaskView(CSRFExemptView):
                 tasks.part_of_project = True
                 tasks.save()
         if existing_project and not new_project:
-            print existing_project
             project = user.userproject_set.all().get(name_of_project=existing_project)
             project.save()
             tasks.project = project
@@ -321,6 +319,35 @@ class ApiTaskView(CSRFExemptView):
             tasks.save()
         response_data['success'] = "true"
         return HttpResponse(json.dumps(response_data), status=201)
+
+
+class IndividualTaskView(View):
+
+    def get(self, request):
+        response = {}
+        try:
+            User.objects.get(username=request.GET.get('username'))
+            task = Tasks.objects.get(id=int(request.GET.get('id')))
+            print "%s tasks name" % task.name_of_tasks
+            response["picture_urls"] = get_task_picture_urls(task)
+            try:
+                response["project"] = task.project.name_of_project
+            except AttributeError:
+                response["project"] = False
+            response["task_name"] = stringify_task(task)
+            feed = get_task_feed(task)
+            response["vouch"] = feed.vouche_count
+            response["seen"] = feed.seen_count
+            response["follow"] = feed.follow_count
+            response["build_cred"] = feed.build_cred_count
+            response["letDown"] = feed.letDown_count
+            response["status"] = True
+
+        except ObjectDoesNotExist:
+            print "not making it"
+            response["status"] = False
+            pass
+        return HttpResponse(json.dumps(response), status=201)
 
 
 class ApiCheckTaskDone(CSRFExemptView):
@@ -342,6 +369,22 @@ class ApiCheckTaskDone(CSRFExemptView):
         task.current_working_on_task = False
         task.save()
         response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiSetTimeForTaskReminder(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.geet(username=request.GET.get('username'))
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        response = {}
+        tasks = Tasks.objects.filter(Q(user=user, is_active=False, start=None))
+
+        return HttpResponse(json.dumps(response), status=201)
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+
         return HttpResponse(json.dumps(response), status=201)
 
 

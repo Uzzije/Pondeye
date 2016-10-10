@@ -31,13 +31,14 @@ def get_user_activities_in_json_format(user):
     tkdge_user = TikedgeUser.objects.get(user=user)
     task_activ = Tasks.objects.filter(Q(user=tkdge_user), Q(is_active=True))
     task_activities = convert_list_to_profile_activities_object(global_variables.NEW_TASK_FEED, task_activ)
-    tasks_picture_activ = TaskPicture.objects.filter(Q(tikedge_user=tkdge_user))
+    tasks_picture_activ = TaskPicture.objects.filter(Q(tikedge_user=tkdge_user), ~Q(task=None))
     tasks_picture_activities = convert_list_to_profile_activities_object(global_variables.NEW_PICTURE_FEED,
                                                                          tasks_picture_activ)
     profile_picture_activ = ProfilePictures.objects.filter(Q(tikedge_user=tkdge_user))
     profile_picture_activities = convert_list_to_profile_activities_object(global_variables.NEW_PROFILE_PICTURE_FEED,
                                                                            profile_picture_activ)
-    activities = task_activities + tasks_picture_activities + profile_picture_activities
+    activities = task_activities + tasks_picture_activities \
+                 + profile_picture_activities
     print activities
     activities_list = []
     if activities:
@@ -60,9 +61,11 @@ def get_user_activities_in_json_format(user):
                 activ_dic['seen_count'] = activ.feed.seen_count
                 activ_dic['follow_count'] = activ.feed.follow_count
                 activ_dic['partOfProject'] = activ.feed.tasks.part_of_project
-                activ_dic['created'] = activ.created.strftime("%I:%M %p")
-            if activ.type_of_feed is global_variables.NEW_PICTURE_FEED or activ.type_of_feed is global_variables.NEW_PROFILE_PICTURE_FEED:
+                activ_dic['created'] = activ.created.strftime("%B %d %Y %I:%M %p")
+            if activ.type_of_feed is global_variables.NEW_PROFILE_PICTURE_FEED:
                 activ_dic['profile_url'] = activ.feed.picture_url
+            if activ.type_of_feed is global_variables.NEW_PICTURE_FEED:
+                activ_dic['picture_url'] = activ.feed.picture_url
             activities_list.append(activ_dic)
     return activities_list
 
@@ -78,6 +81,10 @@ def get_users_feed(user):
         list_of_feed.append(feed)
     return list_of_feed
 
+
+def get_task_feed(task):
+    feed = TasksFeed(task)
+    return feed
 
 def find_people(query_word, user_owner):
     tkdge_users = []
@@ -113,7 +120,6 @@ def people_result_to_json(user_result):
 def transform_activities_feed_to_json(user):
     user_friends = Friend.objects.friends(user)
     tkdge_friends = TikedgeUser.objects.filter(user__in=user_friends)
-    activities = []
     task_activ = Tasks.objects.filter(Q(user__in=tkdge_friends), Q(is_active=True))
     task_activities = convert_list_to_profile_activities_object(global_variables.NEW_TASK_FEED, task_activ)
     tasks_picture_activ = TaskPicture.objects.filter(Q(tikedge_user__in=tkdge_friends))
@@ -146,10 +152,14 @@ def transform_activities_feed_to_json(user):
                 activ_dic['seen_count'] = activ.feed.seen_count
                 activ_dic['follow_count'] = activ.feed.follow_count
                 activ_dic['partOfProject'] = activ.feed.tasks.part_of_project
-                activ_dic['created'] = activ.created.strftime("%I:%M %p")
-                activ_dic['profile_url'] = None
-            if activ.type_of_feed is global_variables.NEW_PICTURE_FEED or activ.type_of_feed is global_variables.NEW_PROFILE_PICTURE_FEED:
+                activ_dic['created'] = activ.created.strftime("%B %d %Y %I:%M %p")
+                activ_dic['user_profile_pic_url'] = activ.feed.task_owner_profile_pic_url
+                activ_dic['name_of_owner'] = activ.feed.task_owner_name
+                print "%s name of user" % activ.feed.task_owner_name
+            if activ.type_of_feed is global_variables.NEW_PROFILE_PICTURE_FEED:
                 activ_dic['profile_url'] = activ.feed.picture_url
+            if activ.type_of_feed is global_variables.NEW_PICTURE_FEED:
+                activ_dic['picture_url'] = activ.feed.picture_url
             activities_list.append(activ_dic)
     return activities_list
 
@@ -164,5 +174,4 @@ def friend_request_to_json(friend_request, user):
         rq_dic["pk"] = each_request.pk
         friend_request_list.append(rq_dic)
     return friend_request_list
-
 
