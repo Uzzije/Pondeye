@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3999507526">
+  <component name="DataSourceManagerImpl" format="xml" hash="2074091140">
     <data-source source="LOCAL" name="Tikedge DataSource" uuid="784817b1-9fab-4976-a9b5-e4cf73834de8">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -36,6 +36,14 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/mysql-connector-license.txt</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/mysql-connector-java-5.1.35-bin.jar</url>
+        </library>
+      </libraries>
     </data-source>
   </component>
 </project>

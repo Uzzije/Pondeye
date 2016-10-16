@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from .views import ProfileView, PictureUploadView, HomeActivityView, TodoFeed, PeopleView, SendFriendRequestView,\
     FriendRequestView, AcceptFriendRequestView, RejectFriendRequestView, ApiTodoFeed, ApiCreateFollow, ApiCreateVouch,\
     ApiPeopleView, ApiSendFriendRequestView, ApiFriendRequestView, ApiRejectFriendRequestView, ApiAcceptFriendRequestView,\
-    ApiPictureUploadView, ApiAddNewPictureToTask, ApiHomeActivityView
+    ApiPictureUploadView, ApiAddNewPictureToTask, ApiHomeActivityView, ApiGradeNotifications
 
 urlpatterns = [
     url(r'^profileview/$', ProfileView.as_view(), name='profile_view'),
@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^api/upload-pictures/$', ApiPictureUploadView.as_view(), name='upload_pictures'),
     url(r'api/add-new-pic-to-task', ApiAddNewPictureToTask.as_view(), name="add_pic_to_task"),
     url(r'api/get-home-activities', ApiHomeActivityView.as_view(), name="get_home_activity_view"),
+    url(r'api/get-grade-notifications/$', ApiGradeNotifications.as_view(), name="grade-notification-view"),
 ]
 
 

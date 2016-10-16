@@ -98,10 +98,8 @@ def get_current_todo_list(user):
 
 def get_current_todo_list_json_form(user):
     todo_item = get_current_todo_list(user)
-    print todo_item, " current to do list"
     if not todo_item:
         return None
-    print todo_item
     todo_json_form = {'name_of_task':todo_item.name_of_tasks, 'start_time':todo_item.start.strftime("%B %d %Y %I:%M %p"),
                       'end_time':todo_item.end.strftime("%B %d %Y %I:%M %p")}
     return todo_json_form
@@ -217,7 +215,6 @@ def time_to_utc(time_to_convert):
     loc_ndt = time_to_convert.replace(tzinfo=None)
     loc_dt = loc_ndt.replace(tzinfo=get_localzone())
     local = get_localzone().localize(loc_ndt).astimezone(pytz.utc)
-    print loc_ndt, "local should be this", local, " locdt", loc_dt
     return local
 
 
@@ -227,3 +224,14 @@ def get_task_picture_urls(task):
     for e_pic in pictures:
         pic_urls.append(e_pic.task_pics.url)
     return pic_urls
+
+
+def json_all_pending_tasks(tasks):
+    expired_tasks = []
+    if tasks:
+        for each_task in tasks:
+            temp_dic = {}
+            temp_dic["name_of_task"] = each_task.name_of_tasks
+            temp_dic["id"] = each_task.id
+            expired_tasks.append(temp_dic)
+    return expired_tasks

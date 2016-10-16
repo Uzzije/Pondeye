@@ -1,4 +1,6 @@
 
+var TASKS_REMINDER = false;
+var reminder_list = [];
 function newUser(){
     console.log(myNavigator.topPage.data);
     console.log("lets do that");
@@ -16,7 +18,7 @@ function createTask() {
     var new_project_name = $("#new_task_new_project_name").val();
     var existing_project = $("#new_task_existing_project").val();
     var task_info = {username:localStorage.getItem('username'), to_do_item:new_task_input, start_time:start_time, end_time:end_time, new_project:new_project_name,
-        existing_project:existing_project}
+        existing_project:existing_project, get_what:"create"}
         console.log(end_time);
     if(new_task_input){
         setUpAjax();
@@ -41,11 +43,51 @@ function createTask() {
     })
   }
 }
+
+function updateTask(update_id) {
+    var new_task_input = $("#new_task_input-update").val();
+    var start_time = $("#update_task_start_time-update").val();
+    if(start_time){
+        $("#div-task-update-view"+update_id).hide();
+    }
+    console.log(" start time "+ start_time);
+    var end_time = $("#new_task_end_time-update").val();
+    var new_project_name = $("#new_task_new_project_name-update").val();
+    var existing_project = $("#new_task_existing_project-update").val();
+    var task_info = {username:localStorage.getItem('username'), to_do_item:new_task_input, start_time:start_time, end_time:end_time, new_project:new_project_name,
+        existing_project:existing_project, get_what:"update", update_id:update_id}
+        console.log(end_time);
+    if(new_task_input){
+        setUpAjax();
+        $.ajax({
+        url: 'http://localhost:8100/tasks/api/tasks',
+        type: "POST",
+        data: task_info,
+        success: function(e){
+            console.log(e);
+            var statusParse = JSON.parse(e)
+            var successStatus = statusParse["success"];
+            console.log(successStatus);
+            if(successStatus === "true"){
+                myNavigator.popPage(); 
+                showTasksInfo()        
+            }
+            else{
+                $("#loginError").show(2000);
+                console.log(successStatus); 
+            }
+        },
+    })
+  }
+}
+
 function showNewTaskOption(){
     $("#show_new_task_options").show(500);
 }
 
 function getNewTaskView(){
+    // get project options
+
     var task_info = {username:localStorage.getItem('username'), get_what:"project"};
     setUpAjax();
         $.ajax({
@@ -79,6 +121,43 @@ function getNewTaskView(){
     });
      $("#show_new_task_options").show(500);
 }
+
+
+function getUpdateTaskView(){
+    var task_info = {username:localStorage.getItem('username'), get_what:"project"};
+    setUpAjax();
+        $.ajax({
+        url: 'http://localhost:8100/tasks/api/tasks',
+        type: "GET",
+        data: task_info,
+        success: function(e){
+            console.log(e);
+            var statusParse = JSON.parse(e)
+            var successStatus = statusParse["status"];
+            console.log(successStatus);
+            if(successStatus === "true"){
+                var project = statusParse["users_project"];
+                console.log($('#new_task_existing_project-update').val());
+                var options = $('#new_task_existing_project-update').get(0).options;
+                $.each(project, function(key, value) {
+                    options[options.length] = new Option(value, value);
+                });
+                console.log(project);
+                 myNavigator.pushPage('new_task_form.html');         
+            }
+            else{
+                $("#loginError").show(2000);
+                console.log(successStatus); 
+            }
+        },
+                error: function(xhr){
+                $("#error-message-update").text(xhr.responseText).show();
+                console.log(xhr);
+        }  
+    });
+     $("#show_new_task_options-update").show(500);
+}
+
 
 function individualTaskView(task_id, view){
     var task_info = {username:localStorage.getItem('username'), id:task_id};
@@ -150,6 +229,7 @@ function individualTaskView(task_id, view){
     });
 }
 
+
 function showTasksInfo(){
     
     var task_info = {username:localStorage.getItem('username'), get_what:"tasks_info"};
@@ -159,14 +239,32 @@ function showTasksInfo(){
         type: "GET",
         data: task_info,
         success: function(e){
-            console.log(e);
             var statusParse = JSON.parse(e)
             var successStatus = statusParse["status"];
             console.log(successStatus);
             if(successStatus === "true"){
                 var upcomingTask = statusParse["upcoming_task"];
                 var todaysTasks = statusParse["tasks"];
-                var expiredTasks = statusParse["exp_task"]
+                var expiredTasks = statusParse["exp_task"];
+                var reminders = statusParse["tasks_reminders"];
+                var reminder_list_non_alert = statusParse["tasks_reminders_non_alert"];
+                if(reminders.length > 0){
+                    TASKS_REMINDER = true;
+                    reminder_list = reminders;
+                    myNavigator.pushPage('tasks_reminders.html');
+                    
+                    console.log(reminders);
+                }
+                else if(reminder_list_non_alert){
+                    reminder_list = reminder_list_non_alert;
+                   
+                }
+                else{
+                    reminder_list = []; 
+                    console.log("push me");
+                    console.log(reminder_list);
+                }
+                // reminder_list = reminder_list_non_alert;
                 //console.log(todaysTasks);
                 //console.log(upcomingTask.name_of_task);
                 $("#todays_list").empty();
@@ -233,6 +331,41 @@ function showTaskModal(task_id, view){
     $("#task_view_modal-"+view).modal();
 }
 
+function showUpdateTask(task_id, task_name){
+    
+    myNavigator.pushPage('new_update_form.html');  
+    $(document).on('pageinit', '#tasks_update_form_id', function(){
+        $("#new_task_input-update").text(task_name);
+        $("#update_view_button").empty();
+        $("#update_view_button").append('<a onclick="updateTask('+task_id+')" class="waves-effect waves-light btn">Update Tasks</a>');  
+    });
+}
+
+function showUnDatedTasks(tasks){
+    $("#tasks-reminders").empty();
+    if(tasks.length > 0){
+        for(var i = 0; i < tasks.length; i++){
+            var task_id = tasks[i].id;
+            var task = tasks[i].name_of_task;
+            $("#tasks-reminders").append('<div class="row" id="div-task-update-view'+task_id+'"><div class="col-md-3"><li><button type="button" class="btn-link" \
+            onclick="showUpdateTask('+task_id+', \''+task+'\')"><span>'+task+'</span></button></li></div></div>'); 
+        }
+    }
+    else{
+        $("#tasks-reminders_done").show();
+    }
+
+    TASKS_REMINDER = false;
+}
+
+function showReminderOverhead(){
+    if(TASKS_REMINDER){
+        $("#show-reminder-").show();
+    }
+    else{
+        $("#show-reminder-").hide();
+    }
+}
 function taskDone(pk){
     var task_info = {username:localStorage.getItem('username'), pk:pk};
    setUpAjax(); 
@@ -314,9 +447,18 @@ $(document).on('pageinit', '#tasks_page_id', function(){
       closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
     }
   );
+  if(TASKS_REMINDER){
+        myNavigator.pushPage('tasks_reminders.html');
+        console.log("tasks reminder");
+    }
+    showReminderOverhead()
 });
 
 $(document).on('pageinit', '#tasks_create_form_id', function(){
+    if(TASKS_REMINDER){
+       // myNavigator.pushPage('tasks_reminders.html');
+    }
+    showReminderOverhead();
     /*
      $('.button-collapse').sideNav({ // Default is 240
       edge: 'right', // Choose the horizontal origin
@@ -324,4 +466,8 @@ $(document).on('pageinit', '#tasks_create_form_id', function(){
     }
   );
   */
+});
+$(document).on('pageinit', '#tasks_reminder_page_id', function(){
+    console.log(reminder_list);
+    showUnDatedTasks(reminder_list);
 });

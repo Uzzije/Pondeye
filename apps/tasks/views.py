@@ -1,15 +1,15 @@
 from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
-from models import User, TikedgeUser, Tasks, UserProject
+from models import User, TikedgeUser, Tasks, UserProject, PendingTasks
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
-from ..social.modules import get_task_feed
+from ..social.modules import get_task_feed, grade_user_success, grade_user_failure
 from modules import get_user_projects, tasks_search, get_current_todo_list, get_todays_todo_list, is_time_conflict, \
     convert_html_to_datetime, time_has_past, get_current_todo_list_json_form, get_todays_todo_list_json, time_to_utc, \
-    get_expired_tasks, get_expired_tasks_json, stringify_task, get_task_picture_urls
+    get_expired_tasks, get_expired_tasks_json, stringify_task, get_task_picture_urls, json_all_pending_tasks
 from django_bootstrap_calendar.models import CalendarEvent
 from actstream import action
 from django.core.exceptions import ObjectDoesNotExist
@@ -247,6 +247,7 @@ class ApiTaskView(CSRFExemptView):
         try:
             username = request.GET.get('username')
             user_obj = User.objects.get(username=username)
+            tikedge_user = TikedgeUser.objects.get(user=user_obj)
         except ObjectDoesNotExist:
             response['status'] = "false"
             return HttpResponse(json.dumps(response), status=201)
@@ -262,6 +263,19 @@ class ApiTaskView(CSRFExemptView):
             response['users_project'] = project
             response['status'] = "true"
         response["exp_task"] = get_expired_tasks_json(user_obj)
+        try:
+            all_undone_tasks = PendingTasks.objects.get(remind_user=True, tikedge_user=tikedge_user)
+            all_tasks = all_undone_tasks.tasks.all()
+            response["tasks_reminders"] = json_all_pending_tasks(all_tasks)
+        except ObjectDoesNotExist:
+            response["tasks_reminders"] = False
+            try:
+                all_undone_tasks = PendingTasks.objects.get(tikedge_user=tikedge_user)
+                all_tasks = all_undone_tasks.tasks.all()
+                response["tasks_reminders_non_alert"] = json_all_pending_tasks(all_tasks)
+            except ObjectDoesNotExist:
+                pass
+            pass
         return HttpResponse(json.dumps(response), status=201)
 
     def post(self, request, *args, **kwargs):
@@ -274,14 +288,23 @@ class ApiTaskView(CSRFExemptView):
         try:
             start_time_r = convert_html_to_datetime(request.POST.get('start_time'))
             start_time = datetime.strptime(start_time_r, '%Y-%m-%d %H:%M')
-
         except (ValueError, IndexError):
             start_time = None
         new_project = request.POST.get('new_project')
         existing_project = request.POST.get('existing_project')
-        tasks = Tasks(name_of_tasks=name_of_task, user=user)
-        tasks.save()
+        get_what = request.POST.get('get_what')
+        if get_what == "update":
+            tasks_id = request.POST.get('update_id')
+            tasks = Tasks.objects.get(id=int(tasks_id))
+            pending_task = PendingTasks.objects.get(tikedge_user=user)
+            pending_task.remind_user = False
+            pending_task.tasks.remove(tasks)
+            pending_task.save()
+        else:
+            tasks = Tasks(name_of_tasks=name_of_task, user=user)
+            tasks.save()
         if start_time:
+            print "hit here"
             msg = time_has_past(start_time)
             if msg:
                 response_data['success'] = msg
@@ -302,8 +325,22 @@ class ApiTaskView(CSRFExemptView):
             new_calender_event.save()
             set_task_active.apply_async((tasks.pk,), eta=time_to_utc(tasks.start))
             set_reminder.apply_async((tasks.pk,), eta=time_to_utc(tasks.end))
-        reminder = time_to_utc(datetime.now) + timedelta(minutes=45)
-        set_reminder_for_non_committed_tasks.apply_async((tasks.pk,), eta=reminder)
+        else:
+            try:
+                pending_task = PendingTasks.objects.get(tikedge_user=user)
+                pending_task.tasks.add(tasks)
+                print "pending task"
+                pending_task.save()
+            except ObjectDoesNotExist:
+                pending_task = PendingTasks(tikedge_user=user, remind_user=False)
+                pending_task.save()
+                pending_task.tasks.add(tasks)
+                pending_task.save()
+                print "pending task"
+            if not pending_task.remind_user:
+                reminder = datetime.now() + timedelta(seconds=15)
+                set_reminder_for_non_committed_tasks.apply_async((pending_task.pk,), eta=reminder)
+            print "pk id: ", user.pk
         if new_project:
             if not user.userproject_set.all().filter(name_of_project=new_project):
                 project = UserProject(name_of_project=new_project, user=user)
@@ -319,7 +356,6 @@ class ApiTaskView(CSRFExemptView):
             tasks.save()
         response_data['success'] = "true"
         return HttpResponse(json.dumps(response_data), status=201)
-
 
 class IndividualTaskView(View):
 
@@ -359,7 +395,7 @@ class ApiCheckTaskDone(CSRFExemptView):
         response = {}
         try:
             username = request.POST.get('username')
-            User.objects.get(username=username)
+            user = User.objects.get(username=username)
         except ObjectDoesNotExist:
             response['status'] = False
             return HttpResponse(json.dumps(response), status=201)
@@ -368,23 +404,8 @@ class ApiCheckTaskDone(CSRFExemptView):
         task.task_completed = True
         task.current_working_on_task = False
         task.save()
+        grade_user_success(user, task)
         response["status"] = True
-        return HttpResponse(json.dumps(response), status=201)
-
-
-class ApiSetTimeForTaskReminder(CSRFExemptView):
-
-    def get(self, request, *args, **kwargs):
-        user = User.objects.geet(username=request.GET.get('username'))
-        tikedge_user = TikedgeUser.objects.get(user=user)
-        response = {}
-        tasks = Tasks.objects.filter(Q(user=user, is_active=False, start=None))
-
-        return HttpResponse(json.dumps(response), status=201)
-
-    def post(self, request, *args, **kwargs):
-        response = {}
-
         return HttpResponse(json.dumps(response), status=201)
 
 
@@ -398,7 +419,7 @@ class ApiCheckFailedTask(CSRFExemptView):
         response = {}
         try:
             username = request.POST.get('username')
-            User.objects.get(username=username)
+            user = User.objects.get(username=username)
         except ObjectDoesNotExist:
             response['status'] = False
             print "check as failure"
@@ -408,6 +429,7 @@ class ApiCheckFailedTask(CSRFExemptView):
         task.task_failed = True
         task.current_working_on_task = False
         task.save()
+        grade_user_failure(user, task)
         response["status"] = True
         print "tasks is failling"
         return HttpResponse(json.dumps(response), status=201)

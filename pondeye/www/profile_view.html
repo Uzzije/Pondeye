@@ -29,19 +29,32 @@
             <img class="img-circle" style="width:80px;height:80px;" src="test-media/fb_profile.jpg">
         </div>
         <br>
-        <div class="row">
-            <div class="col s6 z-depth-1">
-                credibility streak
-            </div>
-            <div class="col s6 z-depth-1">
-                consitency streak
-            </div>
+        <div class="row panel panel-default">
+                <div class="row container">
+                   <div class="col-md-12">
+                        <a class="btn-link">credibility streak<span class="badge" style="color:red;" id="cred-notif-count">0</span></a>
+                   </div>
+                </div>
+                <div class="row container">
+                     Credibiliy Grade: <span id="sup-loyalty"> B+</span>
+                </div>
+        </div>
+        <div class="row panel panel-default">
+                <div class="row container">
+                   <div class="col-md-12">
+                      <a class="btn-link">consistency streak<span class="badge" style="color:red;" id="cons-notif-count">0</span></a>
+                   </div>
+                </div>
+                <div class="row container" id="cons_grade">
+                    Work Ethic Grade: <span id="work-ethic-grade"> B+</span>
+                </div> 
         </div>
         <div class="">
             projects
         </div>
+        <hr>
         <div id="home_activities_body_id" class="">
-            <small>recent activities, <a onclick="myNavigator.pushPage('new_task_form.html')">lets get productive</a></small>
+            <small>recent activities</small>
         </div> 
          <div style="" id="task_view_modal-prof" class="modal fade" role="dialog">
         <div class="modal-dialog">

@@ -1,5 +1,5 @@
 from ..tasks.models import TikedgeUser, Tasks
-from .models import TaskPicture, ProfilePictures
+from .models import TaskPicture, ProfilePictures, Graded, Seen, Vouche, Notification
 from django.db.models import Q
 from tasks_feed import TasksFeed, NewsFeed
 from ..tasks.modules import get_query
@@ -29,7 +29,7 @@ def convert_list_to_profile_activities_object(type_of_feed, object_feed):
 
 def get_user_activities_in_json_format(user):
     tkdge_user = TikedgeUser.objects.get(user=user)
-    task_activ = Tasks.objects.filter(Q(user=tkdge_user), Q(is_active=True))
+    task_activ = Tasks.objects.filter(Q(user=tkdge_user), ~Q(start=None))
     task_activities = convert_list_to_profile_activities_object(global_variables.NEW_TASK_FEED, task_activ)
     tasks_picture_activ = TaskPicture.objects.filter(Q(tikedge_user=tkdge_user), ~Q(task=None))
     tasks_picture_activities = convert_list_to_profile_activities_object(global_variables.NEW_PICTURE_FEED,
@@ -86,6 +86,7 @@ def get_task_feed(task):
     feed = TasksFeed(task)
     return feed
 
+
 def find_people(query_word, user_owner):
     tkdge_users = []
     found_result = get_query(query_word, ['first_name', 'username', 'last_name'])
@@ -120,7 +121,7 @@ def people_result_to_json(user_result):
 def transform_activities_feed_to_json(user):
     user_friends = Friend.objects.friends(user)
     tkdge_friends = TikedgeUser.objects.filter(user__in=user_friends)
-    task_activ = Tasks.objects.filter(Q(user__in=tkdge_friends), Q(is_active=True))
+    task_activ = Tasks.objects.filter(Q(user__in=tkdge_friends), ~Q(start=None))
     task_activities = convert_list_to_profile_activities_object(global_variables.NEW_TASK_FEED, task_activ)
     tasks_picture_activ = TaskPicture.objects.filter(Q(tikedge_user__in=tkdge_friends))
     tasks_picture_activities = convert_list_to_profile_activities_object(global_variables.NEW_PICTURE_FEED,
@@ -174,4 +175,114 @@ def friend_request_to_json(friend_request, user):
         rq_dic["pk"] = each_request.pk
         friend_request_list.append(rq_dic)
     return friend_request_list
+
+
+def grade_user_success(user, task):
+    """
+    User completed task
+    :param user:
+    :param task:
+    :return:
+    """
+    tikedge_user = TikedgeUser.objects.get(user=user)
+    grade = Graded.objects.get(user=tikedge_user)
+
+    try:
+        vouch = Vouche.object.get(tasks=task)
+        vouch_users = vouch.users.all()
+    except ObjectDoesNotExist:
+        vouch_users = []
+    try:
+        seen = Seen.object.get(tasks=task)
+        seen_users = seen.users.filter(~Q(users__in=vouch_users))
+    except ObjectDoesNotExist:
+        seen_users = []
+    grade.prior_consitency_count = grade.consitency_count
+    grade.max_consistency_count =+ 10
+    grade.consistency_count =+ 10
+    grade.completed_tasks =+ 1
+    grade.save()
+    notification = Notification(user=user, type_of_notification=global_variables.COMPLETED_TASKS,
+                                tasks=task)
+    notification.save()
+    for user_friend in vouch_users:
+        """
+            vouched correctly
+        """
+        user_grade = Graded.objects.get(user=user_friend)
+        user_grade.correct_vouch =+ 1
+        user_grade.prior_credibility_count = user_grade.credibility_count
+        user_grade.credibility_count =+ 10
+        user_grade.max_credibility_count =+ 10
+        user_grade.save()
+        notification = Notification(user=user_friend, type_of_notification=global_variables.CORRECT_VOUCH,
+                                tasks=task)
+        notification.save()
+    for user_friend in seen_users:
+
+        """
+           missed opportunity to vouch
+        """
+        user_grade = Graded.objects.get(user=user_friend)
+        user_grade.seen_without_vouch_success =+ 1
+        user_grade.prior_crediblity_count = user_grade.credibility_count
+        user_grade.credibility_count =+ 7
+        user_grade.max_credibility_count =+ 10
+        user_grade.save()
+        notification = Notification(user=user_friend, type_of_notification=global_variables.MISSED_VOUCH_OPPURTUNITY,
+                                tasks=task)
+        notification.save()
+
+
+def grade_user_failure(user, task):
+    """
+    User failed to complete tasks
+    :param user:
+    :param task:
+    :return:
+    """
+    tikedge_user = TikedgeUser.objects.get(user=user)
+    grade = Graded.objects.get(user=tikedge_user)
+
+    try:
+        vouch = Vouche.object.get(tasks=task)
+        vouch_users = vouch.users.all()
+    except ObjectDoesNotExist:
+        vouch_users = []
+    try:
+        seen = Seen.object.get(tasks=task)
+        seen_users = seen.users.filter(~Q(users__in=vouch_users))
+    except ObjectDoesNotExist:
+        seen_users = []
+    grade.prior_consitency_count = grade.consitency_count
+    grade.max_consistency_count =+ 10
+    grade.failed_tasks =+ 1
+    grade.save()
+    notification = Notification(user=user, type_of_notification=global_variables.FAILED_TASKS,
+                                tasks=task)
+    notification.save()
+    for user_friend in vouch_users:
+        """
+            vouched incorrectly, i.e they vouched for a user that didn't finish their task
+        """
+        user_grade = Graded.objects.get(user=user_friend)
+        user_grade.vouch_fail =+ 1
+        user_grade.prior_credibility_count = user_grade.credibility_count
+        user_grade.credibility_count =+ 4
+        user_grade.max_credibility_count =+ 10
+        user_grade.save()
+        notification = Notification(user=user_friend, type_of_notification=global_variables.INCORRECT_VOUCH,
+                                tasks=task)
+        notification.save()
+    for user_friend in seen_users:
+
+        """
+           missed opportunity to vouch
+        """
+        user_grade = Graded.objects.get(user=user_friend)
+        user_grade.seen_without_vouch_fail =+ 1
+        user_grade.prior_crediblity_count = user_grade.credibility_count
+        user_grade.credibility_count =+ 4
+        user_grade.max_credibility_count =+ 4
+        user_grade.save()
 

@@ -126,9 +126,9 @@ function getHomeActivityFeed(){
                             $('#home'+newsFeed[index].id).append('<div class="col-md-1"><small><a>vouches</a><span id="'+vouch_id+'">'+newsFeed[index].vouche_count+'</span></small></div>');
                        }
                         if(newsFeed[index].partOfProject){
-                        //create follow count
+                        //create follow count 
                             var project_id = "project" + newsFeed[index].id;
-                            $('#home'+newsFeed[index].id).append('<div class="col-md-1"><small><a onclick="createFollow('+newsFeed[index].id+')">follows </a> <span id="'+project_id+'">'+newsFeed[index].follow_count+'</span></small></div>');
+                            $('#home'+newsFeed[index].id).append('<div class="col-md-2"><small><a>follows </a> <span id="'+project_id+'">'+newsFeed[index].follow_count+'</span></small></div>');
                         }
                     //create seen count
                     $('#home'+newsFeed[index].id).append('<div class="col-md-1"><small>seen '+newsFeed[index].seen_count+'</small></div>');
@@ -148,10 +148,59 @@ function getHomeActivityFeed(){
 
 }
 
+function getNotificationCred(){
+   var notif_info = {username:localStorage.getItem('username'), get_what:"credibility"};
+   setUpAjax(); 
+   console.log("getting heer credibility");
+   $.ajax({
+        url: 'http://localhost:8100/social/get-grade-notifications/',
+        type: 'GET',
+        data: notif_info,
+        success: function(result){
+        var resultParse = JSON.parse(result)
+        var successStatus = resultParse["status"];
+        var notifications = resultParse["notif_feed"];
+        if(successStatus === true){
+            for(var i = 0; i < notifications.length; i++){
+                var notifName = notifications[i].name;
+                var task = tasks[i].name_of_task;
+                $("#cred-notif").append('<div class="row panel panel-default"><div class="col-md-12">'+notifName+'</div></div>'); 
+           }
+        }
+   },
+    error: function(xhr){
+        $("#error-message").text(xhr.responseText).show();
+        console.log(xhr);
+    }
+});
+}
 
-
-
-
+function getNotificationCons(){
+   var notif_info = {username:localStorage.getItem('username'), get_what:"consistency"};
+   setUpAjax(); 
+   console.log("getting heer credibility");
+   $.ajax({
+        url: 'http://localhost:8100/social/get-grade-notifications/',
+        type: 'GET',
+        data: notif_info,
+        success: function(result){
+        var resultParse = JSON.parse(result)
+        var successStatus = resultParse["status"];
+        var notifications = resultParse["notif_feed"];
+        if(successStatus === true){
+            for(var i = 0; i < notifications.length; i++){
+                var notifName = notifications[i].name;
+                var task = tasks[i].name_of_task;
+                $("#cred-notif").append('<div class="row panel panel-default"><div class="col-md-12">'+notifName+'</div></div>'); 
+           }
+        }
+   },
+    error: function(xhr){
+        $("#error-message").text(xhr.responseText).show();
+        console.log(xhr);
+    }
+});
+}
 
 
 function createVouch(tasks_id){

@@ -22,11 +22,21 @@ class Tasks(models.Model):
     project = models.ForeignKey(UserProject, blank=True, null=True)
     user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     start = models.DateTimeField(blank=True, null=True)
-    end = models.DateTimeField(blank=True, default=now)
+    end = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=False)
     task_completed = models.BooleanField(default=False)
     task_failed = models.BooleanField(default=False)
     current_working_on_task = models.BooleanField(default=False)
+    publish_date = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.name_of_tasks
+
+
+class PendingTasks(models.Model):
+    tasks = models.ManyToManyField(Tasks)
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    remind_user = models.BooleanField(default=False)
+    is_removed = models.BooleanField(default=False)
+
+

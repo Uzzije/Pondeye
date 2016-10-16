@@ -1,0 +1,71 @@
+<ons-page id="tasks_update_form_id">
+    <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">Pondeye</div>
+    </ons-toolbar>
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">mode_edit</i>
+                        <textarea id="new_task_input-update" class="materialize-textarea"></textarea>
+                        <label for="icon_prefix2" class="active">what do you want to do?</label>
+                    </div>
+                </div>
+            </div>
+             <div class="row">
+                <div class="col s4">
+                    <a onclick="getUpdateTaskView()" class="waves-effect waves-light btn">add time</a>
+                </div>
+            </div>
+            
+            <div id="show_new_task_options-update"hidden>
+            <div class="row">
+                <label>when do you want to start?</label>
+            </div>
+            <div class="col s12">  
+                <input id="update_task_start_time-update" type="datetime-local" class="">
+            </div>
+            <div class="">
+                    <label>when do you want it to end?</label>
+            </div>
+            <div class="row">
+               <div class="input-field col s6">
+                    <select id="new_task_end_time-update" class="browser-default">
+                        <option value="" selected>minutes</option>
+                        <option value="10">10 minutes</option>  
+                        <option value="20">20 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="40">40 minutes</option>
+                        <option value="50">50 minutes</option>
+                        <option value="60">60 minutes</option>
+                        <option value="70">70 minutes</option>
+                        <option value="80">80 minutes</option>
+                        <option value="90">90 minutes</option>
+                        <option value="100">100 minutes</option>
+                        <option value="110">110 minutes</option>
+                        <option value="120">120 minutes</option>
+                    </select>
+                </div>
+                <div class="col s4"><p><small>Hey, anything over a couple of hours is too important to not be a project.</small></p></div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <select id="new_task_existing_project-update" class="browser-default">
+                        <option value="" selected>part of an existing project?</option>
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="col s6">
+                <input placeholder="add new project here"class="input-field col s12" id="new_task_new_project_name">
+            </div>
+            </div>
+            <div class="row">
+                <div id="update_view_button" class="col s4">
+                </div>
+            </div>
+        </div>
+    </div>
+</ons-page>
