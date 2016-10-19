@@ -236,23 +236,24 @@ class ApiSendFriendRequestView(CSRFExemptView):
 
 class ApiGradeNotifications(CSRFEnsureCookiesView):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         response = {}
         try:
             username = request.GET.get('username')
             user_obj = User.objects.get(username=username)
             tikedge_user = TikedgeUser.objects.get(user=user_obj)
+            response["status"] = True
         except ObjectDoesNotExist:
             response['status'] = False
             return HttpResponse(json.dumps(response), status=201)
         type_of_notif = request.GET.get('get_what')
         if type_of_notif == "credibility":
-            response["notif_feed"] = get_credibility_notification(user_obj)
+            response["notif_feed"] = modules.get_credibility_notification(user_obj)
         elif type_of_notif == "consistency":
-            response["notif_feed"] = get_consistency_notification(user_obj)
+            response["notif_feed"] = modules.get_consistency_notification(user_obj)
         else:
             response["status"] = False
-        return response
+        return HttpResponse(json.dumps(response), status=201)
 
 
 class AcceptFriendRequestView(View):

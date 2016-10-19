@@ -1,6 +1,57 @@
 
 var TASKS_REMINDER = false;
 var reminder_list = [];
+
+$(document).on('pageinit', '#tasks_page_id', function(){
+    localStorage.setItem("username", "starken");
+    //localStorage.setItem("username", "Uzzis");
+   showTasksInfo();
+   
+  $("#upload_pic").fileupload({
+        dataType: 'json',
+        url: 'http://localhost:8100/api/upload-picture/',
+        done: function(e, data){
+            $.each(data.result.files, function(index, file){
+                $('<p/>').text(file.name).appendTo(document.body);
+                console.log("Uploaded files");
+            });
+            console.log("the e" + e, " the data" + data);
+        }
+    });
+
+    console.log("say something giving up on you");
+    
+     $('.button-collapse').sideNav({// Default is 240
+      edge: 'right', // Choose the horizontal origin
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    }
+  );
+  if(TASKS_REMINDER){
+        myNavigator.pushPage('tasks_reminders.html');
+        console.log("tasks reminder");
+    }
+    showReminderOverhead()
+});
+
+$(document).on('pageinit', '#tasks_create_form_id', function(){
+    if(TASKS_REMINDER){
+       // myNavigator.pushPage('tasks_reminders.html');
+    }
+    showReminderOverhead();
+    /*
+     $('.button-collapse').sideNav({ // Default is 240
+      edge: 'right', // Choose the horizontal origin
+      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    }
+  );
+  */
+});
+$(document).on('pageinit', '#tasks_reminder_page_id', function(){
+    console.log(reminder_list);
+    showUnDatedTasks(reminder_list);
+});
+
+
 function newUser(){
     console.log(myNavigator.topPage.data);
     console.log("lets do that");
@@ -425,49 +476,3 @@ function toggleNav(){
     // Show sideNav
        
 }
-$(document).on('pageinit', '#tasks_page_id', function(){
-   showTasksInfo();
-   
-  $("#upload_pic").fileupload({
-        dataType: 'json',
-        url: 'http://localhost:8100/api/upload-picture/',
-        done: function(e, data){
-            $.each(data.result.files, function(index, file){
-                $('<p/>').text(file.name).appendTo(document.body);
-                console.log("Uploaded files");
-            });
-            console.log("the e" + e, " the data" + data);
-        }
-    });
-
-    console.log("say something giving up on you");
-    
-     $('.button-collapse').sideNav({// Default is 240
-      edge: 'right', // Choose the horizontal origin
-      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-    }
-  );
-  if(TASKS_REMINDER){
-        myNavigator.pushPage('tasks_reminders.html');
-        console.log("tasks reminder");
-    }
-    showReminderOverhead()
-});
-
-$(document).on('pageinit', '#tasks_create_form_id', function(){
-    if(TASKS_REMINDER){
-       // myNavigator.pushPage('tasks_reminders.html');
-    }
-    showReminderOverhead();
-    /*
-     $('.button-collapse').sideNav({ // Default is 240
-      edge: 'right', // Choose the horizontal origin
-      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-    }
-  );
-  */
-});
-$(document).on('pageinit', '#tasks_reminder_page_id', function(){
-    console.log(reminder_list);
-    showUnDatedTasks(reminder_list);
-});

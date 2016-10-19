@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
-from ..social.modules import get_task_feed, grade_user_success, grade_user_failure
+from ..social.modules import get_task_feed, grade_user_success, grade_user_failure, create_grade_for_user
 from modules import get_user_projects, tasks_search, get_current_todo_list, get_todays_todo_list, is_time_conflict, \
     convert_html_to_datetime, time_has_past, get_current_todo_list_json_form, get_todays_todo_list_json, time_to_utc, \
     get_expired_tasks, get_expired_tasks_json, stringify_task, get_task_picture_urls, json_all_pending_tasks
@@ -183,6 +183,7 @@ class ApiRegistrationView(CSRFEnsureCookiesView):
                 user.save()
                 tickedge_user = TikedgeUser(user=user)
                 tickedge_user.save()
+                create_grade_for_user(tickedge_user)
          response = HttpResponse(json.dumps(response_data), status=201)
          return response
 
@@ -319,6 +320,7 @@ class ApiTaskView(CSRFExemptView):
                 tasks.end = start_time + timedelta(minutes=int(end_time))
             else:
                 tasks.end = start_time + timedelta(minutes=60)
+            tasks.end = start_time + timedelta(minutes=1)
             tasks.is_active = True
             tasks.save()
             new_calender_event = CalendarEvent(title=name_of_task, start=start_time, end=tasks.end, css_class='event-info')
@@ -356,6 +358,7 @@ class ApiTaskView(CSRFExemptView):
             tasks.save()
         response_data['success'] = "true"
         return HttpResponse(json.dumps(response_data), status=201)
+
 
 class IndividualTaskView(View):
 

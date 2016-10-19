@@ -1,13 +1,13 @@
 from ..tasks.models import TikedgeUser, Tasks
 from .models import TaskPicture, ProfilePictures, Graded, Seen, Vouche, Notification
 from django.db.models import Q
-from tasks_feed import TasksFeed, NewsFeed
+from tasks_feed import TasksFeed, NewsFeed, NotificationFeed
 from ..tasks.modules import get_query
 from friendship.models import Friend
 from models import User
 from django.core.exceptions import ObjectDoesNotExist
 import global_variables
-
+import copy
 
 def convert_list_to_profile_activities_object(type_of_feed, object_feed):
     list_of_activities = []
@@ -123,7 +123,7 @@ def transform_activities_feed_to_json(user):
     tkdge_friends = TikedgeUser.objects.filter(user__in=user_friends)
     task_activ = Tasks.objects.filter(Q(user__in=tkdge_friends), ~Q(start=None))
     task_activities = convert_list_to_profile_activities_object(global_variables.NEW_TASK_FEED, task_activ)
-    tasks_picture_activ = TaskPicture.objects.filter(Q(tikedge_user__in=tkdge_friends))
+    tasks_picture_activ = TaskPicture.objects.filter(Q(tikedge_user__in=tkdge_friends), ~Q(task=None))
     tasks_picture_activities = convert_list_to_profile_activities_object(global_variables.NEW_PICTURE_FEED,
                                                                          tasks_picture_activ)
     profile_picture_activ = ProfilePictures.objects.filter(Q(tikedge_user__in=tkdge_friends))
@@ -188,19 +188,20 @@ def grade_user_success(user, task):
     grade = Graded.objects.get(user=tikedge_user)
 
     try:
-        vouch = Vouche.object.get(tasks=task)
+        vouch = Vouche.objects.get(tasks=task)
         vouch_users = vouch.users.all()
     except ObjectDoesNotExist:
         vouch_users = []
     try:
-        seen = Seen.object.get(tasks=task)
+        seen = Seen.objects.get(tasks=task)
         seen_users = seen.users.filter(~Q(users__in=vouch_users))
     except ObjectDoesNotExist:
         seen_users = []
-    grade.prior_consitency_count = grade.consitency_count
-    grade.max_consistency_count =+ 10
-    grade.consistency_count =+ 10
-    grade.completed_tasks =+ 1
+    grade.prior_consitency_count = grade.consistency_count
+    grade.save()
+    grade.max_consistency_count = grade.max_consistency_count + 10
+    grade.consistency_count = grade.consistency_count + 10
+    grade.completed_tasks = grade.completed_tasks + 1
     grade.save()
     notification = Notification(user=user, type_of_notification=global_variables.COMPLETED_TASKS,
                                 tasks=task)
@@ -210,12 +211,13 @@ def grade_user_success(user, task):
             vouched correctly
         """
         user_grade = Graded.objects.get(user=user_friend)
-        user_grade.correct_vouch =+ 1
+        user_grade.correct_vouch = user_grade.correct_vouch + 1
         user_grade.prior_credibility_count = user_grade.credibility_count
-        user_grade.credibility_count =+ 10
-        user_grade.max_credibility_count =+ 10
         user_grade.save()
-        notification = Notification(user=user_friend, type_of_notification=global_variables.CORRECT_VOUCH,
+        user_grade.credibility_count = user_grade.credibility_count + 10
+        user_grade.max_credibility_count = user_grade.max_credibility_count + 10
+        user_grade.save()
+        notification = Notification(user=user_friend.user, type_of_notification=global_variables.CORRECT_VOUCH,
                                 tasks=task)
         notification.save()
     for user_friend in seen_users:
@@ -224,12 +226,12 @@ def grade_user_success(user, task):
            missed opportunity to vouch
         """
         user_grade = Graded.objects.get(user=user_friend)
-        user_grade.seen_without_vouch_success =+ 1
+        user_grade.seen_without_vouch_success = user_grade.seen_without_vouch_success + 1
         user_grade.prior_crediblity_count = user_grade.credibility_count
-        user_grade.credibility_count =+ 7
-        user_grade.max_credibility_count =+ 10
+        user_grade.credibility_count = user_grade.credibility_count + 7
+        user_grade.max_credibility_count = user_grade.max_credibility_count + 10
         user_grade.save()
-        notification = Notification(user=user_friend, type_of_notification=global_variables.MISSED_VOUCH_OPPURTUNITY,
+        notification = Notification(user=user_friend.user, type_of_notification=global_variables.MISSED_VOUCH_OPPURTUNITY,
                                 tasks=task)
         notification.save()
 
@@ -245,17 +247,16 @@ def grade_user_failure(user, task):
     grade = Graded.objects.get(user=tikedge_user)
 
     try:
-        vouch = Vouche.object.get(tasks=task)
+        vouch = Vouche.objects.get(tasks=task)
         vouch_users = vouch.users.all()
     except ObjectDoesNotExist:
         vouch_users = []
     try:
-        seen = Seen.object.get(tasks=task)
+        seen = Seen.objects.get(tasks=task)
         seen_users = seen.users.filter(~Q(users__in=vouch_users))
     except ObjectDoesNotExist:
         seen_users = []
-    grade.prior_consitency_count = grade.consitency_count
-    grade.max_consistency_count =+ 10
+    grade.max_consistency_count = grade.max_consistency_count + 10
     grade.failed_tasks =+ 1
     grade.save()
     notification = Notification(user=user, type_of_notification=global_variables.FAILED_TASKS,
@@ -266,12 +267,12 @@ def grade_user_failure(user, task):
             vouched incorrectly, i.e they vouched for a user that didn't finish their task
         """
         user_grade = Graded.objects.get(user=user_friend)
-        user_grade.vouch_fail =+ 1
+        user_grade.vouch_fail = user_grade.vouch_fail + 1
         user_grade.prior_credibility_count = user_grade.credibility_count
-        user_grade.credibility_count =+ 4
-        user_grade.max_credibility_count =+ 10
+        user_grade.credibility_count = user_grade.credibility_count + 4
+        user_grade.max_credibility_count = user_grade.max_credibility_count + 10
         user_grade.save()
-        notification = Notification(user=user_friend, type_of_notification=global_variables.INCORRECT_VOUCH,
+        notification = Notification(user=user_friend.user, type_of_notification=global_variables.INCORRECT_VOUCH,
                                 tasks=task)
         notification.save()
     for user_friend in seen_users:
@@ -280,9 +281,41 @@ def grade_user_failure(user, task):
            missed opportunity to vouch
         """
         user_grade = Graded.objects.get(user=user_friend)
-        user_grade.seen_without_vouch_fail =+ 1
+        user_grade.seen_without_vouch_fail = user_grade.seen_without_vouch_fail + 1
         user_grade.prior_crediblity_count = user_grade.credibility_count
-        user_grade.credibility_count =+ 4
-        user_grade.max_credibility_count =+ 4
+        user_grade.save()
+        user_grade.credibility_count = user_grade.credibility_count + 4
+        user_grade.max_credibility_count = user_grade.credibility_count + 4
         user_grade.save()
 
+
+def get_consistency_notification(user_obj):
+    notif_list = []
+    notifications = Notification.objects.filter(Q(user=user_obj, type_of_notification=global_variables.FAILED_TASKS)|
+                                                   Q(user=user_obj, type_of_notification=global_variables.COMPLETED_TASKS))
+    notification_feed = NotificationFeed(notifications=notifications, user=user_obj)
+    unread_list = notification_feed.get_unread_notification()
+    for notif in unread_list:
+        new_dic = {}
+        new_dic["name"] = notif.get_name()
+        notif_list.append(new_dic)
+    return notif_list
+
+
+def get_credibility_notification(user_obj):
+    notif_list = []
+    notifications = Notification.objects.filter(Q(user=user_obj, type_of_notification=global_variables.MISSED_VOUCH_OPPURTUNITY)|
+                                                   Q(user=user_obj, type_of_notification=global_variables.CORRECT_VOUCH) |
+                                                Q(user=user_obj, type_of_notification=global_variables.INCORRECT_VOUCH))
+    notification_feed = NotificationFeed(notifications=notifications, user=user_obj)
+    unread_list = notification_feed.get_unread_notification()
+    for notif in unread_list:
+        new_dic = {}
+        new_dic["name"] = notif.get_name()
+        notif_list.append(new_dic)
+    return notif_list
+
+
+def create_grade_for_user(tikedge):
+    grade_user = Graded(user=tikedge)
+    grade_user.save()

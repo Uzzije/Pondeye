@@ -15,9 +15,15 @@ $(document).on('pageinit', '#friendship_view_id', function(){
 });
 $(document).on('pageinit', '#social_profile_id', function(){
     getHomeActivityFeed();
+    //getNotificationCred();
     console.log("came here");
 });
-
+$(document).on('pageinit', '#consistency_notification_page_id', function(){
+    getNotificationCons();
+});
+$(document).on('pageinit', '#credibility_notification_page_id', function(){
+    getNotificationCred();
+});
 
 function getNewsFeed(){
     
@@ -153,7 +159,7 @@ function getNotificationCred(){
    setUpAjax(); 
    console.log("getting heer credibility");
    $.ajax({
-        url: 'http://localhost:8100/social/get-grade-notifications/',
+        url: 'http://localhost:8100/social/api/get-grade-notifications',
         type: 'GET',
         data: notif_info,
         success: function(result){
@@ -163,7 +169,6 @@ function getNotificationCred(){
         if(successStatus === true){
             for(var i = 0; i < notifications.length; i++){
                 var notifName = notifications[i].name;
-                var task = tasks[i].name_of_task;
                 $("#cred-notif").append('<div class="row panel panel-default"><div class="col-md-12">'+notifName+'</div></div>'); 
            }
         }
@@ -180,18 +185,20 @@ function getNotificationCons(){
    setUpAjax(); 
    console.log("getting heer credibility");
    $.ajax({
-        url: 'http://localhost:8100/social/get-grade-notifications/',
-        type: 'GET',
+        url: 'http://localhost:8100/social/api/get-grade-notifications',
+        type: "GET",
         data: notif_info,
         success: function(result){
         var resultParse = JSON.parse(result)
         var successStatus = resultParse["status"];
         var notifications = resultParse["notif_feed"];
+        console.log(result);
         if(successStatus === true){
+            console.log(notifications);
+            console.log("notifications!");
             for(var i = 0; i < notifications.length; i++){
                 var notifName = notifications[i].name;
-                var task = tasks[i].name_of_task;
-                $("#cred-notif").append('<div class="row panel panel-default"><div class="col-md-12">'+notifName+'</div></div>'); 
+                $("#cons-notif").append('<div class="row panel panel-default"><div class="col-md-12">'+notifName+'</div></div>'); 
            }
         }
    },
@@ -208,7 +215,7 @@ function createVouch(tasks_id){
    setUpAjax(); 
    console.log("getting heer");
    $.ajax({
-        url: 'http://localhost:8100/social/api/create-vouch/',
+        url: 'http://localhost:8100/social/api/create-vouch',
         type: 'POST',
         data: vouch_info,
         success: function(result){

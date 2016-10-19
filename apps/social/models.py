@@ -64,10 +64,10 @@ class Notification(models.Model):
     picture_post = models.ForeignKey(TaskPicture, blank=True, null=True)
     project_update = models.ForeignKey(UserProject, blank=True, null=True)
     tasks = models.ForeignKey(Tasks, blank=True, null=True)
-    name_of_notification = models.CharField(max_length=300, default="No Notifications")
+    name_of_notification = models.CharField(max_length=300, default="")
 
     def __str__(self):
-        return self.type_of_notification
+        return self.name_of_notification
 
 
 class Graded(models.Model):
@@ -118,37 +118,37 @@ class Graded(models.Model):
         consitency_grade = self.get_num_grade_consistency()
         if (consitency_grade >= 0 and consitency_grade <= 59):
             return 'F'
-        elif (self.consitency_grade > 59 and self.consitency_grade <= 63):
+        elif (consitency_grade > 59 and consitency_grade <= 63):
             return 'D-'
-        elif (self.consitency_grade > 63 and self.consitency_grade <= 66):
+        elif (consitency_grade > 63 and consitency_grade <= 66):
             return 'D'
-        elif (self.consitency_grade > 66 and self.consitency_grade <= 69):
+        elif (consitency_grade > 66 and consitency_grade <= 69):
             return 'D+'
-        elif (self.consitency_grade > 69 and self.consitency_grade <= 73):
+        elif (consitency_grade > 69 and consitency_grade <= 73):
             return 'C-'
-        elif (self.consitency_grade > 73 and self.consitency_grade <= 76):
+        elif (consitency_grade > 73 and consitency_grade <= 76):
             return 'C'
-        elif (self.consitency_grade > 76 and self.consitency_grade <= 79):
+        elif (consitency_grade > 76 and consitency_grade <= 79):
             return 'C+'
-        elif (self.consitency_grade > 79 and self.consitency_grade <= 83):
+        elif (consitency_grade > 79 and consitency_grade <= 83):
             return 'B-'
-        elif (self.consitency_grade > 83 and self.consitency_grade <= 86):
+        elif (consitency_grade > 83 and consitency_grade <= 86):
             return 'B'
-        elif (self.consitency_grade > 86 and self.consitency_grade <= 89):
+        elif (consitency_grade > 86 and consitency_grade <= 89):
             return 'B+'
-        elif (self.consitency_grade > 90 and self.consitency_grade <= 93):
+        elif (consitency_grade > 90 and consitency_grade <= 93):
             return 'A-'
-        elif (self.consitency_grade > 93 and self.consitency_grade <= 96):
+        elif (consitency_grade > 93 and consitency_grade <= 96):
             return 'A'
-        elif (self.consitency_grade > 96 and self.consitency_grade <= 100):
+        elif (consitency_grade > 96 and consitency_grade <= 100):
             return 'A+'
         
     def get_num_grade_consistency(self):
-        ratio = float(self.consitency_grade/self.max_consistency_count)*100
+        ratio = float(self.consistency_count/self.max_consistency_count)*100
         return int(ratio)
     
     def get_num_grade_credibility(self):
-        ratio = float(self.credibility_grade/self.max_credibility_count)*100
+        ratio = float(self.credibility_count/self.max_credibility_count)*100
         return int(ratio)
             
 
