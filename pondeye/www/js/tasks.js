@@ -194,7 +194,7 @@ function getUpdateTaskView(){
                     options[options.length] = new Option(value, value);
                 });
                 console.log(project);
-                 myNavigator.pushPage('new_task_form.html');         
+                 //myNavigator.pushPage('new_task_form.html');         
             }
             else{
                 $("#loginError").show(2000);
