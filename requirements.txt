@@ -40,3 +40,4 @@ redis==2.10.5
 six==1.10.0
 tzlocal==1.2.2
 Unipath==1.1
+awsebcli==3.8.3
