@@ -32,7 +32,6 @@ jsmin==2.2.1
 jsonfield==1.0.3
 kombu==3.0.35
 MySQL-python==1.2.5
-Pillow==3.3.0
 python-dateutil==2.5.3
 python-mimeparse==1.5.2
 pytz==2016.4
