@@ -121,6 +121,7 @@ class PondFeed:
         self.message = self.message()
         self.before_url = self.get_before_url()
         self.after_url = self.get_after_url()
+        self.feed_id = self.tasks.id
 
     def is_milestone_feed(self):
         if self.type_of_feed is global_variables.MILESTONE:

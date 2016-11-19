@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 from forms import social_forms
-from models import ProfilePictures, Notification, Vouche, Follow, TaskPicture, PictureSet, Picture
+from models import ProfilePictures, Notification, Vouche, Follow, PictureSet, Picture, VoucheMilestone
 from ..tasks.models import TikedgeUser, UserProject, User, Tasks, Milestone
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
@@ -199,6 +199,27 @@ class ApiFriendRequestView(CSRFExemptView):
         if json_result:
             response["status"] = True
             response["result"] = json_result
+        else:
+            response["status"] = False
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class CreateVouch(View):
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        milestone_id = request.POST.get("mil_id")
+        milestone = Milestone.objects.get(id=int(milestone_id))
+        user = TikedgeUser.objects.get(user=request.user)
+        try:
+            vouch_obj = VoucheMilestone.objects.get(tasks=milestone)
+        except ObjectDoesNotExist:
+            vouch_obj = VoucheMilestone(tasks=milestone)
+            vouch_obj.save()
+        if user not in vouch_obj.users.all():
+            vouch_obj.users.add(user)
+            vouch_obj.save()
+            response["status"] = True
         else:
             response["status"] = False
         return HttpResponse(json.dumps(response), status=201)

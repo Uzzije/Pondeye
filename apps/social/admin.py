@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Follow, Seen, Vouche, ProfilePictures, TaskPicture, Graded, Notification, PictureSet
+from models import Follow, Seen, Vouche, ProfilePictures, TaskPicture, Graded, Notification, PictureSet, VoucheMilestone
 # Register your models here.
 
 admin.site.register(Follow)
@@ -10,3 +10,4 @@ admin.site.register(TaskPicture)
 admin.site.register(Graded)
 admin.site.register(Notification)
 admin.site.register(PictureSet)
+admin.site.register(VoucheMilestone)

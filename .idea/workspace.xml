@@ -2,235 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/demo/imgs/banner.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/demo/imgs/gittip-button.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/demo/imgs/issues-button.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/material-design-color-palette.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/img/img-modified.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/img/img-original.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/readme.pdf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/demo/imgs/banner.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/demo/imgs/gittip-button.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/demo/imgs/issues-button.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/material-design-color-palette.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/Gemfile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/Gruntfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/ISSUE_TEMPLATE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/_config.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/bootstrap-elements.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/bower.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/grunt/configBridge.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/index.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_alerts.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_buttons.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_cards.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_checkboxes.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_colors.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_core.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_dialogs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_dividers.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_form.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_import-bs-less.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_import-bs-sass.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_inputs-size.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_inputs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_lists.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_mixins.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_navbar.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_panels.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_plugins.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_popups.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_progress.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_radios.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_shadows.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_tabs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_themes.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_togglebutton.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_typography.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_variables.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_welljumbo.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/bootstrap-material-design.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/plugins/_plugin-dropdownjs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/plugins/_plugin-nouislider.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/plugins/_plugin-selectize.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/plugins/_plugin-snackbarjs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/ripples.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_alerts.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_buttons.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_cards.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_checkboxes.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_colors-map.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_colors.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_core.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_dialogs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_dividers.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_form.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_import-bs-less.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_import-bs-sass.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_inputs-size.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_inputs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_labels.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_lists.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_mixins-utilities.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_mixins.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_navbar.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_panels.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_plugins.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_popups.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_progress.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_radios.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_shadows.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_tabs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_themes.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_togglebutton.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_typography.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_variables.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_welljumbo.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/bootstrap-material-design.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/plugins/_plugin-dropdownjs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/plugins/_plugin-nouislider.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/plugins/_plugin-selectize.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/plugins/_plugin-snackbarjs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/ripples.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/scripts/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/scripts/material.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/scripts/ripples.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/test/materialSpec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/test/ripplesSpec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/testcase.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/custom_scripts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/custom_style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/css/reset.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/css/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/img/cd-arrows.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/js/jquery-2.1.1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/js/jquery.mobile.custom.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/js/main.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/js/modernizr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/partials/_layout.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/partials/_mixins.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/partials/_variables.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/scss/style.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/CONTRIBUTING.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/Gemfile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/Gruntfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/ISSUE_TEMPLATE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/LICENSE.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/_config.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/bootstrap-elements.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/bower.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/grunt/configBridge.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/index.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_alerts.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_buttons.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_cards.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_checkboxes.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_colors.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_core.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_dialogs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_dividers.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_form.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_import-bs-less.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_import-bs-sass.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_inputs-size.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_inputs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_lists.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_mixins.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_navbar.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_panels.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_plugins.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_popups.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_progress.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_radios.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_shadows.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_tabs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_themes.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_togglebutton.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_typography.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_variables.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/_welljumbo.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/bootstrap-material-design.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/plugins/_plugin-dropdownjs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/plugins/_plugin-nouislider.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/plugins/_plugin-selectize.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/plugins/_plugin-snackbarjs.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/less/ripples.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_alerts.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_buttons.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_cards.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_checkboxes.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_colors-map.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_colors.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_core.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_dialogs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_dividers.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_form.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_import-bs-less.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_import-bs-sass.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_inputs-size.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_inputs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_labels.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_lists.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_mixins-utilities.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_mixins.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_navbar.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_panels.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_plugins.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_popups.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_progress.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_radios.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_shadows.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_tabs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_themes.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_togglebutton.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_typography.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_variables.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/_welljumbo.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/bootstrap-material-design.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/plugins/_plugin-dropdownjs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/plugins/_plugin-nouislider.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/plugins/_plugin-selectize.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/plugins/_plugin-snackbarjs.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/sass/ripples.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/scripts/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/scripts/material.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/scripts/ripples.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/test/materialSpec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/test/ripplesSpec.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/bootstrap-material-design-master/testcase.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/base/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/upload_picture.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/tasks/add_view.html" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/tasks/nav_bar.html" afterPath="$PROJECT_DIR$/templates/base/nav_bar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/admin.py" afterPath="$PROJECT_DIR$/apps/social/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/global_variables.py" afterPath="$PROJECT_DIR$/apps/social/global_variables.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/models.py" afterPath="$PROJECT_DIR$/apps/social/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/tasks_feed.py" afterPath="$PROJECT_DIR$/apps/social/tasks_feed.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/urls.py" afterPath="$PROJECT_DIR$/apps/social/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/views.py" afterPath="$PROJECT_DIR$/apps/social/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/admin.py" afterPath="$PROJECT_DIR$/apps/tasks/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" afterPath="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/models.py" afterPath="$PROJECT_DIR$/apps/tasks/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/modules.py" afterPath="$PROJECT_DIR$/apps/tasks/modules.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/urls.py" afterPath="$PROJECT_DIR$/apps/tasks/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/views.py" afterPath="$PROJECT_DIR$/apps/tasks/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/social/news_feed.html" afterPath="$PROJECT_DIR$/templates/social/news_feed.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/add_tasks.html" afterPath="$PROJECT_DIR$/templates/tasks/add_tasks.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/home.html" afterPath="$PROJECT_DIR$/templates/tasks/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/list_of_tasks.html" afterPath="$PROJECT_DIR$/templates/tasks/list_of_tasks.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/urls.py" afterPath="$PROJECT_DIR$/urls.py" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -257,21 +35,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="166" column="62" selection-start-line="166" selection-start-column="62" selection-end-line="166" selection-end-column="62" />
+            <state vertical-scroll-proportion="-13.333333">
+              <caret line="123" column="36" selection-start-line="123" selection-start-column="36" selection-end-line="123" selection-end-column="36" />
               <folding>
                 <element signature="e#92#277#0" expanded="true" />
               </folding>
@@ -279,94 +47,120 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="news_feed.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="news_feed.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/social/news_feed.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.55598456">
+              <caret line="81" column="32" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="friend_request.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/social/friend_request.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.625">
+              <caret line="40" column="41" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="social.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pondeye/www/js/social.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="37" column="48" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.2797858">
-              <caret line="203" column="61" selection-start-line="203" selection-start-column="61" selection-end-line="203" selection-end-column="61" />
+            <state vertical-scroll-proportion="-3.5555556">
+              <caret line="215" column="34" selection-start-line="215" selection-start-column="34" selection-end-line="215" selection-end-column="34" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#5645#5823#0" expanded="false" />
-                <element signature="e#5853#6261#0" expanded="false" />
-                <element signature="e#6293#6612#0" expanded="false" />
-                <element signature="e#7647#7938#0" expanded="false" />
-                <element signature="e#7983#8274#0" expanded="false" />
+                <element signature="e#5649#5827#0" expanded="false" />
+                <element signature="e#5857#6265#0" expanded="false" />
+                <element signature="e#6297#6616#0" expanded="false" />
+                <element signature="e#7651#7942#0" expanded="false" />
+                <element signature="e#7987#8278#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
+      <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/social/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+            <state vertical-scroll-proportion="-6.111111">
+              <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
               <folding>
-                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#0#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="custom_style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/static/custom_style.css">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/social/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="75" column="23" selection-start-line="75" selection-start-column="23" selection-end-line="75" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jquery-3.0.0.min.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/static/js/jquery-3.0.0.min.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="5.2222223">
+              <caret line="55" column="88" selection-start-line="55" selection-start-column="88" selection-end-line="55" selection-end-column="88" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#5146#8987#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nav_bar.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base/nav_bar.html">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/social/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="62" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="upload_picture.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/social/upload_picture.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="62" selection-start-line="22" selection-start-column="62" selection-end-line="22" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="custom_scripts.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/static/custom_scripts.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="85" column="50" selection-start-line="85" selection-start-column="50" selection-end-line="85" selection-end-column="50" />
+            <state vertical-scroll-proportion="-4.7222223">
+              <caret line="17" column="72" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
               <folding>
-                <element signature="e#0#48#0" expanded="false" />
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.5555556">
+              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+                <element signature="e#1422#2569#0" expanded="false" />
+                <element signature="e#2599#4846#0" expanded="false" />
+                <element signature="e#4884#5278#0" expanded="false" />
+                <element signature="e#5313#6271#0" expanded="false" />
+                <element signature="e#6306#6446#0" expanded="false" />
+                <element signature="e#6488#6642#0" expanded="false" />
+                <element signature="e#6674#10321#0" expanded="false" />
+                <element signature="e#7147#10321#0" expanded="false" />
+                <element signature="e#10361#11421#0" expanded="false" />
+                <element signature="e#11469#12172#0" expanded="false" />
+                <element signature="e#12222#12994#0" expanded="false" />
+                <element signature="e#13026#13133#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.1666665">
+              <caret line="15" column="89" selection-start-line="15" selection-start-column="89" selection-end-line="15" selection-end-column="89" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -406,7 +200,6 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/apps/tasks/global_variables_tasks.py" />
         <option value="$PROJECT_DIR$/apps/tasks/tasks.py" />
-        <option value="$PROJECT_DIR$/apps/social/urls.py" />
         <option value="$PROJECT_DIR$/wsgi.py" />
         <option value="$PROJECT_DIR$/settings/base.py" />
         <option value="$PROJECT_DIR$/manage.py" />
@@ -418,15 +211,12 @@
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/tasks/nav_bar.html" />
         <option value="$PROJECT_DIR$/urls.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/urls.py" />
         <option value="$PROJECT_DIR$/apps/tasks/admin.py" />
         <option value="$PROJECT_DIR$/templates/tasks/add_view.html" />
         <option value="$PROJECT_DIR$/templates/tasks/upload_picture.html" />
         <option value="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
-        <option value="$PROJECT_DIR$/apps/social/admin.py" />
         <option value="$PROJECT_DIR$/templates/social/upload_picture.html" />
         <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/views.py" />
         <option value="$PROJECT_DIR$/apps/social/global_variables.py" />
         <option value="$PROJECT_DIR$/apps/tasks/models.py" />
         <option value="$PROJECT_DIR$/apps/social/models.py" />
@@ -438,9 +228,13 @@
         <option value="$PROJECT_DIR$/apps/social/static/custom_style.css" />
         <option value="$PROJECT_DIR$/apps/social/static/custom_scripts.js" />
         <option value="$PROJECT_DIR$/templates/base/nav_bar.html" />
+        <option value="$PROJECT_DIR$/apps/tasks/views.py" />
+        <option value="$PROJECT_DIR$/apps/tasks/urls.py" />
         <option value="$PROJECT_DIR$/apps/social/tasks_feed.py" />
-        <option value="$PROJECT_DIR$/templates/social/news_feed.html" />
+        <option value="$PROJECT_DIR$/apps/social/urls.py" />
         <option value="$PROJECT_DIR$/apps/social/views.py" />
+        <option value="$PROJECT_DIR$/apps/social/admin.py" />
+        <option value="$PROJECT_DIR$/templates/social/news_feed.html" />
       </list>
     </option>
   </component>
@@ -512,7 +306,57 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="social" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tasks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -927,27 +771,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/apps/tasks/listener.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scheduler/celery_setting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="27" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scheduler/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="37" selection-start-line="1" selection-start-column="37" selection-end-line="1" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Envs/pondeye/lib/python2.7/site-packages/django_bootstrap_calendar/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -981,6 +804,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-18.125">
           <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1016,6 +840,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.333333">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1047,13 +872,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pondeye/www/tasks_view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-78.125">
@@ -1072,13 +890,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-23.125">
           <caret line="38" column="62" selection-start-line="38" selection-start-column="62" selection-end-line="38" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.2222223">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1104,13 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.111111">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.833333">
@@ -1127,24 +931,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.333333">
-          <caret line="20" column="82" selection-start-line="20" selection-start-column="82" selection-end-line="20" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.925926">
           <caret line="87" column="104" selection-start-line="87" selection-start-column="104" selection-end-line="87" selection-end-column="104" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-35.95062">
-          <caret line="307" column="27" selection-start-line="307" selection-start-column="27" selection-end-line="307" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -1190,16 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8878503">
-          <caret line="55" column="88" selection-start-line="55" selection-start-column="88" selection-end-line="55" selection-end-column="88" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/tasks/add_tasks.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.125">
@@ -1219,7 +999,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1271,16 +1051,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="166" column="62" selection-start-line="166" selection-start-column="62" selection-end-line="166" selection-end-column="62" />
-          <folding>
-            <element signature="e#92#277#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1291,26 +1061,130 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/news_feed.html">
+    <entry file="file://$PROJECT_DIR$/apps/social/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.1666665">
+          <caret line="15" column="89" selection-start-line="15" selection-start-column="89" selection-end-line="15" selection-end-column="89" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.2222223">
+          <caret line="55" column="88" selection-start-line="55" selection-start-column="88" selection-end-line="55" selection-end-column="88" />
+          <folding>
+            <element signature="e#5146#8987#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/friend_request.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.625">
+          <caret line="40" column="41" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pondeye/www/js/social.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+          <caret line="37" column="48" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="48" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.5555556">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#1422#2569#0" expanded="false" />
+            <element signature="e#2599#4846#0" expanded="false" />
+            <element signature="e#4884#5278#0" expanded="false" />
+            <element signature="e#5313#6271#0" expanded="false" />
+            <element signature="e#6306#6446#0" expanded="false" />
+            <element signature="e#6488#6642#0" expanded="false" />
+            <element signature="e#6674#10321#0" expanded="false" />
+            <element signature="e#7147#10321#0" expanded="false" />
+            <element signature="e#10361#11421#0" expanded="false" />
+            <element signature="e#11469#12172#0" expanded="false" />
+            <element signature="e#12222#12994#0" expanded="false" />
+            <element signature="e#13026#13133#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pondeye/www/feed_view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.93050194">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.7222223">
+          <caret line="17" column="72" selection-start-line="17" selection-start-column="72" selection-end-line="17" selection-end-column="72" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.111111">
+          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.2797858">
-          <caret line="203" column="61" selection-start-line="203" selection-start-column="61" selection-end-line="203" selection-end-column="61" />
+        <state vertical-scroll-proportion="-3.5555556">
+          <caret line="215" column="34" selection-start-line="215" selection-start-column="34" selection-end-line="215" selection-end-column="34" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#5645#5823#0" expanded="false" />
-            <element signature="e#5853#6261#0" expanded="false" />
-            <element signature="e#6293#6612#0" expanded="false" />
-            <element signature="e#7647#7938#0" expanded="false" />
-            <element signature="e#7983#8274#0" expanded="false" />
+            <element signature="e#5649#5827#0" expanded="false" />
+            <element signature="e#5857#6265#0" expanded="false" />
+            <element signature="e#6297#6616#0" expanded="false" />
+            <element signature="e#7651#7942#0" expanded="false" />
+            <element signature="e#7987#8278#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.333333">
+          <caret line="123" column="36" selection-start-line="123" selection-start-column="36" selection-end-line="123" selection-end-column="36" />
+          <folding>
+            <element signature="e#92#277#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/news_feed.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55598456">
+          <caret line="81" column="32" selection-start-line="81" selection-start-column="32" selection-end-line="81" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
