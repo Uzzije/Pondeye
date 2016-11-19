@@ -1,0 +1,107 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block design %}
+        <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+        <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+        <link href="{% static "image-comparison-slider/css/reset.css" %}" rel="stylesheet" type="text/css"/>
+         <script src="{% static "image-comparison-slider/js/modernizr.js" %}"></script>
+        <script src="{% static "custom_scripts.js" %}"></script>
+        <link href="{% static 'custom_style.css' %}" rel="stylesheet" type="text/css"/>
+    {% endblock %}
+    {% block custom_design %}
+    {% endblock %}
+    <title>{% block title %}Title{% endblock %}</title>
+</head>
+<body>
+        {% if messages %}
+            {% for message in messages %}
+              <div
+                      {% if message.tags == "success" %}
+                            class="message alert alert-success"
+                      {% else %}
+                            class="message alert alert-warning"{% endif %} role="alert">
+                      {{ message|safe }}
+              </div>
+            {% endfor %}
+        {% endif %}
+        <ul id="slide-out" class="side-nav">
+            <li>
+                <a class="bar-font" style="color:blue" href="{% url 'django_bootstrap_calendar:calendar' %}">
+                    Your Calendar
+                </a>
+            </li>
+            <li><a class="bar-font"style="color:blue" href="{% url 'social:profile_view' %}">Profile</a></li>
+            <li><a class="bar-font" style="color:blue" href="{% url 'social:todo_feed' %}">Feed</a></li>
+            <li><a class="bar-font"style="color:blue" href="{% url 'tasks:logout' %}">Logout</a></li>
+        </ul>
+        {% block search %}
+            <nav class="navbar navbar-inverse">
+                <ul class="nav navbar-nav">
+                  <li class="nav-item active">
+                    <a href="#" data-activates="slide-out" class="button-collapse">
+                        <span class="waves-effect waves-light btn-large"><i class="material-icons">menu</i></span>
+                    </a>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <a href="{% url 'tasks:home' %}"><span><h3>Pondeye</h3></span></a>
+                </ul>
+            </nav>
+            <div class="container">
+                <div class="row">
+                  <form>
+                    <div class="input-field">
+                      <input class="form-control" type="search" placeholder="Discover" name="get_people" id="id_q" value="">
+                      <i class="material-icons">close</i>
+                    </div>
+                  </form>
+                </div>
+            </div>
+        {% endblock %}
+        {% block body %}
+
+        {% endblock %}
+        {% block nav_script %}
+        {% endblock %}
+        {% block base_script %}
+            <script>
+                $(document).ready(function(){
+                    setTimeout(function(){
+                        $('.message').fadeOut('slow');}, 2000);
+                    });
+            </script>
+
+        {% endblock %}
+{% block end %}
+        <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+            <a href="{% url 'tasks:add_proj' %}" class="btn-floating btn-large red">
+                <i class="large material-icons">add</i>
+            </a>
+        </div>
+
+        <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 90px;">
+            <a href="{% url 'social:upload_picture' %}" class="btn-floating btn-large red">
+                <i class="large material-icons">picture_in_picture</i>
+            </a>
+             <!--
+            <div hidden>
+                <input class="btn-floating btn-large red" id="fileupload" type="file" name="pictureFiles[]" value="upload" multiple>
+            </div>
+            <button for="fileupload" class="btn-floating btn-large red">
+                <label for="fileupload"><i hide class="large material-icons">picture_in_picture</i></label>
+            </button>
+             --->
+        </div>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,56 @@
+{% extends 'social/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+            <form method="post" action="{% url 'social:upload_picture' %}" enctype="multipart/form-data">{% csrf_token %}
+                <div class="row">
+                    <div class="col s6">
+                        <input type="radio" id="before_pic_id" name="type_of_picture" value="bc"/>
+                        <label for="before_pic_id">Before Capture</label>
+                    </div>
+                    <div class="col s6">
+                        <input type="radio" id="after_pic_id" name="type_of_picture" value="ac"/>
+                        <label for="after_pic_id">After Capture</label>
+                    </div>
+                </div>
+                <div id="upload_view" hidden>
+                    <div class="row">
+                        <div class="col-md-2 col-md-offset-5">
+                                <h4>{{ user_picture_form.picture.label }}</h4>
+                                {{ user_picture_form.picture }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button type="submit" id="" name="picture" class="btn waves-effect waves-light">upload</button>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                        <label><h3>What milestone is this for?</h3></label>
+                            <select class="browser-default" name="milestone_name" required>
+                                <option value="" selected>milestone?</option>
+                                {% for proj in existing_milestones %}
+                                    <option value="{{ proj }}">{{ proj }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            $("#before_pic_id").change(function(){
+                $("#upload_view").show(1000);
+            });
+            $("#after_pic_id").change(function(){
+                $("#upload_view").show(1000);
+            })
+        </script>
+    {% endblock %}
+  </body>
+ </html>

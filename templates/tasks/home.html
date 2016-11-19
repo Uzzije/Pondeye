@@ -1,72 +1,70 @@
-{% extends 'tasks/nav_bar.html' %}
+{% extends 'base/nav_bar.html' %}
 {% block staticfiles %}{% load static from staticfiles %}{% endblock %}
 <!DOCTYPE html>
-<html >
+<html>
   <head>
   </head>
   <body>
     {% block body %}
         <div class="container">
             <div class="row">
-                <div class="col-md-8">
-                    <form method="get" action="{% url 'tasks:list_of_tasks'%}" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bar-font" placeholder="Search To Do List" name="get_tasks" id="id_q" value="">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="col s6">
+                    <div class="card horizontal">
+                        {% if has_prof_pic %}
+                            <img src ='{{  has_prof_pic.profile_pics.url }}' style="width:40%;height:40%;" class="img-circle"/>
+                        {% else %}
+                            <form method="post" action="{% url 'tasks:home' %}" enctype="multipart/form-data">{% csrf_token %}
+                                    <div class="col s6">
+                                        {{ user_picture_form.picture }}
+                                    </div>
+                                    <div class="col s6">
+                                        <input class="waves-effect waves-light" type="submit"
+                                       name="upload-picture" value="Upload Profile Picture">
+                                    </div>
+                            </form>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <a href="{% url 'tasks:add_task' %}" class="btn btn-lg btn-primary">Add Tasks</a>
+                <div class="col s6">
+                    <div class="card-panel teal">
+                         status of user
+                    </div>
+
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col s6">
                     {% if current_task %}
-
-                            {{ current_task.name_of_tasks }}
-                            {{ current_task.start }}
-                        {{ current_task.end }}
-
+                        <div class="card-panel teal">
+                            <h3>Upcoming MileStones</h3>
+                                {{ current_task.name_of_tasks }}
+                                {{ current_task.start }}
+                                {{ current_task.end }}
+                        </div>
                     {% else %}
-                        No current task
+                         <div class="card-panel teal">
+                            <span>No Upcoming MileStones</span>
+                         </div>
                     {% endif %}
+                </div>
+                <div class="col s6">
+                    <div class="card-panel teal">
+                        {% if has_project %}
+                        {% else %}
+                            <span>No Upcoming Projects</span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
-                    {% if expired_tasks %}
-                            {% for exp_task in expired_tasks %}
-                                {{ exp_task.name_of_tasks }}
-                                {{ exp_task.start }}
-                                {{ exp_task.end }}
-                            {% endfor %}
-
-                    {% else %}
-                        No lingering task
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8">
-                    {% if todays_tasks %}
-                        {% for todo in todays_tasks %}
-                            <div class="row">
-                                {{ todo.name_of_tasks }}
-                                <div class="row">
-                                    {{ todo.start }}
-                                </div>
-                                <div class="row">
-                                    {{ todo.end }}
-                                </div>
-                            </div>
-                            <hr>
-                        {% endfor %}
-                    {% else %}
-                        No task listed for today.
-                    {% endif %}
+                <div class="col s12">
+                    <div class="card-panel teal">
+                        {% if recent_activity %}
+                            <span></span>
+                        {% else %}
+                            <span>No Recent Activities</span>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>

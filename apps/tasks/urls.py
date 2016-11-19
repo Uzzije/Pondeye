@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import RegisterView, LoginView, HomeView, AddTasks, ListOfTasksViews, LogoutView, ApiLoginView, \
+from .views import RegisterView, LoginView, HomeView, AddProject, ListOfTasksViews, LogoutView, ApiLoginView, \
     ApiRegistrationView, ApiStartUserSession, ApiTaskView, ApiCheckFailedTask, ApiCheckTaskDone, IndividualTaskView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^register/$', RegisterView.as_view(), name='register'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^home/$', HomeView.as_view(), name='home'),
-    url(r'^new-tasks/$', AddTasks.as_view(), name='add_task'),
+    url(r'^new-tasks/$', AddProject.as_view(), name='add_proj'),
     url(r'^list_of_tasks/$', ListOfTasksViews.as_view(), name='list_of_tasks'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^api/login', ApiLoginView.as_view(), name="api_login"),

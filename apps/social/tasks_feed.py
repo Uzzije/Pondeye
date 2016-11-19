@@ -2,7 +2,8 @@
 """
 Feed and Notification Classes for Social News Feed of Application
 """
-from models import Seen, Vouche, BuildCred, Follow, LetDown, ProfilePictures, Graded
+from models import Seen, Vouche, BuildCred, Follow, LetDown, ProfilePictures, Graded, \
+BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, LetDownMilestone, VoucheMilestone
 from ..tasks.models import TikedgeUser
 from friendship.models import FriendshipRequest
 from django.db.models import Q
@@ -21,7 +22,7 @@ class TasksFeed:
         self.letDown_count = self.letDown()
         self.name_of_task = self.get_name_of_tasks()
         self.id = tasks.id
-        self.type = global_variables.NEW_TASK_FEED
+        self.type_of_feed = global_variables.NEW_TASK_FEED
         self.created = self.get_start_time()
         self.task_owner_name = self.get_name()
         self.task_owner_profile_pic_url = self.task_owner_profile_pic_url()
@@ -99,11 +100,160 @@ class TasksFeed:
             return None
 
 
+class PondFeed:
+
+    def __init__(self, tasks, type_of_feed):
+        self.tasks = tasks
+        self.type_of_feed = type_of_feed
+        self.seen_count = self.seens()
+        self.vouche_count = self.vouche()
+        #self.build_cred_count = self.build_cred()
+        self.follow_count = self.follow()
+        #self.letDown_count = self.letDown()
+        #self.name_of_task = self.get_name_of_tasks()
+        #self.id = tasks.id
+        #self.created = self.get_start_time()
+        self.task_owner_name = self.get_name()
+        #self.task_owner_profile_pic_url = self.task_owner_profile_pic_url()
+        self.is_milestone_feed = self.is_milestone_feed()
+        self.is_picture_feed = self.is_picture_feed()
+        self.is_project_feed = self.is_project_feed()
+        self.message = self.message()
+        self.before_url = self.get_before_url()
+        self.after_url = self.get_after_url()
+
+    def is_milestone_feed(self):
+        if self.type_of_feed is global_variables.MILESTONE:
+            return True
+        else:
+            return False
+
+    def is_picture_feed(self):
+        if self.type_of_feed is global_variables.PICTURE_SET:
+            return True
+        else:
+            return False
+
+    def is_project_feed(self):
+        if self.type_of_feed is global_variables.NEW_PROJECT:
+            return True
+        else:
+            return False
+
+    def message(self):
+        if self.type_of_feed is global_variables.MILESTONE:
+            print self.task_owner_name, " slammer"
+            message = "%s created a new milestone: %s for project: %s" % \
+                      (self.task_owner_name, self.tasks.name_of_milestone, self.tasks.project.name_of_project)
+            return message
+        elif self.type_of_feed is global_variables.PICTURE_SET:
+            message = "%s entered a journal entry for milestone: %s" % (self.task_owner_name,
+                                                                        self.tasks.milestone.name_of_milestone)
+            return message
+        elif self.type_of_feed is global_variables.NEW_PROJECT:
+            message = "%s created a new project: %s" % (self.task_owner_name, self.tasks.name_of_project)
+            return message
+        else:
+            return None
+
+    def get_before_url(self):
+        if self.type_of_feed is global_variables.PICTURE_SET:
+            return self.tasks.before_picture.milestone_pics.url
+        else:
+            return None
+
+    def get_after_url(self):
+        if self.type_of_feed is global_variables.PICTURE_SET:
+            return self.tasks.after_picture.milestone_pics.url
+        else:
+            return None
+
+    def seens(self):
+        try:
+            if self.type_of_feed is global_variables.MILESTONE:
+                seensd = SeenMilestone.objects.get(tasks=self.tasks)
+            elif self.type_of_feed is global_variables.PICTURE_SET:
+                seensd = SeenPictureSet.objects.get(tasks=self.tasks)
+            elif self.type_of_feed is global_variables.NEW_PROJECT:
+                seensd = SeenProject.objects.get(tasks=self.tasks)
+            else:
+                return 0
+            count = seensd.users.count()
+        except ObjectDoesNotExist:
+            count = 0
+        return count
+
+    def get_start_time(self):
+        return self.tasks.start
+
+    def get_end_time(self):
+        return self.tasks.end
+
+    def get_name_of_tasks(self):
+        try:
+            return self.tasks.name_of_tasks+ " from " + self.get_start_time().strftime("%B %d %Y %I:%M %p") \
+                   + " to " + self.get_end_time().strftime("%B %d %Y %I:%M %p")
+        except (KeyError, AttributeError):
+            return None
+
+    def vouche(self):
+        try:
+            vouched = VoucheMilestone.objects.get(tasks=self.tasks)
+            count = vouched.users.count()
+        except (ObjectDoesNotExist, AttributeError, ValueError):
+            count = 0
+        return count
+
+    def build_cred(self):
+        try:
+            buildCred = BuildCredMilestone.objects.get(tasks=self.tasks)
+            count = buildCred.users.count()
+        except (ObjectDoesNotExist, AttributeError, ValueError):
+            count = 0
+        return count
+
+    def follow(self):
+        count = 0
+        try:
+            follows = Follow.objects.get(tasks=self.tasks)
+            count = follows.users.count()
+        except (ValueError, ObjectDoesNotExist):
+            pass
+        return count
+
+    def letDown(self):
+        try:
+            let_down = LetDown.objects.get(tasks=self.tasks)
+            count = let_down.users.count()
+        except (ObjectDoesNotExist, AttributeError, ValueError):
+            count = 0
+        return count
+
+    def get_name(self):
+        try:
+            print '%s %s from feed' % (self.tasks.user.user.first_name, self.tasks.user.user.last_name)
+            name = '%s' % self.tasks.user.user.first_name + " " + self.tasks.user.user.last_name
+            return name
+        except (AttributeError, ValueError):
+            try:
+                name = '%s' % self.tasks.tikedge_user.user.first_name + " " + self.tasks.tikedge_user.user.last_name
+            except (AttributeError, ValueError):
+                return None
+        return name
+
+    def task_owner_profile_pic_url(self):
+        try:
+            profile_picture = ProfilePictures.objects.get(tikedge_user=self.tasks.user)
+            return profile_picture.profile_pics.url
+        except (AttributeError, ObjectDoesNotExist):
+            return None
+
+
 class NewPictureFeed(TasksFeed):
 
     def __init__(self, tasks, picture):
         TasksFeed.__init__(self, tasks)
-        self.type = global_variables.NEW_PICTURE_FEED
+        self.type_of_feed = global_variables.NEW_PICTURE_FEED
         self.picture = picture
         self.picture_url = self.get_picture_url()
         self.created = picture.date_uploaded
@@ -115,7 +265,7 @@ class NewPictureFeed(TasksFeed):
 class NewsFeed:
 
     def __init__(self, type_of_feed, feed_options=None):
-        self.type_of_feed = type_of_feed
+        self.type_of_feed_of_feed = type_of_feed
         self.feed_options = feed_options
         self.feed = self.get_feed()
         try:
@@ -124,11 +274,11 @@ class NewsFeed:
             self.created = None
 
     def get_feed(self):
-        if self.type_of_feed == global_variables.NEW_TASK_FEED:
+        if self.type_of_feed_of_feed == global_variables.NEW_TASK_FEED:
             return TasksFeed(self.feed_options)
-        elif self.type_of_feed == global_variables.NEW_PICTURE_FEED:
+        elif self.type_of_feed_of_feed == global_variables.NEW_PICTURE_FEED:
             return NewPictureFeed(self.feed_options[0], self.feed_options[1])
-        elif self.type_of_feed == global_variables.NEW_PROFILE_PICTURE_FEED:
+        elif self.type_of_feed_of_feed == global_variables.NEW_PROFILE_PICTURE_FEED:
             return NewPictureFeed(self.feed_options[0], self.feed_options[1])
         return None
 

@@ -22,10 +22,23 @@ def get_user_projects(user):
         user = TikedgeUser.objects.get(user=user)
     except ObjectDoesNotExist:
         return []
-    list_of_project = user.userproject_set.all()
+    list_of_project = user.userproject_set.all().filter(is_live=True)
     t_list= []
     for proj in list_of_project:
         temp_tup = (proj.name_of_project)
+        t_list.append(temp_tup)
+    return t_list
+
+
+def get_user_milestones(user):
+    try:
+        user = TikedgeUser.objects.get(user=user)
+    except ObjectDoesNotExist:
+        return []
+    list_of_milestone = user.milestone_set.all().filter(is_active=True)
+    t_list= []
+    for mil in list_of_milestone:
+        temp_tup = (mil.name_of_milestone)
         t_list.append(temp_tup)
     return t_list
 
@@ -173,6 +186,24 @@ def is_time_conflict(user, start_time, end_time):
     yesterday = form_module.get_current_datetime() - timedelta(days=1)
     user = TikedgeUser.objects.get(user=user)
     todo_todo = user.tasks_set.all().filter(Q(start__lte=start_time), Q(start__gte=yesterday),Q(is_active=True))
+    print todo_todo
+    for task in todo_todo:
+        if task.start.time() <= start_time.time() and task.end.time() >= start_time.time() or \
+                                task.start.time() <= new_end.time() and task.end.time() >= new_end.time():
+            return True
+    return False
+
+
+def is_time_conflict_mil(user, start_time, end_time, project):
+    if end_time:
+        new_end = start_time + timedelta(minutes=int(end_time))
+    else:
+        new_end = start_time + timedelta(minutes=60)
+    print new_end
+    yesterday = form_module.get_current_datetime() - timedelta(days=1)
+    user = TikedgeUser.objects.get(user=user)
+    todo_todo = user.milestone_set.all().filter(Q(start__lte=start_time), Q(start__gte=yesterday),
+                                                Q(is_active=True), Q(project=project))
     print todo_todo
     for task in todo_todo:
         if task.start.time() <= start_time.time() and task.end.time() >= start_time.time() or \

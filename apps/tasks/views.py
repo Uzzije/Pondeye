@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
-from models import User, TikedgeUser, Tasks, UserProject, PendingTasks
+from models import User, TikedgeUser, Tasks, UserProject, PendingTasks, Milestone, TagNames
+from ..social.models import ProfilePictures
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -9,7 +10,8 @@ from datetime import timedelta
 from ..social.modules import get_task_feed, grade_user_success, grade_user_failure, create_grade_for_user
 from modules import get_user_projects, tasks_search, get_current_todo_list, get_todays_todo_list, is_time_conflict, \
     convert_html_to_datetime, time_has_past, get_current_todo_list_json_form, get_todays_todo_list_json, time_to_utc, \
-    get_expired_tasks, get_expired_tasks_json, stringify_task, get_task_picture_urls, json_all_pending_tasks
+    get_expired_tasks, get_expired_tasks_json, stringify_task, get_task_picture_urls, json_all_pending_tasks, \
+    is_time_conflict_mil
 from django_bootstrap_calendar.models import CalendarEvent
 from actstream import action
 from django.core.exceptions import ObjectDoesNotExist
@@ -19,7 +21,7 @@ from datetime import datetime
 from django.db.models import Q
 from tasks import set_reminder, set_task_active, set_reminder_for_non_committed_tasks
 import json
-
+from django.contrib import messages
 
 class RegisterView(View):
 
@@ -56,8 +58,39 @@ class HomeView(View):
         current_task = get_current_todo_list(request.user)
         todays_to_do_list = get_todays_todo_list(request.user)
         expired_tasks = get_expired_tasks(request.user)
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+            pass
+        user_picture_form = tasks_forms.PictureUploadForm()
+
         return render(request, 'tasks/home.html', {'current_task':current_task, 'todays_tasks':todays_to_do_list,
-                                                   'expired_tasks':expired_tasks})
+                                                   'expired_tasks':expired_tasks, 'has_prof_pic':has_prof_pic,
+                                                   'user_picture_form':user_picture_form})
+
+    def post(self, request):
+        user_picture_form = tasks_forms.PictureUploadForm(request.POST, request.FILES)
+        if user_picture_form.is_valid():
+            tkduser = TikedgeUser.objects.get(user=request.user)
+            picture_file = request.FILES.get('picture', False)
+            try:
+                ProfilePictures.objects.get(tikedge_user=tkduser).delete()
+            except ObjectDoesNotExist:
+                pass
+            picture_mod = ProfilePictures(image_name=picture_file.name, profile_pics=picture_file, tikedge_user=tkduser)
+            picture_mod.save()
+            current_task = get_current_todo_list(request.user)
+            todays_to_do_list = get_todays_todo_list(request.user)
+            expired_tasks = get_expired_tasks(request.user)
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tkduser)
+            return render(request, 'tasks/home.html', {'current_task':current_task, 'todays_tasks':todays_to_do_list,
+                                                   'expired_tasks':expired_tasks, 'has_prof_pic':has_prof_pic,
+                                                   'user_picture_form':user_picture_form})
+        print "something went wrong"
+
+        return HttpResponse(request, 'tasks/home.html', {'user_picture_form':user_picture_form})
 
 
 class ListOfTasksViews(View):
@@ -188,17 +221,65 @@ class ApiRegistrationView(CSRFEnsureCookiesView):
          return response
 
 
-class AddTasks(View):
+class AddProject(View):
 
     def get(self, request):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('tasks:login'))
         form = tasks_forms.AddTaskForm(user=request.user)
-        return render(request, 'tasks/add_tasks.html', {'form':form, 'existing_project':get_user_projects(request.user)})
+        tag_names = TagNames.objects.all()
+        return render(request, 'tasks/add_view.html', {'form':form,'tag_names':tag_names,
+                                                       'existing_project':get_user_projects(request.user)})
 
     def post(self, request):
-        form = tasks_forms.AddTaskForm(user=request.user, data=request.POST)
         user = TikedgeUser.objects.get(user=request.user)
+        tag_names = TagNames.objects.all()
+        if 'mil_create' in request.POST:
+            name_of_milestone = request.POST.get('milestone_name')
+            name_of_project = request.POST.get('name_of_mil_proj')
+            try:
+                done_by_r = convert_html_to_datetime(request.POST.get('done_by_mil'))
+                done_by = datetime.strptime(done_by_r, '%Y-%m-%d %H:%M')
+            except (ValueError, IndexError):
+                done_by = None
+            length_of_time = request.POST.get('length_of_time')
+            if (name_of_milestone is not '') and done_by and (name_of_project is not '') and (done_by is not '') \
+                    and (not time_has_past(done_by)):
+                start_time = done_by + timedelta(hours=1)
+                user_project = UserProject.objects.get(name_of_project=name_of_project, user=user)
+                if not time_has_past(start_time) and (not is_time_conflict_mil(request.user, start_time, done_by, user_project)):
+                    if (length_of_time is not '') and (length_of_time is not '-1'):
+                        start_time = done_by + timedelta(hours=int(length_of_time))
+                    new_milestone = Milestone(name_of_milestone=name_of_milestone, user=user, reminder=start_time,
+                                          done_by=done_by, project=user_project)
+                    new_milestone.save()
+                    messages.success(request, "Successfully added a Milestone to %s project" % name_of_project)
+                    return HttpResponseRedirect(reverse('tasks:home'))
+        if 'proj_create' in request.POST or 'proj_save' in request.POST:
+            try:
+                start_by_r = convert_html_to_datetime(request.POST.get('done_by_proj'))
+                start_by = datetime.strptime(start_by_r, '%Y-%m-%d %H:%M')
+            except (ValueError, IndexError):
+                start_by = None
+            if not time_has_past(start_by):
+                name_of_project = request.POST.get('name_of_project')
+                tags = request.POST.getlist('tags')
+                print tags
+                new_project = UserProject(name_of_project=name_of_project, user=user)
+                new_project.save()
+                if 'proj_create' in request.POST:
+                    new_project.is_live = True
+                    new_project.made_live = start_by
+                    messages.success(request, "Sweet! %s has begun!" % name_of_project)
+                else:
+                    messages.success(request, "Sweet! %s has been created!" % name_of_project)
+                for item in tags:
+                    print tags, " tags why"
+                    item_obj = TagNames.objects.get(name_of_tag=item)
+                    new_project.tags.add(item_obj)
+                new_project.save()
+                return HttpResponseRedirect(reverse('tasks:home'))
+        '''
         if form.is_valid():
             name_of_task = form.cleaned_data['to_do_item']
             start_time = form.cleaned_data['start_time']
@@ -238,7 +319,10 @@ class AddTasks(View):
                 tasks.part_of_project = True
                 tasks.save()
             return HttpResponseRedirect(reverse('tasks:home'))
-        return render(request, 'tasks/add_tasks.html', {'form':form, 'existing_project':get_user_projects(request.user)})
+        '''
+        messages.error(request, "Dude something went wrong")
+        return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
+                                                       'existing_project':get_user_projects(request.user)})
 
 
 class ApiTaskView(CSRFExemptView):

@@ -1,48 +1,68 @@
-{% extends 'social/base.html' %}
+{% extends 'social/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>News Feed</title>
+     {% block custom_design %}
+
+    {% endblock %}
 </head>
 <body>
 {% block body %}
-    <div class="row">
-    {% for activities in activities_todo %}
-        {{ activities.name_of_task }}
-        <div class="row">
-            {% if activities.tasks.is_completed or activities.tasks.task_failed %}
-                {% if activities.is_completed %}
-                    <div class="col-md-2">
-                        <i class="">build cred <span id="build-cred">{{ activities.build_cred_count }}</span></i>
+    {% load cropping %}
+    <div class="container">
+        {% for feed in all_feeds %}
+            <div class="row">
+                <div class="row"> <!--- user pic and name --->
+                    <div class="col s6">
+
                     </div>
-                {% endif %}
-                {% if activities.task.task_failed %}
-                    <div class="col-md-2">
-                        <i class="btn-link">let down  <p id="let-down">{{ activities.letDown_count }}</p></i>
+                    <div class="col s6">
+
                     </div>
-                {% endif %}
-            {% else %}
-                <div class="col-md-2">
-                    <button class="btn-link">vouche <span id="vouche">{{ activities.vouche_count }}</span></button>
                 </div>
-            {% endif %}
-            {% if activities.tasks.part_of_project %}
-                <div class="col-md-2">
-                    <button class="btn-link">follow <p id="follow">{{ activities.follow_count }}</p></button>
+                <div class="row"> <!--- feed info and name --->
+                    {% if feed.is_milestone_feed %}
+                        <a href="#">{{ feed.message }}</a>
+                         <div class="row">
+                            <div class="col s2">
+                                <button class="btn-link">vouche <span id="vouche">{{ feed.vouche_count }}</span></button>
+                            </div>
+                             <div class="col s2">
+                                <i class="btn-link">seen <span id="seen">{{ feed.seen_count }}</span></i>
+                             </div>
+                         </div>
+                    {% elif feed.is_picture_feed %}
+                        <div class="col s12">
+                            <div class="ba-slider">
+                               <img src="{{ feed.before_url }}">
+                               <div class="resize">
+                                   <img src="{{ feed.after_url }}">
+                               </div>
+                               <span class="handle"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span>Milestone: </span>{{ feed.message }}
+                        </div>
+                    {% else %}
+                        {{ feed.message }}
+                         <div class="row">
+                            <div class="col s2">
+                                <button class="btn-link">interesting <span id="vouche">{{ feed.follow_count }}</span></button>
+                            </div>
+                             <div class="col s2">
+                                <i class="btn-link">seen <span id="seen">{{ feed.seen_count }}</span></i>
+                             </div>
+                         </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-                <div class="col-md-2">
-                    <i class="btn-link">seen {{ activities.seen_count }}</i>
-                </div>
-        </div>
-    {% endfor %}
-        <div class="row">
-            {% for each_notific in notifications %}
-                {{ each_notific.name }}
-            {% endfor %}
-        </div>
-</div>
+                <br><br>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 </body>
 </html>

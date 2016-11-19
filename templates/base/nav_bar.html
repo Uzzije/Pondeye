@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block nav_script %}
+    <script>
+        $(".button-collapse").sideNav();
+        $(document).ready(function() {
+            $('select').material_select();
+            //function to check if the .cd-image-container is in the viewport here
+            // ...
+            console.log("slider is ready");
+            //make the .cd-handle element draggable and modify .cd-resize-img width according to its position
+            $('.cd-image-container').each(function(){
+                var actual = $(this);
+                dragss(actual.find('.cd-handle'), actual.find('.cd-resize-img'), actual);
+            });
+
+            //function to upadate images label visibility here
+            // ...
+             $('.ba-slider').each(function(){
+                var cur = $(this);
+                // Adjust the slider
+                var width = cur.width()+'px';
+                cur.find('.resize img').css('width', width);
+                 drags(cur.find('.handle'), cur.find('.resize'), cur);
+             });
+        });
+            $(window).resize(function(){
+              $('.ba-slider').each(function(){
+                var cur = $(this);
+                var width = cur.width()+'px';
+                cur.find('.resize img').css('width', width);
+              });
+            });
+    </script>
+{% endblock %}
+</body>
+</html>

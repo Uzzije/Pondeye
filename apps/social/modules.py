@@ -1,13 +1,14 @@
-from ..tasks.models import TikedgeUser, Tasks
-from .models import TaskPicture, ProfilePictures, Graded, Seen, Vouche, Notification
+from ..tasks.models import TikedgeUser, Tasks, Milestone, UserProject
+from .models import TaskPicture, ProfilePictures, Graded, Seen, Vouche, Notification, PictureSet
 from django.db.models import Q
-from tasks_feed import TasksFeed, NewsFeed, NotificationFeed
+from tasks_feed import TasksFeed, NewsFeed, NotificationFeed, PondFeed
 from ..tasks.modules import get_query
 from friendship.models import Friend
 from models import User
 from django.core.exceptions import ObjectDoesNotExist
 import global_variables
 import copy
+
 
 def convert_list_to_profile_activities_object(type_of_feed, object_feed):
     list_of_activities = []
@@ -74,10 +75,19 @@ def get_users_feed(user):
     list_of_feed = []
     user_friends = Friend.objects.friends(user)
     tkdge_friends = TikedgeUser.objects.filter(user__in=user_friends)
-    tasks_feed = Tasks.objects.filter(Q(is_active=True),Q(user__in=tkdge_friends))
-    print tasks_feed
-    for each_tasks in tasks_feed:
-        feed = TasksFeed(each_tasks)
+    milestone_feed = Milestone.objects.filter(Q(is_active=True),Q(user__in=tkdge_friends))
+    project_feed = UserProject.objects.filter(Q(is_live=True), Q(user__in=tkdge_friends))
+    picture_feed = PictureSet.objects.filter(~Q(after_picture=None), Q(tikedge_user__in=tkdge_friends))
+    print "picture feed", picture_feed
+    #print tasks_feed
+    for each_tasks in milestone_feed:
+        feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE)
+        list_of_feed.append(feed)
+    for each_tasks in project_feed:
+        feed = PondFeed(each_tasks, type_of_feed=global_variables.NEW_PROJECT)
+        list_of_feed.append(feed)
+    for each_tasks in picture_feed:
+        feed = PondFeed(each_tasks, type_of_feed=global_variables.PICTURE_SET)
         list_of_feed.append(feed)
     return list_of_feed
 

@@ -103,3 +103,13 @@ class AddTaskForm(forms.Form):
                     return time
                 msg = "Hey, your work is not history yet"
                 self.add_error('start_time', msg)
+
+
+class PictureUploadForm(forms.Form):
+    picture = forms.ImageField(label="Upload Picture", required=True)
+
+
+class AddProjectForm(forms.Form):
+    pass
+
+

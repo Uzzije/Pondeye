@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from image_cropping import ImageRatioField
-from ..tasks.models import TikedgeUser, Tasks, UserProject
+from ..tasks.models import TikedgeUser, Tasks, UserProject, Milestone
 from friendship.models import FriendshipRequest
 from django.contrib.auth.models import User
 from django.utils.timezone import now
@@ -22,7 +22,29 @@ class TaskPicture(models.Model):
     cropping = ImageRatioField('task_pics', '5x5')
     tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     task = models.ForeignKey(Tasks, blank=True, null=True)
-    date_uploaded =  models.DateTimeField(default=now)
+    date_uploaded = models.DateTimeField(default=now)
+
+
+class Picture(models.Model):
+    image_name = models.CharField(max_length=300)
+    milestone_pics = models.ImageField(upload_to='image/tasks/%Y/%m/%d', verbose_name="profile image")
+    cropping = ImageRatioField('milestone_pics', '5x5')
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    date_uploaded = models.DateTimeField(default=now)
+    is_before = models.BooleanField(default=True)
+
+    def __str__(self):
+        return '%s %s' % (self.tikedge_user.user.username, self.image_name)
+
+
+class PictureSet(models.Model):
+    before_picture = models.ForeignKey(Picture, blank=True, null=True, related_name="before_picture")
+    after_picture = models.ForeignKey(Picture, blank=True, null=True, related_name="after_picture")
+    milestone = models.ForeignKey(Milestone, blank=True, null=True)
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+
+    def __str__(self):
+        return '%s' % self.before_picture.image_name
 
 
 class Friends(models.Model):
@@ -35,14 +57,39 @@ class Seen(models.Model):
     tasks = models.ForeignKey(Tasks, blank=True, null=True)
 
 
+class SeenMilestone(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the milestones")
+    tasks = models.ForeignKey(Milestone, blank=True, null=True)
+
+
+class SeenProject(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the projects")
+    tasks = models.ForeignKey(UserProject, blank=True, null=True)
+
+
+class SeenPictureSet(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the pictureSet")
+    tasks = models.ForeignKey(PictureSet, blank=True, null=True)
+
+
 class Vouche(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="User That Vouche For the Task")
     tasks = models.ForeignKey(Tasks, blank=True, null=True)
 
 
+class VoucheMilestone(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="User That Vouche For the milestone")
+    tasks = models.ForeignKey(Milestone, blank=True, null=True)
+
+
 class BuildCred(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="User That Tasks Owner Built Cred For")
     tasks = models.ForeignKey(Tasks, blank=True, null=True)
+
+
+class BuildCredMilestone(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="User That Milestone Owner Built Cred For")
+    tasks = models.ForeignKey(Milestone, blank=True, null=True)
 
 
 class Follow(models.Model):
@@ -53,6 +100,11 @@ class Follow(models.Model):
 class LetDown(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="users that were let down by vouche for your task")
     tasks = models.ForeignKey(Tasks, blank=True, null=True)
+
+
+class LetDownMilestone(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="users that were let down by vouche for your Milestone")
+    tasks = models.ForeignKey(Milestone, blank=True, null=True)
 
 
 class Notification(models.Model):
