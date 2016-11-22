@@ -5,6 +5,8 @@ from ..tasks.models import TikedgeUser, Tasks, UserProject, Milestone
 from friendship.models import FriendshipRequest
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+from global_variables import NEW_PROJECT
+from random import randint
 # Create your models here.
 
 
@@ -122,6 +124,34 @@ class Notification(models.Model):
         return self.name_of_notification
 
 
+class JournalPost(models.Model):
+    entry_blurb = models.CharField(default=None, max_length=240)
+    day_entry = models.IntegerField(default=1)
+    day_created = models.DateTimeField(default=now)
+    event_type = models.CharField(default=NEW_PROJECT, max_length=20)
+    picture_set_entry = models.ForeignKey(PictureSet, null=True)
+    milestone_entry = models.ForeignKey(Milestone, null=True)
+    new_project_entry = models.ForeignKey(UserProject, null=True)
+    user = models.ForeignKey(TikedgeUser, null=True)
+    is_deleted = models.BooleanField(default=False)
+    is_picture_set = models.BooleanField(default=False)
+    is_milestone_entry = models.BooleanField(default=False)
+    is_project_entry = models.BooleanField(default=False)
+    slug = models.SlugField(default=None, max_length=100)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            str_slug = str(randint(0, 999999))
+            str_slug_two = str(randint(9000, 99999999))
+            self.slug = str_slug + str_slug_two
+        super(JournalPost, self).save(*args, **kwargs)
+
+
+class JournalComment(models.Model):
+    journal_post = models.ForeignKey(JournalPost, null=True)
+    comment = models.CharField(max_length=2000, default=None)
+    is_deleted = models.BooleanField(default=False)
+
 class Graded(models.Model):
     credibility_count = models.IntegerField(default=0)
     consistency_count = models.IntegerField(default=0)
@@ -202,6 +232,11 @@ class Graded(models.Model):
     def get_num_grade_credibility(self):
         ratio = float(self.credibility_count/self.max_credibility_count)*100
         return int(ratio)
+
+
+
+
+
             
 
 

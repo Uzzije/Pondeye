@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block design %}
-        <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
@@ -40,7 +41,7 @@
                     Your Calendar
                 </a>
             </li>
-            <li><a class="bar-font"style="color:blue" href="{% url 'social:profile_view' %}">Profile</a></li>
+            <li><a class="bar-font"style="color:blue" href="{% url 'social:journal_entries' %}">Journal Entries</a></li>
             <li><a class="bar-font" style="color:blue" href="{% url 'social:todo_feed' %}">Feed</a></li>
             <li><a class="bar-font"style="color:blue" href="{% url 'tasks:logout' %}">Logout</a></li>
         </ul>

@@ -1,0 +1,110 @@
+{% extends 'social/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+            {% for journal_feed in list_of_journal_feeds %}
+                <div class="panel panel-default">
+                    <div class="row">
+                        <div class="col s3">
+                             <span>Entry: {{ journal_feed.day_entry }}</span>
+                        </div>
+                        <div class="col s3">
+                            {{ journal_feed.day_created }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            {% if journal_feed.is_pic_set %}
+                                <a href="{% url 'social:picture_set' journal_feed.content.slug %}">
+                                    {{ journal_feed.entry }}
+                                </a>
+                            {% elif journal_feed.is_mil %}
+                                <a href="{% url 'social:milestone_view' journal_feed.content.slug %}">
+                                    <p class="flow-text">{{ journal_feed.entry }}</p>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'social:project_view' journal_feed.content.slug %}">
+                                    <h6>{{ journal_feed.entry }}</h6>
+                                </a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s4>">
+                            <button onclick="showCommentBox({{ journal_feed.comment_id }})" class="btn btn-info btn-lg">
+                                Add New Thought
+                            </button>
+                        </div>
+                        <div class="col s4">
+                            <a href="{% url 'social:journal_post_comments' journal_feed.feed_entry.slug %}">
+                                    view thoughts
+                            </a>
+                        </div>
+                    </div>
+                    <div id="{{ journal_feed.comment_id }}" hidden>
+                        <div class="row">
+                              <div class="col-md-12">
+                                  <textarea placeholder="Journal your thoughts to project"
+                                            id="com_{{ journal_feed.comment_id }}"
+                                            class="form-control">
+                                  </textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button onclick="sendComment({{ journal_feed.comment_id }})" class="btn btn-success">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        <script>
+
+            function showCommentBox(comment_id){
+                $("#"+comment_id).toggle(1000);
+            }
+
+            function sendComment(comment_id){
+                var comment = $("#com_"+comment_id).val().trim();
+                console.log(comment + " comments");
+                if(comment == ""){
+                    Materialize.toast("Hey, thoughts can't be empty", 2000);
+                }
+                else{
+                    console.log(comment + " comments");
+                    $.ajaxSetup({
+                        data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                    });
+                    $.ajax({
+                        url: '{% url 'social:journal_entries' %}',
+                        type: "POST",
+                        data: { journal_id: comment_id, comment: comment},
+                        success: function(response){
+                            var statusParse = JSON.parse(response);
+                            var status = statusParse["status"];
+                            if (status == true){
+                                Materialize.toast("Thought Added", 2000);
+                            }
+                            else{
+                                console.log("Can't be empty");
+                            }
+
+                        },
+                        error: function(xhr){
+                            $("#error-message").text(xhr.responseText).show();
+                        }
+                    })
+                }
+            }
+        </script>
+    {% endblock %}
+</body>
+</html>

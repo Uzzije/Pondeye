@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+from random import randint
 
 
 class TikedgeUser(models.Model):
@@ -27,6 +28,20 @@ class UserProject(models.Model):
     length_of_project = models.DateTimeField(blank=True, null=True)
     created = models.DateTimeField(default=now)
     made_live = models.DateTimeField(blank=True, null=True)
+    slug = models.SlugField(default=None, max_length=100)
+    blurb = models.CharField(max_length=150, default=None)
+    is_completed = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if len(self.name_of_project) > 150:
+            self.blurb = self.name_of_project[0:150]
+        else:
+            self.blurb = self.name_of_project
+        if not self.slug:
+            str_slug = str(randint(0, 999999))
+            str_slug_two = str(randint(9000, 99999999))
+            self.slug = str_slug + str_slug_two
+        super(UserProject, self).save(*args, **kwargs)
 
 
 class Tasks(models.Model):
@@ -54,7 +69,7 @@ class PendingTasks(models.Model):
 
 
 class Milestone(models.Model):
-    name_of_milestone = models.CharField(max_length=300)
+    name_of_milestone = models.CharField(max_length=600)
     project = models.ForeignKey(UserProject, blank=True, null=True)
     user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     reminder = models.DateTimeField(blank=True, null=True)
@@ -64,8 +79,20 @@ class Milestone(models.Model):
     milestone_failed = models.BooleanField(default=False)
     current_working_on_milestone = models.BooleanField(default=False)
     created_date = models.DateTimeField(default=now)
+    slug = models.SlugField(default=None, max_length=100)
+    blurb = models.CharField(max_length=150, default=None)
+    is_completed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name_of_milestone
 
-
+    def save(self, *args, **kwargs):
+        if len(self.name_of_milestone) > 150:
+            self.blurb = self.name_of_milestone[0:150]
+        else:
+            self.blurb = self.name_of_milestone
+        if not self.slug:
+            str_slug = str(randint(0, 999999))
+            str_slug_two = str(randint(9000, 99999999))
+            self.slug = str_slug + str_slug_two
+        super(Milestone, self).save(*args, **kwargs)

@@ -1,0 +1,47 @@
+{% extends 'social/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+            <div class="row">
+                <a href="{% url 'social:project_view' project_slug %}"><h6>{{ project_name }}</h6></a>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <header>Project Motivations</header>
+                    <ul>
+                    {% for motif in motivations %}
+                        <li><a href="{% url 'social:tag_search' motif.name_of_tag %}">{{ motif.name_of_tag }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <h4>Milestones of Projects</h4>
+                </div>
+            </div>
+            <div class="row">
+                {% for each_mil, vouches, views in milestones %}
+                    <div class="col s6">
+                        <div class="col s6">
+                            <a href="{% url 'social:milestone_view' each_mil.slug %}">{{ each_mil.blurb }}...</a>
+                        </div>
+                        <div class="col s3">
+                            <span> vouches ( {{ vouches }} )</span>
+                        </div>
+                        <div class="col s3">
+                            <span> views ( {{ views }} )</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endblock %}
+
+</body>
+</html>

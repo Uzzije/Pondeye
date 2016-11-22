@@ -1,9 +1,10 @@
 from django.contrib import admin
-from models import Follow, Seen, Vouche, ProfilePictures, TaskPicture, Graded, Notification, PictureSet, VoucheMilestone
+from models import Follow, SeenMilestone, Vouche, ProfilePictures, TaskPicture, Graded, Notification, PictureSet, VoucheMilestone, \
+	Picture, JournalPost, JournalComment
 # Register your models here.
 
 admin.site.register(Follow)
-admin.site.register(Seen)
+admin.site.register(SeenMilestone)
 admin.site.register(Vouche)
 admin.site.register(ProfilePictures)
 admin.site.register(TaskPicture)
@@ -11,3 +12,6 @@ admin.site.register(Graded)
 admin.site.register(Notification)
 admin.site.register(PictureSet)
 admin.site.register(VoucheMilestone)
+admin.site.register(Picture)
+admin.site.register(JournalPost)
+admin.site.register(JournalComment)

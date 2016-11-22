@@ -145,14 +145,14 @@ class PondFeed:
         if self.type_of_feed is global_variables.MILESTONE:
             print self.task_owner_name, " slammer"
             message = "%s created a new milestone: %s for project: %s" % \
-                      (self.task_owner_name, self.tasks.name_of_milestone, self.tasks.project.name_of_project)
+                      (self.task_owner_name, self.tasks.name_of_milestone, self.tasks.project.blurb)
             return message
         elif self.type_of_feed is global_variables.PICTURE_SET:
             message = "%s entered a journal entry for milestone: %s" % (self.task_owner_name,
-                                                                        self.tasks.milestone.name_of_milestone)
+                                                                        self.tasks.milestone.blurb)
             return message
         elif self.type_of_feed is global_variables.NEW_PROJECT:
-            message = "%s created a new project: %s" % (self.task_owner_name, self.tasks.name_of_project)
+            message = "%s created a new project: %s" % (self.task_owner_name, self.tasks.blurb)
             return message
         else:
             return None
@@ -298,21 +298,17 @@ class NotificationFeed:
     def get_unread_notification(self):
         notification_list = []
         unread_notify = self.notification.filter(Q(read=False)).order_by('created')
-        tikedge = TikedgeUser.objects.get(user=self.user)
-        graded_calc = Graded.objects.get(user=tikedge)
         for each_notif in unread_notify:
-            new_object = SingleNotification(each_notif, graded_cal=graded_calc)
+            new_object = SingleNotification(each_notif)
             notification_list.append(new_object)
         return notification_list
 
 
 class SingleNotification:
 
-    def __init__(self, notification_object, graded_cal=None):
+    def __init__(self, notification_object):
         self.notif = notification_object
-        self.graded_cal = graded_cal
         self.name = self.get_name()
-
 
     def get_name(self):
 
@@ -325,126 +321,11 @@ class SingleNotification:
             name = "Your Friend Request Has Been Accepted"
         elif self.notif.type_of_notification == global_variables.REQUEST_REJECTED:
             name = "Your Friend Request Has Been Rejected"
-        elif self.notif.type_of_notification == global_variables.NEW_PICTURE_ADDED:
-            task_owner_name = '%s %s' % (self.notif.picture_post.task.user.first_name,
-                              self.notif.picture_post.task.user.first_name)
-            name_of_task = self.notif.picture_post.task.name_of_tasks
-            name = "%s Added a New Picture to %s task" % (task_owner_name, name_of_task)
-        elif self.notif.type_of_notification == global_variables.PROJECT_FOLLOWING_UPDATE:
-            project_owner_name = '%s %s' % (self.notif.project_update.user.first_name,
-                              self.notif.project_update.user.first_name)
-            project_name = self.notif.project_update.name_of_project
-            name = "%s Updated %s Project" % (project_owner_name, project_name)
-        elif self.notif.type_of_notification == global_variables.CORRECT_VOUCH:
-            credibility = self.graded_cal
-            point_difference = credibility.credibility_count - credibility.max_credibility_count
-            if point_difference == 0:
-                signal = "+"
-                point_difference = credibility.credibility_count
-            else:
-                signal = ""
-            name = "Good backing, %s %s completed the tasks: %s .Keep up the support! Grade:%s %s%d" % (self.notif.tasks.user.first_name,
-                                                     self.notif.tasks.user.user.last_name, self.notif.tasks.name_of_tasks,
-                                                       credibility.get_grade_for_credibility(), signal,
-                                                         point_difference)
-        elif self.notif.type_of_notification == global_variables.MISSED_VOUCH_OPPURTUNITY:
-            credibility = self.graded_cal
-            point_difference = credibility.credibility_count - credibility.max_credibility_count
-            if point_difference == 0:
-                signal = "+"
-                point_difference = credibility.credibility_count
-            else:
-                signal = ""
-            name = "Hey, you miss judge %s %s chances with tasks: %s Grade: %s %s%d" % (self.notif.tasks.user.user.first_name,
-                                                     self.notif.tasks.user.user.last_name, self.notif.tasks.name_of_tasks,
-                                                       credibility.get_grade_for_credibility(), signal,
-                                                         point_difference)
-
-        elif self.notif.type_of_notification == global_variables.INCORRECT_VOUCH:
-            credibility = self.graded_cal
-            point_difference = credibility.credibility_count - credibility.max_credibility_count
-            if point_difference == 0:
-                signal = "+"
-                point_difference = credibility.credibility_count
-            else:
-                signal = ""
-            name = "Hey, %s %s let you down with tasks: %s. " \
-                   "But hey, keep up the support! Grade: %s %s%d" % (self.notif.tasks.user.user.first_name,
-                                                     self.notif.tasks.user.user.last_name, self.notif.tasks.name_of_tasks,
-                                                       credibility.get_grade_for_credibility(), signal,
-                                                         point_difference)
-
-        elif self.notif.type_of_notification == global_variables.FAILED_TASKS:
-            consitency = self.graded_cal
-            point_difference = consitency.consistency_count - consitency.max_consistency_count
-            if point_difference == 0:
-                signal = "+"
-                point_difference = consitency.consistency_count
-            else:
-                signal = ""
-            try:
-                vouch = Vouche.objects.get(tasks=self.notif.tasks)
-                vouch_count = vouch.users.all().count()
-            except ObjectDoesNotExist:
-                vouch_count = 0
-            if vouch_count > 0:
-                name = "You failed to complete tasks: %s, you let %d friends down Grade: %s %s%d" % \
-                       (self.notif.tasks.name_of_tasks, vouch_count, consitency.get_grade_for_consistency(), signal,
-                                                         point_difference)
-            else:
-                try:
-                    seen = Seen.objects.get(tasks=self.notif.tasks)
-                    seen_count = seen.users.all().count()
-                except ObjectDoesNotExist:
-                    seen_count = 0
-                if seen_count > 0:
-                    name = "You failed to complete tasks: %s, fortunately none of your" \
-                           "%d thought you could do it Grade: %s %s %d" % (self.notif.tasks.name_of_tasks, seen_count,
-                                                                           consitency.get_grade_for_consistency(), signal,
-                                                         point_difference)
-                else:
-                    name = "You failed to complete tasks: %s Grade: %s %s%d" \
-                           % (self.notif.tasks.name_of_tasks, consitency.get_grade_for_consistency(), signal,
-                                                         point_difference)
-        elif self.notif.type_of_notification == global_variables.COMPLETED_TASKS:
-            consitency = self.graded_cal
-            point_difference = consitency.consistency_count - consitency.max_consistency_count
-            if point_difference == 0:
-                signal = "+"
-                point_difference = consitency.consistency_count
-            else:
-                signal = ""
-            try:
-                vouch = Vouche.objects.get(tasks=self.notif.tasks)
-                vouch_count = vouch.users.all().count()
-            except ObjectDoesNotExist:
-                vouch_count = 0
-            if vouch_count > 0:
-                name = "Yes! You completed the tasks: %s, %d friends credibility boosted! Grade: %s %s%d" % \
-                       (self.notif.tasks.name_of_tasks, vouch_count, consitency.get_grade_for_consistency(), signal,
-                                                         point_difference)
-            else:
-                try:
-                    seen = Seen.objects.get(tasks=self.notif.tasks)
-                    seen_count = seen.users.all().count()
-                except ObjectDoesNotExist:
-                    seen_count = 0
-                if seen_count > 0:
-                    name = "Yes! You completed the tasks: %s, %d know " \
-                           "who to support next time Grade: %s %s%d" % (self.notif.tasks.name_of_tasks, seen_count,
-                                                                           consitency.get_grade_for_consistency(), signal,
-                                                         point_difference)
-                else:
-                    name = "Yes! You completed the tasks: %s Grade: %s %s%d" \
-                           % (self.notif.tasks.name_of_tasks, consitency.get_grade_for_consistency(), signal,
-                                                         point_difference)
         else:
             name = "New Notification"
         self.notif.name_of_notification = name
         self.notif.save()
         return name
-
-
 
 
 

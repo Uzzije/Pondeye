@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Material Design Bootstrap</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../apps/social/static/MDB%20Free/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="../../apps/social/static/MDB%20Free/css/mdb.min.css" rel="stylesheet">
+
+    <!-- Your custom styles (optional) -->
+    <link href="../../apps/social/static/MDB%20Free/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+    <!-- Start your project here-->
+
+    <div style="height: 100vh">
+        <div class="flex-center">
+            <h1 class="animated fadeIn">Material Design for Bootstrap</h1>
+        </div>
+    </div>
+
+    <!-- /Start your project here-->
+
+
+    <!-- SCRIPTS -->
+     <script  src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+            crossorigin="anonymous"></script>
+    <!-- JQuery -->
+    <script type="text/javascript" src="../../apps/social/static/MDB%20Free/js/jquery-3.1.1.min.js"></script>
+
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="../../apps/social/static/MDB%20Free/js/tether.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="../../apps/social/static/MDB%20Free/js/bootstrap.min.js"></script>
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="../../apps/social/static/MDB%20Free/js/mdb.min.js"></script>
+
+
+</body>
+
+</html>
+
+<nav class="navbar navbar-inverse">
+                <ul class="nav navbar-nav">
+                  <li class="nav-item active">
+                    <a href="#" data-activates="slide-out" class="button-collapse">
+                        <span class="waves-effect waves-light btn-large"><i class="material-icons">menu</i></span>
+                    </a>
+                  </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <a href="{% url 'tasks:home' %}"><span><h3>Pondeye</h3></span></a>
+                </ul>
+            </nav>
+            <div class="container">
+                <div class="row">
+                  <form>
+                    <div class="input-field">
+                      <input class="form-control" type="search" placeholder="Discover" name="get_people" id="id_q" value="">
+                      <i class="material-icons">close</i>
+                    </div>
+                  </form>
+                </div>
+            </div>
+
+<ul id="slide-out" class="side-nav">
+            <li>
+                <a class="bar-font" style="color:blue" href="{% url 'django_bootstrap_calendar:calendar' %}">
+                    Your Calendar
+                </a>
+            </li>
+            <li><a class="bar-font"style="color:blue" href="{% url 'social:profile_view' %}">Profile</a></li>
+            <li><a class="bar-font" style="color:blue" href="{% url 'social:todo_feed' %}">Feed</a></li>
+            <li><a class="bar-font"style="color:blue" href="{% url 'tasks:logout' %}">Logout</a></li>
+        </ul>

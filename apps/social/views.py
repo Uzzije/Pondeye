@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import View
 from forms import social_forms
-from models import ProfilePictures, Notification, Vouche, Follow, PictureSet, Picture, VoucheMilestone
+from models import (ProfilePictures, Notification, Vouche, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
+                    JournalPost, JournalComment)
 from ..tasks.models import TikedgeUser, UserProject, User, Tasks, Milestone
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
-from encouragements_list import FAIL
 from django.core.exceptions import ObjectDoesNotExist
 import modules
 from ..tasks import modules as task_modules
@@ -18,6 +18,7 @@ import global_variables
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 import json
 from django.contrib import messages
+from django.db.models import Q
 
 
 class CSRFExemptView(View):
@@ -32,23 +33,80 @@ class CSRFEnsureCookiesView(View):
         return super(CSRFEnsureCookiesView, self).dispatch(*args, **kwargs)
 
 
-class ProfileView(View):
+class JournalEntriesView(View):
 
     def get(self, request):
-        activities = modules.get_user_activities(request.user)
-        user_picture_form = social_forms.PictureUploadForm()
         tkdge = TikedgeUser.objects.get(user=request.user)
+        list_of_journal_feeds = modules.get_user_journal_feed(tkdge)
+        return render(request, 'social/journal.html', {'list_of_journal_feeds':list_of_journal_feeds})
+
+    def post(self, request):
+        comment = request.POST.get("comment")
+        response = {}
+        if comment is not "":
+            journal_id = request.POST.get("journal_id")
+            journal = JournalPost.objects.get(id=int(journal_id))
+            new_comment = JournalComment(journal_post=journal, comment=comment)
+            new_comment.save()
+            response["status"] = True
+        else:
+            response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class JournalCommentListView(View):
+
+    def get(self, request, slug):
+        journal_post = JournalPost.objects.get(slug=slug)
+        comments = journal_post.journalcomment_set.all().filter(is_deleted=False)
+        print "comment ", comments
+        return render(request, 'social/journal_thoughts.html', {'journal_comments':comments})
+
+
+class MilestoneView(View):
+
+    def get(self, request, slug):
+        milestone = Milestone.objects.get(slug=slug)
+        project = milestone.project
+        project_name = project.name_of_project
+        feed_id = milestone.id
+        modules.increment_milestone_view(request.user, milestone)
         try:
-            user_pic = ProfilePictures.objects.get(tikede_user=tkdge)
+            vouch_count = VoucheMilestone.objects.get(tasks=milestone).users.count()
         except ObjectDoesNotExist:
-            user_pic = None
+            vouch_count = 0
         try:
-            projects = UserProject.objects.filter(user=tkdge)
+            seen_count = SeenMilestone.objects.get(tasks=milestone).users.count()
+            print "seen count ", seen_count
+            print "seen count ", seen_count
         except ObjectDoesNotExist:
-            projects = None
-        word_of_ecouragement = FAIL
-        return render(request, 'social/profile.html', {'user_pic':user_pic, 'projects':projects,
-                                                       'user_picture_form':user_picture_form, 'activities':activities})
+            seen_count = 0
+        project_completed = task_modules.time_has_past(project.length_of_project)
+        user_first_name = milestone.user.user.first_name
+        pic_list = milestone.pictureset_set.all().filter(~Q(after_picture=None))
+        percentage = modules.get_milestone_percentage(milestone)
+        return render(request, 'social/milestone_view.html', {
+            'milestone':milestone, 'project_name':project_name,
+            'feed_id':feed_id, 'vouch_count':vouch_count, 'seen_count':seen_count,
+            'project_completed':project_completed, 'user_first_name': user_first_name,
+            'project_slug':project.slug, 'pic_list': pic_list,
+            'percentage':percentage
+        })
+
+
+class ProjectView(View):
+
+    def get(self, request, slug):
+        project = UserProject.objects.get(slug=slug)
+        project_name = project.name_of_project
+        motivations = project.tags.all()
+        print "motivations ", motivations
+        milestones = modules.milestone_tuple(project)
+        return render(request, 'social/individual_project.html', {'project_name':project_name,
+                                                                  'motivations':motivations,
+                                                                   'milestones':milestones,
+                                                                    'project_slug':slug,
+                                                                  })
 
 
 class PictureUploadView(View):
@@ -81,19 +139,41 @@ class PictureUploadView(View):
                     pass
             else:
                 is_before = False
+            picture_file.file = modules.resize_image(picture_file)
             picture_mod = Picture(image_name=picture_file.name,
                                    milestone_pics=picture_file, tikedge_user=tkduser, is_before=is_before)
             picture_mod.save()
             if is_before:
                 pic_set = PictureSet(before_picture=picture_mod, milestone=milestone, tikedge_user=tkduser)
                 pic_set.save()
-                messages.success(request, 'Cool! the before visual entry added to %s milestone' % milestone.name_of_milestone)
+                day_entry = tkduser.journalpost_set.all().count()
+                new_journal_entry = JournalPost(
+                                                entry_blurb=modules.get_journal_message(global_variables.BEFORE_PICTURE,
+                                                                                        milestone=milestone.blurb),
+                                                                                        day_entry=day_entry + 1,
+                                                                                        event_type=global_variables.BEFORE_PICTURE,
+                                                                                        is_picture_set=True,
+                                                                                        picture_set_entry=pic_set,
+                                                                                        user=tkduser
+                                                                                        )
+                new_journal_entry.save()
+                messages.success(request, 'Cool! the before visual entry added to %s milestone' % milestone.blurb)
             else:
                 try:
                     pic_set = PictureSet.objects.get(milestone=milestone, after_picture=None, tikedge_user=tkduser)
                     pic_set.after_picture = picture_mod
                     pic_set.save()
-                    messages.success(request, 'Great Job! the after visual entry added to %s milestone' % milestone.name_of_milestone)
+                    day_entry = tkduser.journalpost_set.all().count()
+                    new_journal_entry = JournalPost(
+                                                entry_blurb=modules.get_journal_message(global_variables.AFTER_PICTURE,
+                                                                                        milestone=milestone.blurb),
+                                                day_entry=day_entry + 1,
+                                                event_type=global_variables.AFTER_PICTURE,
+                                                is_picture_set=True,
+                                                 picture_set_entry=pic_set
+                                                )
+                    new_journal_entry.save()
+                    messages.success(request, 'Great Job! the after visual entry added to %s milestone' % milestone.blurb)
                 except ObjectDoesNotExist:
                     existing_milestones = task_modules.get_user_milestones(request.user)
                     messages.error(request, 'Hey we need a before visual entry to wow the crowd')
@@ -104,6 +184,7 @@ class PictureUploadView(View):
         messages.error(request, 'Oops, I think you forgot to upload a picture')
         return render(request, 'social/upload_picture.html', {'user_picture_form':user_picture_form,
                                                               'existing_milestones':existing_milestones})
+
 
 class HomeActivityView(View):
 
@@ -141,7 +222,7 @@ class SendFriendRequestView(View):
         user_id = request.POST.get("user_id")
         other_user = TikedgeUser.objects.get(id=int(user_id))
         print other_user.user.username, other_user.user.first_name, other_user.user.last_name
-        message = "Hi! ", request.user.first_name, " ", request.user.last_name, " would like to add you as a friend!"
+        message = "Hi! ", request.user.first_name, " ", request.user.last_name, " would like to add you to his pond!"
         try:
             Friend.objects.add_friend(request.user, other_user.user, message=message)
             friend_request = FriendshipRequest.objects.get(pk=other_user.pk)
@@ -162,8 +243,11 @@ class AcceptFriendRequestView(View):
     def post(self, request):
         request_id = request.POST.get("pk")
         print "Request ID %s", request_id
-        friend_request = FriendshipRequest.objects.get(pk=int(request_id))
-        friend_request.accept()
+        try:
+            friend_request = FriendshipRequest.objects.get(pk=int(request_id))
+            friend_request.accept()
+        except (AlreadyFriendsError, AlreadyExistsError, ValidationError):
+            pass
         return HttpResponse('')
 
 
@@ -219,9 +303,18 @@ class CreateVouch(View):
         if user not in vouch_obj.users.all():
             vouch_obj.users.add(user)
             vouch_obj.save()
+            try:
+                view = SeenMilestone.objects.get(tasks=Milestone)
+            except ObjectDoesNotExist:
+                view = SeenMilestone(tasks=milestone)
+                view.save()
+            if user not in view.users.all():
+                view.users.add(user)
+                view.save()
             response["status"] = True
         else:
             response["status"] = False
+        print "Tried to print vouch!!!!!!\n"
         return HttpResponse(json.dumps(response), status=201)
 
 
@@ -278,6 +371,11 @@ class ApiCreateFollow(CSRFExemptView):
             response["status"] = "false"
         response["count"] = follow_obj.users.all().count()
         return HttpResponse(json.dumps(response), status=201)
+
+
+class TagSearchView(View):
+    def get(self, request, word):
+        return render(request, 'social/tag_search_results.html')
 
 
 

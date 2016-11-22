@@ -1,0 +1,28 @@
+{% extends 'social/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+  {% block body %}
+      <div class="container">
+        {% if journal_comments %}
+            {% for comment in journal_comments %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card-content">
+                            <p class="flow-text">
+                                {{ comment.comment }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+                <h4 class="flow-text">No thoughts created for this milestone</h4>
+        {% endif %}
+      </div>
+  {% endblock %}
+</body>
+</html>

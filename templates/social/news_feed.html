@@ -25,10 +25,11 @@
                 </div>
                 <div class="row"> <!--- feed info and name --->
                     {% if feed.is_milestone_feed %}
-                        <a href="#">{{ feed.message }}</a>
+                        <a href="{% url 'social:milestone_view' feed.tasks.slug %}">{{ feed.message }}</a>
                          <div class="row">
                             <div class="col s2">
-                                <button id="vouch" onclick="createVouch({{ feed.feed_id }})" name="{{ feed.feed_id }}" class="btn-link">vouche<span id="vouch_{{ feed.feed_id }}"> {{ feed.vouche_count }}</span></button>
+                                <button id="vouch" onclick="createVouch({{ feed.feed_id }})" name="{{ feed.feed_id }}"
+                                        class="btn-link">vouche<span id="vouch_{{ feed.feed_id }}"> {{ feed.vouche_count }}</span></button>
                             </div>
                              <div class="col s2">
                                 <i class="btn-link">seen <span id="seen">{{ feed.seen_count }}</span></i>
@@ -48,7 +49,7 @@
                             <span>Milestone: </span>{{ feed.message }}
                         </div>
                     {% else %}
-                        {{ feed.message }}
+                        <a href="{% url 'social:project_view' feed.tasks.slug %}">{{ feed.message }}</a>
                          <div class="row">
                             <div class="col s2">
                                 <button class="btn-link">interesting <span id="vouche">{{ feed.follow_count }}</span></button>

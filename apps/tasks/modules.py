@@ -2,7 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from models import TikedgeUser, Tasks
 import re
 from django.db.models import Q
-from datetime import timedelta
+from datetime import timedelta, datetime
 from forms import form_module
 from django.db.models import Min
 from forms.form_module import get_current_datetime
@@ -11,6 +11,8 @@ from django.utils import timezone
 import time
 import pytz
 from dateutil.tz import *
+from dateutil.tz import tzlocal
+from tzlocal import get_localzone
 
 DECODE_DICTIONARY = {'a':'c', 'b':'z', 'c':'g', 'd':'h', 'e':'w', 'f':'x', 'g':'a', 'h':'b', 'i':'d', 'j':'e', 'k':'f', 'l':'i', 'm':'j', 'n':'k', 'o':'l',
                      'p':'m', 'q':'o', 'r':'p', 's':'q', 't':'r',
@@ -194,20 +196,15 @@ def is_time_conflict(user, start_time, end_time):
     return False
 
 
-def is_time_conflict_mil(user, start_time, end_time, project):
-    if end_time:
-        new_end = start_time + timedelta(minutes=int(end_time))
-    else:
-        new_end = start_time + timedelta(minutes=60)
-    print new_end
+def is_time_conflict_mil(user, start_time, new_end, project):
     yesterday = form_module.get_current_datetime() - timedelta(days=1)
     user = TikedgeUser.objects.get(user=user)
-    todo_todo = user.milestone_set.all().filter(Q(start__lte=start_time), Q(start__gte=yesterday),
+    todo_todo = user.milestone_set.all().filter(Q(reminder__lte=start_time), Q(reminder__gte=yesterday),
                                                 Q(is_active=True), Q(project=project))
-    print todo_todo
+    print "this is yesterday ", yesterday
     for task in todo_todo:
-        if task.start.time() <= start_time.time() and task.end.time() >= start_time.time() or \
-                                task.start.time() <= new_end.time() and task.end.time() >= new_end.time():
+        if task.reminder.time() <= start_time.time() and task.done_by.time() >= start_time.time() or \
+                                task.reminder.time() <= new_end.time() and task.done_by.time() >= new_end.time():
             return True
     return False
 
@@ -231,21 +228,29 @@ def convert_html_to_datetime(date_time):
 
 
 def time_has_past(time_info):
-        if time_info.time() < get_current_datetime().time():
-            if time_info.date() > get_current_datetime().date():
-                return False
-            msg = "Hey, your work is not history yet"
-        else:
-            if time_info.date() >= get_current_datetime().date():
-                return False
-            msg = "Hey, your work is not history yet"
-        return msg
+        if time_info:
+            if time_info.time() < get_current_datetime().time():
+                if time_info.date() > get_current_datetime().date():
+                    return False
+                msg = "Hey, your work is not history yet"
+            else:
+                if time_info.date() >= get_current_datetime().date():
+                    return False
+                msg = "Hey, your work is not history yet"
+            return msg
+        return False
 
 
 def time_to_utc(time_to_convert):
     loc_ndt = time_to_convert.replace(tzinfo=None)
     loc_dt = loc_ndt.replace(tzinfo=get_localzone())
     local = get_localzone().localize(loc_ndt).astimezone(pytz.utc)
+    return local
+
+
+def utc_to_local(input_time):
+    local_tz = get_localzone()
+    local = input_time.astimezone(local_tz)
     return local
 
 

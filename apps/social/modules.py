@@ -1,5 +1,6 @@
 from ..tasks.models import TikedgeUser, Tasks, Milestone, UserProject
-from .models import TaskPicture, ProfilePictures, Graded, Seen, Vouche, Notification, PictureSet
+from .models import TaskPicture, ProfilePictures, Graded, Seen, Vouche, \
+Notification, PictureSet, VoucheMilestone, SeenMilestone
 from django.db.models import Q
 from tasks_feed import TasksFeed, NewsFeed, NotificationFeed, PondFeed
 from ..tasks.modules import get_query
@@ -7,7 +8,22 @@ from friendship.models import Friend
 from models import User
 from django.core.exceptions import ObjectDoesNotExist
 import global_variables
-import copy
+import StringIO
+from PIL import Image
+from random import randint
+from journal_feed import JournalFeed
+
+
+def resize_image(image_field, is_profile_pic=False):
+    image_file = StringIO.StringIO(image_field.read())
+    image = Image.open(image_file)
+    if is_profile_pic:
+        image = image.resize((161, 161), Image.ANTIALIAS)
+    else:
+        image = image.resize((1080, 566), Image.ANTIALIAS)
+    image_file = StringIO.StringIO()
+    image.save(image_file, 'JPEG', quality=90)
+    return image_file
 
 
 def convert_list_to_profile_activities_object(type_of_feed, object_feed):
@@ -329,3 +345,92 @@ def get_credibility_notification(user_obj):
 def create_grade_for_user(tikedge):
     grade_user = Graded(user=tikedge)
     grade_user.save()
+
+
+def milestone_tuple(project):
+    tuple_list = []
+    milestones = project.milestone_set.all()
+    for each_mil in milestones:
+        try:
+            vouch_count = VoucheMilestone.objects.get(tasks=milestones).users.count()
+        except ObjectDoesNotExist:
+            vouch_count = 0
+        try:
+            seen_count = SeenMilestone.objects.get(tasks=milestones).users.count()
+        except ObjectDoesNotExist:
+            seen_count = 0
+        tuple_list.append((each_mil, vouch_count, seen_count))
+    return tuple_list
+
+
+def get_milestone_percentage(milestone):
+    try:
+        vouch_count = VoucheMilestone.objects.get(tasks=milestone).users.count()
+    except ObjectDoesNotExist:
+        vouch_count = 0
+    try:
+        seen_count = SeenMilestone.objects.get(tasks=milestone).users.count()
+    except ObjectDoesNotExist:
+        seen_count = 0
+    if seen_count == 0:
+        return 50
+    else:
+        percent = (float(vouch_count)/float(seen_count))*100
+        return int(percent)
+
+
+def increment_milestone_view(user_obj, milestone):
+    user = TikedgeUser.objects.get(user=user_obj)
+    try:
+        view = SeenMilestone.objects.get(tasks=milestone)
+    except ObjectDoesNotExist:
+        view = SeenMilestone(tasks=milestone)
+        view.save()
+    if user not in view.users.all():
+        view.users.add(user)
+        view.save()
+    print "Trying to view you!!!"
+
+
+def get_journal_message(type_of_message, milestone=None, project=None):
+    message = input_message(type_of_message, milestone, project)[randint(0, 2)]
+    return message
+
+
+def input_message(type_of_message, milestone_name, project_name):
+    if type_of_message == global_variables.MILESTONE:
+        LIST_OF_RANDOM_MESSAGE = [
+		    'I created a new milestone named: %s, for this %s project' % (milestone_name, project_name),
+		    'This %s milestone belongs to the %s project' % (milestone_name, project_name),
+		    '%s milestone was created for this project: %s' % (milestone_name, project_name),
+	    ]
+    elif type_of_message == global_variables.BEFORE_PICTURE:
+        LIST_OF_RANDOM_MESSAGE = [
+            "I took a new before picture set: %s" % milestone_name,
+            "Just took a new before picture for %s milestone" % milestone_name,
+            "I added a new before picture to %s milestone" % milestone_name,
+        ]
+    elif type_of_message == global_variables.AFTER_PICTURE:
+        LIST_OF_RANDOM_MESSAGE = [
+            "I took a new after picture set: %s" % milestone_name,
+            "Just took a new after picture for %s milestone" % milestone_name,
+            "I added a new after picture to %s milestone" % milestone_name,
+        ]
+    else:
+        LIST_OF_RANDOM_MESSAGE = [
+            "Created a new project: %s." % project_name,
+            "This project will get done: %s." % project_name,
+            "Looking forward to this project %s" % project_name,
+        ]
+    return LIST_OF_RANDOM_MESSAGE
+
+
+def get_user_journal_feed(tikege_user):
+    journal_list = []
+    journals = tikege_user.journalpost_set.all()
+    for journal in journals:
+        journal_feed = JournalFeed(journal)
+        journal_list.append(journal_feed)
+    return journal_list
+
+
