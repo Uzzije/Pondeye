@@ -95,7 +95,7 @@ class BuildCredMilestone(models.Model):
 
 
 class Follow(models.Model):
-    users = models.ManyToManyField(TikedgeUser, verbose_name="users that follow a project")
+    users = models.ManyToManyField(TikedgeUser, verbose_name="users that follow/interested in a project")
     tasks = models.ForeignKey(UserProject, blank=True, null=True)
 
 

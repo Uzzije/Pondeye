@@ -8,66 +8,178 @@
     {% block body %}
         <div class="container">
             <div class="row">
-                <div class="col s6">
-                    <div class="card horizontal">
-                        {% if has_prof_pic %}
-                            <img src ='{{  has_prof_pic.profile_pics.url }}' style="width:40%;height:40%;" class="img-circle"/>
-                        {% else %}
-                            <form method="post" action="{% url 'tasks:home' %}" enctype="multipart/form-data">{% csrf_token %}
-                                    <div class="col s6">
-                                        {{ user_picture_form.picture }}
-                                    </div>
-                                    <div class="col s6">
-                                        <input class="waves-effect waves-light" type="submit"
-                                       name="upload-picture" value="Upload Profile Picture">
-                                    </div>
-                            </form>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col s6">
-                    <div class="card-panel teal">
-                         status of user
-                    </div>
-
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s6">
-                    {% if current_task %}
-                        <div class="card-panel teal">
-                            <h3>Upcoming MileStones</h3>
-                                {{ current_task.name_of_tasks }}
-                                {{ current_task.start }}
-                                {{ current_task.end }}
+                <div class="row">
+                    <div class="col s6">
+                        <div class="card horizontal">
+                            {% if has_prof_pic %}
+                                <img src ='{{  has_prof_pic.profile_pics.url }}' style="width:40%;height:40%;" class="img-circle"/>
+                            {% else %}
+                                <form method="post" action="{% url 'tasks:home' %}" enctype="multipart/form-data">{% csrf_token %}
+                                        <div class="col s6">
+                                            {{ user_picture_form.picture }}
+                                        </div>
+                                        <div class="col s6">
+                                            <input class="waves-effect waves-light" type="submit"
+                                           name="upload-picture" value="Upload Profile Picture">
+                                        </div>
+                                </form>
+                            {% endif %}
                         </div>
-                    {% else %}
-                         <div class="card-panel teal">
-                            <span>No Upcoming MileStones</span>
+                    </div>
+                    <div class="col s6">
+                        <div class="panel-default">
+                            <a href="{% url 'tasks:profile_view' user_name %}">View Profile</a>
+                        </div>
+                        <div class="card-panel teal">
+                             Status of user {{ status_of_user }}
+                        </div>
+                        <div class="card-panel teal">
+                            <p class="">Completed</p>
+                            <div class="col s6">
+                                <span class="">Projects: {{ complete_proj_count }}</span>
+                            </div>
+                            <div class="col s6">
+                                <span class="">Milestones: {{ completed_mil_count }}</span>
+                            </div>
+                        </div>
+                        <div class="card-panel teal">
+                            <p class="">Failed</p>
+                            <div class="col s6">
+                                <span class="">Projects: {{ failed_proj_count }}</span>
+                            </div>
+                            <div class="col s6">
+                                <span class="">Milestones: {{ failed_mil_count }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        {% if current_tasks %}
+                            <div class="card-panel teal">
+                            <h3>Upcoming MileStones</h3>
+                                {% for current_task in current_tasks %}
+                                    <div id=row_curr_{{ current_task.id }} class="row">
+                                        <div class="col-md-8">
+                                            <a href="{% url 'social:milestone_view' current_task.slug %}">{{ current_task.blurb }}</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button onclick="sendCompletedMil({{ current_task.id }})" class="btn btn-link">
+                                                Completed
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                             <div class="card-panel teal">
+                                <span>No Upcoming MileStones</span>
+                             </div>
+                        {% endif %}
+                    </div>
+                    <div class="col s6">
+                        <div class="card-panel teal">
+                            {% if current_projs %}
+                                {% for each_proj in current_projs %}
+                                    <div id=proj_curr_{{ each_proj.id }} class="row">
+                                        <div class="col-md-8">
+                                            <a href="{% url 'social:project_view' each_proj.slug %}">{{ each_proj.blurb }}</a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button onclick="sendCompletedProj({{ each_proj.id }})" class="btn btn-link">
+                                                Completed
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <span>No Upcoming Projects</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card-panel teal">
+                            <span class="flow-text"><button id="show-pond" class="btn btn-link">View Pond</button></span>
                          </div>
+                    </div>
+                </div>
+                <div hidden id="pond-id">
+                    {% if ponders %}
+                        {% for ponder in ponders %}
+                            <div class="row">
+                                 <div class="col-md-3">
+                                     <img src="{{ ponder.profile_pics.url }}" alt="No Picture Uploaded" class="img-thumbnail">
+                                 </div>
+                                 <div class="col-md-9">
+                                    <a href="{% url 'tasks:profile_view' ponder.username %}">
+                                        <span class="flow-text">{{ ponder.first_name }} {{ ponder.last_name }}</span>
+                                    </a>
+                                 </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <span>Empty Pond</span>
                     {% endif %}
-                </div>
-                <div class="col s6">
-                    <div class="card-panel teal">
-                        {% if has_project %}
-                        {% else %}
-                            <span>No Upcoming Projects</span>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <div class="card-panel teal">
-                        {% if recent_activity %}
-                            <span></span>
-                        {% else %}
-                            <span>No Recent Activities</span>
-                        {% endif %}
-                    </div>
                 </div>
             </div>
         </div>
+        <script>
+            $("#show-pond").click(function(){
+                $("#pond-id").toggle(1000);
+            });
+            function sendCompletedMil(pk){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'tasks:milestone_done' %}',
+                    type: "POST",
+                    data: { mil_Id: pk  },
+                    success: function(response){
+                        var statusParse = JSON.parse(response);
+                        var status = statusParse["status"];
+                        var count = 0;
+                        if (status == true){
+                            $("#row_curr_"+pk).hide();
+                            Materialize.toast("Sweet!", 2000);
+                        }
+                        else{
+                            console.log("already vouched");
+                        }
+                        console.log("Successful sent request" + count);
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr).show();
+                    }
+                })
+            }
+            function sendCompletedProj(pk){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'tasks:project_done' %}',
+                    type: "POST",
+                    data: { proj_id: pk  },
+                    success: function(response){
+                        var statusParse = JSON.parse(response);
+                        var status = statusParse["status"];
+                        if (status == true){
+                            $("#proj_curr_"+pk).hide();
+                            Materialize.toast("Sweet! Project Done", 2000);
+                        }
+                        else{
+                            console.log("already said done to project");
+                        }
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr).show();
+                    }
+                })
+            }
+        </script>
     {% endblock %}
   </body>
 </html>

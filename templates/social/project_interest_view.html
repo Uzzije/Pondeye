@@ -1,0 +1,24 @@
+{% extends 'social/notification_view.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+            {% if interest_feed %}
+                {% for feed in interest_feed %}
+                    <p class="flow-text">
+                        <a href="{% url 'tasks:profile_view' feed.username %}">{{ feed.first_name }} {{ feed.last_name }}</a>
+                        is interested in <a href="{% url 'social:project_view' feed.slug %}">{{ feed.blurb }}</a>
+                    </p>
+                {% endfor %}
+            {% else %}
+                <p class="flow-text">No one is currently interested in any of your projects or goals</p>
+            {% endif %}
+        </div>
+    {% endblock %}
+
+</body>
+</html>

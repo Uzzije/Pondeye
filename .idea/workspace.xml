@@ -2,197 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/MDB License.pdf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Bold.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Bold.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Bold.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Bold.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Light.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Light.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Light.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Light.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Medium.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Medium.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Medium.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Medium.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Regular.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Thin.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Thin.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Thin.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/font/roboto/Roboto-Thin.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/lightbox/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/lightbox/default-skin.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/lightbox/preloader.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/01.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/02.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/03.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/04.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/05.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/06.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/07.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/08.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/09.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/overlays/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/journal_feed.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/README.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/css/bootstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/css/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/css/mdb.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/css/mdb.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/css/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/img/lightbox/default-skin.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/bootstrap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/bootstrap.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/jquery-2.2.3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/jquery-2.2.3.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/jquery-3.1.1.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/jquery-3.1.1.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/mdb.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/mdb.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/tether.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/js/tether.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/README.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_animations.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_buttons.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_cards-basic.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_carousels-basic.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_footer.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_forms-basic.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_global.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_helpers.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_hover-effects.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_navbars.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_roboto.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_typography.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/_waves.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/data/_colors.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/data/_mixins.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/data/_prefixer.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/data/_variables-b4.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/MDB Free/sass/mdb/free/data/_variables.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/static/js/jquery-3.1.1.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/base/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/before_and_after_view.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/individual_project.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/journal_thoughts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/milestone_pictures.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/milestone_view.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/picture_view.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/tag_search_results.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/CONTRIBUTING.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/Gemfile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/Gruntfile.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/ISSUE_TEMPLATE.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/LICENSE.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/_config.yml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/bootstrap-elements.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/bower.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/demo/imgs/banner.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/demo/imgs/gittip-button.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/demo/imgs/issues-button.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/grunt/configBridge.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/index.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_alerts.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_buttons.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_cards.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_checkboxes.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_colors.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_core.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_dialogs.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_dividers.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_form.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_import-bs-less.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_import-bs-sass.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_inputs-size.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_inputs.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_lists.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_mixins.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_navbar.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_panels.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_plugins.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_popups.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_progress.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_radios.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_shadows.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_tabs.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_themes.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_togglebutton.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_typography.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_variables.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/_welljumbo.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/bootstrap-material-design.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/plugins/_plugin-dropdownjs.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/plugins/_plugin-nouislider.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/plugins/_plugin-selectize.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/plugins/_plugin-snackbarjs.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/less/ripples.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/material-design-color-palette.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/package.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_alerts.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_buttons.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_cards.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_checkboxes.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_colors-map.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_colors.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_core.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_dialogs.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_dividers.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_form.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_import-bs-less.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_import-bs-sass.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_inputs-size.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_inputs.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_labels.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_lists.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_mixins-utilities.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_mixins.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_navbar.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_panels.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_plugins.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_popups.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_progress.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_radios.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_shadows.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_tabs.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_themes.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_togglebutton.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_typography.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_variables.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/_welljumbo.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/bootstrap-material-design.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/plugins/_plugin-dropdownjs.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/plugins/_plugin-nouislider.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/plugins/_plugin-selectize.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/plugins/_plugin-snackbarjs.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/sass/ripples.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/scripts/index.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/scripts/material.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/scripts/ripples.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/test/materialSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/test/ripplesSpec.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/bootstrap-material-design-master/testcase.html" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/templates/social/profile.html" afterPath="$PROJECT_DIR$/templates/social/journal.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/social/search_module.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/let_down_view.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/milestone_vouches.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/new_ponders.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/notification_view.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/pond.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/project_interest_view.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/social/search_results.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/tasks/profile_view.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/admin.py" afterPath="$PROJECT_DIR$/apps/social/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/forms/social_forms.py" afterPath="$PROJECT_DIR$/apps/social/forms/social_forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/global_variables.py" afterPath="$PROJECT_DIR$/apps/social/global_variables.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/models.py" afterPath="$PROJECT_DIR$/apps/social/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/tasks_feed.py" afterPath="$PROJECT_DIR$/apps/social/tasks_feed.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/urls.py" afterPath="$PROJECT_DIR$/apps/social/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/views.py" afterPath="$PROJECT_DIR$/apps/social/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/global_variables_tasks.py" afterPath="$PROJECT_DIR$/apps/tasks/global_variables_tasks.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/models.py" afterPath="$PROJECT_DIR$/apps/tasks/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/modules.py" afterPath="$PROJECT_DIR$/apps/tasks/modules.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/urls.py" afterPath="$PROJECT_DIR$/apps/tasks/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/views.py" afterPath="$PROJECT_DIR$/apps/tasks/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pondeye/www/js/tasks.js" afterPath="$PROJECT_DIR$/pondeye/www/js/tasks.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/base.html" afterPath="$PROJECT_DIR$/templates/base/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/nav_bar.html" afterPath="$PROJECT_DIR$/templates/base/nav_bar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/social/friend_request.html" afterPath="$PROJECT_DIR$/templates/social/friend_request.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/social/individual_project.html" afterPath="$PROJECT_DIR$/templates/social/individual_project.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/social/news_feed.html" afterPath="$PROJECT_DIR$/templates/social/news_feed.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/home.html" afterPath="$PROJECT_DIR$/templates/tasks/home.html" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -217,53 +53,29 @@
     <option name="myModuleName" value="tikedge" />
   </component>
   <component name="DockManager">
-    <window id="10">
+    <window id="17">
       <content type="file-editors">
         <state>
           <leaf>
-            <file leaf-file-name="journal.html" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/templates/social/journal.html">
+            <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-2.1558442">
-                    <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/apps/social/models.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.84683096">
-                    <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
+                  <state vertical-scroll-proportion="0.5244755">
+                    <caret line="20" column="60" selection-start-line="20" selection-start-column="60" selection-end-line="20" selection-end-column="60" />
                     <folding>
-                      <element signature="e#0#39#0" expanded="true" />
-                      <element signature="e#1748#2163#0" expanded="false" />
-                      <element signature="e#2371#2515#0" expanded="false" />
-                      <element signature="e#2557#2710#0" expanded="false" />
-                      <element signature="e#2750#2903#0" expanded="false" />
-                      <element signature="e#2946#3100#0" expanded="false" />
-                      <element signature="e#3135#3284#0" expanded="false" />
-                      <element signature="e#3328#3486#0" expanded="false" />
-                      <element signature="e#3524#3680#0" expanded="false" />
-                      <element signature="e#3727#3891#0" expanded="false" />
-                      <element signature="e#3926#4079#0" expanded="false" />
-                      <element signature="e#4115#4283#0" expanded="false" />
-                      <element signature="e#4328#4505#0" expanded="false" />
-                      <element signature="e#5219#6248#0" expanded="false" />
-                      <element signature="e#6291#6461#0" expanded="false" />
-                      <element signature="e#6495#10336#0" expanded="false" />
+                      <element signature="e#1408#2555#0" expanded="false" />
+                      <element signature="e#8306#8700#0" expanded="false" />
+                      <element signature="e#8735#9693#0" expanded="false" />
+                      <element signature="e#9728#9868#0" expanded="false" />
+                      <element signature="e#9910#10064#0" expanded="false" />
+                      <element signature="e#10096#17231#0" expanded="false" />
+                      <element signature="e#17271#18331#0" expanded="false" />
+                      <element signature="e#18379#19082#0" expanded="false" />
+                      <element signature="e#19132#19904#0" expanded="false" />
+                      <element signature="e#19936#20043#0" expanded="false" />
+                      <element signature="e#20082#20401#0" expanded="false" />
+                      <element signature="e#20962#21329#0" expanded="false" />
                     </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/apps/social/admin.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="-7.7777777">
-                    <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-                    <folding />
                   </state>
                 </provider>
               </entry>
@@ -279,12 +91,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="journal_thoughts.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/social/journal_thoughts.html">
+      <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.5">
-              <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
-              <folding />
+            <state vertical-scroll-proportion="6.296296">
+              <caret line="251" column="47" selection-start-line="251" selection-start-column="47" selection-end-line="251" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
+                <element signature="e#5857#6488#0" expanded="false" />
+                <element signature="e#6526#6714#0" expanded="false" />
+                <element signature="e#6762#6955#0" expanded="false" />
+                <element signature="e#7845#7992#0" expanded="false" />
+                <element signature="e#8034#8297#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -292,46 +111,105 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.666666">
-              <caret line="403" column="40" selection-start-line="403" selection-start-column="40" selection-end-line="403" selection-end-column="40" />
+            <state vertical-scroll-proportion="17.703703">
+              <caret line="397" column="0" selection-start-line="397" selection-start-column="0" selection-end-line="397" selection-end-column="0" />
               <folding>
                 <element signature="e#0#69#0" expanded="true" />
-                <element signature="e#641#982#0" expanded="false" />
-                <element signature="e#1063#1862#0" expanded="false" />
-                <element signature="e#1915#4541#0" expanded="false" />
-                <element signature="e#4574#5526#0" expanded="false" />
-                <element signature="e#5644#6251#0" expanded="false" />
-                <element signature="e#6298#6671#0" expanded="false" />
-                <element signature="e#6723#9737#0" expanded="false" />
-                <element signature="e#9794#10149#0" expanded="false" />
-                <element signature="e#10192#12514#0" expanded="false" />
-                <element signature="e#12557#14575#0" expanded="false" />
-                <element signature="e#14626#15181#0" expanded="false" />
-                <element signature="e#15232#15919#0" expanded="false" />
-                <element signature="e#15962#16017#0" expanded="false" />
-                <element signature="e#16054#16551#0" expanded="false" />
-                <element signature="e#16599#17021#0" expanded="false" />
-                <element signature="e#17079#17408#0" expanded="false" />
+                <element signature="e#680#1021#0" expanded="false" />
+                <element signature="e#1102#1901#0" expanded="false" />
+                <element signature="e#1954#4580#0" expanded="false" />
+                <element signature="e#4613#5628#0" expanded="false" />
+                <element signature="e#5660#5698#0" expanded="false" />
+                <element signature="e#5746#6353#0" expanded="false" />
+                <element signature="e#6400#6773#0" expanded="false" />
+                <element signature="e#6825#9839#0" expanded="false" />
+                <element signature="e#9896#10251#0" expanded="false" />
+                <element signature="e#10294#12616#0" expanded="false" />
+                <element signature="e#12659#14677#0" expanded="false" />
+                <element signature="e#14728#15283#0" expanded="false" />
+                <element signature="e#15334#16021#0" expanded="false" />
+                <element signature="e#16064#16119#0" expanded="false" />
+                <element signature="e#16156#16649#0" expanded="false" />
+                <element signature="e#16700#17301#0" expanded="false" />
+                <element signature="e#17829#18158#0" expanded="false" />
+                <element signature="e#18212#18533#0" expanded="false" />
+                <element signature="e#18779#20074#0" expanded="false" />
+                <element signature="e#20121#20326#0" expanded="false" />
+                <element signature="e#20559#21249#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="milestone_view.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/social/milestone_view.html">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.375">
-              <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+            <state vertical-scroll-proportion="-10.0">
+              <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="individual_project.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/social/individual_project.html">
+      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.625">
-              <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+            <state vertical-scroll-proportion="-10.208333">
+              <caret line="114" column="29" selection-start-line="114" selection-start-column="29" selection-end-line="114" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/social/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="search_module.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/social/search_module.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-35.51852">
+              <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.5">
+              <caret line="27" column="72" selection-start-line="27" selection-start-column="72" selection-end-line="27" selection-end-column="72" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.33913043">
+              <caret line="13" column="111" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="111" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="profile_view.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/tasks/profile_view.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.5">
+              <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -340,89 +218,35 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.654321">
-              <caret line="253" column="36" selection-start-line="253" selection-start-column="36" selection-end-line="253" selection-end-column="36" />
+            <state vertical-scroll-proportion="-14.407408">
+              <caret line="439" column="0" selection-start-line="439" selection-start-column="0" selection-end-line="439" selection-end-column="0" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#1427#2194#0" expanded="false" />
-                <element signature="e#2238#2536#0" expanded="false" />
-                <element signature="e#2571#3931#0" expanded="false" />
-                <element signature="e#3964#4668#0" expanded="false" />
-                <element signature="e#4707#10035#0" expanded="false" />
-                <element signature="e#10073#10251#0" expanded="false" />
-                <element signature="e#10281#10689#0" expanded="false" />
-                <element signature="e#10721#11040#0" expanded="false" />
-                <element signature="e#12075#12479#0" expanded="false" />
-                <element signature="e#12524#12815#0" expanded="false" />
-                <element signature="e#12854#13065#0" expanded="false" />
-                <element signature="e#13117#13628#0" expanded="false" />
-                <element signature="e#13661#14724#0" expanded="false" />
-                <element signature="e#14770#15708#0" expanded="false" />
-                <element signature="e#15755#16686#0" expanded="false" />
+                <element signature="e#1465#2232#0" expanded="false" />
+                <element signature="e#2276#2574#0" expanded="false" />
+                <element signature="e#2609#3969#0" expanded="false" />
+                <element signature="e#4002#5337#0" expanded="false" />
+                <element signature="e#5376#10704#0" expanded="false" />
+                <element signature="e#10742#10920#0" expanded="false" />
+                <element signature="e#10950#11358#0" expanded="false" />
+                <element signature="e#11390#11709#0" expanded="false" />
+                <element signature="e#11752#12713#0" expanded="false" />
+                <element signature="e#12758#13196#0" expanded="false" />
+                <element signature="e#13241#13532#0" expanded="false" />
+                <element signature="e#13571#13753#0" expanded="false" />
+                <element signature="e#13805#14316#0" expanded="false" />
+                <element signature="e#14349#15412#0" expanded="false" />
+                <element signature="e#15458#16396#0" expanded="false" />
+                <element signature="e#16444#17284#0" expanded="false" />
+                <element signature="e#17318#17412#0" expanded="false" />
+                <element signature="e#17452#17539#0" expanded="false" />
+                <element signature="e#17619#17738#0" expanded="false" />
+                <element signature="e#17784#18102#0" expanded="false" />
+                <element signature="e#18148#18346#0" expanded="false" />
+                <element signature="e#18392#18601#0" expanded="false" />
+                <element signature="e#18640#18852#0" expanded="false" />
+                <element signature="e#18881#19016#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="friend_request.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/social/friend_request.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1976048">
-              <caret line="40" column="41" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-67.703705">
-              <caret line="237" column="58" selection-start-line="237" selection-start-column="58" selection-end-line="237" selection-end-column="58" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#1277#2424#0" expanded="false" />
-                <element signature="e#2454#4701#0" expanded="false" />
-                <element signature="e#4739#5133#0" expanded="false" />
-                <element signature="e#5168#6126#0" expanded="false" />
-                <element signature="e#6161#6301#0" expanded="false" />
-                <element signature="e#6343#6497#0" expanded="false" />
-                <element signature="e#14810#15513#0" expanded="false" />
-                <element signature="e#15563#16335#0" expanded="false" />
-                <element signature="e#16367#16474#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="journal_feed.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/journal_feed.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.6666666">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.0">
-              <caret line="307" column="0" selection-start-line="307" selection-start-column="0" selection-end-line="307" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="global_variables.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/global_variables.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.555555">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -445,31 +269,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/apps/tasks/global_variables_tasks.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/tasks.py" />
-        <option value="$PROJECT_DIR$/wsgi.py" />
-        <option value="$PROJECT_DIR$/settings/base.py" />
-        <option value="$PROJECT_DIR$/manage.py" />
-        <option value="$PROJECT_DIR$/settings/beta.py" />
-        <option value="$PROJECT_DIR$/scheduler/celery.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/forms/form_module.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/templates/tasks/add_tasks.html" />
-        <option value="$PROJECT_DIR$/templates/base.html" />
-        <option value="$PROJECT_DIR$/templates/tasks/nav_bar.html" />
-        <option value="$PROJECT_DIR$/urls.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/admin.py" />
-        <option value="$PROJECT_DIR$/templates/tasks/add_view.html" />
         <option value="$PROJECT_DIR$/templates/tasks/upload_picture.html" />
         <option value="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
         <option value="$PROJECT_DIR$/templates/social/upload_picture.html" />
-        <option value="$PROJECT_DIR$/templates/tasks/home.html" />
         <option value="$PROJECT_DIR$/apps/social/static/css/custom_style.css" />
         <option value="$PROJECT_DIR$/apps/social/static/js/custom_scripts.js" />
         <option value="$PROJECT_DIR$/apps/social/static/custom_style.css" />
         <option value="$PROJECT_DIR$/apps/social/static/custom_scripts.js" />
-        <option value="$PROJECT_DIR$/apps/tasks/urls.py" />
         <option value="$PROJECT_DIR$/templates/before_and_after_view.html" />
         <option value="$PROJECT_DIR$/templates/social/before_and_after_view.html" />
         <option value="$PROJECT_DIR$/templates/social/picture_view.html" />
@@ -478,24 +284,42 @@
         <option value="$PROJECT_DIR$/templates/social/milestone_view.html" />
         <option value="$PROJECT_DIR$/templates/base/nav_bar.html" />
         <option value="$PROJECT_DIR$/templates/social/tag_search_results.html" />
-        <option value="$PROJECT_DIR$/templates/social/individual_project.html" />
-        <option value="$PROJECT_DIR$/templates/social/news_feed.html" />
-        <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/templates/social/journal_feed.py" />
         <option value="$PROJECT_DIR$/apps/social/forms/social_forms.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/models.py" />
-        <option value="$PROJECT_DIR$/apps/social/urls.py" />
-        <option value="$PROJECT_DIR$/apps/social/global_variables.py" />
         <option value="$PROJECT_DIR$/apps/social/admin.py" />
-        <option value="$PROJECT_DIR$/apps/social/modules.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
         <option value="$PROJECT_DIR$/templates/social/journal.html" />
         <option value="$PROJECT_DIR$/templates/social/journal_thoughts.html" />
-        <option value="$PROJECT_DIR$/apps/tasks/views.py" />
-        <option value="$PROJECT_DIR$/apps/social/models.py" />
         <option value="$PROJECT_DIR$/apps/social/journal_feed.py" />
+        <option value="$PROJECT_DIR$/pondeye/www/js/tasks.js" />
+        <option value="$PROJECT_DIR$/templates/social/notification_view.html" />
+        <option value="$PROJECT_DIR$/templates/profile_view.html" />
         <option value="$PROJECT_DIR$/apps/social/tasks_feed.py" />
+        <option value="$PROJECT_DIR$/templates/social/news_feed.html" />
+        <option value="$PROJECT_DIR$/templates/social/individual_project.html" />
+        <option value="$PROJECT_DIR$/templates/social/project_interest_view.html" />
+        <option value="$PROJECT_DIR$/apps/social/models.py" />
+        <option value="$PROJECT_DIR$/apps/social/search.py" />
+        <option value="$PROJECT_DIR$/apps/social/global_variables.py" />
+        <option value="$PROJECT_DIR$/apps/tasks/global_variables_tasks.py" />
+        <option value="$PROJECT_DIR$/templates/search_results.html" />
+        <option value="$PROJECT_DIR$/templates/social/search_results.html" />
+        <option value="$PROJECT_DIR$/apps/social/search_module.py" />
+        <option value="$PROJECT_DIR$/templates/social/friend_request.html" />
+        <option value="$PROJECT_DIR$/templates/social/new_ponders.html" />
+        <option value="$PROJECT_DIR$/templates/social/let_down_view.html" />
+        <option value="$PROJECT_DIR$/templates/social/milestone_vouches.html" />
+        <option value="$PROJECT_DIR$/apps/tasks/migrations/0020_auto_20161123_0911.py" />
+        <option value="$PROJECT_DIR$/templates/social/pond.html" />
         <option value="$PROJECT_DIR$/apps/social/views.py" />
+        <option value="$PROJECT_DIR$/apps/social/urls.py" />
+        <option value="$PROJECT_DIR$/apps/social/modules.py" />
+        <option value="$PROJECT_DIR$/apps/tasks/models.py" />
+        <option value="$PROJECT_DIR$/apps/tasks/urls.py" />
+        <option value="$PROJECT_DIR$/templates/tasks/profile_view.html" />
+        <option value="$PROJECT_DIR$/apps/tasks/views.py" />
+        <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
+        <option value="$PROJECT_DIR$/templates/tasks/home.html" />
+        <option value="$PROJECT_DIR$/templates/base/base.html" />
       </list>
     </option>
   </component>
@@ -505,10 +329,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1676" />
-    <option name="y" value="215" />
-    <option name="width" value="1376" />
-    <option name="height" value="671" />
+    <option name="x" value="1746" />
+    <option name="y" value="216" />
+    <option name="width" value="1411" />
+    <option name="height" value="745" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -600,6 +424,38 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pondeye" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="apps" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -664,11 +520,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/social" />
+      <recent name="$PROJECT_DIR$/templates/tasks" />
       <recent name="$PROJECT_DIR$/apps/tasks" />
       <recent name="$PROJECT_DIR$/apps/social" />
       <recent name="$PROJECT_DIR$/templates/base" />
-      <recent name="$PROJECT_DIR$/templates/social" />
-      <recent name="$PROJECT_DIR$/apps/social/static" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/apps/social/static" />
@@ -1040,10 +896,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1676" y="215" width="1376" height="671" extended-state="0" />
+    <frame x="1746" y="216" width="1411" height="745" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22413793" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15339664" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.053892214" sideWeight="0.5866911" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1062,6 +918,26 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3278328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.053892214" sideWeight="0.5866911" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.053892214" sideWeight="0.41330892" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.09408926" sideWeight="0.49780288" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32996207" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20333838" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3278328" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39783" sideWeight="0.4969651" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -1083,131 +959,15 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="8" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/apps/tasks/tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.8888888">
-          <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/static/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/static/css/reset.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tasks/add_tasks.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.125">
-          <caret line="13" column="7" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/static/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/static/js/jquery-3.0.0.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/static/custom_style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="75" column="23" selection-start-line="75" selection-start-column="23" selection-end-line="75" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/static/custom_scripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="85" column="50" selection-start-line="85" selection-start-column="50" selection-end-line="85" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/media/image/tasks/2016/11/12/1415383346729_zpU9o4t.jpg.2x2_q85_box-58,0,292,234_crop_detail.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pondeye/www/feed_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.93050194">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/upload_picture.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.125">
-          <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/before_and_after_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.625">
-          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/static/js/jquery-3.1.1.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625">
-          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -1265,22 +1025,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/home_activity_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/global_variables_tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/forms/social_forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.7777777">
@@ -1289,26 +1033,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5555553">
-          <caret line="15" column="89" selection-start-line="15" selection-start-column="89" selection-end-line="15" selection-end-column="89" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pondeye/www/new_photo_view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.625">
           <caret line="17" column="18" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pondeye/www/js/tasks.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1329,48 +1057,221 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/news_feed.html">
+    <entry file="file://$PROJECT_DIR$/apps/social/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625">
-          <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.3376206">
+          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.125">
-          <caret line="43" column="90" selection-start-line="43" selection-start-column="90" selection-end-line="43" selection-end-column="90" />
+        <state vertical-scroll-proportion="0.57377046">
+          <caret line="1793" column="0" selection-start-line="1793" selection-start-column="0" selection-end-line="1793" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/urls.py">
+    <entry file="file://$PROJECT_DIR$/apps/social/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.1666665">
-          <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/home_activity_view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pondeye/www/js/tasks.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36190477">
+          <caret line="231" column="37" selection-start-line="231" selection-start-column="37" selection-end-line="231" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/journal_thoughts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5">
+          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/global_variables.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.666667">
+          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/journal_feed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1111112">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.7777777">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#32#0" expanded="false" />
+            <element signature="e#0#38#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
+    <entry file="file://$PROJECT_DIR$/apps/tasks/global_variables_tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.037037">
-          <caret line="30" column="57" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="57" />
+        <state vertical-scroll-proportion="-2.2222223">
+          <caret line="4" column="73" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5555556">
+          <caret line="183" column="68" selection-start-line="183" selection-start-column="68" selection-end-line="183" selection-end-column="68" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#9266#9603#0" expanded="false" />
+            <element signature="e#9627#10443#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
+    <entry file="file://$PROJECT_DIR$/templates/social/project_interest_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.1666667">
-          <caret line="252" column="43" selection-start-line="252" selection-start-column="43" selection-end-line="252" selection-end-column="43" />
+        <state vertical-scroll-proportion="-14.375">
+          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/notification_view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/search_results.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.3333335">
+          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/friend_request.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="8" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/list_of_users.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.5">
+          <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/let_down_view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.25">
+          <caret line="26" column="7" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
           <folding>
-            <element signature="e#0#53#0" expanded="true" />
+            <marker date="1479889301000" expanded="true" signature="139:864" placeholder="..." />
+            <marker date="1479889301000" expanded="true" signature="148:158" placeholder="..." />
+            <marker date="1479889301000" expanded="true" signature="167:856" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/migrations/0017_auto_20161120_0720.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/migrations/0020_auto_20161123_0911.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.444445">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/individual_project.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.0">
+          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/pond.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.0">
+          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+          <folding>
+            <marker date="1479894343000" expanded="true" signature="137:866" placeholder="..." />
+            <marker date="1479894343000" expanded="true" signature="146:156" placeholder="..." />
+            <marker date="1479894343000" expanded="true" signature="165:858" placeholder="..." />
+            <marker date="1479894343000" expanded="true" signature="292:791" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/milestone_vouches.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5">
+          <caret line="12" column="58" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/journal.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.458334">
+          <caret line="95" column="21" selection-start-line="95" selection-start-column="21" selection-end-line="95" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5555556">
+          <caret line="131" column="32" selection-start-line="131" selection-start-column="32" selection-end-line="131" selection-end-column="32" />
+          <folding>
+            <element signature="e#1748#2163#0" expanded="false" />
+            <element signature="e#2199#2338#0" expanded="false" />
+            <element signature="e#2371#2515#0" expanded="false" />
+            <element signature="e#2557#2710#0" expanded="false" />
+            <element signature="e#2750#2903#0" expanded="false" />
+            <element signature="e#2946#3100#0" expanded="false" />
+            <element signature="e#3135#3284#0" expanded="false" />
+            <element signature="e#3328#3486#0" expanded="false" />
+            <element signature="e#3524#3680#0" expanded="false" />
+            <element signature="e#3727#3891#0" expanded="false" />
+            <element signature="e#4129#4297#0" expanded="false" />
+            <element signature="e#6509#10350#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1385,177 +1286,193 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/social/milestone_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.375">
-          <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+        <state vertical-scroll-proportion="-9.583333">
+          <caret line="64" column="45" selection-start-line="64" selection-start-column="45" selection-end-line="64" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/admin.py">
+    <entry file="file://$PROJECT_DIR$/templates/social/news_feed.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.7777777">
-          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+        <state vertical-scroll-proportion="53.541668">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/individual_project.html">
+    <entry file="file://$PROJECT_DIR$/templates/social/new_ponders.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625">
-          <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
+        <state vertical-scroll-proportion="-14.375">
+          <caret line="23" column="7" selection-start-line="23" selection-start-column="7" selection-end-line="23" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/journal.html">
+    <entry file="file://$PROJECT_DIR$/apps/social/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.1558442">
-          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+        <state vertical-scroll-proportion="-6.0740743">
+          <caret line="20" column="72" selection-start-line="20" selection-start-column="72" selection-end-line="20" selection-end-column="72" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/journal_thoughts.html">
+    <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.5">
-          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-67.703705">
-          <caret line="237" column="58" selection-start-line="237" selection-start-column="58" selection-end-line="237" selection-end-column="58" />
+          <caret line="27" column="72" selection-start-line="27" selection-start-column="72" selection-end-line="27" selection-end-column="72" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#1277#2424#0" expanded="false" />
-            <element signature="e#2454#4701#0" expanded="false" />
-            <element signature="e#4739#5133#0" expanded="false" />
-            <element signature="e#5168#6126#0" expanded="false" />
-            <element signature="e#6161#6301#0" expanded="false" />
-            <element signature="e#6343#6497#0" expanded="false" />
-            <element signature="e#14810#15513#0" expanded="false" />
-            <element signature="e#15563#16335#0" expanded="false" />
-            <element signature="e#16367#16474#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.666666">
-          <caret line="403" column="40" selection-start-line="403" selection-start-column="40" selection-end-line="403" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#69#0" expanded="true" />
-            <element signature="e#641#982#0" expanded="false" />
-            <element signature="e#1063#1862#0" expanded="false" />
-            <element signature="e#1915#4541#0" expanded="false" />
-            <element signature="e#4574#5526#0" expanded="false" />
-            <element signature="e#5644#6251#0" expanded="false" />
-            <element signature="e#6298#6671#0" expanded="false" />
-            <element signature="e#6723#9737#0" expanded="false" />
-            <element signature="e#9794#10149#0" expanded="false" />
-            <element signature="e#10192#12514#0" expanded="false" />
-            <element signature="e#12557#14575#0" expanded="false" />
-            <element signature="e#14626#15181#0" expanded="false" />
-            <element signature="e#15232#15919#0" expanded="false" />
-            <element signature="e#15962#16017#0" expanded="false" />
-            <element signature="e#16054#16551#0" expanded="false" />
-            <element signature="e#16599#17021#0" expanded="false" />
-            <element signature="e#17079#17408#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/global_variables.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.555555">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/journal_feed.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.6666666">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57377046">
-          <caret line="1793" column="0" selection-start-line="1793" selection-start-column="0" selection-end-line="1793" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.0">
-          <caret line="307" column="0" selection-start-line="307" selection-start-column="0" selection-end-line="307" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.84683096">
-          <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#1748#2163#0" expanded="false" />
-            <element signature="e#2371#2515#0" expanded="false" />
-            <element signature="e#2557#2710#0" expanded="false" />
-            <element signature="e#2750#2903#0" expanded="false" />
-            <element signature="e#2946#3100#0" expanded="false" />
-            <element signature="e#3135#3284#0" expanded="false" />
-            <element signature="e#3328#3486#0" expanded="false" />
-            <element signature="e#3524#3680#0" expanded="false" />
-            <element signature="e#3727#3891#0" expanded="false" />
-            <element signature="e#3926#4079#0" expanded="false" />
-            <element signature="e#4115#4283#0" expanded="false" />
-            <element signature="e#4328#4505#0" expanded="false" />
-            <element signature="e#5219#6248#0" expanded="false" />
-            <element signature="e#6291#6461#0" expanded="false" />
-            <element signature="e#6495#10336#0" expanded="false" />
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.654321">
-          <caret line="253" column="36" selection-start-line="253" selection-start-column="36" selection-end-line="253" selection-end-column="36" />
+        <state vertical-scroll-proportion="-14.407408">
+          <caret line="439" column="0" selection-start-line="439" selection-start-column="0" selection-end-line="439" selection-end-column="0" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#1427#2194#0" expanded="false" />
-            <element signature="e#2238#2536#0" expanded="false" />
-            <element signature="e#2571#3931#0" expanded="false" />
-            <element signature="e#3964#4668#0" expanded="false" />
-            <element signature="e#4707#10035#0" expanded="false" />
-            <element signature="e#10073#10251#0" expanded="false" />
-            <element signature="e#10281#10689#0" expanded="false" />
-            <element signature="e#10721#11040#0" expanded="false" />
-            <element signature="e#12075#12479#0" expanded="false" />
-            <element signature="e#12524#12815#0" expanded="false" />
-            <element signature="e#12854#13065#0" expanded="false" />
-            <element signature="e#13117#13628#0" expanded="false" />
-            <element signature="e#13661#14724#0" expanded="false" />
-            <element signature="e#14770#15708#0" expanded="false" />
-            <element signature="e#15755#16686#0" expanded="false" />
+            <element signature="e#1465#2232#0" expanded="false" />
+            <element signature="e#2276#2574#0" expanded="false" />
+            <element signature="e#2609#3969#0" expanded="false" />
+            <element signature="e#4002#5337#0" expanded="false" />
+            <element signature="e#5376#10704#0" expanded="false" />
+            <element signature="e#10742#10920#0" expanded="false" />
+            <element signature="e#10950#11358#0" expanded="false" />
+            <element signature="e#11390#11709#0" expanded="false" />
+            <element signature="e#11752#12713#0" expanded="false" />
+            <element signature="e#12758#13196#0" expanded="false" />
+            <element signature="e#13241#13532#0" expanded="false" />
+            <element signature="e#13571#13753#0" expanded="false" />
+            <element signature="e#13805#14316#0" expanded="false" />
+            <element signature="e#14349#15412#0" expanded="false" />
+            <element signature="e#15458#16396#0" expanded="false" />
+            <element signature="e#16444#17284#0" expanded="false" />
+            <element signature="e#17318#17412#0" expanded="false" />
+            <element signature="e#17452#17539#0" expanded="false" />
+            <element signature="e#17619#17738#0" expanded="false" />
+            <element signature="e#17784#18102#0" expanded="false" />
+            <element signature="e#18148#18346#0" expanded="false" />
+            <element signature="e#18392#18601#0" expanded="false" />
+            <element signature="e#18640#18852#0" expanded="false" />
+            <element signature="e#18881#19016#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/social/friend_request.html">
+    <entry file="file://$PROJECT_DIR$/templates/tasks/profile_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1976048">
-          <caret line="40" column="41" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
+        <state vertical-scroll-proportion="-12.5">
+          <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="17.703703">
+          <caret line="397" column="0" selection-start-line="397" selection-start-column="0" selection-end-line="397" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#69#0" expanded="true" />
+            <element signature="e#680#1021#0" expanded="false" />
+            <element signature="e#1102#1901#0" expanded="false" />
+            <element signature="e#1954#4580#0" expanded="false" />
+            <element signature="e#4613#5628#0" expanded="false" />
+            <element signature="e#5660#5698#0" expanded="false" />
+            <element signature="e#5746#6353#0" expanded="false" />
+            <element signature="e#6400#6773#0" expanded="false" />
+            <element signature="e#6825#9839#0" expanded="false" />
+            <element signature="e#9896#10251#0" expanded="false" />
+            <element signature="e#10294#12616#0" expanded="false" />
+            <element signature="e#12659#14677#0" expanded="false" />
+            <element signature="e#14728#15283#0" expanded="false" />
+            <element signature="e#15334#16021#0" expanded="false" />
+            <element signature="e#16064#16119#0" expanded="false" />
+            <element signature="e#16156#16649#0" expanded="false" />
+            <element signature="e#16700#17301#0" expanded="false" />
+            <element signature="e#17829#18158#0" expanded="false" />
+            <element signature="e#18212#18533#0" expanded="false" />
+            <element signature="e#18779#20074#0" expanded="false" />
+            <element signature="e#20121#20326#0" expanded="false" />
+            <element signature="e#20559#21249#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/search_module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-35.51852">
+          <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.296296">
+          <caret line="251" column="47" selection-start-line="251" selection-start-column="47" selection-end-line="251" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+            <element signature="e#5857#6488#0" expanded="false" />
+            <element signature="e#6526#6714#0" expanded="false" />
+            <element signature="e#6762#6955#0" expanded="false" />
+            <element signature="e#7845#7992#0" expanded="false" />
+            <element signature="e#8034#8297#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.208333">
+          <caret line="114" column="29" selection-start-line="114" selection-start-column="29" selection-end-line="114" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/social/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5244755">
+          <caret line="20" column="60" selection-start-line="20" selection-start-column="60" selection-end-line="20" selection-end-column="60" />
+          <folding>
+            <element signature="e#1408#2555#0" expanded="false" />
+            <element signature="e#8306#8700#0" expanded="false" />
+            <element signature="e#8735#9693#0" expanded="false" />
+            <element signature="e#9728#9868#0" expanded="false" />
+            <element signature="e#9910#10064#0" expanded="false" />
+            <element signature="e#10096#17231#0" expanded="false" />
+            <element signature="e#17271#18331#0" expanded="false" />
+            <element signature="e#18379#19082#0" expanded="false" />
+            <element signature="e#19132#19904#0" expanded="false" />
+            <element signature="e#19936#20043#0" expanded="false" />
+            <element signature="e#20082#20401#0" expanded="false" />
+            <element signature="e#20962#21329#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33913043">
+          <caret line="13" column="111" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="111" />
           <folding />
         </state>
       </provider>

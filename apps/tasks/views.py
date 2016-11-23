@@ -7,18 +7,19 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
-from ..social.modules import get_task_feed, grade_user_success, grade_user_failure, get_journal_message
+from ..social.modules import get_task_feed, grade_user_success, grade_user_failure, get_journal_message, \
+    get_notifications, get_pond
 from modules import get_user_projects, tasks_search, get_current_todo_list, get_todays_todo_list, \
     convert_html_to_datetime, time_has_past,\
-    get_expired_tasks, stringify_task, get_task_picture_urls,\
-    is_time_conflict_mil
+    get_expired_tasks, stringify_task, get_task_picture_urls, get_todays_milestones, \
+    confirm_expired_milestone_and_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
+    get_failed_proj_count, get_recent_projects, get_status
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from datetime import datetime
 from ..social.global_variables import MILESTONE, NEW_PROJECT
-from django.db.models import Q
-from tasks import set_reminder, set_task_active, set_reminder_for_non_committed_tasks
+from friendship.models import Friend
 import json
 from django.contrib import messages
 import pytz
@@ -56,20 +57,33 @@ class HomeView(View):
     def get(self, request):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('tasks:login'))
-        current_task = get_current_todo_list(request.user)
-        todays_to_do_list = get_todays_todo_list(request.user)
-        expired_tasks = get_expired_tasks(request.user)
+        current_task = get_todays_milestones(request.user)
+        current_projs = get_recent_projects(request.user)
+        failed_mil_count = get_failed_mil_count(request.user)
+        completed_mil_count = get_completed_mil_count(request.user)
+        failed_proj_count = get_failed_proj_count(request.user)
+        completed_proj_count = get_completed_proj_count(request.user)
         tikedge_user = TikedgeUser.objects.get(user=request.user)
+        notifications = get_notifications(request.user, tikedge_user)
+        status_of_user = get_status(user)
         try:
             has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
         except ObjectDoesNotExist:
             has_prof_pic = None
             pass
         user_picture_form = tasks_forms.PictureUploadForm()
-
-        return render(request, 'tasks/home.html', {'current_task':current_task, 'todays_tasks':todays_to_do_list,
-                                                   'expired_tasks':expired_tasks, 'has_prof_pic':has_prof_pic,
-                                                   'user_picture_form':user_picture_form})
+        ponders = get_pond(request.user)
+        return render(request, 'tasks/home.html', {'current_tasks':current_task,
+                                                   'failed_mil_count':failed_mil_count, 'has_prof_pic':has_prof_pic,
+                                                   'user_picture_form':user_picture_form,
+                                                   'notifications':notifications,
+                                                   'user_name':request.user.username,
+                                                   'ponders': ponders, 'completed_mil_count':completed_mil_count,
+                                                   'failed_proj_count':failed_proj_count,
+                                                   'complete_proj_count':completed_proj_count,
+                                                    'current_projs':current_projs,
+                                                    'status_of_user':status_of_user
+                                                   })
 
     def post(self, request):
         user_picture_form = tasks_forms.PictureUploadForm(request.POST, request.FILES)
@@ -92,6 +106,49 @@ class HomeView(View):
         print "something went wrong"
 
         return HttpResponse(request, 'tasks/home.html', {'user_picture_form':user_picture_form})
+
+
+class ProfileView(View):
+
+    def get(self, request, user_name):
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect(reverse('tasks:login'))
+        user = User.objects.get(username=user_name)
+        current_tasks = get_todays_milestones(request.user)
+        current_projs = get_recent_projects(request.user)
+        expired_tasks = get_expired_tasks(user)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        failed_mil_count = get_failed_mil_count(user)
+        completed_mil_count = get_completed_mil_count(user)
+        failed_proj_count = get_failed_proj_count(user)
+        completed_proj_count = get_completed_proj_count(user)
+        status_of_user = get_status(user)
+        print " friend request ", Friend.objects.unrejected_requests(user=request.user)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        user_picture_form = tasks_forms.PictureUploadForm()
+        try:
+            if Friend.objects.are_friends(request.user, user) or (request.user.username == user.username):
+                is_friend = True
+                print "friends?", (Friend.objects.are_friends(request.user, user))
+            else:
+                is_friend = False
+                print "do what no one those ", request.user, user
+        except ObjectDoesNotExist:
+            print "trouble in paradise"
+            is_friend = False
+        return render(request, 'tasks/profile_view.html', {'current_tasks':current_tasks,
+                                                   'expired_tasks':expired_tasks, 'has_prof_pic':has_prof_pic,
+                                                   'user_picture_form':user_picture_form,'user':tikedge_user,
+                                                    'is_friend':is_friend,'completed_mil_count':completed_mil_count,
+                                                   'failed_proj_count':failed_proj_count,
+                                                   'complete_proj_count':completed_proj_count,
+                                                    'failed_mil_count':failed_mil_count,
+                                                    'current_projs':current_projs,
+                                                    'status_of_user':status_of_user
+                                                   })
 
 
 class ListOfTasksViews(View):
@@ -244,7 +301,7 @@ class AddProject(View):
                                                 day_entry=day_entry + 1,
                                                 event_type=NEW_PROJECT,
                                                 is_project_entry=True,
-                                                milestone_entry=new_project,
+                                                new_project_entry=new_project,
                                                 user=user
                                                 )
                 new_journal_entry.save()
@@ -339,3 +396,44 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse('tasks:login'))
+
+
+class CheckMilestoneDone(View):
+    def post(self, request):
+        response = {}
+        mil_stone = Milestone.objects.get(id=int(request.POST.get("mil_Id")))
+        mil_stone.is_completed = True
+        mil_stone.is_active = False
+        mil_stone.save()
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class CheckPojectDone(View):
+    def post(self, request):
+        response = {}
+        try:
+            proj_stone = UserProject.objects.get(id=int(request.POST.get("proj_id")))
+            proj_stone.is_completed = True
+            proj_stone.is_live = False
+            proj_stone.save()
+            response["status"] = True
+        except (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
+            response["status"] = False
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class CheckFailedProjectMilestoneView(View):
+
+    def post(self, request):
+        response = {}
+        try:
+            tikedge_user = TikedgeUser.objects.get(user=request.user)
+            confirm_expired_milestone_and_project(tikedge_user)
+            response["status"] = True
+        except ObjectDoesNotExist:
+            response["status"] = False
+        return HttpResponse(json.dumps(response), status=201)
+
+
+

@@ -1,22 +1,14 @@
 from django.core.exceptions import ObjectDoesNotExist
 from models import TikedgeUser, Tasks
-import re
-from django.db.models import Q
-from datetime import timedelta, datetime
-from forms import form_module
-from django.db.models import Min
-from forms.form_module import get_current_datetime
-from tzlocal import get_localzone
-from django.utils import timezone
-import time
-import pytz
-from dateutil.tz import *
-from dateutil.tz import tzlocal
-from tzlocal import get_localzone
 
-DECODE_DICTIONARY = {'a':'c', 'b':'z', 'c':'g', 'd':'h', 'e':'w', 'f':'x', 'g':'a', 'h':'b', 'i':'d', 'j':'e', 'k':'f', 'l':'i', 'm':'j', 'n':'k', 'o':'l',
-                     'p':'m', 'q':'o', 'r':'p', 's':'q', 't':'r',
-                    'u':'s', 'v':'t', 'w':'y', 'x':'v', 'y':'u', 'z':'n'}
+from django.db.models import Q
+from datetime import timedelta
+from forms import form_module
+from forms.form_module import get_current_datetime
+import pytz
+from tzlocal import get_localzone
+from global_variables_tasks import DECODE_DICTIONARY
+from ..social.search_module import get_query
 
 
 def get_user_projects(user):
@@ -32,6 +24,11 @@ def get_user_projects(user):
     return t_list
 
 
+def get_tikedge_user(user):
+    tikedge_user = TikedgeUser.objects.get(user=user)
+    return tikedge_user
+
+
 def get_user_milestones(user):
     try:
         user = TikedgeUser.objects.get(user=user)
@@ -43,43 +40,6 @@ def get_user_milestones(user):
         temp_tup = (mil.name_of_milestone)
         t_list.append(temp_tup)
     return t_list
-
-
-def normalize_query(query_string,
-                    findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
-                    normspace=re.compile(r'\s{2,}').sub):
-    ''' Splits the query string in invidual keywords, getting rid of unecessary spaces
-        and grouping quoted words together.
-        Example:
-
-        >>> normalize_query('  some random  words "with   quotes  " and   spaces')
-        ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
-
-    '''
-    return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)]
-
-
-def get_query(query_string, search_fields):
-    ''' Returns a query, that is a combination of Q objects. That combination
-        aims to search keywords within a model by testing the given search fields.
-
-    '''
-    query = None # Query to search for every search term
-    terms = normalize_query(query_string)
-    for term in terms:
-        print term
-        or_query = None # Query to search for a given term in each field
-        for field_name in search_fields:
-            q = Q(**{"%s__icontains" % field_name: term})
-            if or_query is None:
-                or_query = q
-            else:
-                or_query = or_query | q
-        if query is None:
-            query = or_query
-        else:
-            query = query & or_query
-    return query
 
 
 def tasks_search(query, user):
@@ -150,6 +110,18 @@ def get_todays_todo_list(user):
     try:
         result = user.tasks_set.all().filter(Q(start__lte=form_module.get_current_datetime()),
                                              Q(start__gte=yesterday), Q(is_active=True))
+    except ObjectDoesNotExist:
+        result = []
+    return result
+
+
+def get_todays_milestones(user):
+    user = TikedgeUser.objects.get(user=user)
+    yesterday = form_module.get_current_datetime() - timedelta(days=1)
+    print yesterday
+    try:
+        result = user.milestone_set.all().filter(Q(reminder__lte=form_module.get_current_datetime()),
+                                             Q(reminder__gte=yesterday), Q(is_active=True))
     except ObjectDoesNotExist:
         result = []
     return result
@@ -271,3 +243,85 @@ def json_all_pending_tasks(tasks):
             temp_dic["id"] = each_task.id
             expired_tasks.append(temp_dic)
     return expired_tasks
+
+
+def get_status(user):
+    tikedge_user = get_tikedge_user(user)
+    status = "The Learner"
+    mil_all = tikedge_user.milestone_set.all().count()
+    mil_success = get_completed_mil_count(user)
+    milestone_count = mil_success + mil_all
+    ratio_percentage = float(mil_success/mil_all)*100
+    if milestone_count < 10:
+        return status
+    else:
+        if( milestone_count >= 10 and milestone_count < 50):
+            if ratio_percentage > 75.5:
+                status = "The Doer"
+            return status
+        if milestone_count >= 50 and milestone_count < 150:
+            if ratio_percentage > 75.5:
+                status = "The Motivator"
+            elif ratio_percentage > 60.5:
+                status = "The Doer"
+            elif ratio_percentage > 45.5:
+                status = "The Learner"
+            return status
+        if milestone_count >= 150:
+            if ratio_percentage > 75.5:
+                status = "The Inspirer"
+            elif ratio_percentage > 65.5:
+                status = "The Motivator"
+            elif ratio_percentage > 45.5:
+                status = "The Doer"
+            elif ratio_percentage > 25.5:
+                status = "The Learner"
+            return status
+
+
+def confirm_expired_milestone_and_project(tikedge_user):
+    yesterday = form_module.get_current_datetime() - timedelta(days=1)
+    all_milestones = tikedge_user.milestone_set.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False))
+    for each_mil in all_milestones:
+        if time_has_past(each_mil.done_by):
+            each_mil.is_failed = True
+            each_mil.is_active = False
+            each_mil.save()
+
+    all_project = tikedge_user.userproject_set.all().filter(Q(length_of_project__lte=yesterday), Q(is_completed=False))
+    for each_proj in all_project:
+        if time_has_past(each_proj.length_of_project):
+            each_proj.is_failed = True
+            each_proj.is_live = False
+            each_proj.save()
+
+
+def get_failed_mil_count(user):
+    tikedge_user = get_tikedge_user(user)
+    mil_count = tikedge_user.milestone_set.all().filter(Q(is_failed=True)).count()
+    return mil_count
+
+
+def get_completed_mil_count(user):
+    tikedge_user = get_tikedge_user(user)
+    mil_count = tikedge_user.milestone_set.all().filter(Q(is_completed=True)).count()
+    return mil_count
+
+
+def get_failed_proj_count(user):
+    tikedge_user = get_tikedge_user(user)
+    proj_count = tikedge_user.userproject_set.all().filter(Q(is_failed=True)).count()
+    return proj_count
+
+
+def get_completed_proj_count(user):
+    tikedge_user = get_tikedge_user(user)
+    proj_count = tikedge_user.userproject_set.all().filter(Q(is_completed=True)).count()
+    return proj_count
+
+
+def get_recent_projects(user):
+    tikedge_user = get_tikedge_user(user)
+    all_project = tikedge_user.userproject_set.all().filter(Q(is_live=True))
+    return all_project
+

@@ -23,11 +23,11 @@ class UserProject(models.Model):
     name_of_project = models.CharField(max_length=300)
     user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     tags = models.ManyToManyField(TagNames)
-    date_past = models.BooleanField(default=False)
+    is_failed = models.BooleanField(default=False)
     is_live = models.BooleanField(default=False)
     length_of_project = models.DateTimeField(blank=True, null=True)
     created = models.DateTimeField(default=now)
-    made_live = models.DateTimeField(blank=True, null=True)
+    made_live = models.DateTimeField(default=now)
     slug = models.SlugField(default=None, max_length=100)
     blurb = models.CharField(max_length=150, default=None)
     is_completed = models.BooleanField(default=False)
@@ -75,8 +75,7 @@ class Milestone(models.Model):
     reminder = models.DateTimeField(blank=True, null=True)
     done_by = models.DateTimeField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
-    milestone_completed = models.BooleanField(default=False)
-    milestone_failed = models.BooleanField(default=False)
+    is_failed = models.BooleanField(default=False)
     current_working_on_milestone = models.BooleanField(default=False)
     created_date = models.DateTimeField(default=now)
     slug = models.SlugField(default=None, max_length=100)
@@ -96,3 +95,5 @@ class Milestone(models.Model):
             str_slug_two = str(randint(9000, 99999999))
             self.slug = str_slug + str_slug_two
         super(Milestone, self).save(*args, **kwargs)
+
+

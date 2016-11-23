@@ -228,7 +228,7 @@ function individualTaskView(task_id, view){
                 var task_name = statusParse["task_name"];
                 var picture_urls = statusParse["picture_urls"];
                 var vouch = statusParse["vouch"];
-                var seen = statusParse["seen"];``
+                var seen = statusParse["seen"];
                 var follow = statusParse["follow"];
                 var build_cred = statusParse["build_cred"];
                 var letDown = statusParse["letDown"];

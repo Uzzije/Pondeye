@@ -1,30 +1,32 @@
-{% extends 'social/base.html' %}
+{% extends 'social/notification_view.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% block body %}
-   {% if friend_request %}
-       {% for each_req in friend_request %}
-           <div class="row">
-            <div class="col-md-3">
-                {{ each_req.message }}
-            </div>
-           <div class="col-md-3">
-               <button id="accept-request-button" name="{{ each_req.pk }}" class="btn-link">Accept Request</button>
-           </div>
-           <div class="col-md-3">
-               <button id="deny-request-button" name="{{ each_req.pk }}" class="btn-link">Deny Request</button>
-           </div>
-           </div>
-       {% endfor %}
-    {% else %}
-    {% endif %}
-    <script>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+           {% if friend_request %}
+               {% for each_req in friend_request %}
+                   <div class="row">
+                    <div class="col-md-4">
+                        {{ each_req.message }}
+                    </div>
+                   <div class="col-md-4">
+                       <button id="accept-request-button" name="{{ each_req.pk }}" class="btn-link">Accept Invite</button>
+                   </div>
+                   <div class="col-md-4">
+                       <button id="deny-request-button" name="{{ each_req.pk }}" class="btn-link">Deny Invite</button>
+                   </div>
+                   </div>
+               {% endfor %}
+            {% else %}
+               <p class="flow-text">No Pond Requests</p>
+            {% endif %}
+        </div>
 
+    <script>
         $('#accept-request-button').click(function(){
             var pk = $(this).attr("name");
             console.log("Accepted Friend Request ", + pk);

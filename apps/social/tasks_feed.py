@@ -122,6 +122,7 @@ class PondFeed:
         self.before_url = self.get_before_url()
         self.after_url = self.get_after_url()
         self.feed_id = self.tasks.id
+        self.created = self.get_date_created()
 
     def is_milestone_feed(self):
         if self.type_of_feed is global_variables.MILESTONE:
@@ -156,6 +157,14 @@ class PondFeed:
             return message
         else:
             return None
+
+    def get_date_created(self):
+        if self.type_of_feed is global_variables.MILESTONE:
+            return self.tasks.created_date
+        elif self.type_of_feed is global_variables.PICTURE_SET:
+            return self.tasks.after_picture.date_uploaded
+        else:
+            return self.tasks.made_live
 
     def get_before_url(self):
         if self.type_of_feed is global_variables.PICTURE_SET:

@@ -1,0 +1,118 @@
+{% extends 'base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+            {% if not is_friend %}
+                <div class="row">
+                    <div class="col-md-3 col-md-offset-9">
+                        <button id="add-friend-button" name="{{ user.id }}" class="btn-link">Add to Pond</button>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col s6">
+                    <div class="card horizontal">
+                        {% if has_prof_pic %}
+                            <img src ='{{  has_prof_pic.profile_pics.url }}' style="width:40%;height:40%;" class="img-circle"/>
+                        {% else %}
+                           <img src ='{{  has_prof_pic.profile_pics.url }}' alt="No Picture Uploaded" class="img-thumbnail">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col s6">
+                    <div class="card-panel teal">
+                         status of user {{ status_of_user }}
+                    </div>
+                    <div class="card-panel teal">
+                        <p class="">Completed</p>
+                        <div class="col s6">
+                            <span class="">Projects: {{ complete_proj_count }}</span>
+                        </div>
+                        <div class="col s6">
+                            <span class="">Milestones: {{ completed_mil_count }}</span>
+                        </div>
+                    </div>
+                    <div class="card-panel teal">
+                        <p class="">Failed</p>
+                        <div class="col s6">
+                            <span class="">Projects: {{ failed_proj_count }}</span>
+                        </div>
+                        <div class="col s6">
+                            <span class="">Milestones: {{ failed_mil_count }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    {% if current_tasks %}
+                        <h3>Upcoming MileStones</h3>
+                        <div class="card-panel teal">
+                            {% for current_task in current_tasks %}
+                                <div id=row_curr_{{ current_task.id }} class="row">
+                                    <div class="col-md-8">
+                                        <a href="{% url 'social:milestone_view' current_task.slug %}">{{ current_task.blurb }}</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                         <div class="card-panel teal">
+                            <span>No Upcoming MileStones</span>
+                         </div>
+                    {% endif %}
+                </div>
+                <div class="col s6">
+                    {% if current_projs %}
+                        <div class="card-panel teal">
+                            <span>Upcoming Projects</span>
+                                {% for each_proj in current_projs %}
+                                    <div id=proj_curr_{{ each_proj.id }} class="row">
+                                        <div class="col-md-8">
+                                            <a href="{% url 'social:project_view' each_proj.slug %}">{{ each_proj.blurb }}</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                        </div>
+                    {% else %}
+                            <div class="card-panel teal">
+                                <span>No Upcoming Projects</span>
+                            </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <script>
+            $('#add-friend-button').click(function(){
+                var id = $(this).attr("name");
+                console.log("Friends Adding Request sent ", + id);
+                send_friends_request(id);
+            });
+
+            function send_friends_request(id){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:send_friend_request' %}',
+                    type: "POST",
+                    data: { user_id: id  },
+                    success: function(){
+                        $("#add-friend-button").text("Pond Invite Sent!");
+                        console.log("Successful sent request");
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                    }
+                })
+            }
+
+        </script>
+    {% endblock %}
+  </body>
+</html>

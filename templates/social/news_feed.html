@@ -11,7 +11,6 @@
 </head>
 <body>
 {% block body %}
-    {% load cropping %}
     <div class="container">
         {% for feed in all_feeds %}
             <div class="row">
@@ -52,7 +51,9 @@
                         <a href="{% url 'social:project_view' feed.tasks.slug %}">{{ feed.message }}</a>
                          <div class="row">
                             <div class="col s2">
-                                <button class="btn-link">interesting <span id="vouche">{{ feed.follow_count }}</span></button>
+                                <button onclick="createFollow({{ feed.tasks.id }})" class="btn-link">interesting
+                                    <span id="inter_{{ feed.tasks.id }}">{{ feed.follow_count }}</span>
+                                </button>
                             </div>
                              <div class="col s2">
                                 <i class="btn-link">seen <span id="seen">{{ feed.seen_count }}</span></i>
@@ -87,6 +88,35 @@
                         console.log("already vouched");
                     }
                     console.log("Successful sent request" + count);
+                },
+                error: function(xhr){
+                    $("#error-message").text(xhr.responseText).show();
+                }
+            })
+        }
+
+        function createFollow(pk){
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+            });
+            $.ajax({
+                url: '{% url 'social:create_follow' %}',
+                type: "POST",
+                data: { proj_id: pk  },
+                success: function(response){
+                    var statusParse = JSON.parse(response);
+                    var status = statusParse["status"];
+                    var count = 0;
+                    if (status == true){
+                        count = statusParse["count"];
+                        $("#inter_"+pk).empty();
+                        $("#inter_"+pk).text(count);
+                        Materialize.toast("Interest Noted!", 2000);
+                    }
+                    else{
+                        console.log("already follow");
+                    }
+                    console.log("Successful sent follow request" + count);
                 },
                 error: function(xhr){
                     $("#error-message").text(xhr.responseText).show();

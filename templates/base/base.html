@@ -44,6 +44,7 @@
             <li><a class="bar-font"style="color:blue" href="{% url 'social:journal_entries' %}">Journal Entries</a></li>
             <li><a class="bar-font" style="color:blue" href="{% url 'social:todo_feed' %}">Feed</a></li>
             <li><a class="bar-font"style="color:blue" href="{% url 'tasks:logout' %}">Logout</a></li>
+            <li><a class="bar-font"style="color:blue" href="{% url 'social:notifications' %}">Notifications</a></li>
         </ul>
         {% block search %}
             <nav class="navbar navbar-inverse">
@@ -60,49 +61,72 @@
             </nav>
             <div class="container">
                 <div class="row">
-                  <form>
+                  <form method="get" action="{% url 'social:search_everything' %}">
                     <div class="input-field">
-                      <input class="form-control" type="search" placeholder="Discover" name="get_people" id="id_q" value="">
+                      <input class="form-control" type="search" placeholder="Discover" name="query_word" id="id_q" value="">
                       <i class="material-icons">close</i>
                     </div>
                   </form>
                 </div>
             </div>
         {% endblock %}
-        {% block body %}
-
+        {% block notifications %}
         {% endblock %}
+            <br><br>
+        {% block body %}
+        {% endblock %}
+
         {% block nav_script %}
         {% endblock %}
         {% block base_script %}
             <script>
+
                 $(document).ready(function(){
+
                     setTimeout(function(){
                         $('.message').fadeOut('slow');}, 2000);
+
                     });
+                function checkFailedProjectsMilestones(){
+                    $.ajaxSetup({
+                        data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                    });
+                    $.ajax({
+                        url: '{% url 'tasks:check_milestone_proj_failed' %}',
+                        type: "POST",
+                        data: {},
+                        success: function(response){
+                            var statusParse = JSON.parse(response);
+                            var status = statusParse["status"];
+                            if (status == true){
+                                console.log("successfully sent")
+                            }
+                            else{
+                                console.log("something happened");
+                            }
+                        },
+                        error: function(xhr){
+                            $("#error-message").text(xhr.responseText).show();
+                            clearInterval(check_failed_interval);
+                        }
+                    })
+                }
+                var check_failed_interval = setInterval(checkFailedProjectsMilestones, 30000);
             </script>
 
         {% endblock %}
 {% block end %}
-        <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
-            <a href="{% url 'tasks:add_proj' %}" class="btn-floating btn-large red">
-                <i class="large material-icons">add</i>
-            </a>
-        </div>
-
-        <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 90px;">
-            <a href="{% url 'social:upload_picture' %}" class="btn-floating btn-large red">
-                <i class="large material-icons">picture_in_picture</i>
-            </a>
-             <!--
-            <div hidden>
-                <input class="btn-floating btn-large red" id="fileupload" type="file" name="pictureFiles[]" value="upload" multiple>
+            <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 24px;">
+                <a href="{% url 'tasks:add_proj' %}" class="btn-floating btn-large red">
+                    <i class="large material-icons">add</i>
+                </a>
             </div>
-            <button for="fileupload" class="btn-floating btn-large red">
-                <label for="fileupload"><i hide class="large material-icons">picture_in_picture</i></label>
-            </button>
-             --->
-        </div>
+
+            <div class="fixed-action-btn horizontal" style="bottom: 45px; right: 90px;">
+                <a href="{% url 'social:upload_picture' %}" class="btn-floating btn-large red">
+                    <i class="large material-icons">picture_in_picture</i>
+                </a>
+            </div>
 {% endblock %}
 </body>
 </html>

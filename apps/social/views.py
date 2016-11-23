@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import View
 from forms import social_forms
-from models import (ProfilePictures, Notification, Vouche, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
-                    JournalPost, JournalComment)
+from models import (Notification, Vouche, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
+                    JournalPost, JournalComment, SeenProject)
 from ..tasks.models import TikedgeUser, UserProject, User, Tasks, Milestone
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
@@ -19,6 +19,7 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 import json
 from django.contrib import messages
 from django.db.models import Q
+from search_module import find_everything
 
 
 class CSRFExemptView(View):
@@ -101,11 +102,23 @@ class ProjectView(View):
         project_name = project.name_of_project
         motivations = project.tags.all()
         print "motivations ", motivations
+        modules.increment_project_view(request.user, project)
         milestones = modules.milestone_tuple(project)
+        try:
+            seen_count = SeenProject.objects.get(tasks=project).users.count()
+        except ObjectDoesNotExist:
+            seen_count = 0
+        try:
+            follows = Follow.objects.get(tasks=project).users.count()
+        except ObjectDoesNotExist:
+            follows = 0
         return render(request, 'social/individual_project.html', {'project_name':project_name,
                                                                   'motivations':motivations,
                                                                    'milestones':milestones,
                                                                     'project_slug':slug,
+                                                                    'seen_count':seen_count,
+                                                                    'interest_count':follows,
+                                                                    'project':project,
                                                                   })
 
 
@@ -222,16 +235,16 @@ class SendFriendRequestView(View):
         user_id = request.POST.get("user_id")
         other_user = TikedgeUser.objects.get(id=int(user_id))
         print other_user.user.username, other_user.user.first_name, other_user.user.last_name
-        message = "Hi! ", request.user.first_name, " ", request.user.last_name, " would like to add you to his pond!"
+        message = "Hi %s %s username: %s would like to add you to his pond" % request.user.first_name, \
+                  request.user.last_name, request.user.username
         try:
             Friend.objects.add_friend(request.user, other_user.user, message=message)
-            friend_request = FriendshipRequest.objects.get(pk=other_user.pk)
+            friend_request = FriendshipRequest.objects.get(pk=other_user.user.pk)
             notification = Notification(friend_request=friend_request, user=other_user.user,
                                         type_of_notification=global_variables.FRIEND_REQUEST)
             notification.save()
         except (AlreadyFriendsError, AlreadyExistsError, ValidationError):
             pass
-            print "Friends Already Exist"
         return HttpResponse('')
 
 
@@ -246,6 +259,7 @@ class AcceptFriendRequestView(View):
         try:
             friend_request = FriendshipRequest.objects.get(pk=int(request_id))
             friend_request.accept()
+            # create notification
         except (AlreadyFriendsError, AlreadyExistsError, ValidationError):
             pass
         return HttpResponse('')
@@ -268,7 +282,6 @@ class FriendRequestView(View):
 
     def get(self, request):
         friend_request = Friend.objects.requests(request.user)
-        print friend_request
         return render(request, 'social/friend_request.html', {'friend_request':friend_request})
 
 
@@ -304,7 +317,7 @@ class CreateVouch(View):
             vouch_obj.users.add(user)
             vouch_obj.save()
             try:
-                view = SeenMilestone.objects.get(tasks=Milestone)
+                view = SeenMilestone.objects.get(tasks=milestone)
             except ObjectDoesNotExist:
                 view = SeenMilestone(tasks=milestone)
                 view.save()
@@ -346,29 +359,27 @@ class ApiCreateVouch(CSRFExemptView):
         return HttpResponse(json.dumps(response), status=201)
 
 
-class ApiCreateFollow(CSRFExemptView):
+class CreateFollowView(CSRFExemptView):
 
     def get(self, request, *args, **kwargs):
         return HttpResponse('')
 
     def post(self, request, *args, **kwargs):
         response = {}
-        task_id = request.POST.get("task_id")
-        task = Tasks.objects.get(id=task_id)
-        username = request.POST.get("username")
-        user = User.objects.get(username=username)
-        tikedge_user = TikedgeUser.objects.get(user=user)
+        proj_id = request.POST.get("proj_id")
+        project = UserProject.objects.get(id=int(proj_id))
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
         try:
-            follow_obj = Follow.objects.get(tasks=task.project)
+            follow_obj = Follow.objects.get(tasks=project)
         except ObjectDoesNotExist:
-            follow_obj = Follow(tasks=task.project)
+            follow_obj = Follow(tasks=project)
             follow_obj.save()
         if not tikedge_user in follow_obj.users.all():
-            response["status"] = "true"
+            response["status"] = True
             follow_obj.users.add(tikedge_user)
             follow_obj.save()
         else:
-            response["status"] = "false"
+            response["status"] = False
         response["count"] = follow_obj.users.all().count()
         return HttpResponse(json.dumps(response), status=201)
 
@@ -376,6 +387,55 @@ class ApiCreateFollow(CSRFExemptView):
 class TagSearchView(View):
     def get(self, request, word):
         return render(request, 'social/tag_search_results.html')
+
+
+class NotificationsViews(View):
+
+    def get(self, request):
+        return render(request, 'social/notification_view.html')
+
+
+class NewFriendNotificationsView(View):
+
+    def get(self, request):
+        ponders = modules.get_pond(request.user)
+        return render(request, 'social/new_ponders.html', {'ponders':ponders})
+
+
+class ProjectNotificationsView(View):
+
+    def get(self, request):
+        tikegde_user = TikedgeUser.objects.get(user=request.user)
+        all_project = tikegde_user.userproject_set.all()
+        interest_feed = modules.get_interest_notification(all_project)
+        return render(request, 'social/project_interest_view.html', {'interest_feed':interest_feed})
+
+
+class LetDownsNotificationsView(View):
+    def get(self, request):
+        let_down_results = modules.get_let_down_notifications(request.user)
+        return render(request, 'social/let_down_view.html', {'let_down_results':let_down_results})
+
+
+class VouchedNotificationsView(View):
+
+    def get(self, request):
+        mil_down_results = modules.get_milestone_vouch_notifications(request.user)
+        return render(request, 'social/milestone_vouches.html', {'mil_down_results':mil_down_results})
+
+
+class SearchResultsView(View):
+
+    def get(self, request):
+        query_word = request.GET["query_word"]
+        results = find_everything(request.user, query_word)
+        return render(request, 'social/search_results.html', {'results':results})
+
+
+class PondView(View):
+    def get(self, request):
+        ponders = modules.get_pond(request.user)
+        return render('social/pond.html', {'ponders':ponders})
 
 
 

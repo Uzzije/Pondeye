@@ -1,0 +1,27 @@
+{% extends 'social/notification_view.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+            {% if let_down_results %}
+            {% for letdown in let_down_results %}
+                 <div class="col-md-8">
+                    <a href="{% url 'social:milestone_view' letdown.slug %}">
+                        <span class="flow-text">
+                            You let down {{ letdown.count }} persons with milestone {{ letdown.name_of_burb }}
+                        </span>
+                    </a>
+                 </div>
+            {% endfor %}
+            {% else %}
+                <p class="flow-text">Yey! You have no let downs!..yet</p>
+            {% endif %}
+        </div>
+    {% endblock %}
+
+</body>
+</html>

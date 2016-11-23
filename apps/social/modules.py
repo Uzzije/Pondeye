@@ -1,6 +1,6 @@
 from ..tasks.models import TikedgeUser, Tasks, Milestone, UserProject
 from .models import TaskPicture, ProfilePictures, Graded, Seen, Vouche, \
-Notification, PictureSet, VoucheMilestone, SeenMilestone
+Notification, PictureSet, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone
 from django.db.models import Q
 from tasks_feed import TasksFeed, NewsFeed, NotificationFeed, PondFeed
 from ..tasks.modules import get_query
@@ -105,7 +105,8 @@ def get_users_feed(user):
     for each_tasks in picture_feed:
         feed = PondFeed(each_tasks, type_of_feed=global_variables.PICTURE_SET)
         list_of_feed.append(feed)
-    return list_of_feed
+    sorted_list = sorted(list_of_feed, key=lambda x: x.created)
+    return sorted_list
 
 
 def get_task_feed(task):
@@ -352,15 +353,32 @@ def milestone_tuple(project):
     milestones = project.milestone_set.all()
     for each_mil in milestones:
         try:
-            vouch_count = VoucheMilestone.objects.get(tasks=milestones).users.count()
+            vouch_count = VoucheMilestone.objects.get(tasks=each_mil).users.count()
         except ObjectDoesNotExist:
             vouch_count = 0
         try:
-            seen_count = SeenMilestone.objects.get(tasks=milestones).users.count()
+            seen_count = SeenMilestone.objects.get(tasks=each_mil).users.count()
         except ObjectDoesNotExist:
             seen_count = 0
         tuple_list.append((each_mil, vouch_count, seen_count))
     return tuple_list
+
+
+def get_interest_notification(all_project):
+    interest_feed = []
+    for project in all_project:
+        seen_project = Follow.objects.get(tasks=project)
+        for each_follow in seen_project.users.all():
+            interest_feed.append({
+                'username':each_follow.user.username,
+                'first_name':each_follow.user.first_name,
+                'last_name':each_follow.user.last_name,
+                'slug':project.slug,
+                'blurb':project.blurb,
+                'created':project.created
+            })
+    sorted_feed = sorted(interest_feed, key=lambda x: x['created'], reverse=True)
+    return sorted_feed
 
 
 def get_milestone_percentage(milestone):
@@ -385,6 +403,19 @@ def increment_milestone_view(user_obj, milestone):
         view = SeenMilestone.objects.get(tasks=milestone)
     except ObjectDoesNotExist:
         view = SeenMilestone(tasks=milestone)
+        view.save()
+    if user not in view.users.all():
+        view.users.add(user)
+        view.save()
+    print "Trying to view you!!!"
+
+
+def increment_project_view(user_obj, project):
+    user = TikedgeUser.objects.get(user=user_obj)
+    try:
+        view = SeenProject.objects.get(tasks=project)
+    except ObjectDoesNotExist:
+        view = SeenProject(tasks=project)
         view.save()
     if user not in view.users.all():
         view.users.add(user)
@@ -433,4 +464,64 @@ def get_user_journal_feed(tikege_user):
         journal_list.append(journal_feed)
     return journal_list
 
+
+def get_notifications(user, tikedge_user):
+    notifications = user.notification_set.all()
+    nofication_feed = NotificationFeed(user, notifications)
+    return nofication_feed.get_unread_notification()
+
+
+def get_pond(user):
+    dict_list_of_pond = []
+    friends = Friend.objects.friends(user)
+    for each_friend in friends:
+        tikedge_user = TikedgeUser.objects.get(user=each_friend)
+        picture = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        friend = Friend.objects.get(to_user=each_friend, from_user=user)
+        dict_list_of_pond.append({
+            'profile_pics_url':picture.profile_pics.url,
+            'username':each_friend.username,
+            'first_name':each_friend.first_name,
+            'last_name':each_friend.last_name,
+            'created':friend.created
+        })
+    sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['created'])
+    return sorted_pond
+
+
+def get_let_down_notifications(user):
+    tikedge_user = TikedgeUser.objects.get(user=user)
+    milestones = tikedge_user.milestone_set.all()
+    let_down_list = []
+    for each_mil in milestones:
+        try:
+            let_down = LetDownMilestone.objects.get(tasks=each_mil)
+            count = let_down.users.count()
+            let_down_list.append({
+            'name_of_blurb':each_mil.blurb,
+            'slug':each_mil.slug,
+            'count':count
+            })
+        except ObjectDoesNotExist:
+            pass
+    return let_down_list
+
+
+def get_milestone_vouch_notifications(user):
+    tikedge_user = TikedgeUser.objects.get(user=user)
+    milestones = tikedge_user.milestone_set.all()
+    mil_vouch_list = []
+    for each_mil in milestones:
+        print " each mil", each_mil
+        try:
+            mil_vouch = VoucheMilestone.objects.get(tasks=each_mil)
+            count = mil_vouch.users.count()
+            mil_vouch_list.append({
+                'blurb':each_mil.blurb,
+                'slug':each_mil.slug,
+                'count':count
+            })
+        except ObjectDoesNotExist:
+            pass
+    return mil_vouch_list
 

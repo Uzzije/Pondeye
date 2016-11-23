@@ -8,7 +8,20 @@
     {% block body %}
         <div class="container">
             <div class="row">
-                <a href="{% url 'social:project_view' project_slug %}"><h6>{{ project_name }}</h6></a>
+                <div class="col-md-12">
+                    <a href="{% url 'social:project_view' project_slug %}"><h6>{{ project_name }}</h6></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                   <button onclick="createFollow({{ project.id }})" class="btn-link">
+                       <span class="flow-text" id="inter_{{ project.id }}">
+                           {{ interest_count }}</span><span class="flow-text"> persons find this interest</span>
+                   </button>
+                </div>
+                <div class="col-md-6">
+                    <span class="flow-text">{{ seen_count }} persons have noticed this</span>
+                </div>
             </div>
             <div class="row">
                 <div class="col s12">
@@ -25,22 +38,52 @@
                     <h4>Milestones of Projects</h4>
                 </div>
             </div>
-            <div class="row">
                 {% for each_mil, vouches, views in milestones %}
-                    <div class="col s6">
-                        <div class="col s6">
+                    <div class="row">
+                        <div class="col s4">
                             <a href="{% url 'social:milestone_view' each_mil.slug %}">{{ each_mil.blurb }}...</a>
                         </div>
-                        <div class="col s3">
-                            <span> vouches ( {{ vouches }} )</span>
+                        <div class="col s4">
+                            <span> ( {{ vouches }} ) persons vouched for this.</span>
                         </div>
-                        <div class="col s3">
-                            <span> views ( {{ views }} )</span>
+                        <div class="col s4">
+                            <span> seen by ( {{ views }} ) persons.</span>
                         </div>
                     </div>
                 {% endfor %}
-            </div>
+
         </div>
+        <script>
+            function createFollow(pk){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:create_follow' %}',
+                    type: "POST",
+                    data: { proj_id: pk  },
+                    success: function(response){
+                        var statusParse = JSON.parse(response);
+                        var status = statusParse["status"];
+                        var count = 0;
+                        if (status == true){
+                            count = statusParse["count"];
+                            $("#inter_"+pk).empty();
+                            $("#inter_"+pk).text(count);
+                            Materialize.toast("Interest Noted!", 2000);
+                        }
+                        else{
+                            console.log("already follow");
+                        }
+                        console.log("Successful sent follow request" + count);
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                    }
+                })
+            }
+
+        </script>
     {% endblock %}
 
 </body>
