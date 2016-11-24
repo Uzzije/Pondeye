@@ -65,7 +65,7 @@ class HomeView(View):
         completed_proj_count = get_completed_proj_count(request.user)
         tikedge_user = TikedgeUser.objects.get(user=request.user)
         notifications = get_notifications(request.user, tikedge_user)
-        status_of_user = get_status(user)
+        status_of_user = get_status(request.user)
         try:
             has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
         except ObjectDoesNotExist:
