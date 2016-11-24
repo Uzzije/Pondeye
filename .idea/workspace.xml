@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/css/general_design.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/views.py" afterPath="$PROJECT_DIR$/apps/tasks/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/base.html" afterPath="$PROJECT_DIR$/templates/base/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/home.html" afterPath="$PROJECT_DIR$/templates/tasks/home.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/nav_bar.html" afterPath="$PROJECT_DIR$/templates/base/nav_bar.html" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,39 +32,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="17.703703">
-              <caret line="397" column="0" selection-start-line="397" selection-start-column="0" selection-end-line="397" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#69#0" expanded="true" />
-                <element signature="e#680#1021#0" expanded="false" />
-                <element signature="e#1102#1901#0" expanded="false" />
-                <element signature="e#1954#4580#0" expanded="false" />
-                <element signature="e#4613#5628#0" expanded="false" />
-                <element signature="e#5660#5698#0" expanded="false" />
-                <element signature="e#5746#6353#0" expanded="false" />
-                <element signature="e#6400#6773#0" expanded="false" />
-                <element signature="e#6825#9839#0" expanded="false" />
-                <element signature="e#9896#10251#0" expanded="false" />
-                <element signature="e#10294#12616#0" expanded="false" />
-                <element signature="e#12659#14677#0" expanded="false" />
-                <element signature="e#14728#15283#0" expanded="false" />
-                <element signature="e#15334#16021#0" expanded="false" />
-                <element signature="e#16064#16119#0" expanded="false" />
-                <element signature="e#16156#16649#0" expanded="false" />
-                <element signature="e#16700#17301#0" expanded="false" />
-                <element signature="e#17829#18158#0" expanded="false" />
-                <element signature="e#18212#18533#0" expanded="false" />
-                <element signature="e#18779#20074#0" expanded="false" />
-                <element signature="e#20121#20326#0" expanded="false" />
-                <element signature="e#20559#21249#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="news_feed.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/social/news_feed.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -145,10 +108,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.2434783">
+            <state vertical-scroll-proportion="-1.875">
               <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -156,6 +119,16 @@
                 <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#i#0;n#a#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nav_bar.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base/nav_bar.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.33739132">
+              <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -200,7 +173,6 @@
         <option value="$PROJECT_DIR$/templates/base/index.html" />
         <option value="$PROJECT_DIR$/templates/social/milestone_pictures.html" />
         <option value="$PROJECT_DIR$/templates/social/milestone_view.html" />
-        <option value="$PROJECT_DIR$/templates/base/nav_bar.html" />
         <option value="$PROJECT_DIR$/templates/social/tag_search_results.html" />
         <option value="$PROJECT_DIR$/templates/social/journal_feed.py" />
         <option value="$PROJECT_DIR$/apps/social/forms/social_forms.py" />
@@ -239,6 +211,7 @@
         <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/apps/tasks/static/css/general_design.css" />
         <option value="$PROJECT_DIR$/templates/tasks/home.html" />
+        <option value="$PROJECT_DIR$/templates/base/nav_bar.html" />
       </list>
     </option>
   </component>
@@ -329,7 +302,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="social" />
+              <option name="myItemId" value="base" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -942,14 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/nav_bar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.125">
-          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/social/picture_view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
@@ -1423,7 +1388,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.2434783">
+        <state vertical-scroll-proportion="-1.875">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1431,6 +1396,14 @@
             <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#i#0;n#a#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/nav_bar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33739132">
+          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
