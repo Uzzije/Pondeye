@@ -251,11 +251,13 @@ def get_status(user):
     mil_all = tikedge_user.milestone_set.all().count()
     mil_success = get_completed_mil_count(user)
     milestone_count = mil_success + mil_all
+    if mil_all == 0:
+        return status
     ratio_percentage = float(mil_success/mil_all)*100
     if milestone_count < 10:
         return status
     else:
-        if( milestone_count >= 10 and milestone_count < 50):
+        if milestone_count >= 10 and milestone_count < 50:
             if ratio_percentage > 75.5:
                 status = "The Doer"
             return status

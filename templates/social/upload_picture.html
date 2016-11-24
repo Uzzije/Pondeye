@@ -9,34 +9,48 @@
         <div class="container">
             <form method="post" action="{% url 'social:upload_picture' %}" enctype="multipart/form-data">{% csrf_token %}
                 <div class="row">
-                    <div class="col s6">
+                    <div class="col-md-6">
                         <input type="radio" id="before_pic_id" name="type_of_picture" value="bc"/>
-                        <label for="before_pic_id">Before Capture</label>
+                        <label class="para-font" for="before_pic_id">Before Capture</label>
                     </div>
-                    <div class="col s6">
+                    <div class="col-md-6">
                         <input type="radio" id="after_pic_id" name="type_of_picture" value="ac"/>
-                        <label for="after_pic_id">After Capture</label>
+                        <label class="para-font" for="after_pic_id">After Capture</label>
                     </div>
                 </div>
+                <br>
                 <div id="upload_view" hidden>
                     <div class="row">
-                        <div class="col-md-2 col-md-offset-5">
-                                <h4>{{ user_picture_form.picture.label }}</h4>
-                                {{ user_picture_form.picture }}
+                        <div class="col-md-3">
+                            <h4 class="para-font">{{ user_picture_form.picture.label }}</h4>
+                        </div>
+                        <div class="col-md-3">
+                            {{ user_picture_form.picture }}
                         </div>
                     </div>
-                    <div class="row">
-                        <button type="submit" id="" name="picture" class="btn waves-effect waves-light">upload</button>
-                    </div>
-                    <div class="row">
-                        <div class="col s6">
-                        <label><h3>What milestone is this for?</h3></label>
-                            <select class="browser-default" name="milestone_name" required>
-                                <option value="" selected>milestone?</option>
-                                {% for proj in existing_milestones %}
-                                    <option value="{{ proj }}">{{ proj }}</option>
-                                {% endfor %}
-                            </select>
+                    <br>
+                    <div class="col-md-7">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                    <p><h3 class="display-font">What milestone is this for?</h3></p>
+                                        <br>
+                                        <select class="form-control" name="milestone_name" required>
+                                            <option class="para-font" value="" selected>milestone?</option>
+                                            {% for proj in existing_milestones %}
+                                                <option value="{{ proj }}">{{ proj }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-3 col-md-offset-6">
+                                     <button type="submit" id="" name="picture" class="btn btn-primary btn-lg">Upload</button>
+                                 </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

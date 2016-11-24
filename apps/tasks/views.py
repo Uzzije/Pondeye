@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from ..social.modules import get_task_feed, grade_user_success, grade_user_failure, get_journal_message, \
-    get_notifications, get_pond
+    get_notifications, get_pond, resize_image
 from modules import get_user_projects, tasks_search, get_current_todo_list, get_todays_todo_list, \
     convert_html_to_datetime, time_has_past,\
     get_expired_tasks, stringify_task, get_task_picture_urls, get_todays_milestones, \
@@ -82,7 +82,8 @@ class HomeView(View):
                                                    'failed_proj_count':failed_proj_count,
                                                    'complete_proj_count':completed_proj_count,
                                                     'current_projs':current_projs,
-                                                    'status_of_user':status_of_user
+                                                    'status_of_user':status_of_user,
+                                                    'tikedge_user':tikedge_user
                                                    })
 
     def post(self, request):
@@ -94,15 +95,37 @@ class HomeView(View):
                 ProfilePictures.objects.get(tikedge_user=tkduser).delete()
             except ObjectDoesNotExist:
                 pass
+            picture_file.file = resize_image(picture_file, is_profile_pic=True)
             picture_mod = ProfilePictures(image_name=picture_file.name, profile_pics=picture_file, tikedge_user=tkduser)
             picture_mod.save()
-            current_task = get_current_todo_list(request.user)
-            todays_to_do_list = get_todays_todo_list(request.user)
-            expired_tasks = get_expired_tasks(request.user)
-            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tkduser)
-            return render(request, 'tasks/home.html', {'current_task':current_task, 'todays_tasks':todays_to_do_list,
-                                                   'expired_tasks':expired_tasks, 'has_prof_pic':has_prof_pic,
-                                                   'user_picture_form':user_picture_form})
+            current_task = get_todays_milestones(request.user)
+            current_projs = get_recent_projects(request.user)
+            failed_mil_count = get_failed_mil_count(request.user)
+            completed_mil_count = get_completed_mil_count(request.user)
+            failed_proj_count = get_failed_proj_count(request.user)
+            completed_proj_count = get_completed_proj_count(request.user)
+            tikedge_user = TikedgeUser.objects.get(user=request.user)
+            notifications = get_notifications(request.user, tikedge_user)
+            status_of_user = get_status(request.user)
+            try:
+                has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+            except ObjectDoesNotExist:
+                has_prof_pic = None
+                pass
+            user_picture_form = tasks_forms.PictureUploadForm()
+            ponders = get_pond(request.user)
+            return render(request, 'tasks/home.html', {'current_tasks':current_task,
+                                                       'failed_mil_count':failed_mil_count, 'has_prof_pic':has_prof_pic,
+                                                       'user_picture_form':user_picture_form,
+                                                       'notifications':notifications,
+                                                       'user_name':request.user.username,
+                                                       'ponders': ponders, 'completed_mil_count':completed_mil_count,
+                                                       'failed_proj_count':failed_proj_count,
+                                                       'complete_proj_count':completed_proj_count,
+                                                        'current_projs':current_projs,
+                                                        'status_of_user':status_of_user,
+                                                        'tikedge_user':tikedge_user
+                                                       })
         print "something went wrong"
 
         return HttpResponse(request, 'tasks/home.html', {'user_picture_form':user_picture_form})

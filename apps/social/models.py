@@ -152,6 +152,7 @@ class JournalComment(models.Model):
     comment = models.CharField(max_length=2000, default=None)
     is_deleted = models.BooleanField(default=False)
 
+
 class Graded(models.Model):
     credibility_count = models.IntegerField(default=0)
     consistency_count = models.IntegerField(default=0)

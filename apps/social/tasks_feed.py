@@ -123,6 +123,14 @@ class PondFeed:
         self.after_url = self.get_after_url()
         self.feed_id = self.tasks.id
         self.created = self.get_date_created()
+        self.profile_url = self.task_owner_profile_pic_url()
+        self.feed_user = self.get_user_tikedge().user
+
+    def get_user_tikedge(self):
+        if self.type_of_feed is global_variables.PICTURE_SET:
+            return self.tasks.tikedge_user
+        else:
+            return self.tasks.user
 
     def is_milestone_feed(self):
         if self.type_of_feed is global_variables.MILESTONE:
@@ -145,15 +153,14 @@ class PondFeed:
     def message(self):
         if self.type_of_feed is global_variables.MILESTONE:
             print self.task_owner_name, " slammer"
-            message = "%s created a new milestone: %s for project: %s" % \
-                      (self.task_owner_name, self.tasks.name_of_milestone, self.tasks.project.blurb)
+            message = "New milestone: %s for project: %s" % \
+                      (self.tasks.name_of_milestone, self.tasks.project.blurb)
             return message
         elif self.type_of_feed is global_variables.PICTURE_SET:
-            message = "%s entered a journal entry for milestone: %s" % (self.task_owner_name,
-                                                                        self.tasks.milestone.blurb)
+            message = "A journal entry for milestone: %s was entered" % self.tasks.milestone.blurb
             return message
         elif self.type_of_feed is global_variables.NEW_PROJECT:
-            message = "%s created a new project: %s" % (self.task_owner_name, self.tasks.blurb)
+            message = "A new project: %s was created" % self.tasks.blurb
             return message
         else:
             return None
@@ -253,7 +260,7 @@ class PondFeed:
 
     def task_owner_profile_pic_url(self):
         try:
-            profile_picture = ProfilePictures.objects.get(tikedge_user=self.tasks.user)
+            profile_picture = ProfilePictures.objects.get(tikedge_user=self.get_user_tikedge())
             return profile_picture.profile_pics.url
         except (AttributeError, ObjectDoesNotExist):
             return None

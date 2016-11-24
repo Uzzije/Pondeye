@@ -476,10 +476,14 @@ def get_pond(user):
     friends = Friend.objects.friends(user)
     for each_friend in friends:
         tikedge_user = TikedgeUser.objects.get(user=each_friend)
-        picture = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        try:
+            picture = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+            picture_url = picture.profile_pics.url
+        except ObjectDoesNotExist:
+            picture_url = None
         friend = Friend.objects.get(to_user=each_friend, from_user=user)
         dict_list_of_pond.append({
-            'profile_pics_url':picture.profile_pics.url,
+            'profile_pics_url':picture_url,
             'username':each_friend.username,
             'first_name':each_friend.first_name,
             'last_name':each_friend.last_name,

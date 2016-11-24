@@ -12,6 +12,14 @@
 .default-font{
     font-family:  'Josefin Slab', serif;
 }
+.display-font{
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+.para-font {
+    font-family:  'Josefin Slab', serif;
+    font-size: 16px;
+}
 .header-font{
     font-weight: bold;
 }

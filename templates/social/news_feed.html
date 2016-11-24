@@ -14,54 +14,78 @@
     <div class="container">
         {% for feed in all_feeds %}
             <div class="row">
-                <div class="row"> <!--- user pic and name --->
-                    <div class="col s6">
-
-                    </div>
-                    <div class="col s6">
-
-                    </div>
-                </div>
-                <div class="row"> <!--- feed info and name --->
-                    {% if feed.is_milestone_feed %}
-                        <a href="{% url 'social:milestone_view' feed.tasks.slug %}">{{ feed.message }}</a>
-                         <div class="row">
-                            <div class="col s2">
-                                <button id="vouch" onclick="createVouch({{ feed.feed_id }})" name="{{ feed.feed_id }}"
-                                        class="btn-link">vouche<span id="vouch_{{ feed.feed_id }}"> {{ feed.vouche_count }}</span></button>
-                            </div>
-                             <div class="col s2">
-                                <i class="btn-link">seen <span id="seen">{{ feed.seen_count }}</span></i>
-                             </div>
-                         </div>
-                    {% elif feed.is_picture_feed %}
-                        <div class="col s12">
-                            <div class="ba-slider">
-                               <img src="{{ feed.before_url }}">
-                               <div class="resize">
-                                   <img src="{{ feed.after_url }}">
-                               </div>
-                               <span class="handle"></span>
+                <div class="col-md-6 col-md-offset-1">
+                    <div class="row">
+                        <div class="col-md-12"> <!--- user pic and name --->
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <img src="{{ feed.profile_url }}" style="width: 10%; height: 10%;" alt="No Profile Picture"
+                                         class="pull-left img-responsive thumb margin10 img-thumbnail img-circle">
+                                    <a  href="{% url 'tasks:profile_view' feed.feed_user.username %}">
+                                        <span class="display-font">{{ feed.feed_user.first_name }} {{ feed.feed_user.last_name }}</span>
+                                    </a>
+                                    {% if feed.is_milestone_feed %}
+                                        <div class="row">
+                                            <br>
+                                            <div class="col-md-8">
+                                                <a href="{% url 'social:milestone_view' feed.tasks.slug %}">
+                                                    <span class="para-font">{{ feed.message }}</span>
+                                                </a>
+                                            </div>
+                                         </div>
+                                        <hr>
+                                         <div class="row">
+                                            <div class="well">
+                                                <button id="vouch" onclick="createVouch({{ feed.feed_id }})" name="{{ feed.feed_id }}"
+                                                    class="btn-link"><i class="material-icons">verified_user</i><span id="vouch_{{ feed.feed_id }}">({{ feed.vouche_count }})</span>
+                                                </button>
+                                                <i class="material-icons">visibility</i>({{ feed.seen_count }})
+                                            </div>
+                                         </div>
+                                    {% elif feed.is_picture_feed %}
+                                        <br><br>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="ba-slider">
+                                                   <img src="{{ feed.before_url }}">
+                                                   <div class="resize">
+                                                       <img src="{{ feed.after_url }}">
+                                                   </div>
+                                                   <span class="handle"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="para-font">{{ feed.message }}</span>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="row">
+                                            <br>
+                                            <div class="col-md-8">
+                                                <a href="{% url 'social:project_view' feed.tasks.slug %}">
+                                                <span class="para-font">{{ feed.message }}</span></a>
+                                             </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="well">
+                                                <button onclick="createFollow({{ feed.tasks.id }})" class="btn-link">
+                                                    <i class="material-icons">hearing</i>
+                                                    <span id="inter_{{ feed.tasks.id }}">({{ feed.follow_count }})</span>
+                                                </button>
+                                                <i class="material-icons">visibility</i>({{ feed.seen_count }})
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <br><br>
                             </div>
                         </div>
-                        <div class="row">
-                            <span>Milestone: </span>{{ feed.message }}
-                        </div>
-                    {% else %}
-                        <a href="{% url 'social:project_view' feed.tasks.slug %}">{{ feed.message }}</a>
-                         <div class="row">
-                            <div class="col s2">
-                                <button onclick="createFollow({{ feed.tasks.id }})" class="btn-link">interesting
-                                    <span id="inter_{{ feed.tasks.id }}">{{ feed.follow_count }}</span>
-                                </button>
-                            </div>
-                             <div class="col s2">
-                                <i class="btn-link">seen <span id="seen">{{ feed.seen_count }}</span></i>
-                             </div>
-                         </div>
-                    {% endif %}
+                    </div>
                 </div>
-                <br><br>
             </div>
         {% endfor %}
     </div>
