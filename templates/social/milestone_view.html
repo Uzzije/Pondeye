@@ -8,42 +8,57 @@
     {% block body %}
         <div class="container-fluid">
             <div class="row">
-                <div class="col s8">
-                    <a href="{% url 'social:milestone_view' milestone.slug %}"><p class="flow-text">{{ milestone.name_of_milestone }}</p></a>
-                </div>
-                <div class="col s4">
-                    <h3>{{ status }}</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <a href="{% url 'social:project_view' project_slug %}"><h4>Project: {{ project_name }}</h4></a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s6">
-                    <button id="vouch" onclick="createVouch({{ feed_id }})" name="{{ feed_id }}"
-                            class="btn btn-link"><h6>Vouches</h6></button><span id="vouch_{{ feed_id }}"> {{ vouch_count }}</span>
-                </div>
-                <div class="col s6">
-                    <i class="btn btn-link"><h6>seen</h6><span id="seen">{{ seen_count }}</span></i>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    {% if project_completed %}
-                        <span>Based on {{ user_first_name }}'s community, there was a {{ percentage }}% chance of completing milestone</span>
-                    {% else %}
-                        <span>Based on {{ user_first_name }}'s community, there is a {{ percentage }}% chance of completing milestone</span>
-                    {% endif %}
-                </div>
-            </div>
-            {% include "social/milestone_pictures.html" %}
-            <div class="row">
-                <div class="col-md-2 col-md-offset-5">
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#picRowsModal">
-                        View Pictures
-                    </button>
+                <div class="col-md-9 col-md-offset-1">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <a href="{% url 'social:milestone_view' milestone.slug %}"><span style="font-size: 32px;" class="para-font">{{ milestone.name_of_milestone }}</span></a>
+                        </div>
+                        <div class="col-md-4">
+                            {% if project_completed %}
+                            <span class="header-color display-font">Completed!</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="panel panel-dafault">
+                        <div class="panel-body card">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{% url 'social:project_view' project_slug %}"><p style="font-size: 24px" class="para-font">
+                                        <span style="font-weight: bold">Project:</span>  {{ project_name }}</p></a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button id="vouch" onclick="createVouch({{ feed_id }})" name="{{ feed_id }}"
+                                            class="btn btn-link"></button>
+                                            <i class="material-icons">verified_user</i>
+                                            <span id="vouch_{{ feed_id }}"> ({{ vouch_count }})</span>
+                                    <i class="btn btn-link"><i class="material-icons">visibility</i><span id="seen">({{ seen_count }})</span></i>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel-footer">
+                                        {% if project_completed %}
+                                            <span class="para-font">Based on {{ user_first_name }}'s community, there was a {{ percentage }}% chance of completing this milestone</span>
+                                        {% else %}
+                                            <span class="para-font">Based on {{ user_first_name }}'s community, there is a {{ percentage }}% chance of completing this milestone</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            {% include "social/milestone_pictures.html" %}
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-5">
+                                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#picRowsModal">
+                                        <span class="para-font">view experience</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-12"> <!--- user pic and name --->
                             <div class="panel panel-default">
-                                <div class="panel-body">
+                                <div class="panel-body card">
                                     <img src="{{ feed.profile_url }}" style="width: 10%; height: 10%;" alt="No Profile Picture"
                                          class="pull-left img-responsive thumb margin10 img-thumbnail img-circle">
                                     <a  href="{% url 'tasks:profile_view' feed.feed_user.username %}">
@@ -35,7 +35,7 @@
                                          </div>
                                         <hr>
                                          <div class="row">
-                                            <div class="well">
+                                            <div class="panel-footer">
                                                 <button id="vouch" onclick="createVouch({{ feed.feed_id }})" name="{{ feed.feed_id }}"
                                                     class="btn-link"><i class="material-icons">verified_user</i><span id="vouch_{{ feed.feed_id }}">({{ feed.vouche_count }})</span>
                                                 </button>
@@ -71,7 +71,7 @@
                                         </div>
                                         <hr>
                                         <div class="row">
-                                            <div class="well">
+                                            <div class="panel-footer">
                                                 <button onclick="createFollow({{ feed.tasks.id }})" class="btn-link">
                                                     <i class="material-icons">hearing</i>
                                                     <span id="inter_{{ feed.tasks.id }}">({{ feed.follow_count }})</span>

@@ -8,13 +8,24 @@
   {% block body %}
       <div class="container">
         {% if journal_comments %}
+            <div class="row">
+                <div class="col-md-9 col-md-offset-2">
+                    <p class="h2 header-font">{{ journal_post.entry_blurb }}
+                        <a href="{% url 'social:journal_entries' %}">
+                            <span class="para-font">View Journals</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
             {% for comment in journal_comments %}
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="card-content">
-                            <p class="flow-text">
-                                {{ comment.comment }}
-                            </p>
+                    <div class="col-md-5 col-md-offset-3">
+                        <div class="panel panel-default">
+                            <div class="panel-footer card">
+                                <p class="flow-text">
+                                    <p class="journal-font">{{ comment.comment }}</p>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

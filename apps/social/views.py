@@ -61,7 +61,9 @@ class JournalCommentListView(View):
         journal_post = JournalPost.objects.get(slug=slug)
         comments = journal_post.journalcomment_set.all().filter(is_deleted=False)
         print "comment ", comments
-        return render(request, 'social/journal_thoughts.html', {'journal_comments':comments})
+        return render(request, 'social/journal_thoughts.html', {'journal_comments':comments,
+                                                                'journal_post':journal_post
+                                                                })
 
 
 class MilestoneView(View):
