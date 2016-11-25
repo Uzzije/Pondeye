@@ -37,7 +37,7 @@
                                          <div class="row">
                                             <div class="panel-footer">
                                                 <button id="vouch" onclick="createVouch({{ feed.feed_id }})" name="{{ feed.feed_id }}"
-                                                    class="btn-link"><i class="material-icons">verified_user</i><span id="vouch_{{ feed.feed_id }}">({{ feed.vouche_count }})</span>
+                                                    class="btn-link"><i class="material-icons">verified_user</i>(<span id="vouch_{{ feed.feed_id }}">{{ feed.vouche_count }}</span>)
                                                 </button>
                                                 <i class="material-icons">visibility</i>({{ feed.seen_count }})
                                             </div>
@@ -58,7 +58,9 @@
                                         <hr>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <span class="para-font">{{ feed.message }}</span>
+                                               <a href="{% url 'social:milestone_view' feed.tasks.milestone.slug %}">
+                                                   <span class="para-font">{{ feed.message }}</span>
+                                               </a>
                                             </div>
                                         </div>
                                     {% else %}

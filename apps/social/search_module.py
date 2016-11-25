@@ -91,12 +91,12 @@ def get_query(query_string, search_fields):
 def find_everything(user, query_word):
 	result_list = []
 	query = str(query_word)
-	people = get_query(query, ['first_name', 'username', 'last_name'])
+	people = get_query(query, ['username', 'first_name', 'last_name'])
 	people_result = User.objects.filter(people).filter(~Q(username=user.username), (Q(is_staff=False) | Q(is_superuser=False)))
 	projects = get_query(query, ['name_of_project'])
 	print query, " projddd"
 	tikege_user = TikedgeUser.objects.get(user=user)
-	projects_result = UserProject.objects.filter(projects).filter(~Q(user=tikege_user), Q(is_live=True))
+	projects_result = UserProject.objects.filter(projects).filter(~Q(user=tikege_user))
 	milestones = get_query(query, ['name_of_milestone'])
 	milestones_result = Milestone.objects.filter(milestones).filter(~Q(user=tikege_user))
 	for pip in people_result:
