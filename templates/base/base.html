@@ -24,8 +24,8 @@
         <link rel="stylesheet" href="{% static 'css/general_design.css' %}">
 
         <!---style sheet --->
-        <link href="cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
-        <script src="cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <link href="{% static 'toastr/toastr.scss' %}" rel="stylesheet"/>
+        <script src="{% static 'toastr/toastr.js' %}"></script>
 
     {% endblock %}
     {% block custom_design %}

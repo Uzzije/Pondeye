@@ -137,7 +137,7 @@
                         count = statusParse["count"];
                         $("#inter_"+pk).empty();
                         $("#inter_"+pk).text(count);
-                        Materialize.toast("Interest Noted!", 2000);
+                        toastr.success("Interest Noted!")
                     }
                     else{
                         console.log("already follow");
