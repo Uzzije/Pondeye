@@ -20,7 +20,7 @@ import json
 from django.contrib import messages
 from django.db.models import Q
 from search_module import find_everything
-
+from braces.views import LoginRequiredMixin
 
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)
@@ -34,7 +34,7 @@ class CSRFEnsureCookiesView(View):
         return super(CSRFEnsureCookiesView, self).dispatch(*args, **kwargs)
 
 
-class JournalEntriesView(View):
+class JournalEntriesView(LoginRequiredMixin, View):
 
     def get(self, request):
         tkdge = TikedgeUser.objects.get(user=request.user)
@@ -55,7 +55,7 @@ class JournalEntriesView(View):
         return HttpResponse(json.dumps(response), status=201)
 
 
-class JournalCommentListView(View):
+class JournalCommentListView(LoginRequiredMixin, View):
 
     def get(self, request, slug):
         journal_post = JournalPost.objects.get(slug=slug)
@@ -66,7 +66,7 @@ class JournalCommentListView(View):
                                                                 })
 
 
-class MilestoneView(View):
+class MilestoneView(LoginRequiredMixin, View):
 
     def get(self, request, slug):
         milestone = Milestone.objects.get(slug=slug)
@@ -97,7 +97,7 @@ class MilestoneView(View):
         })
 
 
-class ProjectView(View):
+class ProjectView(LoginRequiredMixin, View):
 
     def get(self, request, slug):
         project = UserProject.objects.get(slug=slug)
@@ -124,7 +124,7 @@ class ProjectView(View):
                                                                   })
 
 
-class PictureUploadView(View):
+class PictureUploadView(LoginRequiredMixin, View):
 
     def get(self, request):
         existing_milestones = task_modules.get_user_milestones(request.user)
@@ -201,14 +201,14 @@ class PictureUploadView(View):
                                                               'existing_milestones':existing_milestones})
 
 
-class HomeActivityView(View):
+class HomeActivityView(LoginRequiredMixin, View):
 
     def get(self, request):
         activities = modules.get_user_activities(request.user)
         return render(request, 'social/home_activity_view.html', {'activities':activities})
 
 
-class TodoFeed(View):
+class TodoFeed(LoginRequiredMixin, View):
 
     def get(self, request):
         all_feeds = modules.get_users_feed(request.user)
@@ -216,16 +216,6 @@ class TodoFeed(View):
         notification = NotificationFeed(notifications=notification, user=request.user)
         unread_list = notification.get_unread_notification()
         return render(request, 'social/news_feed.html', {'all_feeds':all_feeds, 'notifications':unread_list})
-
-
-class PeopleView(View):
-
-    def get(self, request):
-        result = []
-        if 'get_people' in request.GET and request.GET['get_people']:
-            query_string = str(request.GET['get_people'])
-            result = modules.find_people(query_string, request.user)
-        return render(request, 'social/list_of_users.html', {'result':result})
 
 
 class SendFriendRequestView(View):
@@ -237,8 +227,8 @@ class SendFriendRequestView(View):
         user_id = request.POST.get("user_id")
         other_user = TikedgeUser.objects.get(id=int(user_id))
         print other_user.user.username, other_user.user.first_name, other_user.user.last_name
-        message = "Hi %s %s username: %s would like to add you to his pond" % request.user.first_name, \
-                  request.user.last_name, request.user.username
+        message = "Hi %s %s username: %s would like to add you to his pond" % (request.user.first_name,
+                  request.user.last_name, request.user.username)
         try:
             Friend.objects.add_friend(request.user, other_user.user, message=message)
             friend_request = FriendshipRequest.objects.get(pk=other_user.user.pk)
@@ -277,30 +267,15 @@ class RejectFriendRequestView(View):
         print "Request ID %s", request_id
         friend_request = FriendshipRequest.objects.get(pk=int(request_id))
         friend_request.reject()
+
         return HttpResponse('')
 
 
 class FriendRequestView(View):
 
     def get(self, request):
-        friend_request = Friend.objects.requests(request.user)
+        friend_request = Friend.objects.unread_requests(user=request.user)
         return render(request, 'social/friend_request.html', {'friend_request':friend_request})
-
-
-class ApiFriendRequestView(CSRFExemptView):
-
-    def get(self, request):
-        user = User.objects.get(username=request.GET.get("username"))
-        friend_request = Friend.objects.requests(user)
-        print friend_request, " frienddder"
-        json_result = modules.friend_request_to_json(friend_request, user)
-        response = {}
-        if json_result:
-            response["status"] = True
-            response["result"] = json_result
-        else:
-            response["status"] = False
-        return HttpResponse(json.dumps(response), status=201)
 
 
 class CreateVouch(View):
@@ -330,34 +305,6 @@ class CreateVouch(View):
         else:
             response["status"] = False
         print "Tried to print vouch!!!!!!\n"
-        return HttpResponse(json.dumps(response), status=201)
-
-
-class ApiCreateVouch(CSRFExemptView):
-
-    def get(self, request, *args, **kwargs):
-        return HttpResponse('')
-
-    def post(self, request, *args, **kwargs):
-        response = {}
-        print "reaching here"
-        task_id = request.POST.get("task_id")
-        task = Tasks.objects.get(id=task_id)
-        username = request.POST.get("username")
-        user = User.objects.get(username=username)
-        tikedge_user = TikedgeUser.objects.get(user=user)
-        try:
-            vouch_obj = Vouche.objects.get(tasks=task)
-        except ObjectDoesNotExist:
-            vouch_obj = Vouche(tasks=task)
-            vouch_obj.save()
-        if not tikedge_user in vouch_obj.users.all():
-            response["status"] = "true"
-            vouch_obj.users.add(tikedge_user)
-            vouch_obj.save()
-        else:
-            response["status"] = "false"
-        response["count"] = vouch_obj.users.all().count()
         return HttpResponse(json.dumps(response), status=201)
 
 
@@ -391,20 +338,20 @@ class TagSearchView(View):
         return render(request, 'social/tag_search_results.html')
 
 
-class NotificationsViews(View):
+class NotificationsViews(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'social/notification_view.html')
 
 
-class NewFriendNotificationsView(View):
+class NewFriendNotificationsView(LoginRequiredMixin, View):
 
     def get(self, request):
         ponders = modules.get_pond(request.user)
         return render(request, 'social/new_ponders.html', {'ponders':ponders})
 
 
-class ProjectNotificationsView(View):
+class ProjectNotificationsView(LoginRequiredMixin, View):
 
     def get(self, request):
         tikegde_user = TikedgeUser.objects.get(user=request.user)
@@ -413,20 +360,20 @@ class ProjectNotificationsView(View):
         return render(request, 'social/project_interest_view.html', {'interest_feed':interest_feed})
 
 
-class LetDownsNotificationsView(View):
+class LetDownsNotificationsView(LoginRequiredMixin, View):
     def get(self, request):
         let_down_results = modules.get_let_down_notifications(request.user)
         return render(request, 'social/let_down_view.html', {'let_down_results':let_down_results})
 
 
-class VouchedNotificationsView(View):
+class VouchedNotificationsView(LoginRequiredMixin, View):
 
     def get(self, request):
         mil_down_results = modules.get_milestone_vouch_notifications(request.user)
         return render(request, 'social/milestone_vouches.html', {'mil_down_results':mil_down_results})
 
 
-class SearchResultsView(View):
+class SearchResultsView(LoginRequiredMixin, View):
 
     def get(self, request):
         query_word = request.GET["query_word"]
@@ -434,7 +381,7 @@ class SearchResultsView(View):
         return render(request, 'social/search_results.html', {'results':results})
 
 
-class PondView(View):
+class PondView(LoginRequiredMixin, View):
     def get(self, request):
         ponders = modules.get_pond(request.user)
         return render('social/pond.html', {'ponders':ponders})

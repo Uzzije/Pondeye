@@ -8,7 +8,7 @@ djcelery.setup_loader()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+login_url = '/login/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -19,7 +19,7 @@ SITE_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 DEBUG = True
 XS_SHARING_ALLOWED_ORIGINS = '*'
 ALLOWED_HOSTS = []
-LOGIN_URL = '/tasks/login'
+LOGIN_URL = '/login'
 
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'

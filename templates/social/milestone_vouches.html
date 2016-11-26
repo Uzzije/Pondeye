@@ -7,19 +7,26 @@
   <body>
     {% block body %}
         <div class="container">
-            {% if mil_down_results %}
-            {% for mil_down in mil_down_results %}
-                 <div class="col-md-8">
-                    <a href="{% url 'social:milestone_view' mil_down.slug %}">
-                        <span class="flow-text">
-                            {{ mil_down.count }} persons have faith you will get {{ mil_down.blurb }} completed!
-                        </span>
-                    </a>
-                 </div>
-            {% endfor %}
-            {% else %}
-                <p class="flow-text">No recent vouches so far!</p>
-            {% endif %}
+            <div class="page-header">
+                <span class="h1 display-font">Milestone Vouches</span>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    {% if mil_down_results %}
+                        <div class="list-group">
+                            {% for mil_down in mil_down_results %}
+                                <a class="list-group-item" href="{% url 'social:milestone_view' mil_down.slug %}">
+                                    <span class="para-font">
+                                        {{ mil_down.count }} person believes that you will get this milestone: {{ mil_down.blurb }} completed!
+                                    </span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="flow-text">No recent vouches so far!</p>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     {% endblock %}
 

@@ -7,11 +7,14 @@
   <body>
     {% block body %}
         <div class="container-fluid">
+            <div class="page-header">
+                <span class="h1 display-font">Milestone</span>
+            </div>
             <div class="row">
                 <div class="col-md-9 col-md-offset-1">
                     <div class="row">
                         <div class="col-md-8">
-                            <a href="{% url 'social:milestone_view' milestone.slug %}"><span style="font-size: 32px;" class="para-font">{{ milestone.name_of_milestone }}</span></a>
+                            <a href="{% url 'social:milestone_view' milestone.slug %}"><span style="font-size: 24px;" class="para-font">{{ milestone.name_of_milestone }}</span></a>
                         </div>
                         <div class="col-md-4">
                             {% if project_completed %}
@@ -31,10 +34,11 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <button id="vouch" onclick="createVouch({{ feed_id }})" name="{{ feed_id }}"
-                                            class="btn btn-link"></button>
+                                            class="btn btn-link">
                                             <i class="material-icons">verified_user</i>
-                                            <span id="vouch_{{ feed_id }}"> ({{ vouch_count }})</span>
-                                    <i class="btn btn-link"><i class="material-icons">visibility</i><span id="seen">({{ seen_count }})</span></i>
+                                            (<span id="vouch_{{ feed_id }}"> {{ vouch_count }}</span>)
+                                    </button>
+                                    <i class="material-icons">visibility</i>(<span id="seen">{{ seen_count }}</span>)
                                 </div>
                             </div>
                             <div class="row">

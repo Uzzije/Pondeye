@@ -88,20 +88,30 @@
                           </ul>
                     </li>
                   </ul>
-
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
+                <br>
+                <div class="row">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-2">
+                              <form method="get" action="{% url 'social:search_everything' %}">
+                                <div class="input-group">
+                                  <input class="form-control input-lg" type="search" placeholder="Discover" name="query_word" id="id_q" value="" required>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default btn-lg" type="submit">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                              </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
             </nav>
 
-            <div class="container">
-                <div class="row">
-                  <form method="get" action="{% url 'social:search_everything' %}">
-                    <div class="input-field">
-                      <input class="form-control input-lg" type="search" placeholder="Discover" name="query_word" id="id_q" value="">
-                    </div>
-                  </form>
-                </div>
-            </div>
 
         {% endblock %}
         {% block notifications %}

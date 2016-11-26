@@ -41,3 +41,4 @@ tzlocal==1.2.2
 Unipath==1.1
 awsebcli==3.8.3
 pillow==2.9.0
+django-braces==1.10.0

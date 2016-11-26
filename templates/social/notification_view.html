@@ -8,7 +8,7 @@
         {% block notifications %}
             <div class="container">
                 <ul class="nav nav-tabs">
-                    <li><a href="{% url 'social:friend_request_notifications' %}">Pond Request</a></li>
+                    <li><a class="active" href="{% url 'social:friend_request_notifications' %}">Pond Request</a></li>
                     <li><a href="{% url 'social:new_friends_notifications' %}">New Ponders</a></li>
                     <li><a href="{% url 'social:project_interest_notifications' %}">Interested</a></li>
                     <li><a href="{% url 'social:let_downs_notifications' %}">Let Downs</a></li>

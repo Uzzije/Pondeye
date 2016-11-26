@@ -23,6 +23,7 @@ from friendship.models import Friend
 import json
 from django.contrib import messages
 import pytz
+from braces.views import LoginRequiredMixin
 
 
 class RegisterView(View):
@@ -52,7 +53,7 @@ class RegisterView(View):
             return render(request, 'tasks/register.html', {'form': form})
 
 
-class HomeView(View):
+class HomeView(LoginRequiredMixin, View):
 
     def get(self, request):
         if not request.user.is_authenticated():
@@ -131,7 +132,7 @@ class HomeView(View):
         return HttpResponse(request, 'tasks/home.html', {'user_picture_form':user_picture_form})
 
 
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin, View):
 
     def get(self, request, user_name):
         if not request.user.is_authenticated():
@@ -174,25 +175,19 @@ class ProfileView(View):
                                                    })
 
 
-class ListOfTasksViews(View):
-
-    def get(self, request):
-        result = None
-        if 'get_tasks' in request.GET and request.GET['get_tasks']:
-            query_string = str(request.GET['get_tasks'])
-            result = tasks_search(query_string, request.user)
-            return render(request, 'tasks/list_of_tasks.html', {'results':result})
-        return render(request, 'tasks/list_of_tasks.html', {'results':result})
-
-
 class LoginView(FormView):
 
     form_class = tasks_forms.LoginForm
     template_name = 'tasks/login.html'
 
     def get_success_url(self):
-        tikedge_user = TikedgeUser.objects.get(user=self.request.user)
-        tikedge_user.save()
+        try:
+            url_with_next = self.request.POST.get('next', "")
+            if url_with_next == "":
+                return reverse('tasks:home')
+            return url_with_next
+        except:
+            pass
         return reverse('tasks:home')
 
     def form_valid(self, form):
@@ -227,7 +222,7 @@ class CSRFEnsureCookiesView(View):
         return super(CSRFEnsureCookiesView, self).dispatch(*args, **kwargs)
 
 
-class AddProject(View):
+class AddProject(LoginRequiredMixin, View):
 
     def get(self, request):
         if not request.user.is_authenticated():
@@ -336,7 +331,7 @@ class AddProject(View):
                                                        'existing_project':get_user_projects(request.user)})
 
 
-class IndividualTaskView(View):
+class IndividualTaskView(LoginRequiredMixin, View):
 
     def get(self, request):
         response = {}

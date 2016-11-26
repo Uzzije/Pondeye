@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import JournalEntriesView, PictureUploadView, HomeActivityView, TodoFeed, PeopleView, SendFriendRequestView,\
+from .views import JournalEntriesView, PictureUploadView, HomeActivityView, TodoFeed, SendFriendRequestView,\
     FriendRequestView, AcceptFriendRequestView, RejectFriendRequestView, CreateVouch, MilestoneView, ProjectView, \
     TagSearchView, JournalCommentListView, NewFriendNotificationsView, ProjectNotificationsView, LetDownsNotificationsView, \
     VouchedNotificationsView, NotificationsViews, CreateFollowView, SearchResultsView, PondView
@@ -25,7 +25,6 @@ urlpatterns = [
     url(r'^project/(?P<slug>[-\w\d\ ]+)/$', ProjectView.as_view(), name="project_view"),
 
     url(r'^tag-search/(?P<word>[-\w\d\ ]+)/$', TagSearchView.as_view(), name="tag_search"),
-    url(r'^find-people/$', PeopleView.as_view(), name="find_people"),
     url(r'search-results/$', SearchResultsView.as_view(), name="search_everything"),
 
     url(r'^notifications/$', NotificationsViews.as_view(), name="notifications"),

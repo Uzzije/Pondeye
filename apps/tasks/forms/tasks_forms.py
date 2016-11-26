@@ -8,13 +8,13 @@ from form_module import get_current_datetime
 
 class RegisterForm(forms.Form):
 
-    user_name = forms.CharField(label='User Name', max_length=100, required=False)
-    first_name = forms.CharField(label='First Name', max_length=100, required=True)
-    last_name = forms.CharField(label='Last Name', max_length=100, required=True)
-    email = forms.EmailField(label='Email', max_length=100, required=False)
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(),
+    user_name = forms.CharField(label='User Name', max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Username'}))
+    first_name = forms.CharField(label='First Name', max_length=100, required=True, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name'}))
+    last_name = forms.CharField(label='Last Name', max_length=100, required=True, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name'}))
+    email = forms.EmailField(label='Email', max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email'}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Password'}),
                                required=True)
-    verify_password = forms.CharField(label='Verify Password', widget=forms.PasswordInput(), required=True)
+    verify_password = forms.CharField(label='Verify Password', widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'Verify Password'}), required=True)
 
     def clean(self):
             cleaned_data = super(RegisterForm, self).clean()
@@ -56,8 +56,8 @@ class LoginForm(forms.Form):
     my_default_errors = {
         'invalid': 'Make sure username and password are correct'
     }
-    name = forms.CharField(label='User Name', max_length=100, required=True)
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(), error_messages=my_default_errors)
+    name = forms.CharField(label='User Name', max_length=100, required=True, widget=forms.TextInput(attrs={'class':"input pass"}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':"input pass"}), error_messages=my_default_errors)
 
     def clean_name(self):
         cleaned_data = super(LoginForm, self).clean()
