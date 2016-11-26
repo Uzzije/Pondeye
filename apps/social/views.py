@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import View
 from forms import social_forms
-from models import (Notification, Vouche, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
+from models import (Notification, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
                     JournalPost, JournalComment, SeenProject)
-from ..tasks.models import TikedgeUser, UserProject, User, Tasks, Milestone
+from ..tasks.models import TikedgeUser, UserProject, Milestone
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
@@ -21,6 +21,7 @@ from django.contrib import messages
 from django.db.models import Q
 from search_module import find_everything
 from braces.views import LoginRequiredMixin
+
 
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)

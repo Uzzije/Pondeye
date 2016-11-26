@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from image_cropping import ImageRatioField
-from ..tasks.models import TikedgeUser, Tasks, UserProject, Milestone
+from ..tasks.models import TikedgeUser, UserProject, Milestone
 from friendship.models import FriendshipRequest
 from django.contrib.auth.models import User
 from django.utils.timezone import now
@@ -16,15 +16,6 @@ class ProfilePictures(models.Model):
     cropping = ImageRatioField('profile_pics', '5x5')
     tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     date_uploaded =  models.DateTimeField(default=now)
-
-
-class TaskPicture(models.Model):
-    image_name = models.CharField(max_length=100)
-    task_pics = models.ImageField(upload_to='image/tasks/%Y/%m/%d', verbose_name="profile image")
-    cropping = ImageRatioField('task_pics', '5x5')
-    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
-    task = models.ForeignKey(Tasks, blank=True, null=True)
-    date_uploaded = models.DateTimeField(default=now)
 
 
 class Picture(models.Model):
@@ -54,11 +45,6 @@ class Friends(models.Model):
     friends = models.ManyToManyField(TikedgeUser, related_name="user_friends")
 
 
-class Seen(models.Model):
-    users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the tasks")
-    tasks = models.ForeignKey(Tasks, blank=True, null=True)
-
-
 class SeenMilestone(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the milestones")
     tasks = models.ForeignKey(Milestone, blank=True, null=True)
@@ -74,19 +60,9 @@ class SeenPictureSet(models.Model):
     tasks = models.ForeignKey(PictureSet, blank=True, null=True)
 
 
-class Vouche(models.Model):
-    users = models.ManyToManyField(TikedgeUser, verbose_name="User That Vouche For the Task")
-    tasks = models.ForeignKey(Tasks, blank=True, null=True)
-
-
 class VoucheMilestone(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="User That Vouche For the milestone")
     tasks = models.ForeignKey(Milestone, blank=True, null=True)
-
-
-class BuildCred(models.Model):
-    users = models.ManyToManyField(TikedgeUser, verbose_name="User That Tasks Owner Built Cred For")
-    tasks = models.ForeignKey(Tasks, blank=True, null=True)
 
 
 class BuildCredMilestone(models.Model):
@@ -97,11 +73,6 @@ class BuildCredMilestone(models.Model):
 class Follow(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="users that follow/interested in a project")
     tasks = models.ForeignKey(UserProject, blank=True, null=True)
-
-
-class LetDown(models.Model):
-    users = models.ManyToManyField(TikedgeUser, verbose_name="users that were let down by vouche for your task")
-    tasks = models.ForeignKey(Tasks, blank=True, null=True)
 
 
 class LetDownMilestone(models.Model):
@@ -115,9 +86,7 @@ class Notification(models.Model):
     type_of_notification = models.CharField(max_length=100)
     created = models.DateTimeField(default=now)
     read = models.BooleanField(default=False)
-    picture_post = models.ForeignKey(TaskPicture, blank=True, null=True)
     project_update = models.ForeignKey(UserProject, blank=True, null=True)
-    tasks = models.ForeignKey(Tasks, blank=True, null=True)
     name_of_notification = models.CharField(max_length=300, default="")
 
     def __str__(self):

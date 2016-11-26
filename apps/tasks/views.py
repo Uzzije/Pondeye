@@ -1,17 +1,17 @@
 from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
-from models import User, TikedgeUser, Tasks, UserProject, PendingTasks, Milestone, TagNames
+from models import User, TikedgeUser, UserProject,Milestone, TagNames
 from ..social.models import ProfilePictures, JournalPost
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
-from ..social.modules import get_task_feed, grade_user_success, grade_user_failure, get_journal_message, \
+from ..social.modules import get_journal_message, \
     get_notifications, get_pond, resize_image
-from modules import get_user_projects, tasks_search, get_current_todo_list, get_todays_todo_list, \
+from modules import get_user_projects, \
     convert_html_to_datetime, time_has_past,\
-    get_expired_tasks, stringify_task, get_task_picture_urls, get_todays_milestones, \
+    get_expired_tasks, get_todays_milestones, \
     confirm_expired_milestone_and_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
     get_failed_proj_count, get_recent_projects, get_status
 from django.core.exceptions import ObjectDoesNotExist
@@ -34,6 +34,7 @@ class RegisterView(View):
 
     def post(self, request):
         form = tasks_forms.RegisterForm(request.POST)
+        print "hitting here"
         if form.is_valid():
             user_name = form.cleaned_data.get('user_name')
             password = form.cleaned_data['password']
@@ -50,6 +51,8 @@ class RegisterView(View):
             self.request.session['first_name'] = tickedge_user.user.first_name
             return HttpResponseRedirect(reverse('tasks:home'))
         else:
+            print "error", form.errors
+            messages.warning(request, form.errors)
             return render(request, 'tasks/register.html', {'form': form})
 
 
@@ -329,84 +332,6 @@ class AddProject(LoginRequiredMixin, View):
         #messages.error(request, "Dude something went wrong! Try again.")
         return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
                                                        'existing_project':get_user_projects(request.user)})
-
-
-class IndividualTaskView(LoginRequiredMixin, View):
-
-    def get(self, request):
-        response = {}
-        try:
-            User.objects.get(username=request.GET.get('username'))
-            task = Tasks.objects.get(id=int(request.GET.get('id')))
-            print "%s tasks name" % task.name_of_tasks
-            response["picture_urls"] = get_task_picture_urls(task)
-            try:
-                response["project"] = task.project.name_of_project
-            except AttributeError:
-                response["project"] = False
-            response["task_name"] = stringify_task(task)
-            feed = get_task_feed(task)
-            response["vouch"] = feed.vouche_count
-            response["seen"] = feed.seen_count
-            response["follow"] = feed.follow_count
-            response["build_cred"] = feed.build_cred_count
-            response["letDown"] = feed.letDown_count
-            response["status"] = True
-
-        except ObjectDoesNotExist:
-            print "not making it"
-            response["status"] = False
-            pass
-        return HttpResponse(json.dumps(response), status=201)
-
-
-class ApiCheckTaskDone(CSRFExemptView):
-
-    def get(self, request, *args, **kwargs):
-        pass
-
-    def post(self, request, *args, **kwargs):
-        response = {}
-        try:
-            username = request.POST.get('username')
-            user = User.objects.get(username=username)
-        except ObjectDoesNotExist:
-            response['status'] = False
-            return HttpResponse(json.dumps(response), status=201)
-        task_pk = request.POST.get("pk")
-        task = Tasks.objects.get(pk=task_pk)
-        task.task_completed = True
-        task.current_working_on_task = False
-        task.save()
-        grade_user_success(user, task)
-        response["status"] = True
-        return HttpResponse(json.dumps(response), status=201)
-
-
-class ApiCheckFailedTask(CSRFExemptView):
-
-    def get(self, request, *args, **kwargs):
-        pass
-
-    def post(self, request, *args, **kwargs):
-
-        response = {}
-        try:
-            username = request.POST.get('username')
-            user = User.objects.get(username=username)
-        except ObjectDoesNotExist:
-            response['status'] = False
-            print "check as failure"
-            return HttpResponse(json.dumps(response), status=201)
-        task_pk = request.POST.get("pk")
-        task = Tasks.objects.get(pk=task_pk)
-        task.task_failed = True
-        task.current_working_on_task = False
-        task.save()
-        grade_user_failure(user, task)
-        response["status"] = True
-        print "tasks is failling"
-        return HttpResponse(json.dumps(response), status=201)
 
 
 class LogoutView(View):

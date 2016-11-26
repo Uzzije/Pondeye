@@ -6,6 +6,7 @@ from models import User
 from .models import ProfilePictures
 from django.core.exceptions import ObjectDoesNotExist
 
+
 class GeneralSearchFeed:
 	def __init__(self, return_object, type_of_result):
 		self.feed_object = return_object

@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from models import TikedgeUser, Tasks
+from models import TikedgeUser
 
 from django.db.models import Q
 from datetime import timedelta
@@ -8,7 +8,6 @@ from forms.form_module import get_current_datetime
 import pytz
 from tzlocal import get_localzone
 from global_variables_tasks import DECODE_DICTIONARY
-from ..social.search_module import get_query
 
 
 def get_user_projects(user):
@@ -40,14 +39,6 @@ def get_user_milestones(user):
         temp_tup = (mil.name_of_milestone)
         t_list.append(temp_tup)
     return t_list
-
-
-def tasks_search(query, user):
-    tkedge = TikedgeUser.objects.get(user=user)
-    query_result = get_query(query, ['name_of_tasks'])
-    found_queries = Tasks.objects.filter(query_result).filter(Q(user=tkedge))
-    return found_queries
-
 
 def get_current_todo_list(user):
     user = TikedgeUser.objects.get(user=user)

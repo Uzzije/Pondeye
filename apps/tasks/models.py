@@ -44,30 +44,6 @@ class UserProject(models.Model):
         super(UserProject, self).save(*args, **kwargs)
 
 
-class Tasks(models.Model):
-    name_of_tasks = models.CharField(max_length=300)
-    part_of_project = models.BooleanField(default=False)
-    project = models.ForeignKey(UserProject, blank=True, null=True)
-    user = models.ForeignKey(TikedgeUser, blank=True, null=True)
-    start = models.DateTimeField(blank=True, null=True)
-    end = models.DateTimeField(blank=True, null=True)
-    is_active = models.BooleanField(default=False)
-    task_completed = models.BooleanField(default=False)
-    task_failed = models.BooleanField(default=False)
-    current_working_on_task = models.BooleanField(default=False)
-    publish_date = models.DateTimeField(default=now)
-
-    def __str__(self):
-        return self.name_of_tasks
-
-
-class PendingTasks(models.Model):
-    tasks = models.ManyToManyField(Tasks)
-    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
-    remind_user = models.BooleanField(default=False)
-    is_removed = models.BooleanField(default=False)
-
-
 class Milestone(models.Model):
     name_of_milestone = models.CharField(max_length=600)
     project = models.ForeignKey(UserProject, blank=True, null=True)
