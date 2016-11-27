@@ -190,7 +190,8 @@ def convert_html_to_datetime(date_time):
     return new_date_time
 
 
-def time_has_past(time_info):
+def time_has_past(time_info_naive):
+        time_info = time_to_utc(time_info_naive)
         if time_info:
             if time_info.time() < get_current_datetime().time():
                 print "checking time, ", time_info.time(), get_current_datetime().time()
