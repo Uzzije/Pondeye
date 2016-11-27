@@ -278,7 +278,7 @@ class AddProject(LoginRequiredMixin, View):
                     start_time = done_by - timedelta(hours=int(length_of_time))
                 else:
                     if length_of_time is '-1':
-                        start_time = done_by - timedelta(hours=30)
+                        start_time = done_by - timedelta(minutes=30)
                     else:
                         start_time = done_by - timedelta(hours=1)
                 if not time_has_past(start_time) and user_project.length_of_project >= start_time and \
