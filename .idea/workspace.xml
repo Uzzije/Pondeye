@@ -2,8 +2,43 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/css/bootstrap.min.css" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/css/bootstrap.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/static/toastr" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/css/bootstrap-theme.css" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/css/bootstrap-theme.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/css/bootstrap-theme.css.map" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/css/bootstrap-theme.css.map" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/css/bootstrap-theme.min.css" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/css/bootstrap-theme.min.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/css/bootstrap-theme.min.css.map" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/css/bootstrap-theme.min.css.map" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/css/bootstrap.css" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/css/bootstrap.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/css/bootstrap.css.map" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/css/bootstrap.css.map" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/css/bootstrap.min.css.map" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/css/bootstrap.min.css.map" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.eot" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.eot" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.svg" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.ttf" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.woff" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.woff" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.woff2" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/fonts/glyphicons-halflings-regular.woff2" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/js/bootstrap.js" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/js/bootstrap.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/js/bootstrap.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/bootstrap-3.3.6-dist 2/js/npm.js" afterPath="$PROJECT_DIR$/apps/tasks/bootstrap-3.3.6-dist 2/js/npm.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/custom_scripts.js" afterPath="$PROJECT_DIR$/apps/tasks/static/custom_scripts.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/custom_style.css" afterPath="$PROJECT_DIR$/apps/tasks/static/custom_style.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/css/reset.css" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/css/reset.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/css/style.css" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/css/style.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/img/cd-arrows.svg" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/img/cd-arrows.svg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/img/img-modified.jpg" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/img/img-modified.jpg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/img/img-original.jpg" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/img/img-original.jpg" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/index.html" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/index.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/js/jquery-2.1.1.js" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/js/jquery-2.1.1.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/js/jquery.mobile.custom.min.js" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/js/jquery.mobile.custom.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/js/main.js" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/js/main.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/js/modernizr.js" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/js/modernizr.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/partials/_layout.scss" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/partials/_layout.scss" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/partials/_mixins.scss" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/partials/_mixins.scss" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/partials/_variables.scss" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/partials/_variables.scss" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/readme.pdf" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/readme.pdf" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/apps/social/static/image-comparison-slider/scss/style.scss" afterPath="$PROJECT_DIR$/apps/tasks/static/image-comparison-slider/scss/style.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/register.html" afterPath="$PROJECT_DIR$/templates/tasks/register.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,8 +99,18 @@
       <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-75.0">
-              <caret line="160" column="33" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
+            <state vertical-scroll-proportion="-19.75">
+              <caret line="170" column="90" selection-start-line="170" selection-start-column="90" selection-end-line="170" selection-end-column="90" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reset.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/social/static/css/reset.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -104,11 +149,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home_design.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="home_design.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/home_design.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.07042254">
+            <state vertical-scroll-proportion="-1.875">
               <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/requirements.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -152,7 +207,6 @@
         <option value="$PROJECT_DIR$/apps/tasks/static/css/general_design.css" />
         <option value="$PROJECT_DIR$/templates/social/search_results.html" />
         <option value="$PROJECT_DIR$/templates/social/journal.html" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/settings/base.py" />
         <option value="$PROJECT_DIR$/apps/social/urls.py" />
         <option value="$PROJECT_DIR$/templates/social/friend_request.html" />
@@ -176,13 +230,14 @@
         <option value="$PROJECT_DIR$/apps/tasks/urls.py" />
         <option value="$PROJECT_DIR$/apps/social/views.py" />
         <option value="$PROJECT_DIR$/apps/tasks/views.py" />
-        <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/templates/social/news_feed.html" />
         <option value="$PROJECT_DIR$/templates/social/milestone_view.html" />
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/creative.min.css" />
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/creative.css" />
         <option value="$PROJECT_DIR$/templates/tasks/register.html" />
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/home_design.css" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/templates/base/base.html" />
       </list>
     </option>
   </component>
@@ -256,56 +311,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tasks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="base" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="apps" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -349,8 +354,22 @@
               <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="startbootstrap-creative" />
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="social" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -368,37 +387,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tasks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="startbootstrap-creative" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tasks" />
+              <option name="myItemId" value="social" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -436,11 +425,11 @@
       <recent name="$PROJECT_DIR$/templates/social" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/apps/tasks/static" />
+      <recent name="$PROJECT_DIR$/apps/tasks" />
       <recent name="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/img" />
       <recent name="$PROJECT_DIR$/templates/social" />
       <recent name="$PROJECT_DIR$/templates/tasks" />
-      <recent name="$PROJECT_DIR$/apps/tasks" />
-      <recent name="$PROJECT_DIR$/apps/social" />
     </key>
   </component>
   <component name="RunManager" selected="JavaScript Debug.index.html (1)">
@@ -838,9 +827,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="24" width="1539" height="924" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22778891" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22778891" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.053892214" sideWeight="0.5866911" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -905,22 +894,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/login_design.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-55.625">
-          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tasks/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.875">
-          <caret line="21" column="99" selection-start-line="21" selection-start-column="99" selection-end-line="21" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.4074073">
@@ -1104,7 +1077,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/static/toastr/toastr.scss">
+    <entry file="file://$PROJECT_DIR$/apps/tasks/static/toastr/toastr.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1314,14 +1287,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-75.0">
-          <caret line="160" column="33" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="11.25">
@@ -1359,8 +1324,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/home_design.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07042254">
+        <state vertical-scroll-proportion="-1.875">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.75">
+          <caret line="170" column="90" selection-start-line="170" selection-start-column="90" selection-end-line="170" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/static/css/reset.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
