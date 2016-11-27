@@ -2,81 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.0.0.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.0.1.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.0.2.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.0.3.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.0.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.1.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.2.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.3.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.4.1.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.4.2.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.4.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.5.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.2.0.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.2.1.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.2.2.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.3.0.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.3.1.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.2.0.0-rc1.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.2.0.1.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.2.0.2.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.2.0.3.nupkg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/toastr-icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/home_design.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/login_design.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/.gitattributes" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/.jscsrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/.jshintrc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/.travis.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/CHANGELOG.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/demo.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/gulpfile.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/karma.conf.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/content/content/toastr.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/content/content/toastr.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/content/content/toastr.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/content/content/toastr.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/content/scripts/toastr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/content/scripts/toastr.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/content/scripts/toastr.min.js.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.0.0.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.0.1.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.0.2.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.0.3.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.0.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.1.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.2.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.4.1.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.4.2.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.4.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.1.5.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.2.0.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.2.1.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.2.2.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.3.0.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.1.3.1.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.2.0.0-rc1.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.2.0.1.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.2.0.2.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/nuget/toastr.2.0.3.nuspec" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/release checklist.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/tests/qunit/qunit.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/tests/qunit/qunit.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/tests/toastr-tests.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/tests/unit/qunit-helper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/tests/unit/toastr-tests.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/tests/unit/x.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/toastr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/toastr.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/toastrs/toastr.scss" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/static/toastr" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/base.html" afterPath="$PROJECT_DIR$/templates/base/base.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/login.html" afterPath="$PROJECT_DIR$/templates/tasks/login.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/register.html" afterPath="$PROJECT_DIR$/templates/tasks/register.html" />
     </list>
@@ -109,11 +34,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2112676">
-              <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+            <state vertical-scroll-proportion="-20.625">
+              <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -152,12 +77,22 @@
       <file leaf-file-name="register.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/tasks/register.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.375">
-              <caret line="23" column="55" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
+            <state vertical-scroll-proportion="-12.875">
+              <caret line="137" column="14" selection-start-line="137" selection-start-column="14" selection-end-line="137" selection-end-column="14" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#7;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/tasks/login.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.37558687">
+              <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -240,7 +175,6 @@
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/index.html" />
         <option value="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/login_design.css" />
-        <option value="$PROJECT_DIR$/templates/tasks/login.html" />
         <option value="$PROJECT_DIR$/settings/beta.py" />
         <option value="$PROJECT_DIR$/apps/tasks/models.py" />
         <option value="$PROJECT_DIR$/apps/social/search_module.py" />
@@ -259,8 +193,9 @@
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/creative.css" />
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/home_design.css" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/templates/tasks/register.html" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
+        <option value="$PROJECT_DIR$/templates/tasks/register.html" />
+        <option value="$PROJECT_DIR$/templates/tasks/login.html" />
       </list>
     </option>
   </component>
@@ -335,24 +270,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="base" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1302,25 +1219,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tasks/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.375">
-          <caret line="23" column="55" selection-start-line="23" selection-start-column="55" selection-end-line="23" selection-end-column="55" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#7;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/static/toastrs/build/toastr.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1339,8 +1237,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2112676">
-          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+        <state vertical-scroll-proportion="-20.625">
+          <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tasks/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.875">
+          <caret line="137" column="14" selection-start-line="137" selection-start-column="14" selection-end-line="137" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#7;n#div#0;n#div#0;n#div#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#header#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tasks/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37558687">
+          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
           <folding />
         </state>
       </provider>
