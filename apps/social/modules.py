@@ -1,6 +1,6 @@
-from ..tasks.models import TikedgeUser
+from ..tasks.models import TikedgeUser, UserProject
 from .models import ProfilePictures, Graded, \
-    Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone
+    Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, Milestone, PictureSet
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from friendship.models import Friend
@@ -10,6 +10,7 @@ import StringIO
 from PIL import Image
 from random import randint
 from journal_feed import JournalFeed
+from tasks_feed import PondFeed
 
 
 def resize_image(image_field, is_profile_pic=False):
@@ -196,6 +197,28 @@ def get_user_journal_feed(tikege_user):
         journal_feed = JournalFeed(journal)
         journal_list.append(journal_feed)
     return journal_list
+
+
+def get_users_feed(user):
+    list_of_feed = []
+    user_friends = Friend.objects.friends(user)
+    tkdge_friends = TikedgeUser.objects.filter(user__in=user_friends)
+    milestone_feed = Milestone.objects.filter(Q(is_active=True),Q(user__in=tkdge_friends))
+    project_feed = UserProject.objects.filter(Q(is_live=True), Q(user__in=tkdge_friends))
+    picture_feed = PictureSet.objects.filter(~Q(after_picture=None), Q(tikedge_user__in=tkdge_friends))
+    print "picture feed", picture_feed
+    #print tasks_feed
+    for each_tasks in milestone_feed:
+         feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE)
+         list_of_feed.append(feed)
+    for each_tasks in project_feed:
+         feed = PondFeed(each_tasks, type_of_feed=global_variables.NEW_PROJECT)
+         list_of_feed.append(feed)
+    for each_tasks in picture_feed:
+         feed = PondFeed(each_tasks, type_of_feed=global_variables.PICTURE_SET)
+         list_of_feed.append(feed)
+    sorted_list = sorted(list_of_feed, key=lambda x: x.created)
+    return sorted_list
 
 
 def get_notifications(user, tikedge_user):
