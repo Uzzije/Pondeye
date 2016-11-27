@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/modules.py" afterPath="$PROJECT_DIR$/apps/tasks/modules.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/views.py" afterPath="$PROJECT_DIR$/apps/tasks/views.py" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,17 +68,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.0">
-              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.63917524">
+              <caret line="213" column="17" selection-start-line="213" selection-start-column="17" selection-end-line="213" selection-end-column="17" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
                 <element signature="e#5592#6223#0" expanded="false" />
                 <element signature="e#6261#6449#0" expanded="false" />
-                <element signature="e#7910#8057#0" expanded="false" />
-                <element signature="e#8099#8362#0" expanded="false" />
+                <element signature="e#7832#7979#0" expanded="false" />
+                <element signature="e#8021#8284#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -97,10 +96,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44334975">
+            <state vertical-scroll-proportion="0.2777778">
               <caret line="257" column="72" selection-start-line="257" selection-start-column="72" selection-end-line="257" selection-end-column="72" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
@@ -114,6 +113,16 @@
                 <element signature="e#19134#19606#0" expanded="false" />
                 <element signature="e#19659#20026#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.5555553">
+              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -166,34 +175,6 @@
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.111111">
-              <caret line="211" column="8" selection-start-line="211" selection-start-column="6" selection-end-line="211" selection-end-column="8" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#2339#2795#0" expanded="false" />
-                <element signature="e#2850#4210#0" expanded="false" />
-                <element signature="e#4263#5598#0" expanded="false" />
-                <element signature="e#5657#10985#0" expanded="false" />
-                <element signature="e#11043#11221#0" expanded="false" />
-                <element signature="e#11722#12683#0" expanded="false" />
-                <element signature="e#12728#13166#0" expanded="false" />
-                <element signature="e#13211#13503#0" expanded="false" />
-                <element signature="e#13769#14832#0" expanded="false" />
-                <element signature="e#14880#15720#0" expanded="false" />
-                <element signature="e#15754#15848#0" expanded="false" />
-                <element signature="e#15908#15995#0" expanded="false" />
-                <element signature="e#16063#16214#0" expanded="false" />
-                <element signature="e#16928#17137#0" expanded="false" />
-                <element signature="e#17196#17408#0" expanded="false" />
-                <element signature="e#17457#17592#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -266,8 +247,8 @@
         <option value="$PROJECT_DIR$/templates/tasks/register.html" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
         <option value="$PROJECT_DIR$/apps/tasks/views.py" />
+        <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
       </list>
     </option>
   </component>
@@ -954,14 +935,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.5555553">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/social/let_down_view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1325,23 +1298,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-            <element signature="e#5592#6223#0" expanded="false" />
-            <element signature="e#6261#6449#0" expanded="false" />
-            <element signature="e#7910#8057#0" expanded="false" />
-            <element signature="e#8099#8362#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44334975">
+        <state vertical-scroll-proportion="0.2777778">
           <caret line="257" column="72" selection-start-line="257" selection-start-column="72" selection-end-line="257" selection-end-column="72" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
@@ -1354,6 +1313,28 @@
             <element signature="e#18779#19098#0" expanded="false" />
             <element signature="e#19134#19606#0" expanded="false" />
             <element signature="e#19659#20026#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.5555553">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.63917524">
+          <caret line="213" column="17" selection-start-line="213" selection-start-column="17" selection-end-line="213" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+            <element signature="e#5592#6223#0" expanded="false" />
+            <element signature="e#6261#6449#0" expanded="false" />
+            <element signature="e#7832#7979#0" expanded="false" />
+            <element signature="e#8021#8284#0" expanded="false" />
           </folding>
         </state>
       </provider>

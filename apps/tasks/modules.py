@@ -192,9 +192,7 @@ def convert_html_to_datetime(date_time):
     return new_date_time
 
 
-def time_has_past(time_info_naive):
-        time_info = timezone(get_localzone()).localize(time_info_naive)
-
+def time_has_past(time_info):
         if time_info:
             if time_info.time() < utc_to_local(get_current_datetime()).time():
                 print "checking time, ", time_info.time(), utc_to_local(get_current_datetime()).time()
@@ -213,7 +211,7 @@ def time_has_past(time_info_naive):
 def time_to_utc(time_to_convert):
     loc_ndt = time_to_convert.replace(tzinfo=None)
     loc_dt = loc_ndt.replace(tzinfo=get_localzone())
-    local = get_localzone().localize(loc_dt).astimezone(pytz.utc)
+    local = get_localzone().localize(loc_ndt).astimezone(pytz.utc)
     return local
 
 
