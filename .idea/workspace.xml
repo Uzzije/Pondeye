@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.min.css" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.min.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.css" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.css" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -96,11 +97,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="creative.min.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="creative.min.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.min.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.09803922">
+            <state vertical-scroll-proportion="-1.1764706">
               <caret line="4" column="2890" selection-start-line="4" selection-start-column="2890" selection-end-line="4" selection-end-column="2890" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="creative.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="3.3333333">
+              <caret line="158" column="21" selection-start-line="158" selection-start-column="21" selection-end-line="158" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -126,16 +137,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -154,7 +155,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/apps/tasks/global_variables_tasks.py" />
         <option value="$PROJECT_DIR$/templates/search_results.html" />
         <option value="$PROJECT_DIR$/templates/social/let_down_view.html" />
         <option value="$PROJECT_DIR$/apps/tasks/migrations/0020_auto_20161123_0911.py" />
@@ -205,6 +205,7 @@
         <option value="$PROJECT_DIR$/templates/tasks/register.html" />
         <option value="$PROJECT_DIR$/templates/tasks/login.html" />
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.min.css" />
+        <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.css" />
       </list>
     </option>
   </component>
@@ -1367,8 +1368,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.min.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09803922">
+        <state vertical-scroll-proportion="-1.1764706">
           <caret line="4" column="2890" selection-start-line="4" selection-start-column="2890" selection-end-line="4" selection-end-column="2890" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.3333333">
+          <caret line="158" column="21" selection-start-line="158" selection-start-column="21" selection-end-line="158" selection-end-column="21" />
           <folding />
         </state>
       </provider>
