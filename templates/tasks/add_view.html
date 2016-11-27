@@ -3,17 +3,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% block cus_design %}
+    {% block custom_design %}
     <meta charset="UTF-8">
     <title>Home</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
-    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
-    {{ form.media }}
+    {{ proj_form.media }}
+        {{ mil_form.media }}
     {% endblock %}
 </head>
 <body>
 {% block body %}
+    {% load tz %}
     <div class="container">
     <form method="post" action="{% url 'tasks:add_proj' %}">{% csrf_token %}
         <div class="row">
@@ -54,7 +53,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-6">
-                            <input class="para-font" type="datetime-local" name="done_by_mil">
+                            {{ mil_form.milestone_date }}
                         </div>
                     </div>
                     <br>
@@ -115,7 +114,7 @@
                     <div class="col-md-6">
                         <label class="display-font">Give us a time when we can celebrate your finished work?</label>
                         <br><br>
-                    <input class="para-font" type="datetime-local" name="done_by_proj">
+                    {{ proj_form.project_date }}
                     </div>
                 </div>
                 <br>

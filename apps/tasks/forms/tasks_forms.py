@@ -110,6 +110,14 @@ class PictureUploadForm(forms.Form):
 
 
 class AddProjectForm(forms.Form):
-    pass
+    DateInput = partial(forms.DateInput, {'class': 'datepicker'})
+    project_date = forms.DateTimeField(required=False, initial=None,
+                                       widget=DateTimeWidget(attrs={'id':"proj_entry_id"}, usel10n = True, bootstrap_version=3), label="When?")
+
+
+class AddMilestoneForm(forms.Form):
+    DateInput = partial(forms.DateInput, {'class': 'datepicker'})
+    milestone_date = forms.DateTimeField(required=False, initial=None,
+                                         widget=DateTimeWidget(attrs={'id':"mil_entry_id"}, usel10n = True, bootstrap_version=3), label="When?")
 
 

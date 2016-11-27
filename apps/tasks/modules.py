@@ -9,6 +9,7 @@ import pytz
 from tzlocal import get_localzone
 from global_variables_tasks import DECODE_DICTIONARY
 from pytz import timezone
+from django.utils.timezone import is_aware
 
 
 def get_user_projects(user):
@@ -192,16 +193,18 @@ def convert_html_to_datetime(date_time):
     return new_date_time
 
 
-def time_has_past(time_info):
-        if time_info:
-            if time_info.time() < utc_to_local(get_current_datetime()).time():
-                print "checking time, ", time_info.time(), utc_to_local(get_current_datetime()).time()
-                if time_info.date() > utc_to_local(get_current_datetime()).date():
+def time_has_past(time_infos):
+        if time_infos:
+            time_info = time_to_utc(time_infos)
+            print "print time info slab ", time_info
+            if time_to_utc(time_info).time() < get_current_datetime().time():
+                "prnt the checking spot"
+                if time_info.date() > get_current_datetime().date():
                     return False
                 msg = "Hey, your work is not history yet"
             else:
-                if time_info.date() >= utc_to_local(get_current_datetime()).date():
-                    print "checking date, ", time_info.date(), utc_to_local(get_current_datetime()).date()
+                if time_info.date() >= get_current_datetime().date():
+                    print "checking date, ", time_info.date(), get_current_datetime().date()
                     return False
                 msg = "Hey, your work is not history yet"
             return msg
@@ -209,10 +212,18 @@ def time_has_past(time_info):
 
 
 def time_to_utc(time_to_convert):
-    loc_ndt = time_to_convert.replace(tzinfo=None)
-    loc_dt = loc_ndt.replace(tzinfo=get_localzone())
-    local = get_localzone().localize(loc_ndt).astimezone(pytz.utc)
-    return local
+    done_by = time_to_convert
+    print done_by.tzinfo,  " my timezone done by ", is_aware(done_by),  get_localzone()
+    new_time = done_by.replace(tzinfo=get_localzone())
+    print new_time.tzinfo, "new timezone"
+    the_utc = pytz.timezone('UTC')
+    new_time_utc = new_time.astimezone(the_utc)
+    print "new time to compare ", new_time_utc.time(), "old time, ", done_by.time(), " current time ", get_current_datetime().time()
+    if new_time_utc.time() < get_current_datetime().time():
+        print "should be less than it"
+    else:
+        print "it is not"
+    return new_time_utc
 
 
 def utc_to_local(input_time):

@@ -24,6 +24,8 @@ import json
 from django.contrib import messages
 from braces.views import LoginRequiredMixin
 import pytz
+from django.utils.timezone import is_aware
+from tzlocal import get_localzone
 
 
 class RegisterView(View):
@@ -231,31 +233,46 @@ class AddProject(LoginRequiredMixin, View):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('tasks:login'))
         form = tasks_forms.AddTaskForm(user=request.user)
+        proj_form = tasks_forms.AddProjectForm()
+        mil_form = tasks_forms.AddMilestoneForm()
         tag_names = TagNames.objects.all()
         return render(request, 'tasks/add_view.html', {'form':form,'tag_names':tag_names,
-                                                       'existing_project':get_user_projects(request.user)})
+                                                       'existing_project':get_user_projects(request.user),
+                                                       'proj_form': proj_form,
+                                                       'mil_form': mil_form
+                                                       })
 
     def post(self, request):
         user = TikedgeUser.objects.get(user=request.user)
         tag_names = TagNames.objects.all()
+        proj_form = tasks_forms.AddProjectForm(request.POST)
+        mil_form = tasks_forms.AddMilestoneForm(request.POST)
+
         if 'mil_create' in request.POST:
             print "Making a new milestone"
             name_of_milestone = request.POST.get('milestone_name')
             if len(name_of_milestone) > 600:
                 messages.error(request, "Way too much words!")
                 return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
-                                                       'existing_project':get_user_projects(request.user)})
+                                                       'existing_project':get_user_projects(request.user),
+                                                        'proj_form': proj_form,
+                                                       'mil_form': mil_form})
             name_of_project = request.POST.get('name_of_mil_proj')
             try:
-                done_by_r = convert_html_to_datetime(request.POST.get('done_by_mil'))
-                done_by = datetime.strptime(done_by_r, '%Y-%m-%d %H:%M')
+                #done_by_r = convert_html_to_datetime(request.POST.get('done_by_mil'))
+                if mil_form.is_valid():
+                    done_by = mil_form.cleaned_data.get('milestone_date')
+                    print "done is time ", done_by
+                else:
+                    done_by = None
+                    print "legit one done by", done_by
             except (ValueError, IndexError):
                 done_by = None
                 messages.error(request, "Your date input seems to be wrong!")
             length_of_time = request.POST.get('length_of_time')
             user_project = UserProject.objects.get(name_of_project=name_of_project, user=user)
             if (name_of_milestone is not '') and done_by and (name_of_project is not '') and (done_by is not '') \
-                    and (not time_has_past(pytz.utc.localize(done_by))):
+                    and (not time_has_past(done_by)):
                 print "time has not passed! ", done_by
                 if (length_of_time is not '') and (length_of_time is not '-1'):
                     start_time = done_by - timedelta(hours=int(length_of_time))
@@ -264,8 +281,8 @@ class AddProject(LoginRequiredMixin, View):
                         start_time = done_by - timedelta(hours=30)
                     else:
                         start_time = done_by - timedelta(hours=1)
-                if not time_has_past(start_time) and user_project.length_of_project >= pytz.utc.localize(start_time) and \
-                        user_project.length_of_project >= pytz.utc.localize(done_by):
+                if not time_has_past(start_time) and user_project.length_of_project >= start_time and \
+                        user_project.length_of_project >= done_by:
                     new_milestone = Milestone(name_of_milestone=name_of_milestone, user=user, reminder=start_time,
                                           done_by=done_by, project=user_project)
                     new_milestone.save()
@@ -293,12 +310,18 @@ class AddProject(LoginRequiredMixin, View):
                 messages.error(request, "Hey, there might be a time conflict!")
         if 'proj_create' in request.POST or 'proj_save' in request.POST:
             try:
-                end_by_r = convert_html_to_datetime(request.POST.get('done_by_proj'))
-                end_by = datetime.strptime(end_by_r, '%Y-%m-%d %H:%M')
+                #end_by_r = convert_html_to_datetime(request.POST.get('done_by_proj'))
+                if proj_form.is_valid():
+                    end_by = proj_form.cleaned_data.get('project_date')
+                else:
+                    end_by = None
+                    print end_by, "legit one end by"
             except (ValueError, IndexError):
                 messages.error(request, "It seems like your date input is wrong!")
                 return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
-                                                       'existing_project':get_user_projects(request.user)})
+                                                       'existing_project':get_user_projects(request.user),
+                                                       'proj_form': proj_form,
+                                                       'mil_form': mil_form})
             if not time_has_past(end_by):
                 name_of_project = request.POST.get('name_of_project')
                 tags = request.POST.getlist('tags')
@@ -331,7 +354,10 @@ class AddProject(LoginRequiredMixin, View):
                 messages.error(request, "There seems to be a time conflict")
         #messages.error(request, "Dude something went wrong! Try again.")
         return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
-                                                       'existing_project':get_user_projects(request.user)})
+                                                       'existing_project':get_user_projects(request.user),
+                                                       'proj_form': proj_form,
+                                                       'mil_form': mil_form
+                                                       })
 
 
 class LogoutView(View):
