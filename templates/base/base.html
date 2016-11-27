@@ -142,6 +142,7 @@
 
                     setTimeout(function(){
                         $('.message').fadeOut('slow');}, 2000);
+                        checkFailedProjectsMilestones();
 
                     });
                 function checkFailedProjectsMilestones(){
@@ -168,7 +169,7 @@
                         }
                     })
                 }
-                var check_failed_interval = setInterval(checkFailedProjectsMilestones, 300000);
+                var check_failed_interval = setInterval(checkFailedProjectsMilestones, 30000);
             </script>
 
         {% endblock %}
