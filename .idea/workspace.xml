@@ -1,7 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="" />
+    <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/header.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/fullsize/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/fullsize/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/fullsize/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/fullsize/4.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/fullsize/5.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/fullsize/6.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/thumbnails/1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/thumbnails/2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/thumbnails/3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/thumbnails/4.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/thumbnails/5.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/img/portfolio/thumbnails/6.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/bootstrap/fonts/glyphicons-halflings-regular.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/bootstrap/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/bootstrap/fonts/glyphicons-halflings-regular.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/bootstrap/fonts/glyphicons-halflings-regular.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/fonts/FontAwesome.otf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/fonts/fontawesome-webfont.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/fonts/fontawesome-webfont.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/fonts/fontawesome-webfont.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/fonts/fontawesome-webfont.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/LICENSE" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/gulpfile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/index.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/js/creative.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/js/creative.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/less/creative.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/less/mixins.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/less/variables.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/package.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/bootstrap/css/bootstrap.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/bootstrap/css/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/bootstrap/fonts/glyphicons-halflings-regular.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/bootstrap/js/bootstrap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/bootstrap/js/bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/css/font-awesome.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/css/font-awesome.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/fonts/fontawesome-webfont.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/animated.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/bordered-pulled.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/core.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/fixed-width.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/font-awesome.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/icons.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/larger.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/list.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/mixins.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/path.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/rotated-flipped.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/screen-reader.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/stacked.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/less/variables.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_animated.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_bordered-pulled.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_core.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_fixed-width.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_icons.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_larger.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_list.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_mixins.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_path.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_rotated-flipped.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_screen-reader.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_stacked.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/_variables.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/font-awesome/scss/font-awesome.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/jquery/jquery.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/jquery/jquery.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/magnific-popup/jquery.magnific-popup.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/magnific-popup/jquery.magnific-popup.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/magnific-popup/magnific-popup.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/scrollreveal/scrollreveal.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/vendor/scrollreveal/scrollreveal.min.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/login.html" afterPath="$PROJECT_DIR$/templates/tasks/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/register.html" afterPath="$PROJECT_DIR$/templates/tasks/register.html" />
+    </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -52,7 +134,7 @@
         </entry>
       </file>
       <file leaf-file-name="creative.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/js/creative.js">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/js/creative.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1201,7 +1283,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/js/creative.js">
+    <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/js/creative.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
