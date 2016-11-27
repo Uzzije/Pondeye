@@ -22,8 +22,8 @@ from ..social.global_variables import MILESTONE, NEW_PROJECT
 from friendship.models import Friend
 import json
 from django.contrib import messages
-import pytz
 from braces.views import LoginRequiredMixin
+import pytz
 
 
 class RegisterView(View):
@@ -255,7 +255,7 @@ class AddProject(LoginRequiredMixin, View):
             length_of_time = request.POST.get('length_of_time')
             user_project = UserProject.objects.get(name_of_project=name_of_project, user=user)
             if (name_of_milestone is not '') and done_by and (name_of_project is not '') and (done_by is not '') \
-                    and (not time_has_past(done_by)):
+                    and (not time_has_past(pytz.utc.localize(done_by))):
                 print "time has not passed! ", done_by
                 if (length_of_time is not '') and (length_of_time is not '-1'):
                     start_time = done_by - timedelta(hours=int(length_of_time))

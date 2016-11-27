@@ -8,6 +8,7 @@ from forms.form_module import get_current_datetime
 import pytz
 from tzlocal import get_localzone
 from global_variables_tasks import DECODE_DICTIONARY
+from pytz import timezone
 
 
 def get_user_projects(user):
@@ -39,6 +40,7 @@ def get_user_milestones(user):
         temp_tup = (mil.name_of_milestone)
         t_list.append(temp_tup)
     return t_list
+
 
 def get_current_todo_list(user):
     user = TikedgeUser.objects.get(user=user)
@@ -191,7 +193,8 @@ def convert_html_to_datetime(date_time):
 
 
 def time_has_past(time_info_naive):
-        time_info = time_to_utc(time_info_naive)
+        time_info = timezone(get_localzone()).localize(time_info_naive)
+
         if time_info:
             if time_info.time() < utc_to_local(get_current_datetime()).time():
                 print "checking time, ", time_info.time(), utc_to_local(get_current_datetime()).time()
@@ -210,7 +213,7 @@ def time_has_past(time_info_naive):
 def time_to_utc(time_to_convert):
     loc_ndt = time_to_convert.replace(tzinfo=None)
     loc_dt = loc_ndt.replace(tzinfo=get_localzone())
-    local = get_localzone().localize(loc_ndt).astimezone(pytz.utc)
+    local = get_localzone().localize(loc_dt).astimezone(pytz.utc)
     return local
 
 
