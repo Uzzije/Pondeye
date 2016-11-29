@@ -145,7 +145,6 @@ class ProfileView(LoginRequiredMixin, View):
         user = User.objects.get(username=user_name)
         current_tasks = get_todays_milestones(request.user)
         current_projs = get_recent_projects(request.user)
-        expired_tasks = get_expired_tasks(user)
         tikedge_user = TikedgeUser.objects.get(user=user)
         failed_mil_count = get_failed_mil_count(user)
         completed_mil_count = get_completed_mil_count(user)
@@ -169,7 +168,7 @@ class ProfileView(LoginRequiredMixin, View):
             print "trouble in paradise"
             is_friend = False
         return render(request, 'tasks/profile_view.html', {'current_tasks':current_tasks,
-                                                   'expired_tasks':expired_tasks, 'has_prof_pic':has_prof_pic,
+                                                    'has_prof_pic':has_prof_pic,
                                                    'user_picture_form':user_picture_form,'user':tikedge_user,
                                                     'is_friend':is_friend,'completed_mil_count':completed_mil_count,
                                                    'failed_proj_count':failed_proj_count,

@@ -124,7 +124,7 @@ def get_todays_milestones(user):
 def get_expired_tasks(user):
     user = TikedgeUser.objects.get(user=user)
     try:
-        exp_tasks = user.tasks_set.all().filter(Q(is_active=False, current_working_on_task=True))
+        exp_tasks = user.milestone_set.all().filter(Q(is_active=False, current_working_on_task=True))
         print "expired"
     except ObjectDoesNotExist:
         exp_tasks = []
