@@ -112,7 +112,7 @@ def get_todays_todo_list(user):
 def get_todays_milestones(user):
     user = TikedgeUser.objects.get(user=user)
     yesterday = form_module.get_current_datetime() - timedelta(days=1)
-    print yesterday
+    print "yesterday ", yesterday,
     try:
         result = user.milestone_set.all().filter(Q(reminder__lte=form_module.get_current_datetime()),
                                              Q(reminder__gte=yesterday), Q(is_active=True))
@@ -212,6 +212,7 @@ def time_has_past(time_infos):
 
 
 def time_to_utc(time_to_convert):
+    print "I am aware or not?", time_to_convert
     done_by = time_to_convert
     print done_by.tzinfo,  " my timezone done by ", is_aware(done_by),  get_localzone()
     new_time = done_by.replace(tzinfo=get_localzone())

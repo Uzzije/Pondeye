@@ -278,8 +278,10 @@ class AddProject(LoginRequiredMixin, View):
                 else:
                     if length_of_time is '-1':
                         start_time = done_by - timedelta(minutes=30)
+
                     else:
                         start_time = done_by - timedelta(hours=1)
+                print "done by ",done_by, "and start time: ", start_time
                 if not time_has_past(start_time) and user_project.length_of_project >= start_time and \
                         user_project.length_of_project >= done_by:
                     new_milestone = Milestone(name_of_milestone=name_of_milestone, user=user, reminder=start_time,

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/forms/form_module.py" afterPath="$PROJECT_DIR$/apps/tasks/forms/form_module.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/modules.py" afterPath="$PROJECT_DIR$/apps/tasks/modules.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/views.py" afterPath="$PROJECT_DIR$/apps/tasks/views.py" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,36 +34,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.333333">
-              <caret line="170" column="51" selection-start-line="170" selection-start-column="51" selection-end-line="170" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.5607735">
+              <caret line="281" column="25" selection-start-line="281" selection-start-column="25" selection-end-line="281" selection-end-column="25" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
                 <element signature="e#2684#7544#0" expanded="false" />
                 <element signature="e#11058#11198#0" expanded="false" />
                 <element signature="e#11240#11394#0" expanded="false" />
-                <element signature="e#19894#20001#0" expanded="false" />
-                <element signature="e#20040#20359#0" expanded="false" />
-                <element signature="e#20395#20867#0" expanded="false" />
-                <element signature="e#20920#21287#0" expanded="false" />
+                <element signature="e#19968#20075#0" expanded="false" />
+                <element signature="e#20114#20433#0" expanded="false" />
+                <element signature="e#20469#20941#0" expanded="false" />
+                <element signature="e#20994#21361#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21270718">
-              <caret line="199" column="47" selection-start-line="199" selection-start-column="47" selection-end-line="199" selection-end-column="47" />
+            <state vertical-scroll-proportion="-43.51852">
+              <caret line="290" column="38" selection-start-line="290" selection-start-column="33" selection-end-line="290" selection-end-column="38" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
-                <element signature="e#5639#6270#0" expanded="false" />
-                <element signature="e#6308#6496#0" expanded="false" />
-                <element signature="e#8279#8426#0" expanded="false" />
-                <element signature="e#8468#8731#0" expanded="false" />
+                <element signature="e#5654#6285#0" expanded="false" />
+                <element signature="e#6323#6511#0" expanded="false" />
+                <element signature="e#8342#8489#0" expanded="false" />
+                <element signature="e#8531#8794#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -163,7 +163,7 @@
       <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings/base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.12963">
+            <state vertical-scroll-proportion="-0.6296296">
               <caret line="105" column="55" selection-start-line="105" selection-start-column="55" selection-end-line="105" selection-end-column="55" />
               <folding>
                 <element signature="e#74#83#0" expanded="true" />
@@ -237,10 +237,10 @@
         <option value="$PROJECT_DIR$/apps/tasks/serializer.py" />
         <option value="$PROJECT_DIR$/templates/tasks/add_view.html" />
         <option value="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/views.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
         <option value="$PROJECT_DIR$/settings/base.py" />
         <option value="$PROJECT_DIR$/apps/tasks/forms/form_module.py" />
+        <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
+        <option value="$PROJECT_DIR$/apps/tasks/views.py" />
       </list>
     </option>
   </component>
@@ -250,8 +250,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="354" />
-    <option name="y" value="46" />
+    <option name="x" value="504" />
+    <option name="y" value="23" />
     <option name="width" value="1246" />
     <option name="height" value="924" />
   </component>
@@ -849,10 +849,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="354" y="46" width="1246" height="924" extended-state="0" />
+    <frame x="504" y="23" width="1246" height="924" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23006645" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18438539" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.053892214" sideWeight="0.5866911" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1263,16 +1263,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.12963">
-          <caret line="105" column="55" selection-start-line="105" selection-start-column="55" selection-end-line="105" selection-end-column="55" />
-          <folding>
-            <element signature="e#74#83#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1308,33 +1298,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
+    <entry file="file://$PROJECT_DIR$/settings/base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.333333">
-          <caret line="170" column="51" selection-start-line="170" selection-start-column="51" selection-end-line="170" selection-end-column="51" />
+        <state vertical-scroll-proportion="-0.6296296">
+          <caret line="105" column="55" selection-start-line="105" selection-start-column="55" selection-end-line="105" selection-end-column="55" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#2684#7544#0" expanded="false" />
-            <element signature="e#11058#11198#0" expanded="false" />
-            <element signature="e#11240#11394#0" expanded="false" />
-            <element signature="e#19894#20001#0" expanded="false" />
-            <element signature="e#20040#20359#0" expanded="false" />
-            <element signature="e#20395#20867#0" expanded="false" />
-            <element signature="e#20920#21287#0" expanded="false" />
+            <element signature="e#74#83#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21270718">
-          <caret line="199" column="47" selection-start-line="199" selection-start-column="47" selection-end-line="199" selection-end-column="47" />
+        <state vertical-scroll-proportion="-43.51852">
+          <caret line="290" column="38" selection-start-line="290" selection-start-column="33" selection-end-line="290" selection-end-column="38" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <element signature="e#5639#6270#0" expanded="false" />
-            <element signature="e#6308#6496#0" expanded="false" />
-            <element signature="e#8279#8426#0" expanded="false" />
-            <element signature="e#8468#8731#0" expanded="false" />
+            <element signature="e#5654#6285#0" expanded="false" />
+            <element signature="e#6323#6511#0" expanded="false" />
+            <element signature="e#8342#8489#0" expanded="false" />
+            <element signature="e#8531#8794#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5607735">
+          <caret line="281" column="25" selection-start-line="281" selection-start-column="25" selection-end-line="281" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#2684#7544#0" expanded="false" />
+            <element signature="e#11058#11198#0" expanded="false" />
+            <element signature="e#11240#11394#0" expanded="false" />
+            <element signature="e#19968#20075#0" expanded="false" />
+            <element signature="e#20114#20433#0" expanded="false" />
+            <element signature="e#20469#20941#0" expanded="false" />
+            <element signature="e#20994#21361#0" expanded="false" />
           </folding>
         </state>
       </provider>
