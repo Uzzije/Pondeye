@@ -193,17 +193,16 @@ def convert_html_to_datetime(date_time):
     return new_date_time
 
 
-def time_has_past(time_infos):
-        if time_infos:
-            time_info = time_to_utc(time_infos)
+def time_has_past(time_info):
+        if time_info:
             print "print time info slab ", time_info
-            if time_to_utc(time_info).time() < get_current_datetime().time():
+            if time_info.time() < utc_to_local(get_current_datetime()).time():
                 "prnt the checking spot"
-                if time_info.date() > get_current_datetime().date():
+                if time_info.date() > utc_to_local(get_current_datetime()).date():
                     return False
                 msg = "Hey, your work is not history yet"
             else:
-                if time_info.date() >= get_current_datetime().date():
+                if time_info.date() >= utc_to_local(get_current_datetime()).date():
                     print "checking date, ", time_info.date(), get_current_datetime().date()
                     return False
                 msg = "Hey, your work is not history yet"
