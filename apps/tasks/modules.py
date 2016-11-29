@@ -289,7 +289,7 @@ def get_status(user):
 
 
 def confirm_expired_milestone_and_project(tikedge_user):
-    yesterday = utc_to_local(form_module.get_current_datetime()) - timedelta(days=1)
+    yesterday = utc_to_local(form_module.get_current_datetime())
     all_milestones = tikedge_user.milestone_set.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False))
     for each_mil in all_milestones:
         if time_has_past(each_mil.done_by):
