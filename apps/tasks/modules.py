@@ -111,10 +111,10 @@ def get_todays_todo_list(user):
 
 def get_todays_milestones(user):
     user = TikedgeUser.objects.get(user=user)
-    yesterday = form_module.get_current_datetime() - timedelta(days=1)
+    yesterday = utc_to_local(form_module.get_current_datetime()) - timedelta(days=1)
     print "yesterday ", yesterday,
     try:
-        result = user.milestone_set.all().filter(Q(reminder__lte=form_module.get_current_datetime()),
+        result = user.milestone_set.all().filter(Q(reminder__lte=utc_to_local(form_module.get_current_datetime())),
                                              Q(reminder__gte=yesterday), Q(is_active=True))
     except ObjectDoesNotExist:
         result = []
@@ -289,7 +289,7 @@ def get_status(user):
 
 
 def confirm_expired_milestone_and_project(tikedge_user):
-    yesterday = form_module.get_current_datetime() - timedelta(days=1)
+    yesterday = utc_to_local(form_module.get_current_datetime()) - timedelta(days=1)
     all_milestones = tikedge_user.milestone_set.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False))
     for each_mil in all_milestones:
         if time_has_past(each_mil.done_by):
