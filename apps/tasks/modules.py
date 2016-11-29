@@ -103,7 +103,7 @@ def get_todays_todo_list(user):
     print yesterday
     try:
         result = user.tasks_set.all().filter(Q(start__lte=form_module.get_current_datetime()),
-                                             Q(start__gte=yesterday), Q(is_active=True))
+                                             Q(is_active=True))
     except ObjectDoesNotExist:
         result = []
     return result
@@ -115,7 +115,7 @@ def get_todays_milestones(user):
     print "yesterday ", yesterday,
     try:
         result = user.milestone_set.all().filter(Q(reminder__lte=utc_to_local(form_module.get_current_datetime())),
-                                             Q(reminder__gte=yesterday), Q(is_active=True))
+                                             Q(is_active=True))
     except ObjectDoesNotExist:
         result = []
     return result
