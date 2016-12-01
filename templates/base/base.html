@@ -20,6 +20,7 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
                 rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 
         <link rel="stylesheet" href="{% static 'css/general_design.css' %}">
 
@@ -58,7 +59,6 @@
                   </button>
                   <a href="{% url 'tasks:home' %}"><span>Brand</span></a>
                 </div>
-
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
@@ -75,6 +75,16 @@
 
                   <ul class="nav navbar-nav navbar-right">
                       <li>
+                          <div class="col-md-12">
+                              <form class="form-inline" method="get" action="{% url 'social:search_everything' %}">
+                                <input class="form-control input-lg" type="search" placeholder="Discover" name="query_word" id="id_q" value="" required>
+                                    <button class="btn btn-default btn-lg" type="submit">
+                                        Discover
+                                    </button>
+                              </form>
+                          </div>
+                      </li>
+                      <li>
                           <a href="{% url 'tasks:add_proj' %}" class="btn btn-default">
                           New Project/Milestone
                           </a>
@@ -87,29 +97,10 @@
                               <li><a href="#">Settings</a></li>
                           </ul>
                     </li>
+
                   </ul>
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
-                <br>
-                <div class="row">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-2">
-                              <form method="get" action="{% url 'social:search_everything' %}">
-                                <div class="input-group">
-                                  <input class="form-control input-lg" type="search" placeholder="Discover" name="query_word" id="id_q" value="" required>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default btn-lg" type="submit">
-                                            <i class="glyphicon glyphicon-search"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                              </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
             </nav>
 
 

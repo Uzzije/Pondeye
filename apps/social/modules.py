@@ -101,16 +101,19 @@ def milestone_tuple(project):
 def get_interest_notification(all_project):
     interest_feed = []
     for project in all_project:
-        seen_project = Follow.objects.get(tasks=project)
-        for each_follow in seen_project.users.all():
-            interest_feed.append({
-                'username':each_follow.user.username,
-                'first_name':each_follow.user.first_name,
-                'last_name':each_follow.user.last_name,
-                'slug':project.slug,
-                'blurb':project.blurb,
-                'created':project.created
-            })
+        try:
+            seen_project = Follow.objects.get(tasks=project)
+            for each_follow in seen_project.users.all():
+                interest_feed.append({
+                    'username':each_follow.user.username,
+                    'first_name':each_follow.user.first_name,
+                    'last_name':each_follow.user.last_name,
+                    'slug':project.slug,
+                    'blurb':project.blurb,
+                    'created':project.created
+                })
+        except ObjectDoesNotExist:
+            pass
     sorted_feed = sorted(interest_feed, key=lambda x: x['created'], reverse=True)
     return sorted_feed
 
@@ -196,6 +199,7 @@ def get_user_journal_feed(tikege_user):
     for journal in journals:
         journal_feed = JournalFeed(journal)
         journal_list.append(journal_feed)
+        sorted(journal_list,  key=lambda x: x.day_created, reverse=False)
     return journal_list
 
 

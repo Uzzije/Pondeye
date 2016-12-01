@@ -12,12 +12,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-5 col-md-offset-5">
-                    <p class="h1">My Journal</p>
+                    <p class="h1"><span class="display-font"> My Journal</span></p>
                 </div>
             </div>
             {% for journal_feed in list_of_journal_feeds %}
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8 col-md-offset-2">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="row">
@@ -48,11 +48,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-footer">
+                            <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <button onclick="showCommentBox({{ journal_feed.comment_id }})" class="btn btn-sm btn-primary">
-                                            Add New Thought
+                                            <span class="para-font">Add New Thought</span>
                                         </button>
                                         <a href="{% url 'social:journal_post_comments' journal_feed.feed_entry.slug %}">
                                                <span class="para-font">View Thoughts</span>

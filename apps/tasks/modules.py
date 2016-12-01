@@ -111,10 +111,10 @@ def get_todays_todo_list(user):
 
 def get_todays_milestones(user):
     user = TikedgeUser.objects.get(user=user)
-    yesterday = utc_to_local(form_module.get_current_datetime()) - timedelta(days=1)
-    print "yesterday ", yesterday,
+    tommorrow = form_module.get_current_datetime() + timedelta(hours=24)
+    #print "yesterday ", yesterday,
     try:
-        result = user.milestone_set.all().filter(Q(reminder__lte=form_module.get_current_datetime()),
+        result = user.milestone_set.all().filter(Q(reminder__lte=tommorrow),
                                              Q(is_active=True))
     except ObjectDoesNotExist:
         result = []
@@ -193,7 +193,8 @@ def convert_html_to_datetime(date_time):
     return new_date_time
 
 
-def time_has_past(time_info):
+def time_has_past(time_infos):
+        time_info = time_to_utc(time_infos)
         if time_info:
             print "print time info slab ", time_info
             if time_info.time() < get_current_datetime().time():

@@ -24,6 +24,7 @@ import json
 from django.contrib import messages
 from braces.views import LoginRequiredMixin
 import pytz
+from global_variables_tasks import TAG_NAMES_LISTS
 from django.utils.timezone import is_aware
 from tzlocal import get_localzone
 
@@ -143,8 +144,8 @@ class ProfileView(LoginRequiredMixin, View):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('tasks:login'))
         user = User.objects.get(username=user_name)
-        current_tasks = get_todays_milestones(request.user)
-        current_projs = get_recent_projects(request.user)
+        current_tasks = get_todays_milestones(user)
+        current_projs = get_recent_projects(user)
         tikedge_user = TikedgeUser.objects.get(user=user)
         failed_mil_count = get_failed_mil_count(user)
         completed_mil_count = get_completed_mil_count(user)
@@ -235,7 +236,7 @@ class AddProject(LoginRequiredMixin, View):
         proj_form = tasks_forms.AddProjectForm()
         mil_form = tasks_forms.AddMilestoneForm()
         tag_names = TagNames.objects.all()
-        return render(request, 'tasks/add_view.html', {'form':form,'tag_names':tag_names,
+        return render(request, 'tasks/add_view.html', {'form':form,'tag_names':TAG_NAMES_LISTS,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,
                                                        'mil_form': mil_form
@@ -269,16 +270,17 @@ class AddProject(LoginRequiredMixin, View):
                 done_by = None
                 messages.error(request, "Your date input seems to be wrong!")
             length_of_time = request.POST.get('length_of_time')
+            print "this is length of time ", length_of_time
             user_project = UserProject.objects.get(name_of_project=name_of_project, user=user)
-            if (name_of_milestone is not '') and done_by and (name_of_project is not '') and (done_by is not '') \
+            if (name_of_milestone != '') and done_by and (name_of_project != '') and (done_by != '') \
                     and (not time_has_past(done_by)):
                 print "time has not passed! ", done_by
-                if (length_of_time is not '') and (length_of_time is not '-1'):
+                if (length_of_time != '') and (length_of_time != '-1'):
                     start_time = done_by - timedelta(hours=int(length_of_time))
                 else:
-                    if length_of_time is '-1':
+                    if length_of_time == '-1':
                         start_time = done_by - timedelta(minutes=30)
-
+                        print "in here for no time", "done by ", done_by, "and start time: ", start_time
                     else:
                         start_time = done_by - timedelta(hours=1)
                 print "done by ",done_by, "and start time: ", start_time
@@ -319,7 +321,7 @@ class AddProject(LoginRequiredMixin, View):
                     print end_by, "legit one end by"
             except (ValueError, IndexError):
                 messages.error(request, "It seems like your date input is wrong!")
-                return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
+                return render(request, 'tasks/add_view.html', {'tag_names':TAG_NAMES_LISTS,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,
                                                        'mil_form': mil_form})
@@ -337,7 +339,11 @@ class AddProject(LoginRequiredMixin, View):
                     messages.success(request, "Sweet! %s has been created!" % name_of_project)
                 for item in tags:
                     print tags, " tags why"
-                    item_obj = TagNames.objects.get(name_of_tag=item)
+                    try:
+                        item_obj = TagNames.objects.get(name_of_tag=item)
+                    except ObjectDoesNotExist:
+                        item_obj = TagNames(name_of_tag=item)
+                        item_obj.save()
                     new_project.tags.add(item_obj)
                 new_project.save()
                 day_entry = user.journalpost_set.all().count()

@@ -15,122 +15,124 @@
                 </div>
             {% endif %}
             <div class="row">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                    <img src ='{{  has_prof_pic.profile_pics.url }}' alt="No Profile Picture" style="width:40%;height:40%;" class="img-thumbnail img-circle"/>
-                                    Status: <span class="h3 default-font header-color">{{ status_of_user }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <br>
-                        <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <p class="">Completed</p>
-                                    <div class="col-md-6">
-                                        <span class="">Projects: {{ complete_proj_count }}</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="">Milestones: {{ completed_mil_count }}</span>
-                                    </div>
+                                        <img src ='{{  has_prof_pic.profile_pics.url }}' alt="No Profile Picture" style="width:40%;height:40%;" class="img-thumbnail img-circle"/>
+                                        Status: <span class="h3 default-font header-color">{{ status_of_user }}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <p class="">Failed</p>
-                                    <div class="col-md-6">
-                                        <span class="">Projects: {{ failed_proj_count }}</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="">Milestones: {{ failed_mil_count }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-body card">
+                        <div class="col-md-6">
+                            <br>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="list-group">
-                                        {% if current_tasks %}
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <p class="">Completed</p>
+                                        <div class="col-md-6">
+                                            <span class="">Projects: {{ complete_proj_count }}</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="">Milestones: {{ completed_mil_count }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <p class="">Failed</p>
+                                        <div class="col-md-6">
+                                            <span class="">Projects: {{ failed_proj_count }}</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="">Milestones: {{ failed_mil_count }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-body card">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="list-group">
+                                            {% if current_tasks %}
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <p class="h3">Upcoming MileStones</p>
+                                                    </div>
+                                                </div>
+                                                 <div class="row">
+                                                    <ul class="list-group">
+                                                        {% for current_task in current_tasks %}
+                                                            <li id=row_curr_{{ current_task.id }} class="list-group-item">
+                                                                <a href="{% url 'social:milestone_view' current_task.slug %}">{{ current_task.blurb }}</a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                 </div>
+                                            {% else %}
+                                                    <p class="h3 default-font">No Upcoming MileStones</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% if current_projs %}
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <p class="h3">Upcoming MileStones</p>
+                                                    <p class="h3 default-font">Current Projects</p>
                                                 </div>
                                             </div>
-                                             <div class="row">
+                                            <div class="row">
                                                 <ul class="list-group">
-                                                    {% for current_task in current_tasks %}
-                                                        <li id=row_curr_{{ current_task.id }} class="list-group-item">
-                                                            <a href="{% url 'social:milestone_view' current_task.slug %}">{{ current_task.blurb }}</a>
+                                                    {% for each_proj in current_projs %}
+                                                        <li id=proj_curr_{{ each_proj.id }} class="list-group-item">
+                                                            <a href="{% url 'social:project_view' each_proj.slug %}">
+                                                                {{ each_proj.blurb }}
+                                                            </a>
                                                         </li>
                                                     {% endfor %}
                                                 </ul>
-                                             </div>
+                                            </div>
                                         {% else %}
-                                                <p class="h3 default-font">No Upcoming MileStones</p>
+                                            <p class="h3 default-font">No Upcoming Projects</p>
                                         {% endif %}
+
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    {% if current_projs %}
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <p class="h3 default-font">Current Projects</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <ul class="list-group">
-                                                {% for each_proj in current_projs %}
-                                                    <li id=proj_curr_{{ each_proj.id }} class="list-group-item">
-                                                        <a href="{% url 'social:project_view' each_proj.slug %}">
-                                                            {{ each_proj.blurb }}
-                                                        </a>
-                                                    </li>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-5">
+                                            <span class="flow-text"><button id="show-pond" class="btn btn-lg btn-default">View Pond</button></span>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-md-7 col-md-offset-2">
+                                    <div hidden id="pond-id" class="panel panel-default">
+                                        {% if ponders %}
+                                            <div class="panel-body">
+                                                {% for ponder in ponders %}
+                                                    <div class="row">
+                                                         <div class="col-md-3">
+                                                             <img src="{{ ponder.profile_pics.url }}" alt="No Picture Uploaded" class="img-thumbnail">
+                                                         </div>
+                                                         <div class="col-md-9">
+                                                            <a href="{% url 'tasks:profile_view' ponder.username %}">
+                                                                <span class="flow-text">{{ ponder.first_name }} {{ ponder.last_name }}</span>
+                                                            </a>
+                                                         </div>
+                                                    </div>
                                                 {% endfor %}
-                                            </ul>
-                                        </div>
-                                    {% else %}
-                                        <p class="h3 default-font">No Upcoming Projects</p>
-                                    {% endif %}
-
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-2 col-md-offset-5">
-                                        <span class="flow-text"><button id="show-pond" class="btn btn-lg btn-default">View Pond</button></span>
-                                </div>
-                            </div>
-                            <br>
-                            <div class="col-md-7 col-md-offset-2">
-                                <div hidden id="pond-id" class="panel panel-default">
-                                    {% if ponders %}
-                                        <div class="panel-body">
-                                            {% for ponder in ponders %}
-                                                <div class="row">
-                                                     <div class="col-md-3">
-                                                         <img src="{{ ponder.profile_pics.url }}" alt="No Picture Uploaded" class="img-thumbnail">
-                                                     </div>
-                                                     <div class="col-md-9">
-                                                        <a href="{% url 'tasks:profile_view' ponder.username %}">
-                                                            <span class="flow-text">{{ ponder.first_name }} {{ ponder.last_name }}</span>
-                                                        </a>
-                                                     </div>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    {% else %}
-                                        <span>Empty Pond</span>
-                                    {% endif %}
+                                            </div>
+                                        {% else %}
+                                            <span>Empty Pond</span>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
