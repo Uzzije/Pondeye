@@ -5,4 +5,4 @@ DECODE_DICTIONARY = {'a':'c', 'b':'z', 'c':'g', 'd':'h', 'e':'w', 'f':'x', 'g':'
                     'u':'s', 'v':'t', 'w':'y', 'x':'v', 'y':'u', 'z':'n'}
 
 TAG_NAMES_LISTS = ['Learning an Instrument','Social Cause', 'Learning a Language','Habitat for Humanity',
-                   'Self Improvement']
+                   'Self Improvement', 'Family']

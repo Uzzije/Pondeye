@@ -57,14 +57,14 @@ class PondFeed:
     def message(self):
         if self.type_of_feed is global_variables.MILESTONE:
             print self.task_owner_name, " slammer"
-            message = "I created a new milestone %s for project %s." % \
+            message = "I created a new milestone: %s . This is for project: %s." % \
                       (self.tasks.name_of_milestone, self.tasks.project.blurb)
             return message
         elif self.type_of_feed is global_variables.PICTURE_SET:
-            message = "A entered a journal entry for milestone %s." % self.tasks.milestone.blurb
+            message = "A entered a journal entry for this milestone: %s." % self.tasks.milestone.blurb
             return message
         elif self.type_of_feed is global_variables.NEW_PROJECT:
-            message = "I am starting a new project entitled: %s" % self.tasks.blurb
+            message = "Hey, I am starting a new project. Project Name: %s" % self.tasks.blurb
             return message
         else:
             return None
