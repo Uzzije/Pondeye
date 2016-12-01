@@ -3,7 +3,7 @@
 Feed and Notification Classes for Social News Feed of Application
 """
 from models import ProfilePictures,\
-    BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, VoucheMilestone
+    BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, VoucheMilestone, Follow
 from friendship.models import FriendshipRequest
 from django.db.models import Q
 import global_variables
@@ -140,14 +140,6 @@ class PondFeed:
             count = follows.users.count()
         except (ValueError, ObjectDoesNotExist):
             pass
-        return count
-
-    def letDown(self):
-        try:
-            let_down = LetDown.objects.get(tasks=self.tasks)
-            count = let_down.users.count()
-        except (ObjectDoesNotExist, AttributeError, ValueError):
-            count = 0
         return count
 
     def get_name(self):

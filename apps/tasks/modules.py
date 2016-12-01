@@ -114,7 +114,7 @@ def get_todays_milestones(user):
     yesterday = utc_to_local(form_module.get_current_datetime()) - timedelta(days=1)
     print "yesterday ", yesterday,
     try:
-        result = user.milestone_set.all().filter(Q(reminder__lte=utc_to_local(form_module.get_current_datetime())),
+        result = user.milestone_set.all().filter(Q(reminder__lte=form_module.get_current_datetime()),
                                              Q(is_active=True))
     except ObjectDoesNotExist:
         result = []
@@ -196,13 +196,13 @@ def convert_html_to_datetime(date_time):
 def time_has_past(time_info):
         if time_info:
             print "print time info slab ", time_info
-            if time_info.time() < utc_to_local(get_current_datetime()).time():
+            if time_info.time() < get_current_datetime().time():
                 "prnt the checking spot"
-                if time_info.date() > utc_to_local(get_current_datetime()).date():
+                if time_info.date() > get_current_datetime().date():
                     return False
                 msg = "Hey, your work is not history yet"
             else:
-                if time_info.date() >= utc_to_local(get_current_datetime()).date():
+                if time_info.date() >= get_current_datetime().date():
                     print "checking date, ", time_info.date(), get_current_datetime().date()
                     return False
                 msg = "Hey, your work is not history yet"
@@ -288,7 +288,7 @@ def get_status(user):
 
 
 def confirm_expired_milestone_and_project(tikedge_user):
-    yesterday = utc_to_local(form_module.get_current_datetime())
+    yesterday = form_module.get_current_datetime()
     all_milestones = tikedge_user.milestone_set.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False))
     for each_mil in all_milestones:
         if time_has_past(each_mil.done_by):

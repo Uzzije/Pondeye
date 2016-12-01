@@ -4,6 +4,7 @@
 import os
 from easy_thumbnails.conf import Settings as thumbnail_settings
 import djcelery
+from tzlocal import get_localzone
 djcelery.setup_loader()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -120,7 +121,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = str(get_localzone())
 
 USE_I18N = True
 
