@@ -119,7 +119,7 @@
                                                 {% for ponder in ponders %}
                                                     <div class="row">
                                                          <div class="col-md-3">
-                                                             <img src="{{ ponder.profile_pics.url }}" alt="No Picture Uploaded" class="img-thumbnail">
+                                                             <img src="{{ ponder.profile_pics_url }}" alt="No Picture Uploaded" class="img-thumbnail">
                                                          </div>
                                                          <div class="col-md-9">
                                                             <a href="{% url 'tasks:profile_view' ponder.username %}">
