@@ -31,7 +31,6 @@
                     {% for feed in all_feeds %}
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="col-md-12"> <!--- user pic and name --->
                                     <div class="panel panel-default">
                                         <div class="panel-body cards">
                                             <img src="{{ feed.profile_url }}" style="width: 10%; height: 10%;" alt="No Profile Picture"
@@ -63,11 +62,11 @@
                                             {% elif feed.is_picture_feed %}
                                                 <br><br>
                                                 <div class="row">
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-10">
                                                         <div class="ba-slider">
-                                                           <img src="{{ feed.after_url }}">
+                                                           <img style="max-width: None;" src="{{ feed.after_url }}">
                                                            <div class="resize">
-                                                               <img src="{{ feed.before_url }}">
+                                                               <img style="max-width: None;" src="{{ feed.before_url }}">
                                                            </div>
                                                            <span class="handle"></span>
                                                         </div>
@@ -108,7 +107,7 @@
                                         </div>
                                         <br><br>
                                     </div>
-                                </div>
+
                             </div>
                         </div>
                     {% endfor %}
