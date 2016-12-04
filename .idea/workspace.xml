@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/static/custom_scripts.js" afterPath="$PROJECT_DIR$/apps/tasks/static/custom_scripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/static/custom_style.css" afterPath="$PROJECT_DIR$/apps/tasks/static/custom_style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/nav_bar.html" afterPath="$PROJECT_DIR$/templates/base/nav_bar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/social/news_feed.html" afterPath="$PROJECT_DIR$/templates/social/news_feed.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/profile_view.html" afterPath="$PROJECT_DIR$/templates/tasks/profile_view.html" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -79,10 +75,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="news_feed.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="news_feed.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/social/news_feed.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.34749034">
+            <state vertical-scroll-proportion="21.375">
               <caret line="32" column="51" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -133,11 +129,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="profile_view.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="profile_view.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/tasks/profile_view.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-34.25">
-              <caret line="146" column="40" selection-start-line="146" selection-start-column="40" selection-end-line="146" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.3243243">
+              <caret line="108" column="159" selection-start-line="108" selection-start-column="159" selection-end-line="108" selection-end-column="159" />
               <folding />
             </state>
           </provider>
@@ -226,12 +222,12 @@
         <option value="$PROJECT_DIR$/templates/social/search_results.html" />
         <option value="$PROJECT_DIR$/apps/social/search_module.py" />
         <option value="$PROJECT_DIR$/templates/tasks/home.html" />
-        <option value="$PROJECT_DIR$/templates/tasks/profile_view.html" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
         <option value="$PROJECT_DIR$/apps/tasks/static/custom_scripts.js" />
         <option value="$PROJECT_DIR$/templates/base/nav_bar.html" />
         <option value="$PROJECT_DIR$/apps/tasks/static/custom_style.css" />
         <option value="$PROJECT_DIR$/templates/social/news_feed.html" />
+        <option value="$PROJECT_DIR$/templates/tasks/profile_view.html" />
       </list>
     </option>
   </component>
@@ -305,6 +301,24 @@
               <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tasks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -352,29 +366,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tasks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tasks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
+              <option name="myItemId" value="social" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1256,14 +1248,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tasks/profile_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-34.25">
-          <caret line="146" column="40" selection-start-line="146" selection-start-column="40" selection-end-line="146" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.352941">
@@ -1306,13 +1290,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/social/news_feed.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34749034">
+        <state vertical-scroll-proportion="21.375">
           <caret line="32" column="51" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
           <folding>
             <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tasks/profile_view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3243243">
+          <caret line="108" column="159" selection-start-line="108" selection-start-column="159" selection-end-line="108" selection-end-column="159" />
+          <folding />
         </state>
       </provider>
     </entry>
