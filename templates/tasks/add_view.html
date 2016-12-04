@@ -13,132 +13,152 @@
 <body>
 {% block body %}
     {% load tz %}
-    <div class="container">
-    <form method="post" action="{% url 'tasks:add_proj' %}">{% csrf_token %}
-        <div class="row">
-            <div class="col-md-6">
-                <button type="button" id="pick_add_proj" class="btn  btn-primary btn-lg">Project</button>
-            </div>
-            <div class="col-md-6">
-                <button type="button" id="pick_add_milestone" class="btn  btn-default btn-lg">Milestone</button>
-            </div>
-        </div>
+    <div class="container" style="margin-top:50px;">
+       <div class="col-md-10 col-md-offset-1">
+           <div class="row">
+                <form method="post" action="{% url 'tasks:add_proj' %}">{% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" id="pick_add_proj" class="btn  btn-primary btn-lg content-float">
+                                <span class="para-font">Project</span>
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" id="pick_add_milestone" class="btn  btn-default btn-lg content-float">
+                                <span class="para-font">Milestone</span>
+                            </button>
+                        </div>
+                    </div>
 
-        <div class="row" id="pick_add_milestone_id" hidden>
-            <div class="col-md-8 col-md-offset-2">
-                <hr>
-                {% if existing_project %}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input class="form-control" type="text" placeholder="What is the Milestone" name="milestone_name">
-                            </div>
+                    <div class="row" id="pick_add_milestone_id" hidden>
+                        <div class="col-md-10">
+                            <hr>
+                            {% if existing_project %}
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="text" placeholder="What is the Milestone?" name="milestone_name">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <label><h3 class="display-font link-color">What project is this for?</h3></label>
+                                            <br><br>
+                                            <select class="form-control" name="name_of_mil_proj">
+                                                {% for proj in existing_project %}
+                                                    <option class="para-font link-color" value="{{ proj }}">{{ proj }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                               <h3 class="display-font link-color"> When will this be done by?</h3>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ mil_form.milestone_date }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label><h4 class="display-font link-color">About how long will this take to complete?</h4></label>
+                                            <br><br>
+                                            <select id="new_task_end_time" name="length_of_time" class="form-control para-font link-color">
+                                                <option value="" selected>hours</option>
+                                                <option value="-1">less than an hour</option>
+                                                <option value="1">an hour</option>
+                                                <option value="2">two hours</option>
+                                                <option value="3">three hours</option>
+                                                <option value="4">four hours</option>
+                                                <option value="5">five hours</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                        <br>
+                                <button type="submit" id="" name="mil_create" class="btn btn-primary">Create Milestone</button>
+                            {% else %}
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h3 class="para-font">Sorry can't create a milestone without an existing project</h3>
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label><h3 class="display-font">What project is this for?</h3></label>
-                                <br><br>
-                                <select class="form-control" name="name_of_mil_proj">
-                                    {% for proj in existing_project %}
-                                        <option class="para-font" value="{{ proj }}">{{ proj }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                   <h3 class="display-font"> When will this be done by?</h3>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                {{ mil_form.milestone_date }}
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label><h4 class="display-font">About how long will this take to complete?</h4></label>
-                                <br><br>
-                                <select id="new_task_end_time" name="length_of_time" class="form-control para-font">
-                                    <option value="" selected>hours</option>
-                                    <option value="-1">less than an hour</option>
-                                    <option value="1">an hour</option>
-                                    <option value="2">two hours</option>
-                                    <option value="3">three hours</option>
-                                    <option value="4">four hours</option>
-                                    <option value="5">five hours</option>
-                                </select>
-                            </div>
-                        </div>
-                            <br>
-                    <button type="submit" id="" name="mil_create" class="btn btn-success">Create Milestone</button>
-                {% else %}
-                    <div class="row">
-                        <h3>Sorry can't create a milestone without an existing project</h3>
                     </div>
-                {% endif %}
-            </div>
-        </div>
 
-        <div class="row" hidden id="pick_add_proj_id">
-            <hr>
-            <div class="col-md-9 col-md-offset-2">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h4 class="display-font"> What's the goal of this project?</h4>
-                        <br>
-                        <div class="col-md-6 para-font">
-                            <input class="" type="radio" id="ls_proj" name="type_of_project" value="learn something"/>
-                            <label for="ls_proj">Learn Something New </label>
-                        </div>
-                        <div class="col-md-6 para-font">
-                            <input type="radio" id="ls_build" name="type_of_project" value="learn something"/>
-                             <label for="ls_build">Build/Create Something </label>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div hidden id="proj_form">
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <input id="user_plan" placeholder="" class="form-control" type="text" name="name_of_project">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h4 class="display-font">What best describes your motivation?</h4>
+                    <div class="row" hidden id="pick_add_proj_id">
+                        <hr>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h4 class="display-font link-color"> What's the goal of this project?</h4>
+                                    <br>
+                                    <div class="col-md-6 para-font">
+                                        <input class="" type="radio" id="ls_proj" name="type_of_project" value="learn something"/>
+                                        <label for="ls_proj">Learn Something New </label>
+                                    </div>
+                                    <div class="col-md-6 para-font">
+                                        <input type="radio" id="ls_build" name="type_of_project" value="learn something"/>
+                                         <label for="ls_build">Build/Acompolish </label>
+                                    </div>
+                                </div>
+                            </div>
                             <br>
-                            {% for tag in tag_names %}
-                                <input class="para-font" type="checkbox" id="id{{ tag }}" name="tags[]" value="{{ tag }}">
-                                <label for="id{{ tag }}">{{ tag }}&nbsp;</label>
-                            {% endfor %}
+                            <div hidden id="proj_form">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <input id="user_plan" placeholder="" class="form-control" type="text" name="name_of_project">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <h4 class="display-font link-color">What best describes your motivation?</h4>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="panel panel-default">
+                                            <div class="post-body">
+                                                {% for tag in tag_names %}
+                                                    <div class="col-md-6">
+                                                        <input class="para-font" type="checkbox" id="id{{ tag }}" name="tags[]" value="{{ tag }}">
+                                                        <label class="para-font" for="id{{ tag }}">{{ tag }}&nbsp;</label>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="display-font link-color">Give us a time when we can celebrate your finished work?</label>
+                                        <br><br>
+                                    {{ proj_form.project_date }}
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button type="submit" id="" name="proj_create" class="btn btn-default content-float">Start Project</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="submit" id="" name="proj_save" class="btn btn-default content-float">Save Project</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-7">
-                            <label class="display-font">Give us a time when we can celebrate your finished work?</label>
-                            <br><br>
-                        {{ proj_form.project_date }}
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <button type="submit" id="" name="proj_create" class="btn btn-default">Start Project</button>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" id="" name="proj_save" class="btn btn-default">Save Project</button>
-                        </div>
-                    </div>
-                </div>
+                 </form>
             </div>
-        </div>
-     </form>
+       </div>
     </div>
         <script>
             $("#pick_add_proj").click(function(){

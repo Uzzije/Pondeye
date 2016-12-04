@@ -103,7 +103,12 @@ class HomeView(LoginRequiredMixin, View):
             except ObjectDoesNotExist:
                 pass
             picture_file.file = resize_image(picture_file, is_profile_pic=True)
-            picture_mod = ProfilePictures(image_name=picture_file.name, profile_pics=picture_file, tikedge_user=tkduser)
+            try:
+                picture_mod = ProfilePictures.objects.get(tikedge_user=tkduser)
+                picture_mod.profile_pics = picture_file
+                picture_mod.image_name = picture_file.name
+            except ObjectDoesNotExist:
+                picture_mod = ProfilePictures(image_name=picture_file.name, profile_pics=picture_file, tikedge_user=tkduser)
             picture_mod.save()
             current_task = get_todays_milestones(request.user)
             current_projs = get_recent_projects(request.user)
@@ -176,7 +181,8 @@ class ProfileView(LoginRequiredMixin, View):
                                                    'complete_proj_count':completed_proj_count,
                                                     'failed_mil_count':failed_mil_count,
                                                     'current_projs':current_projs,
-                                                    'status_of_user':status_of_user
+                                                    'status_of_user':status_of_user,
+                                                    "user_name":user.username,
                                                    })
 
 
@@ -304,10 +310,10 @@ class AddProject(LoginRequiredMixin, View):
                     return HttpResponseRedirect(reverse('tasks:home'))
                 elif time_has_past(start_time):
                     messages.error(request, "Hey, not enough time to complete milestone!")
-                elif user_project.length_of_project >= pytz.utc.localize(start_time):
+                elif user_project.length_of_project >= start_time:
                     messages.error(request, "Hey, can't fit this milestone into the project scope, takes too long!")
                 else:
-                    print "print buisiness ",user_project.length_of_project, pytz.utc.localize(done_by)
+                    print "print buisiness ",user_project.length_of_project, done_by
                     messages.error(request, "Hey, can't fit this milestone into the project scope!")
             else:
                 messages.error(request, "Hey, there might be a time conflict!")

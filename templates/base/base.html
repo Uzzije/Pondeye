@@ -2,14 +2,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'theme-design/img/favicon.png' %}">
+    <!-- Bootstrap core CSS -->
     {% block design %}
-        <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-  crossorigin="anonymous"></script>
+        <link href="{% static "theme-design/bootstrap-3.3.5/css/bootstrap.min.css" %}" rel="stylesheet">
+        <link href="{% static "theme-design/assets/css/animate.min.css" %}" rel="stylesheet">
+        <link href="{% static "theme-design/font-awesome-4.4.0/css/font-awesome.min.css" %}" rel="stylesheet">
+        <link href="{% static "theme-design/assets/css/timeline.css" %}" rel="stylesheet">
+        <link href="{% static "theme-design/assets/css/cover_profile.css" %}" rel="stylesheet">
+        <script src="{% static "theme-design/assets/js/jquery.1.11.1.min.js" %}"></script>
+        <script src="{% static "theme-design/bootstrap-3.3.5/js/bootstrap.min.js" %}"></script>
+        <script src="{% static "theme-design/assets/js/custom.js" %}"></script>
         <!-- Compiled and minified JavaScript -->
-        <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
-        <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
         <link href="{% static "image-comparison-slider/css/reset.css" %}" rel="stylesheet" type="text/css"/>
          <script src="{% static "image-comparison-slider/js/modernizr.js" %}"></script>
         <script src="{% static "custom_scripts.js" %}"></script>
@@ -21,13 +30,15 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
                 rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:900" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Aref+Ruqaa" rel="stylesheet">
 
         <link rel="stylesheet" href="{% static 'css/general_design.css' %}">
 
         <!---style sheet --->
         <link href="{% static 'toastrs/toastr.scss' %}" rel="stylesheet"/>
         <script src="{% static 'toastrs/toastr.js' %}"></script>
-
     {% endblock %}
     {% block custom_design %}
 
@@ -35,88 +46,97 @@
     <title>{% block title %}Title{% endblock %}</title>
 </head>
 <body>
-        {% if messages %}
-            {% for message in messages %}
-              <div
-                      {% if message.tags == "success" %}
-                            class="message alert alert-success"
-                      {% else %}
-                            class="message alert alert-warning"{% endif %} role="alert">
-                      {{ message|safe }}
-              </div>
-            {% endfor %}
-        {% endif %}
+
         {% block search %}
-            <nav class="default-font navbar navbar-default">
-              <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
+                <!-- Fixed navbar -->
+            <nav class="navbar navbar-default navbar-fixed-top navbar-principal">
+            {% if messages %}
+                {% for message in messages %}
+                  <div
+                          {% if message.tags == "success" %}
+                                class="message alert alert-success"
+                          {% else %}
+                                class="message alert alert-warning"{% endif %} role="alert">
+                          <span class="para-font link-color">{{ message|safe }}</span>
+                  </div>
+                {% endfor %}
+            {% endif %}
+              <div class="container">
                 <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a href="{% url 'tasks:home' %}"><span>Brand</span></a>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a class="navbar-brand"  href="{% url 'tasks:register' %}"><b class="nav-font">Pondeye</b></a>
+                            </li>
+                            <li class="active active-color">
+                                <a href="{% url 'tasks:home' %}"><i class="material-icons" style="font-size:32px;">home</i></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav">
-                    <li class="active"><a href="{% url 'tasks:home' %}">Home <span class="sr-only">(current)</span></a></li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{% url 'social:todo_feed' %}">Feed</a></li>
-                        <li><a href="{% url 'social:journal_entries' %}">Journal Entries</a></li>
-                        <li><a href="{% url 'social:notifications' %}">Notifications</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-
-                  <ul class="nav navbar-nav navbar-right">
-                      <li>
-                          <div class="col-md-12">
-                              <form class="form-inline" method="get" action="{% url 'social:search_everything' %}">
-                                <input class="form-control input-lg" type="search" placeholder="Discover" name="query_word" id="id_q" value="" required>
-                                    <button class="btn btn-default btn-lg" type="submit">
-                                        Discover
-                                    </button>
-                              </form>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <div class="col-md-7">
+                     <form class="navbar-form" method="get" action="{% url 'social:search_everything' %}">
+                        <div class="form-group" style="display:inline;">
+                          <div class="input-group" style="display:table;">
+                            <input class="form-control" type="search" placeholder="Discover what's next..." name="query_word" id="id_q" value="" aria-describedby="sizing-addon1" required>
+                            <span class="input-group-addon" style="width:1%;">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </span>
                           </div>
-                      </li>
-                      <li>
-                          <a href="{% url 'tasks:add_proj' %}" class="btn btn-default">
-                          New Project/Milestone
-                          </a>
-                      </li>
-                      <li><a href="{% url 'tasks:login' %}">Sign In</a></li>
+                        </div>
+                      </form>
+                    </div>
+                  <ul class="nav navbar-nav navbar-right">
+                      <li><a href="{% url 'tasks:add_proj' %}"><i class="material-icons" style="font-size:32px;">create</i></a></li>
                       <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                              <i class="material-icons" style="font-size:32px;">menu</i>
+                            <span class="caret"></span>
+                          </a>
                           <ul class="dropdown-menu">
-                              <li><a href="{% url 'tasks:logout' %}">Sign out</a></li>
-                              <li><a href="#">Settings</a></li>
+                            <li><a href="{% url 'social:todo_feed' %}"><span class="para-font">Feed</span></a></li>
+                            <li><a href="{% url 'social:journal_entries' %}"><span class="para-font">Journal Entries</span></a></li>
+                            <li><a href="{% url 'social:notifications' %}"><span class="para-font">Notifications</span></a></li>
                           </ul>
-                    </li>
-
-                  </ul>
-                </div><!-- /.navbar-collapse -->
-              </div><!-- /.container-fluid -->
+                      </li>
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                              <i class="material-icons" style="font-size:32px;">account_circle</i>
+                            <span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                              <li><a href="{% url 'tasks:logout' %}"><span class="para-font">Sign out</span></a></li>
+                              <li><a href="#"><span class="para-font">Settings</span></a></li>
+                          </ul>
+                      </li>
+                    </ul>
+                </div>
+              </div>
             </nav>
-
-
         {% endblock %}
-        {% block notifications %}
-        {% endblock %}
+        <div class="container-fluid">
+            {% block notifications %}
+            {% endblock %}
+        </div>
             <br><br>
-        {% block body %}
-        {% endblock %}
+        <div class="container-fluid">
+            {% block body %}
+            {% endblock %}
+        </div>
 
         {% block nav_script %}
         {% endblock %}
         {% block end %}
             <div class="fixedpicturebutton" style="bottom: 45px; right: 24px;">
                 <a href="{% url 'tasks:add_proj' %}" class="btn-floating btn-large red">
-                    <i class="material-icons" style="font-size:32px;">add</i>
+                    <i class="material-icons" style="font-size:32px;">create</i>
                 </a>
             </div>
 
@@ -162,7 +182,8 @@
                 }
                 var check_failed_interval = setInterval(checkFailedProjectsMilestones, 30000);
             </script>
-
+        {% endblock %}
+        {% block footer %}
         {% endblock %}
 </body>
 </html>

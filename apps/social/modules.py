@@ -205,8 +205,9 @@ def get_user_journal_feed(tikege_user):
 
 def get_users_feed(user):
     list_of_feed = []
-    user_friends = Friend.objects.friends(user)
-    tkdge_friends = TikedgeUser.objects.filter(user__in=user_friends)
+    #user_friends = Friend.objects.friends(user)
+    #tkdge_friends = TikedgeUser.objects.filter(user__in=user_friends)
+    tkdge_friends = TikedgeUser.objects.all()
     milestone_feed = Milestone.objects.filter(Q(is_active=True),Q(user__in=tkdge_friends))
     project_feed = UserProject.objects.filter(Q(is_live=True), Q(user__in=tkdge_friends))
     picture_feed = PictureSet.objects.filter(~Q(after_picture=None), Q(tikedge_user__in=tkdge_friends))

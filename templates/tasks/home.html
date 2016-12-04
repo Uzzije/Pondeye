@@ -6,157 +6,185 @@
   </head>
   <body>
     {% block body %}
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="display-font">{{ tikedge_user.user.first_name }} {{ tikedge_user.user.last_name }}</p>
-                        </div>
+        <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
+                <p class="h1"><span class="h1 status-font link-color">{{ status_of_user }}</span></p>
+                <div class="row">
+                <!-- left content-->
+                  <div class="profile-nav col-md-4">
+                    <div class="panel">
+                      <div class="user-heading round">
+                          <a href="{% url 'tasks:profile_view' user_name %}">
+                              <img src ='{{  has_prof_pic.profile_pics.url }}' alt="">
+                          </a>
+                            <br><br>
+                          <p><h4 class="display-font">{{ tikedge_user.user.first_name }} {{ tikedge_user.user.last_name }}</h4></p>
+                      </div>
                     </div>
-                    <br>
-                    <div class="row">
+                      <div class="row">
                         <div class="col-md-6">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    {% if has_prof_pic %}
-                                        <img src ='{{  has_prof_pic.profile_pics.url }}' style="width:40%;height:40%;" class="img-circle img-thumbnail"/>
-                                        Status: <span class="h3 default-font header-color">{{ status_of_user }}</span>
-                                    {% else %}
-                                        <form method="post" action="{% url 'tasks:home' %}" enctype="multipart/form-data">{% csrf_token %}
-                                                <div class="col-md-6">
-                                                    {{ user_picture_form.picture }}
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input class="btn btn-default" type="submit"
-                                                   name="upload-picture" value="Upload Profile Picture">
-                                                </div>
-                                        </form>
-                                    {% endif %}
-                                </div>
-                            </div>
+                            <button onclick="toggle_upload()" class="btn btn-link">
+                                <i class="material-icons" style="font-size:32px;">add_a_photo</i>
+                            </button>
                         </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <a class="btn btn-primary" href="{% url 'tasks:profile_view' user_name %}">View Profile</a>
+                      </div>
+                      <br>
+                    <!-- Friends activity -->
+                    {% if not has_prof_pic %}
+                        <form method="post" action="{% url 'tasks:home' %}" enctype="multipart/form-data">{% csrf_token %}
+                            <div class="container row">
+                                <div class="col-md-12">
+                                    {{ user_picture_form.picture }}
+                                </div>
                             </div>
                             <br>
-                            <div class="row">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <p class="">Completed</p>
-                                        <div class="col-md-6">
-                                            <span class="">Projects: {{ complete_proj_count }}</span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span class="">Milestones: {{ completed_mil_count }}</span>
-                                        </div>
-                                    </div>
+                            <div class="container row">
+                                <div class="col-md-12">
+                                    <input class="btn btn-default" type="submit"
+                                    name="upload-picture" value="Upload Profile Picture">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <p class="">Failed</p>
-                                        <div class="col-md-6">
-                                            <span class="">Projects: {{ failed_proj_count }}</span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span class="">Milestones: {{ failed_mil_count }}</span>
-                                        </div>
-                                    </div>
+                        </form>
+                    {% else %}
+                        <div hidden id="showbutton">
+                            <form method="post" action="{% url 'tasks:home' %}" enctype="multipart/form-data">{% csrf_token %}
+                                <div class="container row">
+                                    {{ user_picture_form.picture }}
                                 </div>
-                            </div>
+                                <br>
+                                <div class="container row">
+                                    <input class="btn btn-default btn-sm" type="submit"
+                                   name="upload-picture" value="Upload">
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="panel panel-info">
-                            <div class="panel-body card">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="list-group">
-                                            {% if current_tasks %}
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <p class="h3">Upcoming MileStones</p>
+                    {% endif %}
+                      <hr>
+                    <br><br>
+                    <div class="widget">
+                      <div class="widget-header">
+                        <div class="widget-header">
+                            <h3 class="widget-caption"><span class="display-font">Your Pond</span></h3>
+                        </div>
+                      </div>
+                      <div class="widget-body bordered-top bordered-red">
+                        <div class="card">
+                            <div class="content">
+                                 <ul class="list-unstyled team-members">
+                                    {% if ponders %}
+                                     {% for ponder in ponders %}
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <div class="avatar">
+                                                     <img src="{{ ponder.profile_pics_url }}" alt="img" class="img-circle img-no-padding img-responsive">
                                                     </div>
                                                 </div>
-                                                 <div class="row">
-                                                    <ul class="list-group">
-                                                        {% for current_task in current_tasks %}
-                                                            <li id=row_curr_{{ current_task.id }} class="list-group-item">
-                                                                <a href="{% url 'social:milestone_view' current_task.slug %}">{{ current_task.blurb }}</a>
-                                                                <button onclick="sendCompletedMil({{ current_task.id }})" class="btn btn-success">
-                                                                    Completed
-                                                                </button>
-                                                            </li>
-                                                        {% endfor %}
-                                                    </ul>
+                                                 <div class="col-md-9">
+                                                    <a href="{% url 'tasks:profile_view' ponder.username %}">
+                                                        <span class="para-font">{{ ponder.first_name }} {{ ponder.last_name }}</span>
+                                                    </a>
                                                  </div>
-                                            {% else %}
-                                                    <p class="h3 default-font">No Upcoming MileStones</p>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        {% if current_projs %}
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p class="h3 default-font">Current Projects</p>
-                                                </div>
                                             </div>
-                                            <div class="row">
-                                                <ul class="list-group">
-                                                    {% for each_proj in current_projs %}
-                                                        <li id=proj_curr_{{ each_proj.id }} class="list-group-item">
+                                         </li>
+                                     {% endfor %}
+                                    {% else %}
+                                        <span class="para-font">Empty Pond</span>
+                                    {% endif %}
+                                 </ul>
+                            </div>
+                        </div>
+                      </div>
+                    </div><!-- End Friends activity -->
+                                        <!-- Friends activity -->
+                    <div class="widget">
+                      <div class="widget-header">
+                        <div class="widget-header">
+                            <h3 class="widget-caption"><span class="display-font">Goals</span></h3>
+                        </div>
+                      </div>
+                      <div class="widget-body bordered-top bordered-red">
+                        <div class="card">
+                            <div class="content">
+                                 <ul class="list-unstyled team-members">
+                                    {% if current_projs %}
+                                        {% for each_proj in current_projs %}
+                                            <li>
+                                                <div class="row">
+                                                     <div class="col-md-9">
+                                                        <span id=proj_curr_{{ each_proj.id }} class="list-group-item">
                                                             <a href="{% url 'social:project_view' each_proj.slug %}">
                                                                 {{ each_proj.blurb }}
                                                             </a>
-                                                            <button onclick="sendCompletedProj({{ each_proj.id }})" class="btn btn-success">
-                                                                Completed
-                                                            </button>
-                                                        </li>
-                                                    {% endfor %}
-                                                </ul>
-                                            </div>
+                                                                <button onclick="sendCompletedProj({{ each_proj.id }})" class="btn btn-success">
+                                                                    Completed
+                                                                </button>
+                                                        </span>
+                                                     </div>
+                                                </div>
+                                             </li>
+                                         {% endfor %}
                                         {% else %}
-                                            <p class="h3 default-font">No Upcoming Projects</p>
+                                            <span class="para-font">No Upcoming Goals</span>
                                         {% endif %}
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-2 col-md-offset-5">
-                                            <span class="flow-text"><button id="show-pond" class="btn btn-lg btn-default">View Pond</button></span>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="col-md-7 col-md-offset-2">
-                                    <div hidden id="pond-id" class="panel panel-default">
-                                        {% if ponders %}
-                                            <div class="panel-body card">
-                                                {% for ponder in ponders %}
-                                                    <div class="row">
-                                                         <div class="col-md-3">
-                                                             <img src="{{ ponder.profile_pics_url }}" alt="No Picture Uploaded" class="img-thumbnail">
-                                                         </div>
-                                                         <div class="col-md-9">
-                                                            <a href="{% url 'tasks:profile_view' ponder.username %}">
-                                                                <span class="flow-text">{{ ponder.first_name }} {{ ponder.last_name }}</span>
-                                                            </a>
-                                                         </div>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        {% else %}
-                                            <span>Empty Pond</span>
-                                        {% endif %}
-                                    </div>
-                                </div>
+                                 </ul>
                             </div>
                         </div>
-                    </div>
+                      </div>
+                    </div><!-- End Friends activity -->
+                  </div>
+                                  <!-- right  content-->
+                  <div class="profile-info col-md-8  animated fadeInUp">
+                    <div class="panel panel-white post panel-shadow">
+                      <div class="post-heading">
+                          <div class="pull-left">
+                              <p class="h3"><span class="default-font">Acomplished Goals: {{ complete_proj_count }}</span></p>
+                          </div>
+                      </div>
+                        <div class="post-heading panel-default-powder">
+                          <div class="pull-left">
+                              <p class="h3"><span class="default-font">Failed Goals: {{ failed_proj_count }}</span></p>
+                          </div>
+                      </div>
+                    </div><!-- first post-->
+                      <div class="panel panel-white post panel-shadow">
+                          <div class="post-heading">
+                              <div class="pull-left">
+                                  <p class="h3"><span class="default-font">Acomplished Milestones: {{ completed_mil_count }}</span></p>
+                              </div>
+                          </div>
+                            <div class="post-heading panel-default-powder">
+                              <div class="pull-left">
+                                  <p class="h3"><span class="default-font">Failed Milestones: {{ failed_mil_count }}</span></p>
+                              </div>
+                          </div>
+                      </div><!-- first post-->
+                    <!-- second post -->
+                        <span class="default-font">Upcoming Milestones</span>
+                        <br><br>
+                        <div class="panel panel-white post panel-shadow">
+                            {% if current_tasks %}
+                                {% for current_task in current_tasks %}
+                                    <span id=row_curr_{{ current_task.id }}>
+                                      <div class="post-heading">
+                                          <div class="pull-left meta">
+                                              <a class="post-user-name" href="{% url 'social:milestone_view' current_task.slug %}">{{ current_task.blurb }}</a>
+                                                <button onclick="sendCompletedMil({{ current_task.id }})" class="btn btn-link">
+                                                    <span class="para-font">Completed</span>
+                                                </button>
+                                          </div>
+                                      </div>
+                                    </span>
+                                {% endfor %}
+                            {% else %}
+                                <div class="post-heading">
+                                      <div class="pull-left meta">
+                                          <span class="para-font">No Upcoming Milestones</span>
+                                      </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                  </div><!-- end third post -->
                 </div>
             </div>
         </div>
@@ -213,6 +241,10 @@
                         $("#error-message").text(xhr).show();
                     }
                 })
+            }
+            function toggle_upload(){
+                console.log("i am being hit");
+                $("#showbutton").toggle(100);
             }
         </script>
     {% endblock %}

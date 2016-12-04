@@ -6,141 +6,130 @@
   </head>
   <body>
     {% block body %}
-        <div class="container">
-            {% if not is_friend %}
+        <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
                 <div class="row">
-                    <div class="col-md-3 col-md-offset-9">
-                        <button id="add-friend-button" name="{{ user.id }}" class="btn-link">Add to Pond</button>
+                    <div class="col-md-6">
+                        <span class="h1 status-font link-color">{{ status_of_user }}</span>
                     </div>
+                    {% if not is_friend %}
+                        <div class="col-md-3 col-md-offset-9">
+                            <button id="add-friend-button" name="{{ user.id }}" class="btn-link">
+                                <span class="para-font">Add to Pond</span>
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                        <img src ='{{  has_prof_pic.profile_pics.url }}' alt="No Profile Picture" style="width:40%;height:40%;" class="img-thumbnail img-circle"/>
-                                        Status: <span class="h3 default-font header-color">{{ status_of_user }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <br>
-                            <div class="row">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <p class="">Completed</p>
-                                        <div class="col-md-6">
-                                            <span class="">Projects: {{ complete_proj_count }}</span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span class="">Milestones: {{ completed_mil_count }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <p class="">Failed</p>
-                                        <div class="col-md-6">
-                                            <span class="">Projects: {{ failed_proj_count }}</span>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <span class="">Milestones: {{ failed_mil_count }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="row">
+                <!-- left content-->
+                  <div class="profile-nav col-md-4">
+                    <div class="panel">
+                      <div class="user-heading round">
+                          <a href="{% url 'tasks:profile_view' user_name %}">
+                              <img src ='{{  has_prof_pic.profile_pics.url }}' alt="">
+                          </a>
+                            <br><br>
+                          <p><h4 class="display-font">{{ user.user.first_name }} {{ user.user.last_name }}</h4></p>
+                      </div>
                     </div>
-                    <div class="row">
-                        <div class="panel panel-default">
-                            <div class="panel-body card">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="list-group">
-                                            {% if current_tasks %}
+                      <hr>
+                      <br>
+                    <div class="widget">
+                      <div class="widget-header">
+                        <div class="widget-header">
+                            <h3 class="widget-caption"><span class="display-font">Goals</span></h3>
+                        </div>
+                      </div>
+                      <div class="widget-body bordered-top bordered-red">
+                        <div class="card">
+                            <div class="content">
+                                 <ul class="list-unstyled team-members">
+                                    {% if current_projs %}
+                                        {% for each_proj in current_projs %}
+                                            <li>
                                                 <div class="row">
-                                                    <div class="col-md-12">
-                                                        <p class="h3">Upcoming MileStones</p>
+                                                    <div class="col-xs-3">
+                                                        <div class="avatar">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                 <div class="row">
-                                                    <ul class="list-group">
-                                                        {% for current_task in current_tasks %}
-                                                            <li id=row_curr_{{ current_task.id }} class="list-group-item">
-                                                                <a href="{% url 'social:milestone_view' current_task.slug %}">{{ current_task.blurb }}</a>
-                                                            </li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                 </div>
-                                            {% else %}
-                                                    <p class="h3 default-font">No Upcoming MileStones</p>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        {% if current_projs %}
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <p class="h3 default-font">Current Projects</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <ul class="list-group">
-                                                    {% for each_proj in current_projs %}
-                                                        <li id=proj_curr_{{ each_proj.id }} class="list-group-item">
+                                                     <div class="col-md-9">
+                                                        <span id=proj_curr_{{ each_proj.id }} class="list-group-item">
                                                             <a href="{% url 'social:project_view' each_proj.slug %}">
                                                                 {{ each_proj.blurb }}
                                                             </a>
-                                                        </li>
-                                                    {% endfor %}
-                                                </ul>
-                                            </div>
+                                                        </span>
+                                                     </div>
+                                                </div>
+                                             </li>
+                                         {% endfor %}
                                         {% else %}
-                                            <p class="h3 default-font">No Upcoming Projects</p>
+                                            <span class="para-font">No Upcoming Goals</span>
                                         {% endif %}
-
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-2 col-md-offset-5">
-                                            <span class="flow-text"><button id="show-pond" class="btn btn-lg btn-default">View Pond</button></span>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="col-md-7 col-md-offset-2">
-                                    <div hidden id="pond-id" class="panel panel-default">
-                                        {% if ponders %}
-                                            <div class="panel-body">
-                                                {% for ponder in ponders %}
-                                                    <div class="row">
-                                                         <div class="col-md-3">
-                                                             <img src="{{ ponder.profile_pics_url }}" alt="No Picture Uploaded" class="img-thumbnail">
-                                                         </div>
-                                                         <div class="col-md-9">
-                                                            <a href="{% url 'tasks:profile_view' ponder.username %}">
-                                                                <span class="flow-text">{{ ponder.first_name }} {{ ponder.last_name }}</span>
-                                                            </a>
-                                                         </div>
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                        {% else %}
-                                            <span>Empty Pond</span>
-                                        {% endif %}
-                                    </div>
-                                </div>
+                                 </ul>
                             </div>
                         </div>
-                    </div>
+                      </div>
+                    </div><!-- End Friends activity -->
+                  </div>
+                                  <!-- right  content-->
+                  <div class="profile-info col-md-8  animated fadeInUp">
+                    <div class="panel panel-white post panel-shadow">
+                      <div class="post-heading">
+                          <div class="pull-left">
+                              <p class="h3"><span class="default-font">Acomplished Goals: {{ complete_proj_count }}</span></p>
+                          </div>
+                      </div>
+                        <div class="post-heading panel-default-powder">
+                          <div class="pull-left">
+                              <p class="h3"><span class="default-font">Failed Goals: {{ failed_proj_count }}</span></p>
+                          </div>
+                      </div>
+                    </div><!-- first post-->
+                      <div class="panel panel-white post panel-shadow">
+                          <div class="post-heading">
+                              <div class="pull-left">
+                                  <p class="h3"><span class="default-font">Acomplished Milestones: {{ completed_mil_count }}</span></p>
+                              </div>
+                          </div>
+                            <div class="post-heading panel-default-powder">
+                              <div class="pull-left">
+                                  <p class="h3"><span class="default-font">Failed Milestones: {{ failed_mil_count }}</span></p>
+                              </div>
+                          </div>
+                      </div><!-- first post-->
+                    <!-- second post -->
+                        <span class="default-font">Upcoming Milestones</span>
+                        <br><br>
+                        <div class="panel panel-white post panel-shadow">
+                            {% if current_tasks %}
+                                {% for current_task in current_tasks %}
+                                    <span id=row_curr_{{ current_task.id }}>
+                                      <div class="post-heading">
+                                          <div class="pull-left meta">
+                                              <a class="post-user-name" href="{% url 'social:milestone_view' current_task.slug %}">{{ current_task.blurb }}</a>
+                                                <button onclick="sendCompletedMil({{ current_task.id }})" class="btn btn-link">
+                                                    <span class="para-font">Completed</span>
+                                                </button>
+                                          </div>
+                                      </div>
+                                    </span>
+                                {% endfor %}
+                            {% else %}
+                                <div class="post-heading">
+                                      <div class="pull-left meta">
+                                          <span class="para-font">No Upcoming Milestones</span>
+                                      </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                  </div><!-- end third post -->
                 </div>
             </div>
         </div>
         <script>
+            $("#show-pond").click(function(){
+                $("#pond-id").toggle(1000);
+            });
             $('#add-friend-button').click(function(){
                 var id = $(this).attr("name");
                 console.log("Friends Adding Request sent ", + id);
@@ -164,7 +153,6 @@
                     }
                 })
             }
-
         </script>
     {% endblock %}
   </body>

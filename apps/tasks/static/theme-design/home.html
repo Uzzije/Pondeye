@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/favicon.png">
+    <title>BookPost</title>
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <link href="font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/timeline.css" rel="stylesheet">
+    <script src="assets/js/jquery.1.11.1.min.js"></script>
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="animated fadeIn">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-principal">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">
+            <b>BookPost</b>
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+			<div class="col-md-5 col-sm-4">         
+			 <form class="navbar-form">
+			    <div class="form-group" style="display:inline;">
+			      <div class="input-group" style="display:table;">
+			        <input class="form-control" name="search" placeholder="Search..." autocomplete="off" type="text">
+			        <span class="input-group-addon" style="width:1%;">
+			          <span class="glyphicon glyphicon-search"></span>
+			        </span>
+			      </div>
+			    </div>
+			  </form>
+			</div>        
+	      <ul class="nav navbar-nav navbar-right">
+	          <li>
+	            <a href="profile.html">
+	              Jonathan Smith
+	              <img src="img/Friends/guy-3.jpg" class="img-nav">
+	            </a>
+	          </li>
+	          <li class="active"><a href="home.html"><i class="fa fa-bars"></i>&nbsp;Home</a></li>
+	          <li><a href="messages.html"><i class="fa fa-comments"></i></a></li>
+	          <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  Pages 
+	                <span class="caret"></span>
+	              </a>
+	              <ul class="dropdown-menu">
+	                <li><a href="cover_profile.html">Cover profile</a></li>
+	                <li><a href="profile_wall.html">Profile wall</a></li>
+	                <li><a href="user_detail.html">User detail</a></li>
+	                <li><a href="list_users.html">List users</a></li>
+	                <li><a href="file_manager.html">File manager</a></li>
+	                <li><a href="profile_settings.html">Profile settings</a></li>
+	                <li><a href="photos.html">Photos</a></li>
+	                <li><a href="friends.html">Friends</a></li>
+	                <li><a href="About.html">About</a></li>
+	                <li><a href="edit_profile.html">Edit profile</a></li>
+	                <li><a href="notifications.html">Notifications</a></li>
+	                <li><a href="blank-cover.html">Blank cover</a></li>
+	                <li><a href="registration_email.html">Registration email</a></li>
+	                <li><a href="error404.html">Error 404</a></li>
+	                <li><a href="error500.html">Error 500</a></li>
+	                <li><a href="recover_password.html">Recover password</a></li>
+	              </ul>
+	          </li>
+	          <li><a href="#" class="nav-controller"><i class="fa fa-user"></i></a></li>        
+	        </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Timeline content -->
+    <div class="container" style="margin-top:50px;">
+    	<div class="col-md-10 no-paddin-xs">
+			<div class="row">
+			<!-- left content-->
+			  <div class="profile-nav col-md-4">
+				<div class="panel">
+				  <div class="user-heading round">
+				      <a href="#">
+				          <img src="img/Friends/guy-3.jpg" alt="">
+				      </a>
+				      <h1>Jonathan Smith</h1>
+				  </div>
+				</div>
+				<!-- Friends activity -->
+				<div class="widget">
+				  <div class="widget-header">
+				    <h3 class="widget-caption">Friends activity</h3>
+				  </div>
+				  <div class="widget-body bordered-top bordered-red">
+				  	<div class="card">
+					  	<div class="content">
+					  		 <ul class="list-unstyled team-members">
+				                <li>
+				                    <div class="row">
+				                        <div class="col-xs-3">
+				                            <div class="avatar">
+				                            <img class="notifications" src="img/Friends/guy-2.jpg" alt="img" lass="img-circle img-no-padding img-responsive">
+				                            </div>
+				                        </div>
+				                        <div class="col-xs-9">
+											<b><a href="#">Carlos marthur</a></b> reviewed a 
+											<b><a href="#">publication</a></b>. 
+											<span class="timeago" >5 days ago</span>
+				                        </div>
+				                    </div>
+				                </li>
+				                <li>
+				                    <div class="row">
+				                        <div class="col-xs-3">
+				                            <div class="avatar">
+				                                <img src="img/Friends/woman-2.jpg" alt="img" class="img-circle img-no-padding img-responsive">
+				                            </div>
+				                        </div>
+				                        <div class="col-xs-9">
+											<b><a href="#">Hillary Markston</a></b> shared a 
+											<b><a href="#">publication</a></b>. 
+											<span class="timeago" >5 min ago</span>
+				                        </div>
+				                    </div>
+				                </li>
+				                <li>
+				                    <div class="row">
+				                        <div class="col-xs-3">
+				                            <div class="avatar">
+				                                <img src="img/Friends/woman-3.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+				                            </div>
+				                        </div>
+				                        <div class="col-xs-9">
+											<b><a href="#">Leidy marshel</a></b> shared a 
+											<b><a href="#">publication</a></b>. 
+											<span class="timeago" >5 min ago</span>
+				                        </div>
+				                    </div>
+				                </li>
+				                <li>
+				                    <div class="row">
+				                        <div class="col-xs-3">
+				                            <div class="avatar">
+				                                <img src="img/Friends/woman-4.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+				                            </div>
+				                        </div>
+				                        <div class="col-xs-9">
+											<b><a href="#">Presilla bo</a></b> shared a 
+											<b><a href="#">publication</a></b>. 
+											<span class="timeago" >5 min ago</span>
+				                        </div>
+				                    </div>
+				                </li>
+				                <li>
+				                    <div class="row">
+				                        <div class="col-xs-3">
+				                            <div class="avatar">
+				                                <img src="img/Friends/woman-4.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+				                            </div>
+				                        </div>
+				                        <div class="col-xs-9">
+											<b><a href="#">Martha markguy</a></b> shared a 
+											<b><a href="#">publication</a></b>. 
+											<span class="timeago" >5 min ago</span>
+				                        </div>
+				                    </div>
+				                </li>
+				            </ul>					
+					  	</div>
+				  	</div>
+				  </div>
+    			</div><!-- End Friends activity -->
+
+				<!-- People You May Know -->
+				<!-- People You May Know -->
+				<div class="widget">
+				  <div class="widget-header">
+				    <h3 class="widget-caption">People You May Know</h3>
+				  </div>
+				  <div class="widget-body bordered-top bordered-red">
+				    <div class="card">
+				        <div class="content">
+				            <ul class="list-unstyled team-members">
+				                <li>
+				                    <div class="row">
+				                        <div class="col-xs-3">
+				                            <div class="avatar">
+				                                <img src="img/Friends/guy-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+				                            </div>
+				                        </div>
+				                        <div class="col-xs-6">
+				                           Carlos marthur
+				                        </div>
+				            
+				                        <div class="col-xs-3 text-right">
+				                            <btn class="btn btn-sm btn-info btn-icon"><i class="fa fa-user-plus"></i></btn>
+				                        </div>
+				                    </div>
+				                </li>
+				                <li>
+				                    <div class="row">
+				                        <div class="col-xs-3">
+				                            <div class="avatar">
+				                                <img src="img/Friends/woman-1.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+				                            </div>
+				                        </div>
+				                        <div class="col-xs-6">
+				                            Maria gustami
+				                        </div>
+				            
+				                        <div class="col-xs-3 text-right">
+				                            <btn class="btn btn-sm btn-info btn-icon"><i class="fa fa-user-plus"></i></btn>
+				                        </div>
+				                    </div>
+				                </li>
+				                <li>
+				                    <div class="row">
+				                        <div class="col-xs-3">
+				                            <div class="avatar">
+				                                <img src="img/Friends/woman-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+				                            </div>
+				                        </div>
+				                        <div class="col-xs-6">
+				                            Angellina mcblown
+				                        </div>
+				            
+				                        <div class="col-xs-3 text-right">
+				                            <btn class="btn btn-sm btn-info  btn-icon"><i class="fa fa-user-plus"></i></btn>
+				                        </div>
+				                    </div>
+				                </li>
+				            </ul>
+				        </div>
+				    </div>					
+				  </div>
+				</div><!-- End people yout may know -->											 			      
+			  </div><!-- end left content-->
+			  <!-- right  content-->
+			  <div class="profile-info col-md-8  animated fadeInUp">
+				<div class="panel">
+				  <form>
+				      <textarea placeholder="Whats in your mind today?" rows="2" class="form-control input-lg p-text-area"></textarea>
+				  </form>
+				  <div class="panel-footer">
+				      <button class="btn btn-danger pull-right">Post</button>
+				      <ul class="nav nav-pills">
+				          <li>
+				              <a href="#"><i class="fa fa-map-marker"></i></a>
+				          </li>
+				          <li>
+				              <a href="#"><i class="fa fa-camera"></i></a>
+				          </li>
+				          <li>
+				              <a href="#"><i class=" fa fa-film"></i></a>
+				          </li>
+				          <li>
+				              <a href="#"><i class="fa fa-microphone"></i></a>
+				          </li>
+				      </ul>
+				  </div>
+				</div>
+		        <!-- first post-->
+				<div class="panel panel-white post panel-shadow">
+				  <div class="post-heading">
+				      <div class="pull-left image">
+				          <img src="img/Friends/guy-2.jpg" class="avatar" alt="user profile image">
+				      </div>
+				      <div class="pull-left meta">
+				          <div class="title h5">
+				              <a href="#" class="post-user-name">Omarion welkdic</a>
+				              uploaded a photo.
+				          </div>
+				          <h6 class="text-muted time">5 seconds ago</h6>
+				      </div>
+				  </div>
+				  <div class="post-image">
+				      <img src="img/Post/game.jpg" class="image show-in-modal" alt="image post">
+				  </div>
+				  <div class="post-description">
+				      <p>This is a short description</p>
+				      <div class="stats">
+				          <a href="#" class="stat-item">
+				              <i class="fa fa-thumbs-up icon"></i>228
+				          </a>
+				          <a href="#" class="stat-item">
+				              <i class="fa fa-retweet icon"></i>128
+				          </a>
+				          <a href="#" class="stat-item">
+				              <i class="fa fa-comments-o icon"></i>3
+				          </a>
+				      </div>
+				  </div>
+				  <div class="post-footer">
+				      <input class="form-control add-comment-input" placeholder="Add a comment..." type="text">
+				      <ul class="comments-list">
+				          <li class="comment">
+				              <a class="pull-left" href="#">
+				                  <img class="avatar" src="img/Friends/guy-3.jpg" alt="avatar">
+				              </a>
+				              <div class="comment-body">
+				                  <div class="comment-heading">
+				                      <h4 class="comment-user-name"><a href="#">Antony andrew lobghi</a></h4>
+				                      <h5 class="time">7 minutes ago</h5>
+				                  </div>
+				                  <p>This is a comment bla bla bla</p>
+				              </div>
+				          </li>
+				          <li class="comment">
+				              <a class="pull-left" href="#">
+				                  <img class="avatar" src="img/Friends/guy-2.jpg" alt="avatar">
+				              </a>
+				              <div class="comment-body">
+				                  <div class="comment-heading">
+				                      <h4 class="comment-user-name"><a href="#">Jeferh Smith</a></h4>
+				                      <h5 class="time">3 minutes ago</h5>
+				                  </div>
+				                  <p>This is another comment bla bla bla</p>
+				              </div>
+				          </li>
+				          <li class="comment">
+				              <a class="pull-left" href="#">
+				                  <img class="avatar" src="img/Friends/woman-2.jpg" alt="avatar">
+				              </a>
+				              <div class="comment-body">
+				                  <div class="comment-heading">
+				                      <h4 class="comment-user-name"><a href="#">Maria fernanda coronel</a></h4>
+				                      <h5 class="time">10 seconds ago</h5>
+				                  </div>
+				                  <p>Wow! so cool my friend</p>
+				              </div>
+				          </li>
+				      </ul>
+				  </div>
+				</div><!-- first post-->
+		        <!-- second post -->
+				<div class="panel panel-white post panel-shadow">
+				  <div class="post-heading">
+				      <div class="pull-left image">
+				          <img src="img/Friends/guy-3.jpg" class="avatar" alt="user profile image">
+				      </div>
+				      <div class="pull-left meta">
+				          <div class="title h5">
+				              <a href="#" class="post-user-name">Jonathan Smith</a>
+				              made a post.
+				          </div>
+				          <h6 class="text-muted time">1 minute ago</h6>
+				      </div>
+				  </div> 
+				  <div class="post-description"> 
+				      <p>Bootdey is a gallery of free snippets resources templates and utilities 
+				      for bootstrap css hmtl js framework. Codes for developers and web designers</p>
+				      <div class="stats">
+				          <a href="#" class="stat-item">
+				              <i class="fa fa-thumbs-up icon"></i>2
+				          </a>
+				          <a href="#" class="stat-item">
+				              <i class="fa fa-retweet icon"></i>12
+				          </a>
+				          <a href="#" class="stat-item">
+				              <i class="fa fa-comments-o icon"></i>3
+				          </a>
+				      </div>
+				  </div>
+				  <div class="post-footer">
+				      <input class="form-control add-comment-input" placeholder="Add a comment..." type="text">
+				      <ul class="comments-list">
+				          <li class="comment">
+				              <a class="pull-left" href="#">
+				                  <img class="avatar" src="img/Friends/guy-8.jpg" alt="avatar">
+				              </a>
+				              <div class="comment-body">
+				                  <div class="comment-heading">
+				                      <h4 class="comment-user-name"><a href="#">Gavhin dahg martb</a></h4>
+				                      <h5 class="time">5 minutes ago</h5>
+				                  </div>
+				                  <p>This is a first comment</p>
+				              </div>
+				              <ul class="comments-list">
+				                  <li class="comment">
+				                      <a class="pull-left" href="#">
+				                          <img class="avatar" src="img/Friends/woman-5.jpg" alt="avatar">
+				                      </a>
+				                      <div class="comment-body">
+				                          <div class="comment-heading">
+				                              <h4 class="comment-user-name"><a href="#">Ryanah Haywofd</a></h4>
+				                              <h5 class="time">3 minutes ago</h5>
+				                          </div>
+				                          <p>Relax my friend</p>
+				                      </div>
+				                  </li> 
+				                  <li class="comment">
+				                      <a class="pull-left" href="#">
+				                          <img class="avatar" src="img/Friends/woman-7.jpg" alt="avatar">
+				                      </a>
+				                      <div class="comment-body">
+				                          <div class="comment-heading">
+				                              <h4 class="comment-user-name"><a href="#">Maria dh heart</a></h4>
+				                              <h5 class="time">3 minutes ago</h5>
+				                          </div>
+				                          <p>Ok, cool.</p>
+				                      </div>
+				                  </li> 
+				              </ul>
+				          </li>
+				      </ul>
+				  </div>
+				</div><!-- end second post -->
+			        <!-- third post -->
+					<div class="panel panel-white post panel-shadow">
+					  <div class="post-heading">
+					      <div class="pull-left image">
+					          <img src="img/Friends/guy-3.jpg" class="avatar" alt="user profile image">
+					      </div>
+					      <div class="pull-left meta">
+					          <div class="title h5">
+					              <a href="#" class="post-user-name">Jonathan Smith</a>
+					              made a post.
+					          </div>
+					          <h6 class="text-muted time">1 minute ago</h6>
+					      </div>
+					  </div> 
+					  <div class="post-image">
+					      <img src="img/Post/young-couple-in-love.jpg" class="image show-in-modal" alt="image post">
+					  </div>					      
+					  <div class="post-description"> 
+					      <p>This is my new awesome photo, ok relax with my style, so cray</p>
+					      <div class="stats">
+					          <a href="#" class="stat-item">
+					              <i class="fa fa-thumbs-up icon"></i>2
+					          </a>
+					          <a href="#" class="stat-item">
+					              <i class="fa fa-retweet icon"></i>12
+					          </a>
+					          <a href="#" class="stat-item">
+					              <i class="fa fa-comments-o icon"></i>3
+					          </a>
+					      </div>
+					  </div>
+					  <div class="post-footer">
+					      <input class="form-control add-comment-input" placeholder="Add a comment..." type="text">
+					      <ul class="comments-list">
+					          <li class="comment">
+					              <a class="pull-left" href="#">
+					                  <img class="avatar" src="img/Friends/guy-8.jpg" alt="avatar">
+					              </a>
+					              <div class="comment-body">
+					                  <div class="comment-heading">
+					                      <h4 class="comment-user-name"><a href="#">Gavhin dahg martb</a></h4>
+					                      <h5 class="time">5 minutes ago</h5>
+					                  </div>
+					                  <p>This is a first comment</p>
+					              </div>
+					              <ul class="comments-list">
+					                  <li class="comment">
+					                      <a class="pull-left" href="#">
+					                          <img class="avatar" src="img/Friends/woman-5.jpg" alt="avatar">
+					                      </a>
+					                      <div class="comment-body">
+					                          <div class="comment-heading">
+					                              <h4 class="comment-user-name"><a href="#">Ryanah Haywofd</a></h4>
+					                              <h5 class="time">3 minutes ago</h5>
+					                          </div>
+					                          <p>Relax my friend</p>
+					                      </div>
+					                  </li> 
+					                  <li class="comment">
+					                      <a class="pull-left" href="#">
+					                          <img class="avatar" src="img/Friends/woman-7.jpg" alt="avatar">
+					                      </a>
+					                      <div class="comment-body">
+					                          <div class="comment-heading">
+					                              <h4 class="comment-user-name"><a href="#">Maria dh heart</a></h4>
+					                              <h5 class="time">3 minutes ago</h5>
+					                          </div>
+					                          <p>Ok, cool.</p>
+					                      </div>
+					                  </li> 
+					              </ul>
+					          </li>
+					      </ul>
+					  </div>
+					</div><!-- end third post -->
+					<div class="panel panel-white post-load-more panel-shadow text-center">
+						<button class="btn btn-danger">
+							<i class="fa fa-refresh"></i>Load More...
+						</button>
+					</div>			      
+			  </div><!--end right  content-->
+			</div>
+    	</div>
+    </div><!-- end timeline content-->
+
+    <!-- Online users sidebar content-->
+    <div class="chat-sidebar focus">
+      <div class="list-group text-left">
+        <p class="text-center visible-xs"><a href="#" class="hide-chat">Hide</a></p> 
+        <p class="text-center chat-title">Online users</p>  
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-check-circle connected-status"></i>
+          <img src="img/Friends/guy-2.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Jeferh Smith</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-times-circle absent-status"></i>
+          <img src="img/Friends/woman-1.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Dapibus acatar</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-check-circle connected-status"></i>
+          <img src="img/Friends/guy-3.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Antony andrew lobghi</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-check-circle connected-status"></i>
+          <img src="img/Friends/woman-2.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Maria fernanda coronel</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-check-circle connected-status"></i>
+          <img src="img/Friends/guy-4.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Markton contz</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-times-circle absent-status"></i>
+          <img src="img/Friends/woman-3.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Martha creaw</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-times-circle absent-status"></i>
+          <img src="img/Friends/woman-8.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Yira Cartmen</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-check-circle connected-status"></i>
+          <img src="img/Friends/woman-4.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Jhoanath matew</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-check-circle connected-status"></i>
+          <img src="img/Friends/woman-5.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Ryanah Haywofd</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-check-circle connected-status"></i>
+          <img src="img/Friends/woman-9.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Linda palma</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-check-circle connected-status"></i>
+          <img src="img/Friends/woman-10.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Andrea ramos</span>
+        </a>
+        <a href="messages.html" class="list-group-item">
+          <i class="fa fa-check-circle connected-status"></i>
+          <img src="img/Friends/child-1.jpg" class="img-chat img-thumbnail">
+          <span class="chat-user-name">Dora ty bluekl</span>
+        </a>        
+      </div>
+    </div><!-- Online users sidebar content-->
+    
+    <footer class="welcome-footer">
+      <div class="container">
+        <p>
+          <div class="footer-links">
+            <a href="#">Terms of Use</a> | 
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Developers</a> | 
+            <a href="#">Contact</a> | 
+            <a href="#">About</a>
+          </div>   
+          Copyright &copy; Company - All rights reserved       
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
