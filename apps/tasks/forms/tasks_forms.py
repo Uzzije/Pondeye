@@ -4,7 +4,7 @@ from form_choices import LIST_OF_MINUTES
 from functools import partial
 from datetimewidget.widgets import DateTimeWidget
 from form_module import get_current_datetime
-
+from django.contrib.auth import authenticate
 
 class RegisterForm(forms.Form):
 
@@ -56,21 +56,22 @@ class LoginForm(forms.Form):
     my_default_errors = {
         'invalid': 'Make sure username and password are correct'
     }
-    name = forms.CharField(label='User Name', max_length=100, required=True, widget=forms.TextInput(attrs={'class':"input pass", 'placeholder':'Username'}))
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':"input pass", 'placeholder':'Password'}), error_messages=my_default_errors)
+    name = forms.CharField(error_messages=my_default_errors, required=True, label='User Name', max_length=100, widget=forms.TextInput(attrs={'class':"input pass", 'placeholder':'Username'}))
+    password = forms.CharField(required=True, label='Password', widget=forms.PasswordInput(attrs={'class':"input pass", 'placeholder':'Password'}), error_messages=my_default_errors)
 
-    def clean_name(self):
+    def clean(self):
         cleaned_data = super(LoginForm, self).clean()
-        name = self.cleaned_data['name']
-        try:
-            user = User.objects.get(username=name)
-        except User.DoesNotExist:
-            user = None
+        name = self.cleaned_data.get('name')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=name, password=password)
         if user is None:
-            msg = " Oops Username does not exist"
+            msg = " Oops username and password combination is invalid"
             self.add_error('name', msg)
+            raise forms.ValidationError(
+                    "Oops username and password combination is invalid"
+                )
         else:
-            return user
+            return cleaned_data
 
 
 class AddTaskForm(forms.Form):
@@ -106,7 +107,7 @@ class AddTaskForm(forms.Form):
 
 
 class PictureUploadForm(forms.Form):
-    picture = forms.ImageField(label="Upload Picture", required=True)
+    picture = forms.ImageField(label="Upload Visual", required=True)
 
 
 class AddProjectForm(forms.Form):

@@ -7,30 +7,32 @@
   <body>
     {% block body %}
         <div class="container">
-            <div class="page-header">
-                <p class="h1 display-font">Pond Invites.</p>
-            </div>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            {% if friend_request %}
-                               {% for each_req in friend_request %}
-                                   <div class="row">
-                                        <div class="col-md-4">
-                                            <span class="para-font">{{ each_req.message }}</span>
-                                        </div>
-                                       <div class="col-md-2">
-                                           <button id="accept-request-button" name="{{ each_req.pk }}" class="btn btn-link">Accept Invite</button>
+            <div class="col-md-10 no-paddin-xs">
+                <div class="page-header">
+                    <p class="h1 display-font">Pond Invites.</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                {% if friend_request %}
+                                   {% for each_req in friend_request %}
+                                       <div class="row">
+                                            <div class="col-md-4">
+                                                <span class="para-font">{{ each_req.message }}</span>
+                                            </div>
+                                           <div class="col-md-2">
+                                               <button id="accept-request-button" name="{{ each_req.pk }}" class="btn btn-link">Accept Invite</button>
+                                           </div>
+                                           <div class="col-md-2">
+                                               <button id="deny-request-button" name="{{ each_req.pk }}" class="btn btn-link">Deny Invite</button>
+                                           </div>
                                        </div>
-                                       <div class="col-md-2">
-                                           <button id="deny-request-button" name="{{ each_req.pk }}" class="btn btn-link">Deny Invite</button>
-                                       </div>
-                                   </div>
-                               {% endfor %}
-                            {% else %}
-                               <p class="flow-text">No Pond Requests</p>
-                            {% endif %}
+                                   {% endfor %}
+                                {% else %}
+                                   <p class="para-font">No Pond Requests</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>

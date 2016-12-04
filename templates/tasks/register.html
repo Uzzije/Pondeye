@@ -79,6 +79,17 @@
                     <p>Pondeye is a a social journaling platform for visually sharing your progress on your personal goals and projects</p>
                 </div>
                 <div class="col-md-6">
+                    {% if messages %}
+                        {% for message in messages %}
+                          <div
+                                  {% if message.tags == "success" %}
+                                        class="message alert alert-success"
+                                  {% else %}
+                                        class="message alert alert-warning"{% endif %} role="alert">
+                                  <span class="para-font link-color">{{ message|safe }}</span>
+                          </div>
+                        {% endfor %}
+                    {% endif %}
                     <form method="post" action="{% url 'tasks:register' %}">{% csrf_token %}
                         <div class="panel panel-default">
                             <div class="panel-body card">
@@ -157,6 +168,14 @@
 
     <!-- Theme JavaScript -->
     <script src="{% static 'startbootstrap-creatives/js/creative.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+
+            setTimeout(function(){
+                $('.message').fadeOut('slow');
+            }, 4000);
+        });
+    </script>
 
 </body>
 

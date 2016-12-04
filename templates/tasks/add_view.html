@@ -93,9 +93,9 @@
 
                     <div class="row" hidden id="pick_add_proj_id">
                         <hr>
-                        <div class="col-md-9">
+                        <div class="col-md-10">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-10">
                                     <h4 class="display-font link-color"> What's the goal of this project?</h4>
                                     <br>
                                     <div class="col-md-6 para-font">
@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="col-md-6 para-font">
                                         <input type="radio" id="ls_build" name="type_of_project" value="learn something"/>
-                                         <label for="ls_build">Build/Acompolish </label>
+                                         <label for="ls_build">Build/Accomplish Something</label>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                                             <div class="post-body">
                                                 {% for tag in tag_names %}
                                                     <div class="col-md-6">
-                                                        <input class="para-font" type="checkbox" id="id{{ tag }}" name="tags[]" value="{{ tag }}">
+                                                        <input class="para-font" type="checkbox" id="id{{ tag }}" name="tags" value="{{ tag }}">
                                                         <label class="para-font" for="id{{ tag }}">{{ tag }}&nbsp;</label>
                                                     </div>
                                                 {% endfor %}
@@ -146,11 +146,8 @@
                                 </div>
                                 <br>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <button type="submit" id="" name="proj_create" class="btn btn-default content-float">Start Project</button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button type="submit" id="" name="proj_save" class="btn btn-default content-float">Save Project</button>
                                     </div>
                                 </div>
                             </div>

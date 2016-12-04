@@ -6,20 +6,31 @@
   </head>
   <body>
     {% block body %}
-        <div class="container">
-            {% if let_down_results %}
-            {% for letdown in let_down_results %}
-                 <div class="col-md-8">
-                    <a href="{% url 'social:milestone_view' letdown.slug %}">
-                        <span class="flow-text">
-                            You let down {{ letdown.count }} persons with milestone {{ letdown.name_of_burb }}
-                        </span>
-                    </a>
-                 </div>
-            {% endfor %}
-            {% else %}
-                <p class="flow-text">Yey! You have no let downs!..yet</p>
-            {% endif %}
+         <div class="container">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="col-md-8">
+                    <div class="page-header">
+                        <span class="h1 display-font">People interested in your goals</span>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {% if let_down_results %}
+                            {% for letdown in let_down_results %}
+                                 <div class="col-md-8">
+                                    <a href="{% url 'social:milestone_view' letdown.slug %}">
+                                        <span class="para-font">
+                                            You let down {{ letdown.count }} persons with milestone {{ letdown.name_of_burb }}
+                                        </span>
+                                    </a>
+                                 </div>
+                            {% endfor %}
+                            {% else %}
+                                <p class="para-font">Yey! You have no let downs!..yet</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     {% endblock %}
 

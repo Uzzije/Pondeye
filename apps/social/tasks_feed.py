@@ -61,7 +61,7 @@ class PondFeed:
                       (self.tasks.name_of_milestone, self.tasks.project.blurb)
             return message
         elif self.type_of_feed is global_variables.PICTURE_SET:
-            message = "A entered a journal entry for this milestone: %s." % self.tasks.milestone.blurb
+            message = "I entered a journal entry for this milestone: %s." % self.tasks.milestone.blurb
             return message
         elif self.type_of_feed is global_variables.NEW_PROJECT:
             message = "Hey, I am starting a new project. Project Name: %s" % self.tasks.blurb

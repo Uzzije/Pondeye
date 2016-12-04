@@ -10,10 +10,10 @@ from datetime import timedelta
 from ..social.modules import get_journal_message, \
     get_notifications, get_pond, resize_image
 from modules import get_user_projects, \
-    convert_html_to_datetime, time_has_past,\
-    get_expired_tasks, get_todays_milestones, \
+    time_has_past,\
+    get_todays_milestones, \
     confirm_expired_milestone_and_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
-    get_failed_proj_count, get_recent_projects, get_status
+    get_failed_proj_count, get_recent_projects, get_status, display_error
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
@@ -23,10 +23,7 @@ from friendship.models import Friend
 import json
 from django.contrib import messages
 from braces.views import LoginRequiredMixin
-import pytz
 from global_variables_tasks import TAG_NAMES_LISTS
-from django.utils.timezone import is_aware
-from tzlocal import get_localzone
 
 
 class RegisterView(View):
@@ -54,8 +51,7 @@ class RegisterView(View):
             self.request.session['first_name'] = tickedge_user.user.first_name
             return HttpResponseRedirect(reverse('tasks:home'))
         else:
-            print "error", form.errors
-            messages.warning(request, form.errors)
+            display_error(form, request)
             return render(request, 'tasks/register.html', {'form': form})
 
 
@@ -195,11 +191,11 @@ class LoginView(FormView):
         try:
             url_with_next = self.request.POST.get('next', "")
             if url_with_next == "":
-                return reverse('tasks:home')
+                return reverse('tasks:todo_feed')
             return url_with_next
         except:
             pass
-        return reverse('tasks:home')
+        return reverse('social:todo_feed')
 
     def form_valid(self, form):
         name = form.cleaned_data.get('name')
@@ -285,10 +281,10 @@ class AddProject(LoginRequiredMixin, View):
                     start_time = done_by - timedelta(hours=int(length_of_time))
                 else:
                     if length_of_time == '-1':
-                        start_time = done_by - timedelta(minutes=30)
+                        start_time = done_by - timedelta(minutes=5)
                         print "in here for no time", "done by ", done_by, "and start time: ", start_time
                     else:
-                        start_time = done_by - timedelta(hours=1)
+                        start_time = done_by - timedelta(minutes=57)
                 print "done by ",done_by, "and start time: ", start_time
                 if not time_has_past(start_time) and user_project.length_of_project >= start_time and \
                         user_project.length_of_project >= done_by:
@@ -309,7 +305,7 @@ class AddProject(LoginRequiredMixin, View):
                     messages.success(request, "Successfully added a Milestone to %s project" % name_of_project)
                     return HttpResponseRedirect(reverse('tasks:home'))
                 elif time_has_past(start_time):
-                    messages.error(request, "Hey, not enough time to complete milestone!")
+                    messages.error(request, "Hey, not enough time to complete milestone! Milestone must take at least 5 minutes!")
                 elif user_project.length_of_project >= start_time:
                     messages.error(request, "Hey, can't fit this milestone into the project scope, takes too long!")
                 else:
@@ -384,9 +380,10 @@ class CheckMilestoneDone(View):
     def post(self, request):
         response = {}
         mil_stone = Milestone.objects.get(id=int(request.POST.get("mil_Id")))
-        mil_stone.is_completed = True
-        mil_stone.is_active = False
-        mil_stone.save()
+        if not mil_stone.is_failed:
+            mil_stone.is_completed = True
+            mil_stone.is_active = False
+            mil_stone.save()
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
@@ -400,6 +397,12 @@ class CheckPojectDone(View):
             proj_stone.is_live = False
             proj_stone.save()
             response["status"] = True
+            all_milestones = proj_stone.milestone_set.all()
+            for each_mil in all_milestones:
+                each_mil.is_active = False
+                if not each_mil.is_failed:
+                    each_mil.is_completed = True
+                each_mil.save()
         except (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
             response["status"] = False
         return HttpResponse(json.dumps(response), status=201)

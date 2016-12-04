@@ -232,6 +232,14 @@ def get_notifications(user, tikedge_user):
     return nofication_feed.get_unread_notification()
 
 
+def file_is_picture(picture):
+    picture_file = str(picture)
+    if picture_file.lower().endswith(('png', 'jpg', 'jpeg')):
+        return 'image'
+    else:
+        return False
+
+
 def get_pond(user):
     dict_list_of_pond = []
     friends = Friend.objects.friends(user)

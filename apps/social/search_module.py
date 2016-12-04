@@ -97,9 +97,9 @@ def find_everything(user, query_word):
 	projects = get_query(query, ['name_of_project'])
 	print query, " projddd"
 	tikege_user = TikedgeUser.objects.get(user=user)
-	projects_result = UserProject.objects.filter(projects).filter(~Q(user=tikege_user))
+	projects_result = UserProject.objects.filter(projects)
 	milestones = get_query(query, ['name_of_milestone'])
-	milestones_result = Milestone.objects.filter(milestones).filter(~Q(user=tikege_user))
+	milestones_result = Milestone.objects.filter(milestones)
 	for pip in people_result:
 		search_obj = GeneralSearchFeed(pip, global_variables.PERSON_SEARCH)
 		result_list.append(search_obj)

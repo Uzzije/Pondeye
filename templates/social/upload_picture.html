@@ -6,57 +6,67 @@
   </head>
   <body>
     {% block body %}
-        <div class="container">
-            <form method="post" action="{% url 'social:upload_picture' %}" enctype="multipart/form-data">{% csrf_token %}
-                <div class="row">
-                    <div class="col-md-6">
-                        <input type="radio" id="before_pic_id" name="type_of_picture" value="bc"/>
-                        <label class="para-font" for="before_pic_id">Before Capture</label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="radio" id="after_pic_id" name="type_of_picture" value="ac"/>
-                        <label class="para-font" for="after_pic_id">After Capture</label>
-                    </div>
-                </div>
-                <br>
-                <div id="upload_view" hidden>
+        <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
+                <form method="post" action="{% url 'social:upload_picture' %}" enctype="multipart/form-data">{% csrf_token %}
                     <div class="row">
-                        <div class="col-md-3">
-                            <h4 class="para-font">{{ user_picture_form.picture.label }}</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="radio" id="before_pic_id" name="type_of_picture" value="bc"/>
+                                <label class="para-font" for="before_pic_id">The Before Visual</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="radio" id="after_pic_id" name="type_of_picture" value="ac"/>
+                                <label class="para-font" for="after_pic_id">The After Visual</label>
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            {{ user_picture_form.picture }}
-                        </div>
-                    </div>
-                    <br>
-                    <div class="col-md-7">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
+                        <br>
+                        <div id="upload_view" hidden>
+                            <div class="col-md-7">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                    <p><h3 class="display-font">What milestone is this for?</h3></p>
-                                        <br>
-                                        <select class="form-control" name="milestone_name" required>
-                                            <option class="para-font" value="" selected>milestone?</option>
-                                            {% for proj in existing_milestones %}
-                                                <option value="{{ proj }}">{{ proj }}</option>
-                                            {% endfor %}
-                                        </select>
+                                    <div class="col-md-3">
+                                        <h4 class="para-font">{{ user_picture_form.picture.label }}</h4>
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ user_picture_form.picture }}
                                     </div>
                                 </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-3 col-md-offset-6">
-                                     <button type="submit" id="" name="picture" class="btn btn-primary btn-lg">Upload</button>
-                                 </div>
+                            </div>
+                            <br><br>
+                            <div class="col-md-7">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                            <p><h3 class="display-font">What milestone is this for?</h3></p>
+                                                <br>
+                                                {% if existing_milestones %}
+                                                    <select class="form-control" name="milestone_name" required>
+                                                        <option class="para-font" value="" selected>milestone?</option>
+                                                        {% for proj in existing_milestones %}
+                                                            <option value="{{ proj.id }}">{{ proj.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                {% else %}
+                                                    <p class="para-font">Hmm you have no active milestones.</p>
+                                                        <p class="para-font">You create a new visual entry by adding a milestone to your goal</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-3 col-md-offset-6">
+                                             <button type="submit" id="" name="picture" class="btn btn-primary btn-lg">Upload</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-
         <script>
             $("#before_pic_id").change(function(){
                 $("#upload_view").show(1000);

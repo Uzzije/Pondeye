@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from forms import social_forms
 from models import (Notification, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
-                    JournalPost, JournalComment, SeenProject)
+                    JournalPost, JournalComment, SeenProject, ProfilePictures)
 from ..tasks.models import TikedgeUser, UserProject, Milestone
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
@@ -137,17 +137,22 @@ class PictureUploadView(LoginRequiredMixin, View):
     def post(self, request):
         user_picture_form = social_forms.PictureUploadForm(request.POST, request.FILES)
 
-        if user_picture_form.is_valid() and 'type_of_picture' in request.POST:
+        if user_picture_form.is_valid() and 'picture' in request.POST:
             tkduser = TikedgeUser.objects.get(user=request.user)
             picture_file = request.FILES.get('picture', False)
+            if not modules.file_is_picture(picture_file):
+                messages.error(request, 'Hey visual must be either jpg, jpeg or png file!')
+                existing_milestones = task_modules.get_user_milestones(request.user)
+                return render(request, 'social/upload_picture.html', {'user_picture_form':user_picture_form,
+                                                              'existing_milestones':existing_milestones})
             milestone_name = request.POST.get('milestone_name')
-            milestone = Milestone.objects.get(name_of_milestone=milestone_name)
+            milestone = Milestone.objects.get(id=milestone_name)
             if request.POST.get("type_of_picture") == global_variables.BEFORE_PICTURE:
                 is_before = True
                 # check that user is not creating concurrent before for current milestone
                 try:
                     PictureSet.objects.get(milestone=milestone, after_picture=None)
-                    messages.error(request, 'Sorry we need an after picture for %s milestone' % milestone.name_of_milestone)
+                    messages.error(request, 'Sorry we first need an after picture for %s milestone' % milestone.name_of_milestone)
                     existing_milestones = task_modules.get_user_milestones(request.user)
                     return render(request, 'social/upload_picture.html', {'user_picture_form':user_picture_form,
                                                                           'existing_milestones':existing_milestones})
@@ -192,12 +197,12 @@ class PictureUploadView(LoginRequiredMixin, View):
                     messages.success(request, 'Great Job! the after visual entry added to %s milestone' % milestone.blurb)
                 except ObjectDoesNotExist:
                     existing_milestones = task_modules.get_user_milestones(request.user)
-                    messages.error(request, 'Hey we need a before visual entry to wow the crowd')
+                    messages.error(request, 'Hey we need a before visual entry before an after visual entry. This wow the crowd!')
                     return render(request, 'social/upload_picture.html', {'user_picture_form':user_picture_form,
                                                               'existing_milestones':existing_milestones})
             return HttpResponseRedirect(reverse('tasks:home'))
         existing_milestones = task_modules.get_user_milestones(request.user)
-        messages.error(request, 'Oops, I think you forgot to upload a picture')
+        messages.error(request, 'Oops, I think you forgot to upload a valid picture file')
         return render(request, 'social/upload_picture.html', {'user_picture_form':user_picture_form,
                                                               'existing_milestones':existing_milestones})
 
@@ -216,7 +221,17 @@ class TodoFeed(LoginRequiredMixin, View):
         notification = Notification.objects.filter(user=request.user)
         notification = NotificationFeed(notifications=notification, user=request.user)
         unread_list = notification.get_unread_notification()
-        return render(request, 'social/news_feed.html', {'all_feeds':all_feeds, 'notifications':unread_list})
+        tikedge_user = task_modules.get_tikedge_user(request.user)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+            user_pic_url = has_prof_pic.profile_pics.url
+        except ObjectDoesNotExist:
+            user_pic_url = None
+        return render(request, 'social/news_feed.html', {'all_feeds':all_feeds,
+                                                         'notifications':unread_list,
+                                                         'user_pic_url': user_pic_url,
+                                                         'user':request.user
+                                                         })
 
 
 class SendFriendRequestView(View):

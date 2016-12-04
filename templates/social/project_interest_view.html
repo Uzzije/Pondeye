@@ -6,17 +6,29 @@
   </head>
   <body>
     {% block body %}
-        <div class="container">
-            {% if interest_feed %}
-                {% for feed in interest_feed %}
-                    <p class="flow-text">
-                        <a href="{% url 'tasks:profile_view' feed.username %}">{{ feed.first_name }} {{ feed.last_name }}</a>
-                        is interested in <a href="{% url 'social:project_view' feed.slug %}">{{ feed.blurb }}</a>
-                    </p>
-                {% endfor %}
-            {% else %}
-                <p class="flow-text">No one is currently interested in any of your projects or goals</p>
-            {% endif %}
+         <div class="container">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="col-md-8">
+                    <div class="page-header">
+                        <span class="h1 display-font">People interested in your goals</span>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {% if interest_feed %}
+                                {% for feed in interest_feed %}
+                                    <p class="para-font">
+                                        <a href="{% url 'tasks:profile_view' feed.username %}">{{ feed.first_name }} {{ feed.last_name }}</a>
+                                        is interested in <a href="{% url 'social:project_view' feed.slug %}">{{ feed.blurb }}</a>
+                                    </p>
+                                    <hr>
+                                {% endfor %}
+                            {% else %}
+                                <p class="para-font">No one is currently interested in any of your projects or goals</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     {% endblock %}
 

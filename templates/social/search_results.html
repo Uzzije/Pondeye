@@ -6,44 +6,49 @@
   </head>
   <body>
     {% block body %}
-        <div class="container">
-            {% if results %}
-                    {% for res in results %}
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        {% if res.is_person %}
-                                            <div class="col-md-3">
-                                                <img src="{{ res.is_person.profile_pics.url }}" alt="No Picture Uploaded" class="img-thumbnail img-circle">
-                                            </div>
-                                            <div class="col-md-9">
-                                                <a href="{% url 'tasks:profile_view' res.feed_object.username %}">
-                                                    <span class="flow-text">{{ res.feed_object.first_name }} {{ res.feed_object.last_name }}</span>
-                                                </a>
-                                            </div>
-                                        {% elif res.is_milestone %}
-                                            <div class="col-md-12">
-                                                <a href="{% url 'social:milestone_view' res.feed_object.slug %}">
-                                                    <p class="flow-text">{{ res.feed_object.blurb }}</p>
-                                                </a>
-                                            </div>
-                                        {% else %}
-                                            <div class="col-md-12">
-                                                <a href="{% url 'social:project_view' res.feed_object.slug %}">
-                                                    <p class="flow-text">{{ res.feed_object.blurb }}</p>
-                                                </a>
-                                            </div>
-                                        {% endif %}
+        <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="page-header">
+                    <p class="h1 display-font">Search Result</p>
+                </div>
+                {% if results %}
+                        {% for res in results %}
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            {% if res.is_person %}
+                                                <div class="col-md-3">
+                                                    <img src="{{ res.is_person.profile_pics.url }}" style="width: 80%; height: 80%;" alt="No Picture Uploaded" class="img-thumbnail">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <a href="{% url 'tasks:profile_view' res.feed_object.username %}">
+                                                        <span class="flow-text">{{ res.feed_object.first_name }} {{ res.feed_object.last_name }}</span>
+                                                    </a>
+                                                </div>
+                                            {% elif res.is_milestone %}
+                                                <div class="col-md-12">
+                                                    <a href="{% url 'social:milestone_view' res.feed_object.slug %}">
+                                                        <p class="flow-text">{{ res.feed_object.blurb }}</p>
+                                                    </a>
+                                                </div>
+                                            {% else %}
+                                                <div class="col-md-12">
+                                                    <a href="{% url 'social:project_view' res.feed_object.slug %}">
+                                                        <p class="flow-text">{{ res.feed_object.blurb }}</p>
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                    {% endfor %}
-                {% else %}
-                <p class="flow-text">Sorry, but there was no result found ;)</p>
-            {% endif %}
+                            <br>
+                        {% endfor %}
+                    {% else %}
+                    <p class="para-font">Sorry, but there was no result found ;)</p>
+                {% endif %}
+            </div>
         </div>
     {% endblock %}
 

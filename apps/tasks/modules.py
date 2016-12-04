@@ -8,8 +8,9 @@ from forms.form_module import get_current_datetime
 import pytz
 from tzlocal import get_localzone
 from global_variables_tasks import DECODE_DICTIONARY
-from pytz import timezone
 from django.utils.timezone import is_aware
+from bs4 import BeautifulSoup
+from django.contrib import messages
 
 
 def get_user_projects(user):
@@ -38,7 +39,7 @@ def get_user_milestones(user):
     list_of_milestone = user.milestone_set.all().filter(is_active=True)
     t_list= []
     for mil in list_of_milestone:
-        temp_tup = (mil.name_of_milestone)
+        temp_tup = ({'name':mil.name_of_milestone, 'id':mil.id})
         t_list.append(temp_tup)
     return t_list
 
@@ -196,15 +197,15 @@ def convert_html_to_datetime(date_time):
 def time_has_past(time_infos):
         time_info = time_to_utc(time_infos)
         if time_info:
-            print "print time info slab ", time_info
+
             if time_info.time() < get_current_datetime().time():
-                "prnt the checking spot"
+
                 if time_info.date() > get_current_datetime().date():
                     return False
                 msg = "Hey, your work is not history yet"
             else:
                 if time_info.date() >= get_current_datetime().date():
-                    print "checking date, ", time_info.date(), get_current_datetime().date()
+
                     return False
                 msg = "Hey, your work is not history yet"
             return msg
@@ -212,18 +213,13 @@ def time_has_past(time_infos):
 
 
 def time_to_utc(time_to_convert):
-    print "I am aware or not?", time_to_convert
+
     done_by = time_to_convert
-    print done_by.tzinfo,  " my timezone done by ", is_aware(done_by),  get_localzone()
+
     new_time = done_by.replace(tzinfo=get_localzone())
-    print new_time.tzinfo, "new timezone"
+
     the_utc = pytz.timezone('UTC')
     new_time_utc = new_time.astimezone(the_utc)
-    print "new time to compare ", new_time_utc.time(), "old time, ", done_by.time(), " current time ", get_current_datetime().time()
-    if new_time_utc.time() < get_current_datetime().time():
-        print "should be less than it"
-    else:
-        print "it is not"
     return new_time_utc
 
 
@@ -303,6 +299,12 @@ def confirm_expired_milestone_and_project(tikedge_user):
             each_proj.is_failed = True
             each_proj.is_live = False
             each_proj.save()
+            all_milestones = each_proj.milestone_set.all()
+            for each_mil in all_milestones:
+                each_mil.is_active = False
+                if not each_mil.is_completed:
+                    each_mil.is_failed = True
+                each_mil.save()
 
 
 def get_failed_mil_count(user):
@@ -333,4 +335,10 @@ def get_recent_projects(user):
     tikedge_user = get_tikedge_user(user)
     all_project = tikedge_user.userproject_set.all().filter(Q(is_live=True))
     return all_project
+
+def display_error(form, request):
+	for field, mes in form.errors.items():
+		str_item = BeautifulSoup(mes[0], 'html.parser')
+		print (str_item.get_text())
+		messages.warning(request, "For this field: %s. %s" % (field, mes[0]))
 

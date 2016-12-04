@@ -23,14 +23,21 @@
                       <form id="signup" method="post" action="{% url 'tasks:login' %}">{% csrf_token %}
                           <div class="text-center">
                               <p class="h2 nav-font">Sign In</p>
+                              {% for err in form.non_field_errors %}
+                                    <div class="alert alert-warning">{{ err }}</div>
+                              {% endfor %}
                           </div>
-                          <div class="alert alert-warning">
-                              {{ form.name.errors }}
-                          </div>
+                           {% if form.password.errors %}
+                              <div class="alert alert-warning">
+                                  {{ form.name.errors }}
+                              </div>
+                            {% endif %}
                           {{ form.name }}
-                          <div class="alert alert-warning">
-                              {{ form.password.errors }}
-                          </div>
+                          {% if form.password.errors %}
+                              <div class="alert alert-warning">
+                                  {{ form.password.errors }}
+                              </div>
+                          {% endif %}
                           {{ form.password }}
                         <div class="text-center">
                             <div class="row">

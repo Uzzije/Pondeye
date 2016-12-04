@@ -147,6 +147,7 @@
                     success: function(){
                         $("#add-friend-button").text("Pond Invite Sent!");
                         console.log("Successful sent request");
+                        toastr.success("Successfully sent request!");
                     },
                     error: function(xhr){
                         $("#error-message").text(xhr.responseText).show();

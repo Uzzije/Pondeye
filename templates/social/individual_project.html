@@ -6,62 +6,64 @@
   </head>
   <body>
     {% block body %}
-        <div class="container">
-            <div class="page-header">
-               <span class="h1 display-font">Project Name:</span>
-                    <span class="h1 display-font">{{ project_name }}</span>
-                <button onclick="createFollow({{ project.id }})" class="btn-link"><i class="material-icons">hearing</i></button>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-md-offset-8">
+        <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="page-header">
+                   <span class="h1 display-font">Project Name:</span>
+                        <span class="h1 display-font">{{ project_name }}</span>
+                    <button onclick="createFollow({{ project.id }})" class="btn-link"><i class="material-icons">hearing</i></button>
+                </div>
+                <div class="row">
                     <div class="row">
-                        <div class="col-md-12">
-                            <span class="para-font">Project noticed by {{ seen_count }} persons.</span>
-                               <span class="flow-text" id="inter_{{ project.id }}">
-                                   {{ interest_count }}</span><span class="para-font"> of which finds it interesting</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <p class="h2 display-font">Project Motivations</p>
-                        <div class="col-md-4">
-                            <ul class="list-group">
-                                {% for motif in motivations %}
-                                    <li class="list-group-item"><a href="{% url 'social:tag_search' motif.name_of_tag %}">
-                                        <span class="para-font">{{ motif.name_of_tag }}</span></a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-2">
-                        <p class="h2 display-font">Milestones of Projects</p>
-                    </div>
-                </div>
-
-                {% for each_mil, vouches, views in milestones %}
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-2">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <span class="para-font">{{ each_mil.blurb }}</span>
-                                            <a href="{% url 'social:milestone_view' each_mil.slug %}"> view...
-                                            </a>
-                                            <i class="material-icons">verified_user</i>( {{ vouches }} )
-                                            <i class="material-icons">visibility</i>( {{ views }} )
-                                        </div>
-                                    </div>
-                                    <br>
-
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="col-md-12">
+                                <span class="para-font">Project noticed by {{ seen_count }} persons.</span>
+                                   <span class="flow-text" id="inter_{{ project.id }}">
+                                       {{ interest_count }}</span><span class="para-font"> of which finds it interesting</span>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <p class="h2 display-font">Project Motivations</p>
+                            <div class="col-md-4">
+                                <ul class="list-group">
+                                    {% for motif in motivations %}
+                                        <li class="list-group-item"><a href="{% url 'social:tag_search' motif.name_of_tag %}">
+                                            <span class="para-font">{{ motif.name_of_tag }}</span></a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-2">
+                            <p class="h2 display-font">Milestones of Projects</p>
+                        </div>
+                    </div>
+
+                    {% for each_mil, vouches, views in milestones %}
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-2">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="para-font">{{ each_mil.blurb }}</span>
+                                                <a href="{% url 'social:milestone_view' each_mil.slug %}"> view...
+                                                </a>
+                                                <i class="material-icons">verified_user</i>( {{ vouches }} )
+                                                <i class="material-icons">visibility</i>( {{ views }} )
+                                            </div>
+                                        </div>
+                                        <br>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
         <script>
@@ -72,7 +74,7 @@
                 $.ajax({
                     url: '{% url 'social:create_follow' %}',
                     type: "POST",
-                    data: { proj_id: pk  },
+                    data: { proj_id: pk },
                     success: function(response){
                         var statusParse = JSON.parse(response);
                         var status = statusParse["status"];

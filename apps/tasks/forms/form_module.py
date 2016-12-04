@@ -5,5 +5,4 @@ from datetime import datetime
 
 def get_current_datetime():
     local = timezone.now()
-    print "current time", local,
     return local

@@ -104,20 +104,16 @@ div.cards {
     background-color: #5C9EAD;
     border-color: #5C9EAD;
 }
-.alert-warning {
-    color: #6A3937;
-    background-color: #6A3937;
-    border-color: #6A3937;
-}
-.alert-success {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
+
 .theme-font {
-    background-color: #5C9EAD;
+    color: #6A3937;
 }
 ::-webkit-input-placeholder {
    font-family:  'Josefin Slab', serif;
     font-size: 16px;
+}
+.feed-font{
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    color: #5C9EAD;
 }

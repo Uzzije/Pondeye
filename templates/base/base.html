@@ -47,40 +47,37 @@
 </head>
 <body>
 
-        {% block search %}
-                <!-- Fixed navbar -->
-            <nav class="navbar navbar-default navbar-fixed-top navbar-principal">
+    {% block search %}
+            <!-- Fixed navbar -->
+        <nav class="navbar navbar-default navbar-fixed-top navbar-principal">
             {% if messages %}
                 {% for message in messages %}
                   <div
-                          {% if message.tags == "success" %}
-                                class="message alert alert-success"
-                          {% else %}
-                                class="message alert alert-warning"{% endif %} role="alert">
-                          <span class="para-font link-color">{{ message|safe }}</span>
+                      {% if message.tags == "success" %}
+                            class="message alert alert-success"
+                      {% else %}
+                            class="message alert alert-warning"{% endif %} role="alert">
+                      <span class="para-font link-color">{{ message|safe }}</span>
                   </div>
                 {% endfor %}
             {% endif %}
-              <div class="container">
-                <div class="navbar-header">
+          <div class="container">
+              <div class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li>
-                                <a class="navbar-brand"  href="{% url 'tasks:register' %}"><b class="nav-font">Pondeye</b></a>
-                            </li>
-                            <li class="active active-color">
-                                <a href="{% url 'tasks:home' %}"><i class="material-icons" style="font-size:32px;">home</i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
+                    <a class="navbar-brand"  href="{% url 'tasks:register' %}"><b class="nav-font">Pondeye</b></a>
+              </div>
+              <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active active-color">
+                            <a href="{% url 'tasks:home' %}"><i class="material-icons" style="font-size:32px;">home</i></a>
+                        </li>
+                    </ul>
+
                     <div class="col-md-7">
                      <form class="navbar-form" method="get" action="{% url 'social:search_everything' %}">
                         <div class="form-group" style="display:inline;">
@@ -93,6 +90,7 @@
                         </div>
                       </form>
                     </div>
+
                   <ul class="nav navbar-nav navbar-right">
                       <li><a href="{% url 'tasks:add_proj' %}"><i class="material-icons" style="font-size:32px;">create</i></a></li>
                       <li class="dropdown">
@@ -102,7 +100,6 @@
                           </a>
                           <ul class="dropdown-menu">
                             <li><a href="{% url 'social:todo_feed' %}"><span class="para-font">Feed</span></a></li>
-                            <li><a href="{% url 'social:journal_entries' %}"><span class="para-font">Journal Entries</span></a></li>
                             <li><a href="{% url 'social:notifications' %}"><span class="para-font">Notifications</span></a></li>
                           </ul>
                       </li>
@@ -118,44 +115,59 @@
                       </li>
                     </ul>
                 </div>
-              </div>
-            </nav>
+          </div>
+        </nav>
+    {% endblock %}
+    <div class="container-fluid">
+        {% block notifications %}
         {% endblock %}
-        <div class="container-fluid">
-            {% block notifications %}
-            {% endblock %}
+    </div>
+        <br><br>
+    <div class="container-fluid">
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    {% block nav_script %}
+    {% endblock %}
+    {% block end %}
+        <div class="fixedpicturebutton" style="bottom: 45px; right: 24px;">
+            <a href="{% url 'tasks:add_proj' %}" class="btn-floating btn-large red">
+                <i class="material-icons" style="font-size:32px;">create</i>
+            </a>
         </div>
-            <br><br>
-        <div class="container-fluid">
-            {% block body %}
-            {% endblock %}
+
+        <div class="fixedaddbutton" style="bottom: 45px; right: 90px;">
+            <a href="{% url 'social:upload_picture' %}" class="btn-floating btn-large red">
+                <i class="material-icons" style="font-size:32px;">add_a_photo</i>
+            </a>
         </div>
+    {% endblock %}
+    {% block base_script %}
+        <script>
+            $(document).ready(function(){
 
-        {% block nav_script %}
-        {% endblock %}
-        {% block end %}
-            <div class="fixedpicturebutton" style="bottom: 45px; right: 24px;">
-                <a href="{% url 'tasks:add_proj' %}" class="btn-floating btn-large red">
-                    <i class="material-icons" style="font-size:32px;">create</i>
-                </a>
-            </div>
-
-            <div class="fixedaddbutton" style="bottom: 45px; right: 90px;">
-                <a href="{% url 'social:upload_picture' %}" class="btn-floating btn-large red">
-                    <i class="material-icons" style="font-size:32px;">add_a_photo</i>
-                </a>
-            </div>
-        {% endblock %}
-        {% block base_script %}
-            <script>
-
-                $(document).ready(function(){
-
-                    setTimeout(function(){
-                        $('.message').fadeOut('slow');}, 2000);
-                        checkFailedProjectsMilestones();
-
-                    });
+                setTimeout(function(){
+                    $('.message').fadeOut('slow');}, 2000);
+                    checkFailedProjectsMilestones();
+                    toastr.options = {
+                      "closeButton": false,
+                      "debug": false,
+                      "newestOnTop": false,
+                      "progressBar": false,
+                      "positionClass": "toast-top-right",
+                      "preventDuplicates": false,
+                      "onclick": null,
+                      "showDuration": "300",
+                      "hideDuration": "1000",
+                      "timeOut": "5000",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    }
+                });
                 function checkFailedProjectsMilestones(){
                     $.ajaxSetup({
                         data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
@@ -178,12 +190,12 @@
                             $("#error-message").text(xhr.responseText).show();
                             clearInterval(check_failed_interval);
                         }
-                    })
-                }
-                var check_failed_interval = setInterval(checkFailedProjectsMilestones, 30000);
-            </script>
-        {% endblock %}
-        {% block footer %}
-        {% endblock %}
+                    });
+            }
+            var check_failed_interval = setInterval(checkFailedProjectsMilestones, 30000);
+        </script>
+    {% endblock %}
+    {% block footer %}
+    {% endblock %}
 </body>
 </html>
