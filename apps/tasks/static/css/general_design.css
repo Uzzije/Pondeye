@@ -114,3 +114,10 @@ div.cards {
     background-color: #dff0d8;
     border-color: #d6e9c6;
 }
+.theme-font {
+    background-color: #5C9EAD;
+}
+::-webkit-input-placeholder {
+   font-family:  'Josefin Slab', serif;
+    font-size: 16px;
+}

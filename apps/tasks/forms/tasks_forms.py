@@ -56,8 +56,8 @@ class LoginForm(forms.Form):
     my_default_errors = {
         'invalid': 'Make sure username and password are correct'
     }
-    name = forms.CharField(label='User Name', max_length=100, required=True, widget=forms.TextInput(attrs={'class':"input pass"}))
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':"input pass"}), error_messages=my_default_errors)
+    name = forms.CharField(label='User Name', max_length=100, required=True, widget=forms.TextInput(attrs={'class':"input pass", 'placeholder':'Username'}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':"input pass", 'placeholder':'Password'}), error_messages=my_default_errors)
 
     def clean_name(self):
         cleaned_data = super(LoginForm, self).clean()

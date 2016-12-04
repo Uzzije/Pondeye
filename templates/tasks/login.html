@@ -15,19 +15,34 @@
   </head>
   <body>
   {% block body %}
-      <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div id="logbox">
-                  <form id="signup" method="post" action="{% url 'tasks:login' %}">{% csrf_token %}
-                    <h1>Sign In</h1>
-                      {{ form.name }}
-                      {{ form.password }}
-                    <input type="submit" value="Sign in" class="inputButton"/>
-                    <div class="text-center">
-                        <a href="{% url 'tasks:register' %}" id="">create an account</a>
+      <div class="container" style="margin-top:50px;">
+        <div class="col-md-10 no-paddin-xs">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div id="logbox">
+                      <form id="signup" method="post" action="{% url 'tasks:login' %}">{% csrf_token %}
+                          <div class="text-center">
+                              <p class="h2 nav-font">Sign In</p>
+                          </div>
+                          <div class="alert alert-warning">
+                              {{ form.name.errors }}
+                          </div>
+                          {{ form.name }}
+                          <div class="alert alert-warning">
+                              {{ form.password.errors }}
+                          </div>
+                          {{ form.password }}
+                        <div class="text-center">
+                            <div class="row">
+                                <button type="submit" class="btn btn-primary">Sign In</button>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <a href="{% url 'tasks:register' %}" id=""><span class="link-color">create an account</span></a>
+                            </div>
+                        </div>
+                      </form>
                     </div>
-                  </form>
                 </div>
             </div>
         </div>

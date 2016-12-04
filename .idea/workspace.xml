@@ -2,152 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/fonts/FontAwesome.otf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/fonts/fontawesome-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/fonts/fontawesome-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/fonts/fontawesome-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/fonts/fontawesome-webfont.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Bg/bg_1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Bg/bg_2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Bg/bg_3.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Cover/corb.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Cover/cover.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Cover/game.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Cover/mandown.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Cover/manok.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Cover/relax.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/child-1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/guy-2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/guy-3.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/guy-4.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/guy-5.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/guy-7.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/guy-8.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/guy-9.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-10.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-3.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-4.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-5.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-6.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-7.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-8.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Friends/woman-9.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Likes/likes-1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Likes/likes-2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Likes/likes-3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Likes/likes-4.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Likes/likes-5.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Likes/likes-6.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Movies/movie-1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Movies/movie-2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Movies/movie-3.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Originals/favicon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Photos/1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Photos/2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Photos/3.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Photos/4.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Photos/5.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Photos/6.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Photos/7.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Photos/8.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Photos/9.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Post/game.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Post/home-bg.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Post/manok.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Post/place-234-87.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Post/place1-full.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Post/place1-full2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Post/young-couple-in-love.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Profile/default-avatar.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Profile/profile.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Sponsor/sponsor-1.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Sponsor/sponsor-2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Sponsor/sponsor-3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Sponsor/sponsor-4.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/Sponsor/sponsor-5.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/email_text.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/favicon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/icon-edit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/img/plus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/about.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/blank-cover.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/css/bootstrap-theme.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/css/bootstrap-theme.css.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/css/bootstrap-theme.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/css/bootstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/css/bootstrap.css.map" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/css/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/fonts/glyphicons-halflings-regular.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/js/bootstrap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/js/bootstrap.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/bootstrap-3.3.5/js/npm.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/cover_profile.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/credits.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/edit_profile.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/error404.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/error500.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/file_manager.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/HELP-US-OUT.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/css/font-awesome.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/css/font-awesome.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/fonts/fontawesome-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/animated.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/bordered-pulled.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/core.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/fixed-width.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/font-awesome.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/icons.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/larger.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/list.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/mixins.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/path.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/rotated-flipped.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/stacked.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/less/variables.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_animated.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_bordered-pulled.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_core.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_fixed-width.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_icons.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_larger.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_list.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_mixins.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_path.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_rotated-flipped.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_stacked.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/_variables.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/font-awesome-4.4.0/scss/font-awesome.scss" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/friends.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/home.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/license.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/list_posts.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/list_users.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/messages.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/notifications.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/photos.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/profile.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/profile_settings.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/profile_wall.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/recover_password.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/registration_email.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/apps/tasks/static/theme-design/user_detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" afterPath="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/static/css/general_design.css" afterPath="$PROJECT_DIR$/apps/tasks/static/css/general_design.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.css" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/login_design.css" afterPath="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/login_design.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/views.py" afterPath="$PROJECT_DIR$/apps/tasks/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/base.html" afterPath="$PROJECT_DIR$/templates/base/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/add_view.html" afterPath="$PROJECT_DIR$/templates/tasks/add_view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/home.html" afterPath="$PROJECT_DIR$/templates/tasks/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/profile_view.html" afterPath="$PROJECT_DIR$/templates/tasks/profile_view.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/login.html" afterPath="$PROJECT_DIR$/templates/tasks/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/tasks/register.html" afterPath="$PROJECT_DIR$/templates/tasks/register.html" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -180,29 +41,81 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.81417114">
-              <caret line="317" column="17" selection-start-line="317" selection-start-column="17" selection-end-line="317" selection-end-column="17" />
+            <state vertical-scroll-proportion="-7.740741">
+              <caret line="209" column="23" selection-start-line="209" selection-start-column="23" selection-end-line="209" selection-end-column="23" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#11428#11568#0" expanded="false" />
-                <element signature="e#11610#11764#0" expanded="false" />
-                <element signature="e#20634#20741#0" expanded="false" />
-                <element signature="e#20780#21099#0" expanded="false" />
-                <element signature="e#21135#21607#0" expanded="false" />
-                <element signature="e#21660#22027#0" expanded="false" />
+                <element signature="e#11423#11563#0" expanded="false" />
+                <element signature="e#11605#11759#0" expanded="false" />
+                <element signature="e#20629#20736#0" expanded="false" />
+                <element signature="e#20775#21094#0" expanded="false" />
+                <element signature="e#21130#21602#0" expanded="false" />
+                <element signature="e#21655#22022#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="general_design.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="register.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/tasks/register.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.7843137">
+              <caret line="63" column="78" selection-start-line="63" selection-start-column="78" selection-end-line="63" selection-end-column="78" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/tasks/login.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-16.875">
+              <caret line="27" column="52" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="form_choices.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/forms/form_choices.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login_design.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/login_design.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="2.5833333">
+              <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="general_design.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/tasks/static/css/general_design.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-28.041666">
-              <caret line="115" column="1" selection-start-line="115" selection-start-column="1" selection-end-line="115" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.74935734">
+              <caret line="112" column="19" selection-start-line="112" selection-start-column="19" selection-end-line="112" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tasks_forms.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-25.814816">
+              <caret line="59" column="122" selection-start-line="59" selection-start-column="122" selection-end-line="59" selection-end-column="122" />
               <folding />
             </state>
           </provider>
@@ -211,20 +124,8 @@
       <file leaf-file-name="profile_view.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/tasks/profile_view.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.1764708">
-              <caret line="85" column="28" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="add_view.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/tasks/add_view.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.117647">
-              <caret line="48" column="83" selection-start-line="48" selection-start-column="83" selection-end-line="48" selection-end-column="83" />
+            <state vertical-scroll-proportion="-1.4705882">
+              <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -235,8 +136,8 @@
       <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="54" column="22" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
+            <state vertical-scroll-proportion="-8.529411">
+              <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -261,62 +162,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-57.058823">
-              <caret line="194" column="26" selection-start-line="194" selection-start-column="25" selection-end-line="194" selection-end-column="26" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="home.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/tasks/static/theme-design/home.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.9607844">
-              <caret line="576" column="4" selection-start-line="576" selection-start-column="4" selection-end-line="576" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-51.11111">
-              <caret line="318" column="11" selection-start-line="318" selection-start-column="8" selection-end-line="318" selection-end-column="11" />
-              <folding>
-                <element signature="e#2339#2795#0" expanded="false" />
-                <element signature="e#2850#4210#0" expanded="false" />
-                <element signature="e#11043#11221#0" expanded="false" />
-                <element signature="e#12728#13166#0" expanded="false" />
-                <element signature="e#13211#13503#0" expanded="false" />
-                <element signature="e#13769#14832#0" expanded="false" />
-                <element signature="e#15754#15848#0" expanded="false" />
-                <element signature="e#15908#15995#0" expanded="false" />
-                <element signature="e#16063#16214#0" expanded="false" />
-                <element signature="e#16928#17137#0" expanded="false" />
-                <element signature="e#17196#17408#0" expanded="false" />
-                <element signature="e#17457#17592#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="search_module.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/search_module.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="11.111111">
-              <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -335,7 +180,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/social/upload_picture.html" />
         <option value="$PROJECT_DIR$/apps/social/static/image-comparison-slider/css/style.css" />
         <option value="$PROJECT_DIR$/apps/social/static/image-comparison-slider/img/cd-arrows.svg" />
         <option value="$PROJECT_DIR$/apps/social/static/custom_style.css" />
@@ -360,17 +204,14 @@
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/creative.css" />
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creative/css/home_design.css" />
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/templates/tasks/login.html" />
         <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/creative.min.css" />
         <option value="$PROJECT_DIR$/apps/tasks/serializer.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
         <option value="$PROJECT_DIR$/apps/tasks/forms/form_module.py" />
         <option value="$PROJECT_DIR$/settings/base.py" />
         <option value="$PROJECT_DIR$/apps/tasks/models.py" />
         <option value="$PROJECT_DIR$/apps/social/journal_feed.py" />
         <option value="$PROJECT_DIR$/templates/social/journal.html" />
         <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
-        <option value="$PROJECT_DIR$/templates/tasks/register.html" />
         <option value="$PROJECT_DIR$/apps/tasks/global_variables_tasks.py" />
         <option value="$PROJECT_DIR$/templates/social/individual_project.html" />
         <option value="$PROJECT_DIR$/apps/social/tasks_feed.py" />
@@ -382,10 +223,14 @@
         <option value="$PROJECT_DIR$/templates/tasks/profile_view.html" />
         <option value="$PROJECT_DIR$/templates/tasks/home.html" />
         <option value="$PROJECT_DIR$/templates/tasks/add_view.html" />
-        <option value="$PROJECT_DIR$/apps/tasks/static/css/general_design.css" />
+        <option value="$PROJECT_DIR$/apps/social/modules.py" />
+        <option value="$PROJECT_DIR$/templates/tasks/register.html" />
+        <option value="$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/login_design.css" />
+        <option value="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
         <option value="$PROJECT_DIR$/apps/tasks/views.py" />
         <option value="$PROJECT_DIR$/templates/base/base.html" />
-        <option value="$PROJECT_DIR$/apps/social/modules.py" />
+        <option value="$PROJECT_DIR$/templates/tasks/login.html" />
+        <option value="$PROJECT_DIR$/apps/tasks/static/css/general_design.css" />
       </list>
     </option>
   </component>
@@ -587,7 +432,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="theme-design" />
+              <option name="myItemId" value="startbootstrap-creatives" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -613,45 +458,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="theme-design" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tasks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="theme-design" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
+              <option name="myItemId" value="startbootstrap-creatives" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tasks" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="forms" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1162,13 +995,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/social/upload_picture.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.5">
-          <caret line="54" column="26" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/social/tag_search_results.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1232,27 +1058,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/forms/form_choices.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/serializer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="114" column="106" selection-start-line="114" selection-start-column="106" selection-end-line="114" selection-end-column="106" />
-          <folding>
-            <element signature="e#0#24#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1308,14 +1117,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tasks/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.0">
-          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/journal_feed.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.0">
@@ -1323,14 +1124,6 @@
           <folding>
             <element signature="e#0#23#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tasks/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.25">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1507,23 +1300,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/tasks/profile_view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.1764708">
-          <caret line="85" column="28" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/tasks/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-57.058823">
           <caret line="194" column="26" selection-start-line="194" selection-start-column="25" selection-end-line="194" selection-end-column="26" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#i#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1535,14 +1318,6 @@
           <folding>
             <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="54" column="22" selection-start-line="54" selection-start-column="22" selection-end-line="54" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1592,27 +1367,87 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/static/css/general_design.css">
+    <entry file="file://$PROJECT_DIR$/templates/tasks/profile_view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-28.041666">
-          <caret line="115" column="1" selection-start-line="115" selection-start-column="1" selection-end-line="115" selection-end-column="1" />
+        <state vertical-scroll-proportion="-1.4705882">
+          <caret line="5" column="9" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tasks/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.7843137">
+          <caret line="63" column="78" selection-start-line="63" selection-start-column="78" selection-end-line="63" selection-end-column="78" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81417114">
-          <caret line="317" column="17" selection-start-line="317" selection-start-column="17" selection-end-line="317" selection-end-column="17" />
+        <state vertical-scroll-proportion="-7.740741">
+          <caret line="209" column="23" selection-start-line="209" selection-start-column="23" selection-end-line="209" selection-end-column="23" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#11428#11568#0" expanded="false" />
-            <element signature="e#11610#11764#0" expanded="false" />
-            <element signature="e#20634#20741#0" expanded="false" />
-            <element signature="e#20780#21099#0" expanded="false" />
-            <element signature="e#21135#21607#0" expanded="false" />
-            <element signature="e#21660#22027#0" expanded="false" />
+            <element signature="e#11423#11563#0" expanded="false" />
+            <element signature="e#11605#11759#0" expanded="false" />
+            <element signature="e#20629#20736#0" expanded="false" />
+            <element signature="e#20775#21094#0" expanded="false" />
+            <element signature="e#21130#21602#0" expanded="false" />
+            <element signature="e#21655#22022#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/forms/form_choices.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.529411">
+          <caret line="62" column="23" selection-start-line="62" selection-start-column="23" selection-end-line="62" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/static/startbootstrap-creatives/css/login_design.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.5833333">
+          <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-25.814816">
+          <caret line="59" column="122" selection-start-line="59" selection-start-column="122" selection-end-line="59" selection-end-column="122" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/tasks/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.875">
+          <caret line="27" column="52" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/static/css/general_design.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74935734">
+          <caret line="112" column="19" selection-start-line="112" selection-start-column="19" selection-end-line="112" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>

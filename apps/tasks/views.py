@@ -209,7 +209,7 @@ class LoginView(FormView):
             user.is_active = True
             user.save()
         login(self.request, user)
-        return HttpResponseRedirect(self.get_success_url())
+        return super(LoginView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         """Use this to add extra context."""

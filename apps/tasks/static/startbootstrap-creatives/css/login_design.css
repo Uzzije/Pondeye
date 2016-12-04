@@ -6,16 +6,6 @@
   background-color: #8ac7d8;
 }
 
-body {
-  background: #ffffff;
-}
-
-.container {
-  display: -webkit-flex;
-  display: flex;
-  height: 100%;
-}
-
 #logbox {
   padding: 10px;
   margin: 50px auto;
