@@ -199,7 +199,7 @@ def get_user_journal_feed(tikege_user):
     for journal in journals:
         journal_feed = JournalFeed(journal)
         journal_list.append(journal_feed)
-        sorted(journal_list,  key=lambda x: x.day_created, reverse=False)
+        sorted(journal_list,  key=lambda x: x.day_entry, reverse=True)
     return journal_list
 
 
@@ -222,7 +222,7 @@ def get_users_feed(user):
     for each_tasks in picture_feed:
          feed = PondFeed(each_tasks, type_of_feed=global_variables.PICTURE_SET)
          list_of_feed.append(feed)
-    sorted_list = sorted(list_of_feed, key=lambda x: x.created)
+    sorted_list = sorted(list_of_feed, key=lambda x: x.created, reverse=True)
     return sorted_list
 
 

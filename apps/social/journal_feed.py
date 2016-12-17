@@ -6,7 +6,7 @@ class JournalFeed:
 	def __init__(self, journal):
 		self.feed_entry = journal
 		self.entry = journal.entry_blurb
-		self.day_entry = journal.day_entry
+		self.day_entry = int(journal.day_entry)
 		self.day_created = utc_to_local(journal.day_created).strftime("%B %d %Y %I:%M %p")
 		self.is_pic_set = journal.is_picture_set
 		self.is_mil = journal.is_milestone_entry

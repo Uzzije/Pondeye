@@ -9,82 +9,84 @@
     {% endblock %}
   <body>
     {% block body %}
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5 col-md-offset-5">
-                    <p class="h1"><span class="display-font"> My Journal</span></p>
-                </div>
-            </div>
-            {% for journal_feed in list_of_journal_feeds %}
+        <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <span class="para-font">Entry: <span class="header-color">{{ journal_feed.day_entry }}</span></span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <span class="para-font">{{ journal_feed.day_created }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        {% if journal_feed.is_pic_set %}
-                                                <p class="journal-font">{{ journal_feed.entry }}</p>
-
-                                        {% elif journal_feed.is_mil %}
-                                            <a href="{% url 'social:milestone_view' journal_feed.content.slug %}">
-                                                <p class="journal-font">{{ journal_feed.entry }}</p>
-                                            </a>
-                                        {% else %}
-                                            <a href="{% url 'social:project_view' journal_feed.content.slug %}">
-                                                <p class="journal-font">{{ journal_feed.entry }}</p>
-                                            </a>
-                                        {% endif %}
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button onclick="showCommentBox({{ journal_feed.comment_id }})" class="btn btn-sm btn-primary">
-                                            <span class="para-font">Add New Thought</span>
-                                        </button>
-                                        <a href="{% url 'social:journal_post_comments' journal_feed.feed_entry.slug %}">
-                                               <span class="para-font">View Thoughts</span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div id="{{ journal_feed.comment_id }}" hidden>
-                                    <hr>
+                    <div class="col-md-5 col-md-offset-5">
+                        <p class="h1"><span class="display-font"> My Journal</span></p>
+                    </div>
+                </div>
+                {% for journal_feed in list_of_journal_feeds %}
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-2">
+                            <div class="panel panel-default journal">
+                                <div class="">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                          <div class="form-group">
-                                              <label for="com_{{ journal_feed.comment_id }}"><p class="para-font">Thoughts:</p></label>
-                                              <br><br>
-                                              <textarea placeholder="Journal your thoughts to project" id="com_{{ journal_feed.comment_id }}" class="form-control">
-                                              </textarea>
-                                          </div>
+                                        <div class="col-md-3">
+                                            <span class="para-font">Entry: <span class="header-color">{{ journal_feed.day_entry }}</span></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span class="para-font">{{ journal_feed.day_created }}</span>
                                         </div>
                                     </div>
-                                    <br>
+                                </div>
+                                <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <button onclick="sendComment({{ journal_feed.comment_id }})" class="btn btn-sm">
-                                                <span class="journal-font">Add</span>
+                                        <div class="col-md-10">
+                                            {% if journal_feed.is_pic_set %}
+                                                    <p class="journal-font">{{ journal_feed.entry }}</p>
+                                            {% elif journal_feed.is_mil %}
+                                                <a href="{% url 'social:milestone_view' journal_feed.content.slug %}">
+                                                    <p class="journal-font">{{ journal_feed.entry }}</p>
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'social:project_view' journal_feed.content.slug %}">
+                                                    <p class="journal-font">{{ journal_feed.entry }}</p>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button onclick="showCommentBox({{ journal_feed.comment_id }})" class="btn btn-sm">
+                                                <span class="para-font">Add Thought</span>
                                             </button>
+                                            <a href="{% url 'social:journal_post_comments' journal_feed.feed_entry.slug %}">
+                                                   <span class="para-font">Thoughts</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="{{ journal_feed.comment_id }}" hidden>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                              <div class="form-group">
+                                                  <label for="com_{{ journal_feed.comment_id }}"><p class="para-font">Thoughts:</p></label>
+                                                  <br><br>
+                                                  <textarea cols="50" rows="5" placeholder="Journal your thoughts to project"
+                                                            id="com_{{ journal_feed.comment_id }}" class="journal form-control">
+                                                  </textarea>
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <button onclick="sendComment({{ journal_feed.comment_id }})" class="btn btn-sm">
+                                                    <span class="journal-font">Add</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
         <script>
 
             function showCommentBox(comment_id){
@@ -95,7 +97,7 @@
                 var comment = $("#com_"+comment_id).val().trim();
                 console.log(comment + " comments");
                 if(comment == ""){
-                    Materialize.toast("Hey, thoughts can't be empty", 2000);
+                    toastr.warning("Hey, thoughts can't be empty");
                 }
                 else{
                     console.log(comment + " comments");
@@ -122,7 +124,9 @@
                             $("#error-message").text(xhr.responseText).show();
                         }
                     })
+                    showCommentBox(comment_id);
                 }
+
             }
         </script>
     {% endblock %}

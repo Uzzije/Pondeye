@@ -6,33 +6,35 @@
   </head>
   <body>
   {% block body %}
-      <div class="container">
-        {% if journal_comments %}
-            <div class="row">
-                <div class="col-md-9 col-md-offset-2">
-                    <p class="h2 header-font">{{ journal_post.entry_blurb }}
-                        <a href="{% url 'social:journal_entries' %}">
-                            <span class="para-font">View Journals</span>
-                        </a>
-                    </p>
-                </div>
-            </div>
-            {% for comment in journal_comments %}
-                <div class="row">
-                    <div class="col-md-5 col-md-offset-3">
-                        <div class="panel panel-default">
-                            <div class="panel-footer card">
-                                <p class="flow-text">
-                                    <p class="journal-font">{{ comment.comment }}</p>
-                                </p>
-                            </div>
+     <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
+                {% if journal_comments %}
+                    <div class="row">
+                        <div class="col-md-9 col-md-offset-2">
+                            <p class="h2 header-font">{{ journal_post.entry_blurb }}
+                                <a href="{% url 'social:journal_entries' %}">
+                                    <span class="para-font">View Journals</span>
+                                </a>
+                            </p>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        {% else %}
-                <h4 class="flow-text">No thoughts created for this milestone</h4>
-        {% endif %}
+                    {% for comment in journal_comments %}
+                        <div class="col-md-9 col-md-offset-2">
+                            <div class="row journal">
+                                <br>
+                                <div class="col-md-5">
+                                    <p class="journal-font">{{ comment.comment }}</p>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                        <h4 class="flow-text">No thoughts created for this milestone</h4>
+                        <a href="{% url 'social:journal_entries' %}"><span class="para-font">Back to Journals</span></a>
+                {% endif %}
+            </div>
+        </div>
       </div>
   {% endblock %}
 </body>

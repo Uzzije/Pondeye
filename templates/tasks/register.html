@@ -61,7 +61,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="{% url 'tasks:login' %}">Sign In</a>
+                        <a class="page-scroll" href="{% url 'tasks:login' %}"><span class="feed-font">Sign In</span></a>
                     </li>
                 </ul>
             </div>
@@ -74,9 +74,10 @@
         <div class="header-content">
             <div class="header-content-inner">
                 <div class="col-md-6">
-                    <h1>You have personal goals and projects. Journal the progress. Make it an experience.</h1>
+                    <br>
+                    <h1>Inspire others as they hold you accountable to your personal goals</h1>
                     <hr>
-                    <p>Pondeye is a a social journaling platform for visually sharing your progress on your personal goals and projects</p>
+                    <p class="feed-font" style="color: #0b0b0b">Pondeye is a journal sharing platform for your personal goals and projects.</p>
                 </div>
                 <div class="col-md-6">
                     {% if messages %}
