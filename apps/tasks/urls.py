@@ -1,13 +1,12 @@
 from django.conf.urls import url
 from .views import RegisterView, LoginView, HomeView, AddProject, LogoutView,\
         ProfileView, CheckMilestoneDone, \
-    CheckFailedProjectMilestoneView, CheckPojectDone
+    CheckFailedProjectMilestoneView, CheckPojectDone, PreLaunchView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^$', RegisterView.as_view(), name='register'),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^profile/(?P<user_name>[-\w\d\ ]+)$', ProfileView.as_view(), name='profile_view'),
@@ -16,6 +15,8 @@ urlpatterns = [
     url(r'^api/milstone-done', CheckMilestoneDone.as_view(), name="milestone_done"),
     url(r'^api/project-done', CheckPojectDone.as_view(), name="project_done"),
     url(r'^api/check-failed', CheckFailedProjectMilestoneView.as_view(), name="check_milestone_proj_failed"),
+    url(r'^$', PreLaunchView.as_view(), name='pre_launch_view'),
+    url(r'^register/$', RegisterView.as_view(), name='register'),
 ]
 
 

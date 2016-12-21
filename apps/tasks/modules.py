@@ -340,5 +340,5 @@ def display_error(form, request):
 	for field, mes in form.errors.items():
 		str_item = BeautifulSoup(mes[0], 'html.parser')
 		print (str_item.get_text())
-		messages.warning(request, "For this field: %s. %s" % (field, mes[0]))
+		messages.warning(request, "%s" % mes[0])
 

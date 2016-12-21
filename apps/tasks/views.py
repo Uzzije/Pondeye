@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
-from models import User, TikedgeUser, UserProject,Milestone, TagNames
+from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
 from ..social.models import ProfilePictures, JournalPost
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
@@ -24,6 +24,7 @@ import json
 from django.contrib import messages
 from braces.views import LoginRequiredMixin
 from global_variables_tasks import TAG_NAMES_LISTS
+from .forms import launch_form
 
 
 class RegisterView(View):
@@ -53,6 +54,29 @@ class RegisterView(View):
         else:
             display_error(form, request)
             return render(request, 'tasks/register.html', {'form': form})
+
+
+class PreLaunchView(View):
+
+    def get(self, request):
+        form = launch_form.LaunchForm()
+        return render(request, 'base/pre-launch.html', {'form':form})
+
+    def post(self, request):
+        form = launch_form.LaunchForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            try:
+                LaunchEmail.objects.get(email=email)
+                messages.info(request, "Hey! You are already registered!")
+                return render(request, 'base/pre-launch.html', {'form':form})
+            except ObjectDoesNotExist:
+                new_email = LaunchEmail(email=email)
+                new_email.save()
+                messages.success(request, "Thanks! We will let you know when we go live!")
+                return render(request, 'base/pre-launch.html', {'form':form})
+        display_error(form, request)
+        return render(request, 'base/pre-launch.html', {'form':form})
 
 
 class HomeView(LoginRequiredMixin, View):

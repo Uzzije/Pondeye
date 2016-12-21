@@ -73,3 +73,7 @@ class Milestone(models.Model):
         super(Milestone, self).save(*args, **kwargs)
 
 
+class LaunchEmail(models.Model):
+    email = models.CharField(max_length=150)
+
+

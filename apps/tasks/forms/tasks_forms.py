@@ -6,6 +6,7 @@ from datetimewidget.widgets import DateTimeWidget
 from form_module import get_current_datetime
 from django.contrib.auth import authenticate
 
+
 class RegisterForm(forms.Form):
 
     user_name = forms.CharField(label='User Name', max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Username'}))
