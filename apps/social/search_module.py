@@ -94,9 +94,9 @@ def find_everything(user, query_word):
 	query = str(query_word)
 	people = get_query(query, ['username', 'first_name', 'last_name'])
 	people_result = User.objects.filter(people).filter(~Q(username=user.username), (Q(is_staff=False) | Q(is_superuser=False)))
-	projects = get_query(query, ['name_of_project'])
+	projects = get_query(query, ['name_of_project', 'tags__name_of_tag'])
 	print query, " projddd"
-	tikege_user = TikedgeUser.objects.get(user=user)
+	#tikege_user = TikedgeUser.objects.get(user=user)
 	projects_result = UserProject.objects.filter(projects)
 	milestones = get_query(query, ['name_of_milestone'])
 	milestones_result = Milestone.objects.filter(milestones)
@@ -112,4 +112,5 @@ def find_everything(user, query_word):
 	print result_list
 	sorted_list = sorted(result_list, key=lambda res: res.created)
 	return sorted_list
+
 

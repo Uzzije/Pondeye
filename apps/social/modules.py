@@ -1,6 +1,7 @@
 from ..tasks.models import TikedgeUser, UserProject
 from .models import ProfilePictures, Graded, \
-    Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, Milestone, PictureSet
+    Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, Milestone, PictureSet, \
+	 PondRequest, Pond
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from friendship.models import Friend
@@ -239,7 +240,7 @@ def file_is_picture(picture):
     else:
         return False
 
-
+'''
 def get_pond(user):
     dict_list_of_pond = []
     friends = Friend.objects.friends(user)
@@ -260,6 +261,13 @@ def get_pond(user):
         })
     sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['created'])
     return sorted_pond
+'''
+
+def get_pond(user):
+	tikedge_user = TikedgeUser.objects.get(user=user)
+	#ponds = Pond.objects.filter(pond_members__contains=tikedge_user)
+	ponds = tikedge_user.pond_member.all()
+	return ponds
 
 
 def get_let_down_notifications(user):
@@ -271,9 +279,9 @@ def get_let_down_notifications(user):
             let_down = LetDownMilestone.objects.get(tasks=each_mil)
             count = let_down.users.count()
             let_down_list.append({
-            'name_of_blurb':each_mil.blurb,
-            'slug':each_mil.slug,
-            'count':count
+                'name_of_blurb':each_mil.blurb,
+                'slug':each_mil.slug,
+                'count':count
             })
         except ObjectDoesNotExist:
             pass
@@ -298,3 +306,20 @@ def get_milestone_vouch_notifications(user):
             pass
     return mil_vouch_list
 
+
+def send_pond_request(pond, user):
+    tikedge_user = TikedgeUser.objects.get(user=user)
+    try:
+       PondRequest.objects.get(pond=pond, user=tikedge_user, request_responded_to=False)
+    except ObjectDoesNotExist:
+       new_pond_request = PondRequest(pond=pond, user=tikedge_user)
+       new_pond_request.save()
+
+
+def available_ponds(tikedge_user, owner):
+	aval_ponds_list = []
+	aval_ponds = get_pond(owner)
+	for each_aval in aval_ponds:
+		if tikedge_user not in each_aval.pond_members:
+			aval_ponds_list.append(each_aval)
+	return aval_ponds

@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from image_cropping import ImageRatioField
-from ..tasks.models import TikedgeUser, UserProject, Milestone
+from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from friendship.models import FriendshipRequest
 from django.contrib.auth.models import User
 from django.utils.timezone import now
@@ -202,6 +202,26 @@ class Graded(models.Model):
     def get_num_grade_credibility(self):
         ratio = float(self.credibility_count/self.max_credibility_count)*100
         return int(ratio)
+
+
+class Pond(models.Model):
+    name_of_pond = models.CharField(max_length=250)
+    pond_creator = models.ForeignKey(TikedgeUser, null=True, blank=True, related_name='pond_creater')
+    pond_members = models.ManyToManyField(TikedgeUser, related_name='pond_member')
+    date_created = models.DateTimeField(default=now)
+    date_deleted = models.DateTimeField(blank=True, null=True)
+    tags = models.ManyToManyField(TagNames)
+
+
+class PondRequest(models.Model):
+    user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    pond = models.ForeignKey(Pond, blank=True, null=True)
+    date_requested = models.DateTimeField(default=now)
+    date_response = models.DateTimeField(blank=True, null=True)
+    request_accepted = models.BooleanField(default=False)
+    request_denied = models.BooleanField(default=False)
+    request_responded_to = models.BooleanField(default=False)
+    member_that_responded = models.ForeignKey(TikedgeUser, blank=True, null=True, related_name='the_member_that_responded')
 
 
 

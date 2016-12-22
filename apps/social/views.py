@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from forms import social_forms
 from models import (Notification, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
-                    JournalPost, JournalComment, SeenProject, ProfilePictures)
+                    JournalPost, JournalComment, SeenProject, ProfilePictures, Pond)
 from ..tasks.models import TikedgeUser, UserProject, Milestone
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
@@ -399,8 +399,55 @@ class SearchResultsView(LoginRequiredMixin, View):
 
 class PondView(LoginRequiredMixin, View):
     def get(self, request):
-        ponders = modules.get_pond(request.user)
-        return render('social/pond.html', {'ponders':ponders})
+        ponds = modules.get_pond(request.user)
+        return render('social/pond.html', {'ponds':ponds})
+
+
+class AddToPond(LoginRequiredMixin, View):
+
+    def post(self, request):
+        data = {}
+        pond_id = request.POST.get("pond_id")
+        pond = Pond.objects.get(id=int(pond_id))
+        user_id = request.POST.get("user_id")
+        other_user = TikedgeUser.objects.get(id=int(user_id))
+        pond.add(other_user)
+        pond.save()
+        try:
+            notification = Notification(pond=pond, user=other_user.user,
+                                        type_of_notification=global_variables.ADD_TO_POND)
+            notification.save()
+            data['status'] = True
+        except ():
+            data['status'] = False
+            pass
+        return HttpResponse(json.dumps(data))
+
+
+class PondRequest(LoginRequiredMixin, View):
+
+    def post(self, request):
+        data = {}
+        pond_id = request.POST.get("pond_id")
+        pond = Pond.objects.get(id=int(pond_id))
+        modules.send_pond_request(pond, request.user)
+        try:
+            notification = Notification(pond=pond, user=request.user,
+                                        type_of_notification=global_variables.POND_REQUEST)
+            notification.save()
+            data['status'] = True
+        except ():
+            data['status'] = False
+            pass
+        return HttpResponse(json.dumps(data))
+
+
+
+
+
+
+
+
 
 
 

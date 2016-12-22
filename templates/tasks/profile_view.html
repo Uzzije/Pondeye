@@ -12,12 +12,13 @@
                     <div class="col-md-6">
                         <span class="h1 status-font link-color">{{ status_of_user }}</span>
                     </div>
-                    {% if not is_friend %}
+                    {% if not aval_pond %}
                         <div class="col-md-3 col-md-offset-9">
-                            <button id="add-friend-button" name="{{ user.id }}" class="btn-link">
+                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#pondRowsModal">
                                 <span class="para-font">Add to Pond</span>
                             </button>
                         </div>
+                        {% include "social/pond_list.html" %}
                     {% endif %}
                 </div>
                 <div class="row">
@@ -132,22 +133,36 @@
                 console.log("Friends Adding Request sent ", + id);
                 send_friends_request(id);
             });
+            $("#add_to_pond").click(function(){
+                 var id = '{{ user.id }}';
+                 var pond_id = $( "#add_pond_list option:selected" ).val()
+                 add_to_pond(id, pond_id);
 
-            function send_friends_request(id){
+            });
+            function add_to_pond(id, pond_id){
                 $.ajaxSetup({
                     data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
                 });
                 $.ajax({
                     url: '{% url 'social:send_friend_request' %}',
                     type: "POST",
-                    data: { user_id: id  },
-                    success: function(){
-                        $("#add-friend-button").text("Pond Invite Sent!");
-                        console.log("Successful sent request");
-                        toastr.success("Successfully sent request!");
+                    data: { user_id: id, pond_id:  pond_id},
+                    success: function(data){
+                        var statusParse = JSON.parse(response);
+                        var status = statusParse["status"];
+                        if(status == true){
+                            console.log("Successful Added to Pond!");
+                            toastr.success("Successfully sent request!");
+                        }
+                        else{
+                            console.log("Successful Added to Pond!");
+                            toastr.warning("Sorry, Something Went Wrong. PleaseTry Again!");
+                        }
                     },
                     error: function(xhr){
                         $("#error-message").text(xhr.responseText).show();
+                        toastr.warning("Sorry, Something Went Wrong. PleaseTry Again!");
+                        console.log("Successful Added to Pond!");
                     }
                 })
             }

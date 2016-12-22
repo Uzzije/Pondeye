@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from ..social.modules import get_journal_message, \
-    get_notifications, get_pond, resize_image
+    get_notifications, get_pond, resize_image, available_ponds
 from modules import get_user_projects, \
     time_has_past,\
     get_todays_milestones, \
@@ -183,20 +183,11 @@ class ProfileView(LoginRequiredMixin, View):
         except ObjectDoesNotExist:
             has_prof_pic = None
         user_picture_form = tasks_forms.PictureUploadForm()
-        try:
-            if Friend.objects.are_friends(request.user, user) or (request.user.username == user.username):
-                is_friend = True
-                print "friends?", (Friend.objects.are_friends(request.user, user))
-            else:
-                is_friend = False
-                print "do what no one those ", request.user, user
-        except ObjectDoesNotExist:
-            print "trouble in paradise"
-            is_friend = False
+        aval_pond = available_ponds(tikedge_user, request.user)
         return render(request, 'tasks/profile_view.html', {'current_tasks':current_tasks,
                                                     'has_prof_pic':has_prof_pic,
                                                    'user_picture_form':user_picture_form,'user':tikedge_user,
-                                                    'is_friend':is_friend,'completed_mil_count':completed_mil_count,
+                                                    'aval_pond':aval_pond,'completed_mil_count':completed_mil_count,
                                                    'failed_proj_count':failed_proj_count,
                                                    'complete_proj_count':completed_proj_count,
                                                     'failed_mil_count':failed_mil_count,

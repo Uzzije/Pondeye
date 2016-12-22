@@ -75,5 +75,3 @@ class Milestone(models.Model):
 
 class LaunchEmail(models.Model):
     email = models.CharField(max_length=150)
-
-
