@@ -64,7 +64,9 @@
                     <div class="widget">
                       <div class="widget-header">
                         <div class="widget-header">
-                            <h3 class="widget-caption"><span class="display-font">Your Pond</span></h3>
+                            <h3 class="widget-caption display-font">
+                                <a href="{% url 'social:all_pond' %}">Your Pond</a>
+                            </h3>
                         </div>
                       </div>
                       <div class="widget-body bordered-top bordered-red">
@@ -72,17 +74,13 @@
                             <div class="content">
                                  <ul class="list-unstyled team-members">
                                     {% if ponders %}
-                                     {% for ponder in ponders %}
+                                     {% for pond in ponders %}
                                         <li>
                                             <div class="row">
-                                                <div class="col-xs-3">
-                                                    <div class="avatar">
-                                                     <img src="{{ ponder.profile_pics_url }}" alt="img" class="img-circle img-no-padding img-responsive">
-                                                    </div>
-                                                </div>
                                                  <div class="col-md-9">
-                                                    <a href="{% url 'tasks:profile_view' ponder.username %}">
-                                                        <span class="para-font">{{ ponder.first_name }} {{ ponder.last_name }}</span>
+                                                    <span class="para-font">{{ pond.name_of_pond }}</span>
+                                                     <a href="{% url 'social:individual_pond' pond.slug %}">
+                                                        <span class="para-font">view pond...</span>
                                                     </a>
                                                  </div>
                                             </div>
@@ -242,6 +240,8 @@
                     }
                 })
             }
+
+
             function toggle_upload(){
                 console.log("i am being hit");
                 $("#showbutton").toggle(100);

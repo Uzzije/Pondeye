@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import View
-from forms import social_forms
+from forms import social_forms, pond_form
 from models import (Notification, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
-                    JournalPost, JournalComment, SeenProject, ProfilePictures, Pond)
-from ..tasks.models import TikedgeUser, UserProject, Milestone
+                    JournalPost, JournalComment, SeenProject, ProfilePictures, Pond, PondRequest,
+                    PondMembership)
+from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
@@ -21,7 +22,8 @@ from django.contrib import messages
 from django.db.models import Q
 from search_module import find_everything
 from braces.views import LoginRequiredMixin
-
+from ..tasks.global_variables_tasks import TAG_NAMES_LISTS
+from datetime import datetime
 
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)
@@ -357,14 +359,23 @@ class TagSearchView(View):
 class NotificationsViews(LoginRequiredMixin, View):
 
     def get(self, request):
-        return render(request, 'social/notification_view.html')
+        notif = modules.get_notifications(request.user)
+        return render(request, 'social/notification_view.html', {'notif':notif})
 
 
-class NewFriendNotificationsView(LoginRequiredMixin, View):
-
+class NewPondertNotificationView(LoginRequiredMixin, View):
+    """
+        View for viewing all new people in your pond
+    """
     def get(self, request):
-        ponders = modules.get_pond(request.user)
-        return render(request, 'social/new_ponders.html', {'ponders':ponders})
+        pond_reqs = modules.get_new_pond_member_notification(task_modules.get_tikedge_user(request.user))
+        return render(request, 'social/new_ponders.html', {'pond_reqs':pond_reqs})
+
+    def post(self, request):
+        modules.mark_new_ponder_notification_as_read(request.user)
+        data = {}
+        data["status"] = True
+        return HttpResponse(json.dumps(data))
 
 
 class ProjectNotificationsView(LoginRequiredMixin, View):
@@ -400,7 +411,7 @@ class SearchResultsView(LoginRequiredMixin, View):
 class PondView(LoginRequiredMixin, View):
     def get(self, request):
         ponds = modules.get_pond(request.user)
-        return render('social/pond.html', {'ponds':ponds})
+        return render(request, 'social/pond.html', {'ponders':ponds})
 
 
 class AddToPond(LoginRequiredMixin, View):
@@ -411,42 +422,172 @@ class AddToPond(LoginRequiredMixin, View):
         pond = Pond.objects.get(id=int(pond_id))
         user_id = request.POST.get("user_id")
         other_user = TikedgeUser.objects.get(id=int(user_id))
-        pond.add(other_user)
-        pond.save()
         try:
-            notification = Notification(pond=pond, user=other_user.user,
+            for each_member in pond.pond_members.all():
+                notification = Notification(user=each_member.user,
+                                        type_of_notification=global_variables.NEW_PONDERS)
+                notification.save()
+            pond.pond_members.add(other_user)
+            pond.save()
+            pond_membership = PondMembership(user=other_user, pond=pond)
+            pond_membership.save()
+            pond_request = PondRequest(user=other_user, pond=pond, date_response=datetime.now(),
+                                       request_accepted=True,
+                                       member_that_responded=task_modules.get_tikedge_user(request.user),
+                                       request_responded_to=True)
+            pond_request.save()
+            notification = Notification(user=other_user.user,
                                         type_of_notification=global_variables.ADD_TO_POND)
             notification.save()
             data['status'] = True
-        except ():
+        except (AttributeError, ValueError, TypeError):
             data['status'] = False
             pass
         return HttpResponse(json.dumps(data))
 
 
-class PondRequest(LoginRequiredMixin, View):
+class PondRequestView(LoginRequiredMixin, View):
+    """
+        Send Pond Request to pond members
+    """
+    def post(self, request):
+        pond_id = request.POST.get("pond_id")
+        pond = Pond.objects.get(id=int(pond_id))
+        data = modules.send_pond_request(pond, request.user)
+        return HttpResponse(json.dumps(data))
+
+
+class IndividualPondView(LoginRequiredMixin, View):
+
+    def get(self, request, slug):
+        the_pond = Pond.objects.get(slug=slug)
+        pond_list_members = the_pond.pond_members.all()
+        ponders = modules.get_pond_profile(pond_list_members, the_pond.pond_creator)
+        tikedge_user = task_modules.get_tikedge_user(request.user)
+        pond_member = pond_list_members.filter(user=tikedge_user.user)
+        pond_status = task_modules.get_pond_status(pond_list_members)
+        '''
+        try:
+            ponders.index(tikedge_user)
+            pond_member = True
+        except ValueError:
+            pond_member = False
+        '''
+        return render(request, 'social/individual_pond.html',
+                      {
+                          'ponders':ponders,
+                          'pond':the_pond,
+                           'pond_member':pond_member,
+                            'pond_stage':pond_status
+                      })
+
+    def post(self, request):
+        return
+
+
+class NewPondEntryView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        form = pond_form.PondEntryForm()
+        return render(request, 'social/new_pond_entry.html', {'form':form, 'tag_names':TAG_NAMES_LISTS})
+
+    def post(self, request):
+        form = pond_form.PondEntryForm(request.POST)
+        if form.is_valid():
+            pond_name = form.cleaned_data.get('name_of_pond')
+            purpose = form.cleaned_data.get('purpose')
+            tags = request.POST.getlist('tags')
+            pond = Pond(name_of_pond=pond_name, purpose=purpose,
+                        pond_creator=task_modules.get_tikedge_user(request.user))
+            pond.save()
+            for item in tags:
+                print tags, " tags why"
+                try:
+                    item_obj = TagNames.objects.get(name_of_tag=item)
+                except ObjectDoesNotExist:
+                    item_obj = TagNames(name_of_tag=item)
+                    item_obj.save()
+                pond.tags.add(item_obj)
+            pond.pond_members.add(task_modules.get_tikedge_user(request.user))
+            pond.save()
+            pond_membership = PondMembership(user=task_modules.get_tikedge_user(request.user),
+                                             pond=pond)
+            pond_membership.save()
+            messages.success(request, "%s was created!" % pond_name)
+            return HttpResponseRedirect(reverse('tasks:home'))
+        task_modules.display_error(form, request)
+        return render(request, 'social/new_pond_entry.html', {'form':form, 'tag_names':TAG_NAMES_LISTS})
+
+
+class AcceptPondRequest(LoginRequiredMixin, View):
 
     def post(self, request):
         data = {}
-        pond_id = request.POST.get("pond_id")
-        pond = Pond.objects.get(id=int(pond_id))
-        modules.send_pond_request(pond, request.user)
-        try:
-            notification = Notification(pond=pond, user=request.user,
-                                        type_of_notification=global_variables.POND_REQUEST)
-            notification.save()
-            data['status'] = True
-        except ():
-            data['status'] = False
-            pass
+        pond_request_id = request.POST.get("pond_request_id")
+        pond_request = PondRequest.objects.get(id=int(pond_request_id))
+        if pond_request.request_responded_to:
+            data["status"] = "already exist"
+            return HttpResponse(json.dumps(data))
+        else:
+            try:
+                pond_request.date_response = datetime.now()
+                pond_request.request_accepted = True
+                pond_request.request_responded_to = True
+                pond_request.member_that_responded = task_modules.get_tikedge_user(request.user)
+                pond_request.save()
+                data["status"] = "accepted"
+                new_notif = Notification(user=pond_request.user.user, type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
+                new_notif.save()
+                for each_member in pond_request.pond.pond_members.all():
+                    new_notif = Notification(user=each_member.user, type_of_notification=global_variables.NEW_PONDERS)
+                    new_notif.save()
+                pond_request.pond.pond_members.add(pond_request.user)
+                pond_request.pond.save()
+                pond_membership = PondMembership(user=pond_request.user, pond=pond_request.pond)
+                pond_membership.save()
+                return  HttpResponse(json.dumps(data))
+            except (AttributeError, ValueError, TypeError):
+                data["status"] = "error"
+                return HttpResponse(json.dumps(data))
+
+
+class DenyPondRequest(LoginRequiredMixin, View):
+
+    def post(self, request):
+        data = {}
+        pond_request_id = request.POST.get("pond_request_id")
+        pond_request = PondRequest.objects.get(id=int(pond_request_id))
+        if pond_request.request_responded_to:
+            data["status"] = "already exist"
+            return HttpResponse(json.dumps(data))
+        else:
+            try:
+                pond_request.date_response = datetime.now()
+                pond_request.request_accepted = False
+                pond_request.request_denied = True
+                pond_request.request_responded_to = True
+                pond_request.member_that_responded = task_modules.get_tikedge_user(request.user)
+                pond_request.save()
+                data["status"] = "accepted"
+                return  HttpResponse(json.dumps(data))
+            except (AttributeError, ValueError, TypeError):
+                data["status"] = "error"
+                return HttpResponse(json.dumps(data))
+
+
+class NewPondRequestNotificationView(LoginRequiredMixin, View):
+    """
+    A view to show all pond request that a person can either accept or deny
+    """
+    def get(self, request):
+        ponder_request = PondRequest.objects.filter(pond__pond_members__user=request.user).order_by('-date_requested')
+        return render(request, 'social/pond_request_notification.html', {'pond_request':ponder_request})
+
+    def post(self, request):
+        modules.mark_pond_request_notification_as_read(request.user)
+        data = {}
+        data["status"] = True
         return HttpResponse(json.dumps(data))
-
-
-
-
-
-
-
 
 
 

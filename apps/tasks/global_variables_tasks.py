@@ -6,3 +6,8 @@ DECODE_DICTIONARY = {'a':'c', 'b':'z', 'c':'g', 'd':'h', 'e':'w', 'f':'x', 'g':'
 
 TAG_NAMES_LISTS = ['Learning an Instrument','Social Cause', 'Learning a Language','Habitat for Humanity',
                    'Self Improvement', 'Family']
+
+POND_FIRST_STAGE = "Learning to Support Each Other"
+POND_SECOND_STAGE = "Supporting Each Other"
+POND_THIRD_STAGE = "Motivating Each Other"
+POND_FOURTH_STAGE = "Inspiring Each Other"

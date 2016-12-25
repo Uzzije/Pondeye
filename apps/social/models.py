@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 from global_variables import NEW_PROJECT
 from random import randint
-# Create your models here.
+from django.template.defaultfilters import slugify
 
 
 class ProfilePictures(models.Model):
@@ -112,7 +112,8 @@ class JournalPost(models.Model):
         if not self.slug:
             str_slug = str(randint(0, 999999))
             str_slug_two = str(randint(9000, 99999999))
-            self.slug = str_slug + str_slug_two
+            the_slug = str_slug + str_slug_two + str(self.day_created)
+            self.slug = slugify(the_slug)
         super(JournalPost, self).save(*args, **kwargs)
 
 
@@ -211,6 +212,21 @@ class Pond(models.Model):
     date_created = models.DateTimeField(default=now)
     date_deleted = models.DateTimeField(blank=True, null=True)
     tags = models.ManyToManyField(TagNames)
+    slug = models.SlugField(default=None, max_length=100)
+    purpose = models.CharField(max_length=110, default=None)
+    blurb = models.CharField(max_length=51, default=None)
+
+    def save(self, *args, **kwargs):
+        if len(self.name_of_pond) > 50:
+            self.blurb = self.name_of_pond[0:50]
+        else:
+            self.blurb = self.name_of_pond
+        if not self.slug:
+            str_slug = str(randint(0, 999999))
+            str_slug_two = str(randint(9000, 99999999))
+            the_slug = str_slug + str_slug_two + str(self.date_created)
+            self.slug = slugify(the_slug)
+        super(Pond, self).save(*args, **kwargs)
 
 
 class PondRequest(models.Model):
@@ -222,6 +238,12 @@ class PondRequest(models.Model):
     request_denied = models.BooleanField(default=False)
     request_responded_to = models.BooleanField(default=False)
     member_that_responded = models.ForeignKey(TikedgeUser, blank=True, null=True, related_name='the_member_that_responded')
+
+
+class PondMembership(models.Model):
+    user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    pond = models.ForeignKey(Pond, blank=True, null=True)
+    date_joined = models.DateTimeField(default=now)
 
 
 

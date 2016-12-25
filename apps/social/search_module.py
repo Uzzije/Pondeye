@@ -3,7 +3,7 @@ import re
 from django.db.models import Q
 from ..tasks.models import TikedgeUser, Milestone, UserProject
 from models import User
-from .models import ProfilePictures
+from .models import ProfilePictures, Pond
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -14,6 +14,7 @@ class GeneralSearchFeed:
 		self.is_person = self.get_is_person()
 		self.is_project = self.get_is_project()
 		self.is_milestone = self.get_is_milestone()
+		self.is_pond = self.get_is_pond()
 		self.created = self.date_created()
 
 	def get_is_person(self):
@@ -47,9 +48,17 @@ class GeneralSearchFeed:
 		elif (self.type_of_result == global_variables.PROJECT_TAG_SEARCH
 				or self.type_of_result == global_variables.PROJECT_NAME_SEARCH):
 			date_created = self.feed_object.made_live
+		elif self.type_of_result == global_variables.POND_SEARCH_NAME:
+			date_created = self.feed_object.date_created
 		else:
 			date_created = self.feed_object.created_date
 		return date_created
+
+	def get_is_pond(self):
+		if self.type_of_result == global_variables.POND_SEARCH_NAME:
+			return True
+		else:
+			return False
 
 
 def normalize_query(query_string,
@@ -100,6 +109,8 @@ def find_everything(user, query_word):
 	projects_result = UserProject.objects.filter(projects)
 	milestones = get_query(query, ['name_of_milestone'])
 	milestones_result = Milestone.objects.filter(milestones)
+	ponds = get_query(query, ['name_of_pond', 'tags__name_of_tag', 'purpose'])
+	pond_list = Pond.objects.filter(ponds)
 	for pip in people_result:
 		search_obj = GeneralSearchFeed(pip, global_variables.PERSON_SEARCH)
 		result_list.append(search_obj)
@@ -108,6 +119,9 @@ def find_everything(user, query_word):
 		result_list.append(search_obj)
 	for mil in milestones_result:
 		search_obj = GeneralSearchFeed(mil, global_variables.MILESTONE_NAME_SEARCH)
+		result_list.append(search_obj)
+	for pond in pond_list:
+		search_obj = GeneralSearchFeed(pond, global_variables.POND_SEARCH_NAME)
 		result_list.append(search_obj)
 	print result_list
 	sorted_list = sorted(result_list, key=lambda res: res.created)

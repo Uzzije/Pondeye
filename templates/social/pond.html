@@ -1,25 +1,52 @@
-{% extends 'social/../base/nav_bar.html' %}
+{% extends 'tasks/../base/nav_bar.html' %}
 {% block staticfiles %}{% load static from staticfiles %}{% endblock %}
 <!DOCTYPE html>
-<html>
-  <head>
-  </head>
-  <body>
-    {% block body %}
-        <div class="container">
-            {% for ponder in ponders %}
-                <div class="row">
-                     <div class="col-md-3">
-                         <img src="{{ ponder.profile_pics.url }}" alt="No Picture Uploaded" class="img-thumbnail">
-                     </div>
-                     <div class="col-md-9">
-                        <a href="{% url 'tasks:profile_view' ponder.username %}">
-                            <span class="flow-text">{{ ponder.first_name }} {{ ponder.last_name }}</span>
-                        </a>
-                     </div>
-                </div>
-            {% endfor %}
-        </div>
+<html lang="en">
+<head>
+    {% block custom_design %}
+    <meta charset="UTF-8">
+    <title>Pond</title>
     {% endblock %}
-</body>
-</html>
+</head>
+<body>
+{% block body %}
+    {% load tz %}
+    <div class="container" style="margin-top:50px;">
+       <div class="col-md-10 col-md-offset-1">
+           <div class="row">
+                <div class="row" id="pond_entry_id">
+                    <div class="col-md-10">
+                        <header><span class="feed-font">Your Ponds</span></header>
+                        <br>
+                        <div class="widget">
+                          <div class="widget-body bordered-top bordered-red">
+                            <div class="card">
+                                <div class="content">
+                                     <ul class="list-unstyled team-members">
+                                        {% if ponders %}
+                                         {% for pond in ponders %}
+                                            <li>
+                                                <div class="row">
+                                                     <div class="col-md-9">
+                                                        <span class="para-font">{{ pond.name_of_pond }}</span>
+                                                         <a href="{% url 'social:individual_pond' pond.slug %}">
+                                                            <span class="para-font">view pond...</span>
+                                                        </a>
+                                                     </div>
+                                                </div>
+                                             </li>
+                                         {% endfor %}
+                                        {% else %}
+                                            <span class="para-font">Empty Pond</span>
+                                        {% endif %}
+                                     </ul>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </div>
+{% endblock %}

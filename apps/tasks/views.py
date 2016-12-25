@@ -91,7 +91,7 @@ class HomeView(LoginRequiredMixin, View):
         failed_proj_count = get_failed_proj_count(request.user)
         completed_proj_count = get_completed_proj_count(request.user)
         tikedge_user = TikedgeUser.objects.get(user=request.user)
-        notifications = get_notifications(request.user, tikedge_user)
+        notifications = get_notifications(request.user)
         status_of_user = get_status(request.user)
         try:
             has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
@@ -99,7 +99,7 @@ class HomeView(LoginRequiredMixin, View):
             has_prof_pic = None
             pass
         user_picture_form = tasks_forms.PictureUploadForm()
-        ponders = get_pond(request.user)
+        ponders = get_pond(request.user)[0:5]
         return render(request, 'tasks/home.html', {'current_tasks':current_task,
                                                    'failed_mil_count':failed_mil_count, 'has_prof_pic':has_prof_pic,
                                                    'user_picture_form':user_picture_form,
@@ -137,7 +137,7 @@ class HomeView(LoginRequiredMixin, View):
             failed_proj_count = get_failed_proj_count(request.user)
             completed_proj_count = get_completed_proj_count(request.user)
             tikedge_user = TikedgeUser.objects.get(user=request.user)
-            notifications = get_notifications(request.user, tikedge_user)
+            notifications = get_notifications(request.user)
             status_of_user = get_status(request.user)
             try:
                 has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
@@ -187,13 +187,14 @@ class ProfileView(LoginRequiredMixin, View):
         return render(request, 'tasks/profile_view.html', {'current_tasks':current_tasks,
                                                     'has_prof_pic':has_prof_pic,
                                                    'user_picture_form':user_picture_form,'user':tikedge_user,
-                                                    'aval_pond':aval_pond,'completed_mil_count':completed_mil_count,
+                                                    'completed_mil_count':completed_mil_count,
                                                    'failed_proj_count':failed_proj_count,
                                                    'complete_proj_count':completed_proj_count,
                                                     'failed_mil_count':failed_mil_count,
                                                     'current_projs':current_projs,
                                                     'status_of_user':status_of_user,
                                                     "user_name":user.username,
+                                                    "aval_pond":aval_pond
                                                    })
 
 
@@ -330,7 +331,6 @@ class AddProject(LoginRequiredMixin, View):
                 messages.error(request, "Hey, there might be a time conflict!")
         if 'proj_create' in request.POST or 'proj_save' in request.POST:
             try:
-                #end_by_r = convert_html_to_datetime(request.POST.get('done_by_proj'))
                 if proj_form.is_valid():
                     end_by = proj_form.cleaned_data.get('project_date')
                 else:

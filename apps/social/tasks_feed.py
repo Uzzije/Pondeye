@@ -181,6 +181,38 @@ class NotificationFeed:
             notification_list.append(new_object)
         return notification_list
 
+    def highight_new_notification(self):
+        unread_notify = self.notification.filter(Q(read=False)).order_by('created')
+        pond_request = False
+        pond_request_accepted = False
+        new_ponder = False
+        interested = False
+        let_down = False
+        milestone_vouch = False
+        for each_notif in unread_notify:
+            if each_notif.type_of_notification == global_variables.POND_REQUEST:
+                pond_request = True
+            if each_notif.type_of_notification == global_variables.POND_REQUEST_ACCEPTED:
+                pond_request_accepted = True
+            if each_notif.type_of_notification == global_variables.NEW_PONDERS:
+                new_ponder = True
+            if each_notif.type_of_notification == global_variables.NEW_PROJECT_INTERESTED:
+                interested = True
+            if each_notif.type_of_notification == global_variables.NEW_PROJECT_LETDOWN:
+                let_down = True
+            if each_notif.type_of_notification == global_variables.NEW_PROJECT_MILESTONE:
+                milestone_vouch = True
+        notification_dic = {
+            "pond_request":pond_request,
+            "pond_request_accepted":pond_request_accepted,
+            "new_ponder":new_ponder,
+            "interested":interested,
+            "let_down":let_down,
+            "milestone_vouch":milestone_vouch
+        }
+        return notification_dic
+
+
 
 class SingleNotification:
 

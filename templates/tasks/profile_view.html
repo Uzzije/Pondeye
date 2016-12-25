@@ -12,7 +12,7 @@
                     <div class="col-md-6">
                         <span class="h1 status-font link-color">{{ status_of_user }}</span>
                     </div>
-                    {% if not aval_pond %}
+                    {% if aval_pond %}
                         <div class="col-md-3 col-md-offset-9">
                             <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#pondRowsModal">
                                 <span class="para-font">Add to Pond</span>
@@ -107,7 +107,9 @@
                                     <span id=row_curr_{{ current_task.id }}>
                                       <div class="post-heading">
                                           <div class="pull-left meta">
-                                              <a class="post-user-name" href="{% url 'social:milestone_view' current_task.slug %}">{{ current_task.blurb }}</a>
+                                              <a class="post-user-name" href="{% url 'social:milestone_view' current_task.slug %}">
+                                                  {{ current_task.blurb }}
+                                              </a>
                                           </div>
                                       </div>
                                     </span>
@@ -144,24 +146,24 @@
                     data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
                 });
                 $.ajax({
-                    url: '{% url 'social:send_friend_request' %}',
+                    url: '{% url 'social:add_to_pond' %}',
                     type: "POST",
                     data: { user_id: id, pond_id:  pond_id},
-                    success: function(data){
+                    success: function(response){
                         var statusParse = JSON.parse(response);
                         var status = statusParse["status"];
                         if(status == true){
                             console.log("Successful Added to Pond!");
-                            toastr.success("Successfully sent request!");
+                            toastr.success("Successfully Added to Pond!");
                         }
                         else{
                             console.log("Successful Added to Pond!");
-                            toastr.warning("Sorry, Something Went Wrong. PleaseTry Again!");
+                            toastr.warning("Seems Like Someone Beat You to It!");
                         }
                     },
                     error: function(xhr){
                         $("#error-message").text(xhr.responseText).show();
-                        toastr.warning("Sorry, Something Went Wrong. PleaseTry Again!");
+                        toastr.warning("Sorry, Something Went Wrong. Please Try Again!");
                         console.log("Successful Added to Pond!");
                     }
                 })

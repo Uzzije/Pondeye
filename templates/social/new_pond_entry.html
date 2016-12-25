@@ -1,0 +1,78 @@
+{% extends 'tasks/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block custom_design %}
+    <meta charset="UTF-8">
+    <title>Home</title>
+    {{ proj_form.media }}
+        {{ mil_form.media }}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    {% load tz %}
+    <div class="container" style="margin-top:50px;">
+       <div class="col-md-10 col-md-offset-1">
+           <div class="row">
+                <form method="post" action="{% url 'social:new_pond_entry' %}">{% csrf_token %}
+                    <div class="row" id="pond_entry_id">
+                        <div class="col-md-10">
+                            <header><span class="feed-font">New Pond Entry</span></header>
+                            <br>
+                            <div class="panel panel-default">
+                                <div class="panel-body cards">
+                                    <div class="row">
+                                        <div class="col-md-8 col-md-offset-1">
+                                            <p class="para-font">Word count(245 max): <span id="pond_name_count">0</span> words</p>
+                                            <br>
+                                            {{ form.name_of_pond }}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-8 col-md-offset-1">
+                                            <p class="para-font">Word count(100 max): <span id="purpose_count"></span> words</p>
+                                            <hr>
+                                            {{ form.purpose }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <p class="para-font">What type of pond is this?</p>
+                                    <br>
+                                    <div class="row">
+                                        {% for tag in tag_names %}
+                                            <div class="col-md-6">
+                                                <input class="para-font" type="checkbox" id="id{{ tag }}" name="tags" value="{{ tag }}">
+                                                <label class="para-font" for="id{{ tag }}">{{ tag }} Pond&nbsp;</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <button type="submit" id="" name="proj_create" class="btn btn-primary">Create Pond</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+       </div>
+    </div>
+    <script>
+        $("#id_purpose").keyup(function(){
+            var count = $("#id_purpose").val().length;
+            $("#purpose_count").text('');
+            $("#purpose_count").text(count);
+        });
+        $("#id_name_of_pond").keyup(function(){
+            var count = $("#id_name_of_pond").val().length;
+            $("#pond_name_count").text = '';
+            $("#pond_name_count").text(count);
+        })
+    </script>
+{% endblock %}

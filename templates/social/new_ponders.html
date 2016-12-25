@@ -1,4 +1,4 @@
-{% extends 'social/notification_view.html' %}
+{% extends 'base/base.html' %}
 {% block staticfiles %}{% load static from staticfiles %}{% endblock %}
 <!DOCTYPE html>
 <html>
@@ -14,20 +14,43 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-1">
                         <div class="list-group">
-                            {% for ponder in ponders %}
+                            {% if pond_reqs %}
+                            {% for pond_req in pond_reqs %}
                                  <div class="list-group-item">
-                                     <img src="{{ ponder.profile_pics_url }}" style="width: 20%; height: 20%;" alt="No Picture Uploaded" class="img-thumbnail">
-                                        <span class="para-font">{{ ponder.first_name }} {{ ponder.last_name }} has joined your pond</span>
-                                     <a class="" href="{% url 'tasks:profile_view' ponder.username %}"><span class="para-font">view profile</span>
+                                        <span class="para-font">{{ pond_req.user.user.first_name }}
+                                            {{ pond_req.user.user.last_name }} has been added to</span>
+                                         <a href="{% url 'social:individual_pond' pond_req.pond.slug %}">
+                                             <span class="para-font"> {{ pond_req.pond.blurb }}</span></a><span class="para-font"> pond.</span>
+                                     <a class="" href="{% url 'tasks:profile_view' pond_req.user.user.username %}">
+                                         <span class="para-font">view member</span>
                                     </a>
                                  </div>
                             {% endfor %}
+                                {% else %}
+                                    <span class="para-font">No new persons add to your pond recently</span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function(){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:new_ponder_notifications' %}',
+                    type: "POST",
+                    success: function(){
+                        console.log("Successful sent request to remove new feature");
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                    }
+                })
+            });
+        </script>
     {% endblock %}
-
 </body>
 </html>

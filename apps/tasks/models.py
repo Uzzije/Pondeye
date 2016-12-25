@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 from random import randint
-
+from django.template.defaultfilters import slugify
 
 class TikedgeUser(models.Model):
     user = models.OneToOneField(User)
@@ -40,7 +40,8 @@ class UserProject(models.Model):
         if not self.slug:
             str_slug = str(randint(0, 999999))
             str_slug_two = str(randint(9000, 99999999))
-            self.slug = str_slug + str_slug_two
+            the_slug = str_slug + str_slug_two + str(self.created)
+            self.slug = slugify(the_slug)
         super(UserProject, self).save(*args, **kwargs)
 
 

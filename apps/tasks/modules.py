@@ -11,7 +11,7 @@ from global_variables_tasks import DECODE_DICTIONARY
 from django.utils.timezone import is_aware
 from bs4 import BeautifulSoup
 from django.contrib import messages
-
+import global_variables_tasks
 
 def get_user_projects(user):
     try:
@@ -195,9 +195,8 @@ def convert_html_to_datetime(date_time):
 
 
 def time_has_past(time_infos):
-        time_info = time_to_utc(time_infos)
-        if time_info:
-
+        if time_infos:
+            time_info = time_to_utc(time_infos)
             if time_info.time() < get_current_datetime().time():
 
                 if time_info.date() > get_current_datetime().date():
@@ -281,6 +280,45 @@ def get_status(user):
                 status = "The Doer"
             elif ratio_percentage > 25.5:
                 status = "The Learner"
+            return status
+
+
+def get_pond_status(pond_members):
+    pond_count = len(pond_members)
+    status = global_variables_tasks.POND_FIRST_STAGE
+    mil_all = 0
+    mil_success = 0
+    milestone_count = mil_success + mil_all
+    for tikedge_user in pond_members:
+        mil_all = mil_all + tikedge_user.milestone_set.all().count()
+        mil_success = mil_success + get_completed_mil_count(tikedge_user.user)
+    if mil_all == 0:
+        return status
+    ratio_percentage = float(mil_success/mil_all)*100
+    if milestone_count <= 9*pond_count:
+        return status
+    else:
+        if milestone_count >= 10*pond_count and milestone_count < 50*pond_count:
+            if ratio_percentage > 75.5:
+                status = global_variables_tasks.POND_SECOND_STAGE
+            return status
+        if milestone_count >= 50*pond_count and milestone_count < 150*pond_count:
+            if ratio_percentage > 75.5:
+                status = global_variables_tasks.POND_THIRD_STAGE
+            elif ratio_percentage > 60.5:
+                status = global_variables_tasks.POND_SECOND_STAGE
+            elif ratio_percentage > 45.5:
+                status = global_variables_tasks.POND_THIRD_STAGE
+            return status
+        if milestone_count >= 150*pond_count:
+            if ratio_percentage > 75.5:
+                status = global_variables_tasks.POND_FOURTH_STAGE
+            elif ratio_percentage > 65.5:
+                status = global_variables_tasks.POND_THIRD_STAGE
+            elif ratio_percentage > 45.5:
+                status = global_variables_tasks.POND_SECOND_STAGE
+            elif ratio_percentage > 25.5:
+                status = global_variables_tasks.POND_FIRST_STAGE
             return status
 
 

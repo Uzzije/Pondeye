@@ -18,6 +18,8 @@
                                     <div class="panel panel-default">
                                         <div class="panel-body">
                                             {% if res.is_person %}
+                                                <p class="feed-font">Ponder</p>
+                                                    <br>
                                                 <div class="col-md-3">
                                                     <img src="{{ res.is_person.profile_pics.url }}" style="width: 80%; height: 80%;" alt="No Picture Uploaded" class="img-thumbnail">
                                                 </div>
@@ -28,15 +30,21 @@
                                                 </div>
                                             {% elif res.is_milestone %}
                                                 <div class="col-md-12">
-                                                    <a href="{% url 'social:milestone_view' res.feed_object.slug %}">
-                                                        <p class="flow-text">{{ res.feed_object.blurb }}</p>
-                                                    </a>
+                                                    <p class="feed-font">Milestone</p>
+                                                    <br>
+                                                    <p class="para-font">{{ res.feed_object.blurb }}
+                                                        <a href="{% url 'social:milestone_view' res.feed_object.slug %}">
+                                                        more...</a>
+                                                    </p>
                                                 </div>
-                                            {% else %}
+                                            {% elif res.is_pond  %}
                                                 <div class="col-md-12">
-                                                    <a href="{% url 'social:project_view' res.feed_object.slug %}">
-                                                        <p class="flow-text">{{ res.feed_object.blurb }}</p>
-                                                    </a>
+                                                <p class="feed-font">Pond</p>
+                                                    <br>
+                                                <p class="para-font">{{ res.feed_object.name_of_pond }}
+                                                    <a href="{% url 'social:individual_pond' res.feed_object.slug %}">
+                                                       <span class="para-font"> view pond...</span>
+                                                    </a></p>
                                                 </div>
                                             {% endif %}
                                         </div>

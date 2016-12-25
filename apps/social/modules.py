@@ -1,7 +1,7 @@
 from ..tasks.models import TikedgeUser, UserProject
 from .models import ProfilePictures, Graded, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, Milestone, PictureSet, \
-	 PondRequest, Pond
+	 PondRequest, Pond, PondMembership
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from friendship.models import Friend
@@ -12,6 +12,7 @@ from PIL import Image
 from random import randint
 from journal_feed import JournalFeed
 from tasks_feed import PondFeed
+from itertools import chain
 
 
 def resize_image(image_field, is_profile_pic=False):
@@ -227,10 +228,10 @@ def get_users_feed(user):
     return sorted_list
 
 
-def get_notifications(user, tikedge_user):
+def get_notifications(user):
     notifications = user.notification_set.all()
     nofication_feed = NotificationFeed(user, notifications)
-    return nofication_feed.get_unread_notification()
+    return nofication_feed.highight_new_notification()
 
 
 def file_is_picture(picture):
@@ -240,33 +241,32 @@ def file_is_picture(picture):
     else:
         return False
 
-'''
-def get_pond(user):
+
+def get_pond_profile(tikedge_users, owner):
     dict_list_of_pond = []
-    friends = Friend.objects.friends(user)
-    for each_friend in friends:
-        tikedge_user = TikedgeUser.objects.get(user=each_friend)
+    for tikedge_user in tikedge_users:
         try:
             picture = ProfilePictures.objects.get(tikedge_user=tikedge_user)
             picture_url = picture.profile_pics.url
         except ObjectDoesNotExist:
             picture_url = None
-        friend = Friend.objects.get(to_user=each_friend, from_user=user)
+        if owner == tikedge_user:
+           is_creator = True
+        else:
+			is_creator = False
         dict_list_of_pond.append({
             'profile_pics_url':picture_url,
-            'username':each_friend.username,
-            'first_name':each_friend.first_name,
-            'last_name':each_friend.last_name,
-            'created':friend.created
+            'username':tikedge_user.user.username,
+            'first_name':tikedge_user.user.first_name,
+            'last_name':tikedge_user.user.last_name,
+	        'is_creator':is_creator
         })
-    sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['created'])
+    sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['last_name'])
     return sorted_pond
-'''
+
 
 def get_pond(user):
-	tikedge_user = TikedgeUser.objects.get(user=user)
-	#ponds = Pond.objects.filter(pond_members__contains=tikedge_user)
-	ponds = tikedge_user.pond_member.all()
+	ponds = Pond.objects.filter(pond_members__user=user)
 	return ponds
 
 
@@ -309,17 +309,56 @@ def get_milestone_vouch_notifications(user):
 
 def send_pond_request(pond, user):
     tikedge_user = TikedgeUser.objects.get(user=user)
+    data = {}
     try:
        PondRequest.objects.get(pond=pond, user=tikedge_user, request_responded_to=False)
+       data['status'] = False
     except ObjectDoesNotExist:
        new_pond_request = PondRequest(pond=pond, user=tikedge_user)
        new_pond_request.save()
+       for member in pond.pond_members.all():
+           notification = Notification(user=member.user, type_of_notification=global_variables.POND_REQUEST)
+           notification.save()
+       data['status'] = True
+    return data
 
 
 def available_ponds(tikedge_user, owner):
+	"""
+	The available ponds of a user that they can add other user to.
+	:param tikedge_user: the user to be added
+	:param owner: the user doing the adding
+	:return:
+	"""
 	aval_ponds_list = []
 	aval_ponds = get_pond(owner)
 	for each_aval in aval_ponds:
-		if tikedge_user not in each_aval.pond_members:
+		if tikedge_user not in each_aval.pond_members.all():
 			aval_ponds_list.append(each_aval)
-	return aval_ponds
+	return aval_ponds_list
+
+
+def mark_pond_request_notification_as_read(user):
+	notifcation = user.notification_set.all().filter(read=False, type_of_notification=global_variables.POND_REQUEST)
+	for each_notif in notifcation:
+		each_notif.read = True
+		each_notif.save()
+
+
+def get_new_pond_member_notification(tikedge_user):
+	pond_request_list = []
+	pond = Pond.objects.filter(pond_members__user=tikedge_user.user)
+	for each_pond in pond:
+		pond_membership = PondMembership.objects.get(user=tikedge_user, pond=each_pond)
+		pond_requests = each_pond.pondrequest_set.all().filter(request_accepted=True, pond__pond_members=tikedge_user,
+		                                                       date_response__gte=pond_membership.date_joined)
+
+		pond_request_list  = list(chain(pond_request_list, pond_requests))
+	return pond_request_list
+
+
+def mark_new_ponder_notification_as_read(user):
+	notifcation = user.notification_set.all().filter(read=False, type_of_notification=global_variables.NEW_PONDERS)
+	for each_notif in notifcation:
+		each_notif.read = True
+		each_notif.save()

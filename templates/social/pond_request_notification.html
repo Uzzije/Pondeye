@@ -1,0 +1,183 @@
+{% extends 'base/base.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="page-header">
+                    <p class="h1 display-font">Pond Invites.</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                {% if pond_request %}
+                                   {% for each_req in pond_request %}
+                                       <div class="row">
+                                            <div class="col-md-6">
+                                                <span class="para-font">
+                                                    <a href="{% url 'tasks:profile_view' each_req.user.user.username %}">
+                                                        {{ each_req.user.user.first_name }} {{ each_req.user.user.last_name }}</a>
+                                                wants to join</span> <a href="{% url 'social:individual_pond' each_req.pond.slug %}">
+                                                <span class="para-font">{{ each_req.pond.name_of_pond }}</span></a>
+                                            </div><br>
+                                           {% if not each_req.request_responded_to %}
+                                           <div id="buttons_req" class="col-md-6">
+                                               <button id="accept-request-button" name="{{ each_req.id }}" class="btn btn-link">Add To Pond</button>
+                                               <button id="deny-request-button" name="{{ each_req.id }}" class="btn btn-link">Deny From Pond</button>
+                                           </div>
+                                           {% endif %}
+                                       </div>
+                                       <br><hr>
+                                   {% endfor %}
+                                {% else %}
+                                   <p class="para-font">No Pond Requests</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script>
+        $(document).ready(function(){
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+            });
+            $.ajax({
+                url: '{% url 'social:new_ponder_request_notifications' %}',
+                type: "POST",
+                success: function(){
+                    console.log("Successful sent request to remove new feature");
+                },
+                error: function(xhr){
+                    $("#error-message").text(xhr.responseText).show();
+                }
+            })
+        });
+        $('#accept-request-button').click(function(){
+            var pond_request_id = $(this).attr("name");
+            console.log("Accepted Friend Request ", + pond_request_id);
+            add_to_pond_request(pond_request_id);
+            $("#buttons_req").hide(1000);
+
+        });
+
+        $('#deny-request-button').click(function(){
+            var pond_request_id = $(this).attr("name");
+            console.log("Denied Friend Request ", + pond_request_id);
+            deny_from_pond(pond_request_id);
+            $("#buttons_req").hide(1000);
+        });
+
+        function accept_friends_request(pk){
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+            });
+            $.ajax({
+                url: '{% url 'social:accept_friend_request' %}',
+                type: "POST",
+                data: { pk: pk  },
+                success: function(){
+                    $("#accept-request-button").text("Friend Request Accepted!");
+                    $("#deny-request-button").hide(100);
+                    console.log("Successful sent request");
+                },
+                error: function(xhr){
+                    $("#error-message").text(xhr.responseText).show();
+                }
+            })
+        }
+
+        function deny_friends_request(pk){
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+            });
+            $.ajax({
+                url: '{% url 'social:reject_friend_request' %}',
+                type: "POST",
+                data: { pk: pk  },
+                success: function(){
+                    $("#deny-request-button").text("Friend Request Denied!");
+                    $("#accept-request-button").hide(100);
+                    console.log("Successful sent request");
+                },
+                error: function(xhr){
+                    $("#error-message").text(xhr.responseText).show();
+                }
+            })
+        }
+
+        function add_to_pond_request(pond_request_id){
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+            });
+            $.ajax({
+                url: '{% url 'social:pond_request_notifications' %}',
+                type: "POST",
+                data: { pond_request_id: pond_request_id },
+                success: function(response){
+                    var statusParse = JSON.parse(response);
+                    var status = statusParse["status"];
+                    if(status == "accepted"){
+                        console.log("Successful Added to Pond!");
+                        $("#accept-request-button").text("Pond Request Accepted!");
+                        toastr.success("Successfully Added to Pond!");
+                    }
+                    else if(status == "already exist"){
+                        console.log("Successful Added to Pond!");
+                        toastr.info("Seems Like Someone Already Beat You to It!");
+                    }
+                    else{
+                        console.log("Successful Added to Pond!");
+                        toastr.warning("Sorry, Something Went Wrong. Please Try Again!");
+                    }
+                },
+                error: function(xhr){
+                    $("#error-message").text(xhr.responseText).show();
+                    toastr.warning("Sorry, Something Went Wrong. PleaseTry Again!");
+                    console.log("Successful Added to Pond!");
+                }
+            })
+        }
+
+        function deny_from_pond(pond_request_id){
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+            });
+            $.ajax({
+                url: '{% url 'social:deny_from_pond_notification' %}',
+                type: "POST",
+                data: { pond_request_id:  pond_request_id },
+                success: function(response){
+                    var statusParse = JSON.parse(response);
+                    var status = statusParse["status"];
+                    if(status == "accepted"){
+                        console.log("Successful Denied to Pond!");
+                        toastr.success("Successfully Denied From Pond!");
+                    }
+                    else if(status == "already exist"){
+                        console.log("Successful Denied to Pond!");
+                        toastr.info("Seems Like Someone Already Beat You to It!");
+                    }
+                    else{
+                        console.log("Successful Denied to Pond!");
+                        toastr.warning("Sorry, Something Went Wrong. Please Try Again!");
+                    }
+                },
+                error: function(xhr){
+                    $("#error-message").text(xhr.responseText).show();
+                    toastr.warning("Sorry, Something Went Wrong. PleaseTry Again!");
+                    console.log("Successful Added to Pond!");
+                }
+            })
+        }
+    </script>
+{% endblock %}
+</body>
+</html>
