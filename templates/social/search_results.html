@@ -46,6 +46,15 @@
                                                        <span class="para-font"> view pond...</span>
                                                     </a></p>
                                                 </div>
+                                            {% elif res.is_project  %}
+                                                <div class="col-md-12">
+                                                    <p class="feed-font">Personal Project</p>
+                                                        <br>
+                                                    <p class="para-font">{{ res.feed_object.name_of_project }}
+                                                        <a href="{% url 'social:project_view' res.feed_object.slug %}">
+                                                           <span class="para-font"> view pond...</span>
+                                                        </a></p>
+                                                </div>
                                             {% endif %}
                                         </div>
                                     </div>

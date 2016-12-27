@@ -24,13 +24,31 @@
                                 {% endfor %}
                             </div>
                         {% else %}
-                            <p class="flow-text">No recent vouches so far!</p>
+                            <p class="para-font">No recent vouches so far!</p>
                         {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-    {% endblock %}
+        <script>
+            $(document).ready(function(){
 
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:vouch_notifications' %}',
+                    type: "POST",
+                    success: function(){
+                        console.log("Successful sent request to remove new feature");
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                    }
+                })
+            });
+        </script>
+
+    {% endblock %}
 </body>
 </html>

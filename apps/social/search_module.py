@@ -30,8 +30,7 @@ class GeneralSearchFeed:
 			return False
 
 	def get_is_project(self):
-		if (self.type_of_result == global_variables.PROJECT_TAG_SEARCH
-				or self.type_of_result == global_variables.PROJECT_NAME_SEARCH):
+		if (self.type_of_result == global_variables.PROJECT_NAME_SEARCH):
 			return True
 		else:
 			return False
@@ -45,8 +44,7 @@ class GeneralSearchFeed:
 	def date_created(self):
 		if self.type_of_result == global_variables.PERSON_SEARCH:
 			date_created = self.feed_object.date_joined
-		elif (self.type_of_result == global_variables.PROJECT_TAG_SEARCH
-				or self.type_of_result == global_variables.PROJECT_NAME_SEARCH):
+		elif (self.type_of_result == global_variables.PROJECT_NAME_SEARCH):
 			date_created = self.feed_object.made_live
 		elif self.type_of_result == global_variables.POND_SEARCH_NAME:
 			date_created = self.feed_object.date_created

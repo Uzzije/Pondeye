@@ -20,12 +20,13 @@ PERSON_SEARCH = 'psr'
 PROJECT_TAG_SEARCH = 'pisr'
 PROJECT_NAME_SEARCH = 'pisr'
 MILESTONE_NAME_SEARCH = 'mns'
-ADD_TO_POND = 'atp'
+ADD_TO_POND = 'atp'  # notify user that they have been added to pond
 POND_REQUEST = 'prq'
 POND_SEARCH_NAME = 'psn'
 POND_REQUEST_ACCEPTED = 'prc'
 NEW_PONDERS = 'npn'
 NEW_PROJECT_INTERESTED = 'npi'
 NEW_PROJECT_LETDOWN = "npl"
-NEW_PROJECT_MILESTONE = 'npm'
+NEW_MILESTONE_VOUCH = 'npv'
+
 

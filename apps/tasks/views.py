@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from ..social.modules import get_journal_message, \
-    get_notifications, get_pond, resize_image, available_ponds
+    get_notifications_alert, get_pond, resize_image, available_ponds
 from modules import get_user_projects, \
     time_has_past,\
     get_todays_milestones, \
@@ -25,6 +25,8 @@ from django.contrib import messages
 from braces.views import LoginRequiredMixin
 from global_variables_tasks import TAG_NAMES_LISTS
 from .forms import launch_form
+import modules
+from forms.form_module import get_current_datetime
 
 
 class RegisterView(View):
@@ -91,7 +93,7 @@ class HomeView(LoginRequiredMixin, View):
         failed_proj_count = get_failed_proj_count(request.user)
         completed_proj_count = get_completed_proj_count(request.user)
         tikedge_user = TikedgeUser.objects.get(user=request.user)
-        notifications = get_notifications(request.user)
+        notifications = get_notifications_alert(request.user)
         status_of_user = get_status(request.user)
         try:
             has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
@@ -137,7 +139,7 @@ class HomeView(LoginRequiredMixin, View):
             failed_proj_count = get_failed_proj_count(request.user)
             completed_proj_count = get_completed_proj_count(request.user)
             tikedge_user = TikedgeUser.objects.get(user=request.user)
-            notifications = get_notifications(request.user)
+            notifications = get_notifications_alert(request.user)
             status_of_user = get_status(request.user)
             try:
                 has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
@@ -253,7 +255,6 @@ class AddProject(LoginRequiredMixin, View):
         form = tasks_forms.AddTaskForm(user=request.user)
         proj_form = tasks_forms.AddProjectForm()
         mil_form = tasks_forms.AddMilestoneForm()
-        tag_names = TagNames.objects.all()
         return render(request, 'tasks/add_view.html', {'form':form,'tag_names':TAG_NAMES_LISTS,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,
@@ -267,116 +268,131 @@ class AddProject(LoginRequiredMixin, View):
         mil_form = tasks_forms.AddMilestoneForm(request.POST)
 
         if 'mil_create' in request.POST:
-            print "Making a new milestone"
-            name_of_milestone = request.POST.get('milestone_name')
-            if len(name_of_milestone) > 600:
-                messages.error(request, "Way too much words!")
-                return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
-                                                       'existing_project':get_user_projects(request.user),
-                                                        'proj_form': proj_form,
-                                                       'mil_form': mil_form})
+            name_of_milestone= request.POST.get('milestone_name')
             name_of_project = request.POST.get('name_of_mil_proj')
-            try:
-                #done_by_r = convert_html_to_datetime(request.POST.get('done_by_mil'))
-                if mil_form.is_valid():
-                    done_by = mil_form.cleaned_data.get('milestone_date')
-                    print "done is time ", done_by
-                else:
-                    done_by = None
-                    print "legit one done by", done_by
-            except (ValueError, IndexError):
-                done_by = None
-                messages.error(request, "Your date input seems to be wrong!")
             length_of_time = request.POST.get('length_of_time')
-            print "this is length of time ", length_of_time
-            user_project = UserProject.objects.get(name_of_project=name_of_project, user=user)
-            if (name_of_milestone != '') and done_by and (name_of_project != '') and (done_by != '') \
-                    and (not time_has_past(done_by)):
-                print "time has not passed! ", done_by
-                if (length_of_time != '') and (length_of_time != '-1'):
-                    start_time = done_by - timedelta(hours=int(length_of_time))
-                else:
-                    if length_of_time == '-1':
-                        start_time = done_by - timedelta(minutes=5)
-                        print "in here for no time", "done by ", done_by, "and start time: ", start_time
-                    else:
-                        start_time = done_by - timedelta(minutes=57)
-                print "done by ",done_by, "and start time: ", start_time
-                if not time_has_past(start_time) and user_project.length_of_project >= start_time and \
-                        user_project.length_of_project >= done_by:
-                    new_milestone = Milestone(name_of_milestone=name_of_milestone, user=user, reminder=start_time,
-                                          done_by=done_by, project=user_project)
-                    new_milestone.save()
-                    day_entry = user.journalpost_set.all().count()
-                    new_journal_entry = JournalPost(entry_blurb=get_journal_message(MILESTONE,
-                                                                                    milestone=new_milestone.blurb,
-                                                                                    project=user_project.blurb),
-                                                                                    day_entry=day_entry + 1,
-                                                                                    event_type=MILESTONE,
-                                                                                    is_milestone_entry=True,
-                                                                                    milestone_entry=new_milestone,
-                                                                                    user=user,
-                                                                                 )
-                    new_journal_entry.save()
-                    messages.success(request, "Successfully added a Milestone to %s project" % name_of_project)
-                    return HttpResponseRedirect(reverse('tasks:home'))
-                elif time_has_past(start_time):
-                    messages.error(request, "Hey, not enough time to complete milestone! Milestone must take at least 5 minutes!")
-                elif user_project.length_of_project >= start_time:
-                    messages.error(request, "Hey, can't fit this milestone into the project scope, takes too long!")
-                else:
-                    print "print buisiness ",user_project.length_of_project, done_by
-                    messages.error(request, "Hey, can't fit this milestone into the project scope!")
+            valid_milestone_word = modules.check_milestone_word_is_valid(name_of_milestone)
+            valid_project_name = modules.check_milestone_word_is_valid(name_of_project)
+            if not valid_milestone_word:
+                messages.error(request, "Words must be between 0 and 600!")
+                return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
+                                                               'existing_project':get_user_projects(request.user),
+                                                               'proj_form': proj_form,
+                                                               'mil_form': mil_form})
+            if not valid_project_name:
+                messages.error(request, "Milestone must be part of project!")
+                return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
+                                                               'existing_project':get_user_projects(request.user),
+                                                               'proj_form': proj_form,
+                                                               'mil_form': mil_form})
+            if mil_form.is_valid() and mil_form.cleaned_data.get('milestone_date'):
+                done_by = mil_form.cleaned_data.get('milestone_date')
+                if time_has_past(done_by):
+                    messages.error(request, "The time for milestone completion has past!")
+                    return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
+                                                               'existing_project':get_user_projects(request.user),
+                                                               'proj_form': proj_form,
+                                                               'mil_form': mil_form})
             else:
-                messages.error(request, "Hey, there might be a time conflict!")
+                messages.error(request, "Your date input seems to be wrong!")
+                return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
+                                                               'existing_project':get_user_projects(request.user),
+                                                               'proj_form': proj_form,
+                                                               'mil_form': mil_form})
+            
+            user_project = UserProject.objects.get(name_of_project=name_of_project, user=user)
+            if len(length_of_time) != 0 and length_of_time != '-1':
+                start_time = done_by - timedelta(hours=int(length_of_time))
+                if time_has_past(start_time):
+                    messages.error(request, "The time for milestone completion has past!")
+                    return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
+                                                               'existing_project':get_user_projects(request.user),
+                                                               'proj_form': proj_form,
+                                                               'mil_form': mil_form})
+            else:
+                start_time = done_by - timedelta(minutes=20)
+                if time_has_past(start_time):
+                    start_time = get_current_datetime() + timedelta(minutes=int(3))
+                    if start_time >= done_by:
+                       messages.error(request, "The time for milestone completion is not enough!")
+                       return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
+                                                               'existing_project':get_user_projects(request.user),
+                                                               'proj_form': proj_form,
+                                                               'mil_form': mil_form})
+
+            if user_project.length_of_project >= done_by:
+                print start_time, done_by
+                new_milestone = Milestone(name_of_milestone=name_of_milestone, user=user, reminder=start_time,
+                                      done_by=done_by, project=user_project)
+                new_milestone.save()
+                day_entry = user.journalpost_set.all().count()
+                new_journal_entry = JournalPost(entry_blurb=get_journal_message(MILESTONE,
+                                                                                milestone=new_milestone.blurb,
+                                                                                project=user_project.blurb),
+                                                                                day_entry=day_entry + 1,
+                                                                                event_type=MILESTONE,
+                                                                                is_milestone_entry=True,
+                                                                                milestone_entry=new_milestone,
+                                                                                user=user,
+                                                                             )
+                new_journal_entry.save()
+                messages.success(request, "Successfully added a Milestone to %s project" % name_of_project)
+                return HttpResponseRedirect(reverse('tasks:home'))
+            else:
+                messages.error(request, "Hey, can't fit this milestone into the project scope!")
         if 'proj_create' in request.POST or 'proj_save' in request.POST:
-            try:
-                if proj_form.is_valid():
-                    end_by = proj_form.cleaned_data.get('project_date')
-                else:
-                    end_by = None
-                    print end_by, "legit one end by"
-            except (ValueError, IndexError):
+            name_of_project = request.POST.get('name_of_project')
+            valid_project_name_entry = modules.check_milestone_word_is_valid(name_of_project)
+            tags = request.POST.getlist('tags')
+            if not valid_project_name_entry:
+                messages.error(request, "Words must be between 0 and 600!")
+                return render(request, 'tasks/add_view.html', {'tag_names':TAG_NAMES_LISTS,
+                                                       'existing_project':get_user_projects(request.user),
+                                                       'proj_form': proj_form,
+                                                       'mil_form': mil_form})
+            if proj_form.is_valid() and proj_form.cleaned_data.get('project_date'):
+               end_by = proj_form.cleaned_data.get('project_date')
+            else:
                 messages.error(request, "It seems like your date input is wrong!")
                 return render(request, 'tasks/add_view.html', {'tag_names':TAG_NAMES_LISTS,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,
                                                        'mil_form': mil_form})
-            if not time_has_past(end_by):
-                name_of_project = request.POST.get('name_of_project')
-                tags = request.POST.getlist('tags')
-                print tags
-                new_project = UserProject(name_of_project=name_of_project, user=user, length_of_project=end_by)
-                new_project.save()
-                if 'proj_create' in request.POST:
-                    new_project.is_live = True
-                    new_project.made_live = datetime.now()
-                    messages.success(request, "Sweet! %s has begun!" % name_of_project)
-                else:
-                    messages.success(request, "Sweet! %s has been created!" % name_of_project)
-                for item in tags:
-                    print tags, " tags why"
-                    try:
-                        item_obj = TagNames.objects.get(name_of_tag=item)
-                    except ObjectDoesNotExist:
-                        item_obj = TagNames(name_of_tag=item)
-                        item_obj.save()
-                    new_project.tags.add(item_obj)
-                new_project.save()
-                day_entry = user.journalpost_set.all().count()
-                new_journal_entry = JournalPost(
-                                                entry_blurb=get_journal_message(NEW_PROJECT, project=new_project.blurb),
-                                                day_entry=day_entry + 1,
-                                                event_type=NEW_PROJECT,
-                                                is_project_entry=True,
-                                                new_project_entry=new_project,
-                                                user=user
-                                                )
-                new_journal_entry.save()
-                return HttpResponseRedirect(reverse('tasks:home'))
+                
+            if time_has_past(end_by):
+                messages.error(request, "It seems like your date input is in the past!")
+                return render(request, 'tasks/add_view.html', {'tag_names':TAG_NAMES_LISTS,
+                                                       'existing_project':get_user_projects(request.user),
+                                                       'proj_form': proj_form,
+                                                       'mil_form': mil_form})
+
+            new_project = UserProject(name_of_project=name_of_project, user=user, length_of_project=end_by)
+            new_project.save()
+            if 'proj_create' in request.POST:
+                new_project.is_live = True
+                new_project.made_live = datetime.now()
+                messages.success(request, "Sweet! %s has begun!" % name_of_project)
             else:
-                messages.error(request, "There seems to be a time conflict")
-        #messages.error(request, "Dude something went wrong! Try again.")
+                messages.success(request, "Sweet! %s has been created!" % name_of_project)
+            for item in tags:
+                try:
+                    item_obj = TagNames.objects.get(name_of_tag=item)
+                except ObjectDoesNotExist:
+                    item_obj = TagNames(name_of_tag=item)
+                    item_obj.save()
+                new_project.tags.add(item_obj)
+            new_project.save()
+            day_entry = user.journalpost_set.all().count()
+            new_journal_entry = JournalPost(
+                                            entry_blurb=get_journal_message(NEW_PROJECT, project=new_project.blurb),
+                                            day_entry=day_entry + 1,
+                                            event_type=NEW_PROJECT,
+                                            is_project_entry=True,
+                                            new_project_entry=new_project,
+                                            user=user
+                                            )
+            new_journal_entry.save()
+            return HttpResponseRedirect(reverse('tasks:home'))
         return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,

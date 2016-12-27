@@ -41,7 +41,19 @@
                                             {% if feed.is_milestone_feed %}
                                                 <div class="row">
                                                     <br>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-8 col-md-offset-1">
+                                                        {% if not feed.tasks.is_active %}
+                                                            <div class="row">
+                                                                <span class="theme-font">
+                                                                    {% if feed.tasks.is_completed %}
+                                                                        Completed!
+                                                                    {% elif feed.tasks.is_failed %}
+                                                                        Did Not Complete
+                                                                    {% endif %}
+                                                                </span>
+                                                            </div>
+                                                            <br>
+                                                        {% endif %}
                                                         <span class="para-font">{{ feed.message }}...</span>
                                                         <a href="{% url 'social:milestone_view' feed.tasks.slug %}">
                                                             <span class="para-font">view</span>

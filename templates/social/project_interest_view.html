@@ -30,7 +30,23 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function(){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:project_interest_notifications' %}',
+                    type: "POST",
+                    success: function(){
+                        console.log("Successful sent request to remove new feature");
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                    }
+                })
+            });
+        </script>
     {% endblock %}
-
 </body>
 </html>

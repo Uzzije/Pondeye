@@ -8,10 +8,12 @@ from forms.form_module import get_current_datetime
 import pytz
 from tzlocal import get_localzone
 from global_variables_tasks import DECODE_DICTIONARY
-from django.utils.timezone import is_aware
 from bs4 import BeautifulSoup
 from django.contrib import messages
 import global_variables_tasks
+from ..social.models import Notification, LetDownMilestone, VoucheMilestone
+from ..social import global_variables
+
 
 def get_user_projects(user):
     try:
@@ -196,19 +198,11 @@ def convert_html_to_datetime(date_time):
 
 def time_has_past(time_infos):
         if time_infos:
-            time_info = time_to_utc(time_infos)
-            if time_info.time() < get_current_datetime().time():
-
-                if time_info.date() > get_current_datetime().date():
-                    return False
-                msg = "Hey, your work is not history yet"
+            if time_infos <= get_current_datetime():
+                return True
             else:
-                if time_info.date() >= get_current_datetime().date():
-
-                    return False
-                msg = "Hey, your work is not history yet"
-            return msg
-        return False
+                return False
+        return True
 
 
 def time_to_utc(time_to_convert):
@@ -324,25 +318,37 @@ def get_pond_status(pond_members):
 
 def confirm_expired_milestone_and_project(tikedge_user):
     yesterday = form_module.get_current_datetime()
-    all_milestones = tikedge_user.milestone_set.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False))
+    all_milestones = tikedge_user.milestone_set.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False),
+                                                             Q(is_failed=False))
+    print "all milestone, ", all_milestones
     for each_mil in all_milestones:
         if time_has_past(each_mil.done_by):
             each_mil.is_failed = True
             each_mil.is_active = False
             each_mil.save()
-
-    all_project = tikedge_user.userproject_set.all().filter(Q(length_of_project__lte=yesterday), Q(is_completed=False))
+            try:
+                user_mil_vouch = VoucheMilestone.objects.get(tasks=each_mil)
+                if user_mil_vouch.users.all():
+                    let_down = LetDownMilestone(tasks=each_mil)
+                    let_down.save()
+                    for each_user in user_mil_vouch.users.all():
+                        notification = Notification(user=each_user.user,
+                                        type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
+                        let_down.users.add(each_user)
+                        notification.save()
+                    notification = Notification(user=tikedge_user.user,
+                                        type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
+                    notification.save()
+                    let_down.save()
+            except ObjectDoesNotExist:
+                pass
+    all_project = tikedge_user.userproject_set.all().filter(Q(length_of_project__lte=yesterday), Q(is_completed=False),
+                                                            ~Q(made_live=None), Q(is_failed=False))
     for each_proj in all_project:
         if time_has_past(each_proj.length_of_project):
             each_proj.is_failed = True
             each_proj.is_live = False
             each_proj.save()
-            all_milestones = each_proj.milestone_set.all()
-            for each_mil in all_milestones:
-                each_mil.is_active = False
-                if not each_mil.is_completed:
-                    each_mil.is_failed = True
-                each_mil.save()
 
 
 def get_failed_mil_count(user):
@@ -379,4 +385,20 @@ def display_error(form, request):
 		str_item = BeautifulSoup(mes[0], 'html.parser')
 		print (str_item.get_text())
 		messages.warning(request, "%s" % mes[0])
+
+def check_milestone_word_is_valid(word):
+    if (len(word) > 600) or (len(word) == 0):
+        return False
+    else:
+        return True
+
+
+
+
+
+
+
+
+
+
 

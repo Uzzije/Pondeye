@@ -13,6 +13,11 @@
                         <span class="h1 display-font">{{ project_name }}</span>
                     <button onclick="createFollow({{ project.id }})" class="btn-link"><i class="material-icons">hearing</i></button>
                 </div>
+                <div classs="page-header">
+                    <a href="{% url 'tasks:profile_view' user.user.username %}">
+                        <span class="para-font"></span>By: {{ user.user.first_name }} {{ user.user.last_name }}</a>
+                </div>
+                <br>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3">

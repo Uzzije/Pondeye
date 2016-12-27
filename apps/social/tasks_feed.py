@@ -200,7 +200,7 @@ class NotificationFeed:
                 interested = True
             if each_notif.type_of_notification == global_variables.NEW_PROJECT_LETDOWN:
                 let_down = True
-            if each_notif.type_of_notification == global_variables.NEW_PROJECT_MILESTONE:
+            if each_notif.type_of_notification == global_variables.NEW_MILESTONE_VOUCH:
                 milestone_vouch = True
         notification_dic = {
             "pond_request":pond_request,

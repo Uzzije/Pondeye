@@ -13,8 +13,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
-                        <div class="col-md-12">
-                            <div class="row">
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="col-md-6">
                                     <a href="{% url 'social:milestone_view' milestone.slug %}"><span style="font-size: 24px;" class="para-font">{{ milestone.name_of_milestone }}</span></a>
                                 </div>
@@ -22,6 +22,17 @@
                                     {% if project_completed %}
                                     <span class="header-color display-font">Completed!</span>
                                     {% endif %}
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <span class="para-font">Start By: {{ start_time }}</span></a>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="para-font">End By: {{ end_time }}</span></a>
                                 </div>
                             </div>
                         </div>
@@ -50,9 +61,9 @@
                                     <div class="col-md-12">
                                         <div class="panel-footer">
                                             {% if project_completed %}
-                                                <span class="para-font">Based on {{ user_first_name }}'s community, there was a {{ percentage }}% chance of completing this milestone</span>
+                                                <span class="para-font">Based on {{ user_first_name }} {{ milestone.user.user.last_name }}'s community, there was a {{ percentage }}% chance of completing this milestone</span>
                                             {% else %}
-                                                <span class="para-font">Based on {{ user_first_name }}'s community, there is a {{ percentage }}% chance of completing this milestone</span>
+                                                <span class="para-font">Based on {{ user_first_name }} {{ milestone.user.user.last_name }}'s community, there is a {{ percentage }}% chance of completing this milestone</span>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -91,6 +102,7 @@
                             count++;
                             $("#vouch_"+pk).text(count);
                             toastr.success("Vouch Noted!")
+
                         }
                         else{
                             console.log("already vouched");

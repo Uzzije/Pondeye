@@ -1,7 +1,7 @@
 from ..tasks.models import TikedgeUser, UserProject
 from .models import ProfilePictures, Graded, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, Milestone, PictureSet, \
-	 PondRequest, Pond, PondMembership
+     PondRequest, Pond, PondMembership
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from friendship.models import Friend
@@ -170,10 +170,10 @@ def get_journal_message(type_of_message, milestone=None, project=None):
 def input_message(type_of_message, milestone_name, project_name):
     if type_of_message == global_variables.MILESTONE:
         LIST_OF_RANDOM_MESSAGE = [
-		    'I created a new milestone named: %s, for this %s project' % (milestone_name, project_name),
-		    'This %s milestone belongs to the %s project' % (milestone_name, project_name),
-		    '%s milestone was created for this project: %s' % (milestone_name, project_name),
-	    ]
+            'I created a new milestone named: %s, for this %s project' % (milestone_name, project_name),
+            'This %s milestone belongs to the %s project' % (milestone_name, project_name),
+            '%s milestone was created for this project: %s' % (milestone_name, project_name),
+        ]
     elif type_of_message == global_variables.BEFORE_PICTURE:
         LIST_OF_RANDOM_MESSAGE = [
             "I took a new before picture set: %s" % milestone_name,
@@ -210,9 +210,9 @@ def get_users_feed(user):
     #user_friends = Friend.objects.friends(user)
     #tkdge_friends = TikedgeUser.objects.filter(user__in=user_friends)
     tkdge_friends = TikedgeUser.objects.all()
-    milestone_feed = Milestone.objects.filter(Q(is_active=True),Q(user__in=tkdge_friends))
-    project_feed = UserProject.objects.filter(Q(is_live=True), Q(user__in=tkdge_friends))
-    picture_feed = PictureSet.objects.filter(~Q(after_picture=None), Q(tikedge_user__in=tkdge_friends))
+    milestone_feed = Milestone.objects.filter(Q(user__in=tkdge_friends))
+    project_feed = UserProject.objects.filter(Q(is_live=True))
+    picture_feed = PictureSet.objects.filter(~Q(after_picture=None))
     print "picture feed", picture_feed
     #print tasks_feed
     for each_tasks in milestone_feed:
@@ -228,10 +228,23 @@ def get_users_feed(user):
     return sorted_list
 
 
-def get_notifications(user):
+def get_notifications_alert(user):
     notifications = user.notification_set.all()
     nofication_feed = NotificationFeed(user, notifications)
     return nofication_feed.highight_new_notification()
+
+
+def notification_exist(user):
+    """
+    Check if notification exist.
+    :param user:
+    :return:
+    """
+    notif_dict = get_notifications_alert(user)
+    if True in notif_dict.itervalues():
+        return True
+    else:
+        return False
 
 
 def file_is_picture(picture):
@@ -253,24 +266,29 @@ def get_pond_profile(tikedge_users, owner):
         if owner == tikedge_user:
            is_creator = True
         else:
-			is_creator = False
+            is_creator = False
         dict_list_of_pond.append({
             'profile_pics_url':picture_url,
             'username':tikedge_user.user.username,
             'first_name':tikedge_user.user.first_name,
             'last_name':tikedge_user.user.last_name,
-	        'is_creator':is_creator
+            'is_creator':is_creator
         })
     sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['last_name'])
     return sorted_pond
 
 
 def get_pond(user):
-	ponds = Pond.objects.filter(pond_members__user=user)
-	return ponds
+    ponds = Pond.objects.filter(pond_members__user=user)
+    return ponds
 
 
 def get_let_down_notifications(user):
+    """
+    Get all the people that you let down
+    :param user:
+    :return:
+    """
     tikedge_user = TikedgeUser.objects.get(user=user)
     milestones = tikedge_user.milestone_set.all()
     let_down_list = []
@@ -280,12 +298,37 @@ def get_let_down_notifications(user):
             count = let_down.users.count()
             let_down_list.append({
                 'name_of_blurb':each_mil.blurb,
-                'slug':each_mil.slug,
-                'count':count
+                'mil':each_mil,
+                'count':count,
+                'created':each_mil.created_date
             })
         except ObjectDoesNotExist:
             pass
     return let_down_list
+
+
+def notification_of_people_that_let_you_down(user):
+    """
+    Get all people that let you down
+    :param user:
+    :return:
+    """
+    let_down = LetDownMilestone.objects.filter(users__user=user)
+    let_down_list = []
+    for each_mil in let_down:
+        let_down_list.append({
+            'name_of_blurb':each_mil.tasks.blurb,
+            'mil':each_mil.tasks,
+            'count': None,
+            'created':each_mil.tasks.created_date
+        })
+    return let_down_list
+
+
+def let_downs(user):
+    let_down_list = get_let_down_notifications(user) + notification_of_people_that_let_you_down(user)
+    sorted_let_downs = sorted(let_down_list, key=lambda x: x['created'], reverse=True)
+    return sorted_let_downs
 
 
 def get_milestone_vouch_notifications(user):
@@ -324,41 +367,106 @@ def send_pond_request(pond, user):
 
 
 def available_ponds(tikedge_user, owner):
-	"""
-	The available ponds of a user that they can add other user to.
-	:param tikedge_user: the user to be added
-	:param owner: the user doing the adding
-	:return:
-	"""
-	aval_ponds_list = []
-	aval_ponds = get_pond(owner)
-	for each_aval in aval_ponds:
-		if tikedge_user not in each_aval.pond_members.all():
-			aval_ponds_list.append(each_aval)
-	return aval_ponds_list
-
-
-def mark_pond_request_notification_as_read(user):
-	notifcation = user.notification_set.all().filter(read=False, type_of_notification=global_variables.POND_REQUEST)
-	for each_notif in notifcation:
-		each_notif.read = True
-		each_notif.save()
+    """
+    The available ponds of a user that they can add other user to.
+    :param tikedge_user: the user to be added
+    :param owner: the user doing the adding
+    :return:
+    """
+    aval_ponds_list = []
+    aval_ponds = get_pond(owner)
+    for each_aval in aval_ponds:
+        if tikedge_user not in each_aval.pond_members.all():
+            aval_ponds_list.append(each_aval)
+    return aval_ponds_list
 
 
 def get_new_pond_member_notification(tikedge_user):
-	pond_request_list = []
-	pond = Pond.objects.filter(pond_members__user=tikedge_user.user)
-	for each_pond in pond:
-		pond_membership = PondMembership.objects.get(user=tikedge_user, pond=each_pond)
-		pond_requests = each_pond.pondrequest_set.all().filter(request_accepted=True, pond__pond_members=tikedge_user,
-		                                                       date_response__gte=pond_membership.date_joined)
+    pond_request_list = []
+    pond = Pond.objects.filter(pond_members__user=tikedge_user.user)
+    for each_pond in pond:
+        pond_membership = PondMembership.objects.get(user=tikedge_user, pond=each_pond)
+        pond_requests = each_pond.pondrequest_set.all().filter(request_accepted=True, pond__pond_members=tikedge_user,
+                                                               date_response__gte=pond_membership.date_joined)
 
-		pond_request_list  = list(chain(pond_request_list, pond_requests))
-	return pond_request_list
+        pond_request_list  = list(chain(pond_request_list, pond_requests))
+    return pond_request_list
+
+
+def mark_pond_request_notification_as_read(user):
+    """
+    Notification for new user requesting to join pond marked as read
+    :param user: 
+    :return: 
+    """
+    notifcation = user.notification_set.all().filter(read=False, type_of_notification=global_variables.POND_REQUEST)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
 
 
 def mark_new_ponder_notification_as_read(user):
-	notifcation = user.notification_set.all().filter(read=False, type_of_notification=global_variables.NEW_PONDERS)
-	for each_notif in notifcation:
-		each_notif.read = True
-		each_notif.save()
+    """
+    Notification for a new user that has been added to pond marked as read
+    :param user: 
+    :return: 
+    """
+    notifcation = user.notification_set.all().filter(read=False, type_of_notification=global_variables.NEW_PONDERS)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_milestone_vouch_as_read(user):
+    """
+    Noftication for a new vouch on milestone marked as read
+    :param user: 
+    :return: 
+    """
+    notifcation = user.notification_set.all().filter(read=False, 
+                                                     type_of_notification=global_variables.NEW_MILESTONE_VOUCH)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_milestone_pond_request_accepted_as_read(user):
+    """
+    Nofication that one has been accepted in a pond marked as read
+    :param user: 
+    :return: 
+    """
+    notifcation = user.notification_set.all().filter(read=False, 
+                                                     type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_milestone_new_project_interested_as_read(user):
+    """
+    Notifciation that one has a new interest/follower of their project marked as read
+    :param user: 
+    :return: 
+    """
+    notifcation = user.notification_set.all().filter(read=False, 
+                                                     type_of_notification=global_variables.NEW_PROJECT_INTERESTED)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_milestone_let_down_as_read(user):
+    
+    """
+    Notification that one who failed to complete a set milestone/project let down a vouchers marked as read
+    :param user: 
+    :return: 
+    """
+    notifcation = user.notification_set.all().filter(read=False, 
+                                                     type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+    
+    

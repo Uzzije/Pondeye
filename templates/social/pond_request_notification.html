@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'social/notification_view.html' %}
 {% block staticfiles %}{% load static from staticfiles %}{% endblock %}
 <!DOCTYPE html>
 <html>
@@ -26,10 +26,13 @@
                                                 <span class="para-font">{{ each_req.pond.name_of_pond }}</span></a>
                                             </div><br>
                                            {% if not each_req.request_responded_to %}
-                                           <div id="buttons_req" class="col-md-6">
-                                               <button id="accept-request-button" name="{{ each_req.id }}" class="btn btn-link">Add To Pond</button>
-                                               <button id="deny-request-button" name="{{ each_req.id }}" class="btn btn-link">Deny From Pond</button>
-                                           </div>
+                                               <div id="buttons_req" class="col-md-6">
+                                                   <button id="accept-request-button" name="{{ each_req.id }}" class="btn btn-link">Add To Pond</button>
+                                                   <button id="deny-request-button" name="{{ each_req.id }}" class="btn btn-link">Deny From Pond</button>
+                                               </div>
+                                           {% else %}
+                                                <span class="feed-font">{% if each_req.request_accepted %} ACCEPTED! {% else %} REQUEST NOT GRANTED! {% endif %}
+                                                </span>
                                            {% endif %}
                                        </div>
                                        <br><hr>

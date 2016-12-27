@@ -25,6 +25,7 @@ from braces.views import LoginRequiredMixin
 from ..tasks.global_variables_tasks import TAG_NAMES_LISTS
 from datetime import datetime
 
+
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
@@ -91,12 +92,16 @@ class MilestoneView(LoginRequiredMixin, View):
         user_first_name = milestone.user.user.first_name
         pic_list = milestone.pictureset_set.all().filter(~Q(after_picture=None))
         percentage = modules.get_milestone_percentage(milestone)
+        start_time = task_modules.utc_to_local(milestone.reminder).strftime("%B %d %Y %I:%M %p")
+        end_time = task_modules.utc_to_local(milestone.done_by).strftime("%B %d %Y %I:%M %p")
         return render(request, 'social/milestone_view.html', {
             'milestone':milestone, 'project_name':project_name,
             'feed_id':feed_id, 'vouch_count':vouch_count, 'seen_count':seen_count,
             'project_completed':project_completed, 'user_first_name': user_first_name,
             'project_slug':project.slug, 'pic_list': pic_list,
-            'percentage':percentage
+            'percentage':percentage,
+            'end_time':end_time,
+            'start_time':start_time
         })
 
 
@@ -106,6 +111,7 @@ class ProjectView(LoginRequiredMixin, View):
         project = UserProject.objects.get(slug=slug)
         project_name = project.name_of_project
         motivations = project.tags.all()
+        user = project.user
         print "motivations ", motivations
         modules.increment_project_view(request.user, project)
         milestones = modules.milestone_tuple(project)
@@ -124,6 +130,7 @@ class ProjectView(LoginRequiredMixin, View):
                                                                     'seen_count':seen_count,
                                                                     'interest_count':follows,
                                                                     'project':project,
+                                                                    'user':user
                                                                   })
 
 
@@ -308,7 +315,7 @@ class CreateVouch(View):
         except ObjectDoesNotExist:
             vouch_obj = VoucheMilestone(tasks=milestone)
             vouch_obj.save()
-        if user not in vouch_obj.users.all():
+        if user not in vouch_obj.users.all() and (user != milestone.user):
             vouch_obj.users.add(user)
             vouch_obj.save()
             try:
@@ -319,14 +326,19 @@ class CreateVouch(View):
             if user not in view.users.all():
                 view.users.add(user)
                 view.save()
-            response["status"] = True
+                response["status"] = True
+                vouch_notif = Notification(user=milestone.user.user,
+                                        type_of_notification=global_variables.NEW_MILESTONE_VOUCH)
+                vouch_notif.save()
+            else:
+                response["status"] = False
         else:
             response["status"] = False
         print "Tried to print vouch!!!!!!\n"
         return HttpResponse(json.dumps(response), status=201)
 
 
-class CreateFollowView(CSRFExemptView):
+class CreateFollow(CSRFExemptView):
 
     def get(self, request, *args, **kwargs):
         return HttpResponse('')
@@ -341,25 +353,23 @@ class CreateFollowView(CSRFExemptView):
         except ObjectDoesNotExist:
             follow_obj = Follow(tasks=project)
             follow_obj.save()
-        if not tikedge_user in follow_obj.users.all():
+        if not tikedge_user in follow_obj.users.all() and (tikedge_user != project.user):
             response["status"] = True
             follow_obj.users.add(tikedge_user)
             follow_obj.save()
+            follow_notif = Notification(user=project.user.user,
+                                        type_of_notification=global_variables.NEW_PROJECT_INTERESTED)
+            follow_notif.save()
         else:
             response["status"] = False
         response["count"] = follow_obj.users.all().count()
         return HttpResponse(json.dumps(response), status=201)
 
 
-class TagSearchView(View):
-    def get(self, request, word):
-        return render(request, 'social/tag_search_results.html')
-
-
 class NotificationsViews(LoginRequiredMixin, View):
 
     def get(self, request):
-        notif = modules.get_notifications(request.user)
+        notif = modules.get_notifications_alert(request.user)
         return render(request, 'social/notification_view.html', {'notif':notif})
 
 
@@ -386,11 +396,23 @@ class ProjectNotificationsView(LoginRequiredMixin, View):
         interest_feed = modules.get_interest_notification(all_project)
         return render(request, 'social/project_interest_view.html', {'interest_feed':interest_feed})
 
+    def post(self, request):
+        modules.mark_milestone_new_project_interested_as_read(request.user)
+        data = {}
+        data["status"] = True
+        return HttpResponse(json.dumps(data))
+
 
 class LetDownsNotificationsView(LoginRequiredMixin, View):
     def get(self, request):
-        let_down_results = modules.get_let_down_notifications(request.user)
+        let_down_results = modules.let_downs(request.user)
         return render(request, 'social/let_down_view.html', {'let_down_results':let_down_results})
+
+    def post(self, request):
+        modules.mark_milestone_let_down_as_read(request.user)
+        data = {}
+        data["status"] = True
+        return HttpResponse(json.dumps(data))
 
 
 class VouchedNotificationsView(LoginRequiredMixin, View):
@@ -398,6 +420,41 @@ class VouchedNotificationsView(LoginRequiredMixin, View):
     def get(self, request):
         mil_down_results = modules.get_milestone_vouch_notifications(request.user)
         return render(request, 'social/milestone_vouches.html', {'mil_down_results':mil_down_results})
+
+    def post(self, request):
+        modules.mark_milestone_vouch_as_read(request.user)
+        data = {}
+        data["status"] = True
+        return HttpResponse(json.dumps(data))
+
+
+class NewPondRequestNotificationView(LoginRequiredMixin, View):
+    """
+    A view to show all pond request that a person can either accept or deny
+    """
+    def get(self, request):
+        ponder_request = PondRequest.objects.filter(pond__pond_members__user=request.user).order_by('-date_requested')
+        return render(request, 'social/pond_request_notification.html', {'pond_request':ponder_request})
+
+    def post(self, request):
+        modules.mark_pond_request_notification_as_read(request.user)
+        modules.mark_milestone_pond_request_accepted_as_read(request.user)
+        data = {}
+        data["status"] = True
+        return HttpResponse(json.dumps(data))
+
+
+class GetNotification(LoginRequiredMixin, View):
+
+    def get(self, request):
+        data = {}
+        data["status"] = modules.notification_exist(request.user)
+        return HttpResponse(json.dumps((data)))
+
+
+class TagSearchView(View):
+    def get(self, request, word):
+        return render(request, 'social/tag_search_results.html')
 
 
 class SearchResultsView(LoginRequiredMixin, View):
@@ -437,7 +494,7 @@ class AddToPond(LoginRequiredMixin, View):
                                        request_responded_to=True)
             pond_request.save()
             notification = Notification(user=other_user.user,
-                                        type_of_notification=global_variables.ADD_TO_POND)
+                                        type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
             notification.save()
             data['status'] = True
         except (AttributeError, ValueError, TypeError):
@@ -575,19 +632,6 @@ class DenyPondRequest(LoginRequiredMixin, View):
                 return HttpResponse(json.dumps(data))
 
 
-class NewPondRequestNotificationView(LoginRequiredMixin, View):
-    """
-    A view to show all pond request that a person can either accept or deny
-    """
-    def get(self, request):
-        ponder_request = PondRequest.objects.filter(pond__pond_members__user=request.user).order_by('-date_requested')
-        return render(request, 'social/pond_request_notification.html', {'pond_request':ponder_request})
-
-    def post(self, request):
-        modules.mark_pond_request_notification_as_read(request.user)
-        data = {}
-        data["status"] = True
-        return HttpResponse(json.dumps(data))
 
 
 

@@ -45,74 +45,82 @@
     {% endblock %}
     <title>{% block title %}Title{% endblock %}</title>
 </head>
-<body>
+<body onload="checkNotification()">
 
     {% block search %}
             <!-- Fixed navbar -->
             <nav class="navbar navbar-default navbar-fixed-top navbar-principal">
-            <div class="container">
-                {% if messages %}
-                    {% for message in messages %}
-                      <div
-                          {% if message.tags == "success" %}
-                                class="message alert alert-success"
-                          {% else %}
-                                class="message alert alert-warning"{% endif %} role="alert">
-                          <span class="para-font link-color">{{ message|safe }}</span>
+                    {% if messages %}
+                        {% for message in messages %}
+                          <div
+                              {% if message.tags == "success" %}
+                                    class="message alert alert-success"
+                              {% else %}
+                                    class="message alert alert-warning"{% endif %} role="alert">
+                              <span class="para-font link-color">{{ message|safe }}</span>
+                          </div>
+                        {% endfor %}
+                    {% endif %}
+                      <div hidden id="show-notif-message" class="message alert alert-info" role="alert">
+                        <span class="para-font">You have at least one new notification</span>
                       </div>
-                    {% endfor %}
-                {% endif %}
+                    
+                      <div class="navbar-header">
+                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                            <a class="navbar-brand"  href="{% url 'social:todo_feed' %}"><b class="nav-font"><img style="width:50%; height: 250%" src="{% static 'images/animal_logo.png' %}"></b></a>
+                      </div>
+                    <div class="container">
+                      <div id="navbar" class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li class="active active-color">
+                                    <a href="{% url 'tasks:home' %}"><i class="material-icons" style="font-size: 28px;">home</i></a>
+                                </li>
+                                <li class="active active-color"><a href="{% url 'social:todo_feed' %}" data-toggle="tooltip" data-placement="top"  title="See what your goals your community is tackling!"><span class="feed-font">feed<i class="material-icons">rss_feed</i></span></a></li>
+                                <li class="active active-color"><a href="{% url 'social:journal_entries' %}"><i class="material-icons">book</i><span class="feed-font">my entries</span></a></li>
+                            </ul>
 
-                  <div class="navbar-header">
-                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                      </button>
-                        <a class="navbar-brand"  href="{% url 'social:todo_feed' %}"><b class="nav-font"><img style="width:50%; height: 250%" src="{% static 'images/animal_logo.png' %}"></b></a>
-                  </div>
-                  <div id="navbar" class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="active active-color">
-                                <a href="{% url 'tasks:home' %}"><i class="material-icons" style="font-size: 28px;">home</i></a>
-                            </li>
-                            <li class="active active-color"><a href="{% url 'social:todo_feed' %}" data-toggle="tooltip" data-placement="top"  title="See what your goals your community is tackling!"><span class="feed-font">feed<i class="material-icons">rss_feed</i></span></a></li>
-                            <li class="active active-color"><a href="{% url 'social:journal_entries' %}"><i class="material-icons">book</i><span class="feed-font">my entries</span></a></li>
-                        </ul>
-
-                        <div class="col-md-4">
-                         <form class="navbar-form" method="get" action="{% url 'social:search_everything' %}">
-                            <div class="form-group" style="display:inline;">
-                              <div class="input-group" style="display:table;">
-                                <input class="form-control" type="search" placeholder="find friends and goals to inspire you..." name="query_word" id="id_q" value="" aria-describedby="sizing-addon1" required>
-                                <span class="input-group-addon" style="width:1%;">
-                                  <span class="glyphicon glyphicon-search"></span>
-                                </span>
-                              </div>
+                            <div class="col-md-4">
+                             <form class="navbar-form" method="get" action="{% url 'social:search_everything' %}">
+                                <div class="form-group" style="display:inline;">
+                                  <div class="input-group" style="display:table;">
+                                    <input class="form-control" type="search" placeholder="find friends and goals to inspire you..." name="query_word" id="id_q" value="" aria-describedby="sizing-addon1" required>
+                                    <span class="input-group-addon" style="width:1%;">
+                                      <span class="glyphicon glyphicon-search"></span>
+                                    </span>
+                                  </div>
+                                </div>
+                              </form>
                             </div>
-                          </form>
-                        </div>
 
-                      <ul class="nav navbar-nav navbar-right">
-                          <li class="active active-color"><a href="{% url 'social:new_pond_entry' %}"><i class="material-icons">add_box</i><span class="feed-font">new pond</span></a></li>
-                          <li class="active active-color"><a href="{% url 'tasks:add_proj' %}"><i class="material-icons">create</i><span class="feed-font">goal/milestone</span></a></li>
-                          <li class="active active-color"><a href="{% url 'social:notifications' %}"><i style="font-size:24px;" class="material-icons">add_alert</i></a></li>
-                          <li class="dropdown active active-color">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                  <i class="material-icons">account_circle</i>
-                                <span class="caret"></span>
-                              </a>
-                              <ul class="dropdown-menu">
-                                  <li class="active active-color"><a href="{% url 'tasks:logout' %}"><span class="para-font">Sign out</span></a></li>
-                                  <li class="active active-color"><a href="#"><span class="para-font">Settings</span></a></li>
-                              </ul>
-                          </li>
-                        </ul>
-                    </div>
-                </div>
+                          <ul class="nav navbar-nav navbar-right">
+                              <li class="active active-color"><a href="{% url 'social:new_pond_entry' %}"><i class="material-icons">add_box</i><span class="feed-font">new pond</span></a></li>
+                              <li class="active active-color"><a href="{% url 'tasks:add_proj' %}"><i class="material-icons">create</i><span class="feed-font">goal/milestone</span></a></li>
+                              <li class="active active-color">
+                                  <a href="{% url 'social:notifications' %}">
+                                    <span id="show-no-notification"><i style="font-size:24px;" class="material-icons">add_alert</i></span>
+
+                                      <span hidden id="show-notification-id"><i style="font-size:24px; color: red;" class="material-icons">add_alert</i><span class="badge"><small>New</small></span></span>
+                                  </a>
+                              </li>
+                              <li class="dropdown active active-color">
+                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                      <i class="material-icons">account_circle</i>
+                                    <span class="caret"></span>
+                                  </a>
+                                  <ul class="dropdown-menu">
+                                      <li class="active active-color"><a href="{% url 'tasks:logout' %}"><span class="para-font">Sign out</span></a></li>
+                                      <li class="active active-color"><a href="#"><span class="para-font">Settings</span></a></li>
+                                  </ul>
+                              </li>
+                          </ul>
+                      </div>
+                      </div>
             </nav>
-        </div>
     {% endblock %}
     <div class="container-fluid">
         {% block notifications %}
@@ -149,10 +157,12 @@
             $(document).ready(function(){
 
                 $('[data-toggle="tooltip"]').tooltip();
-
                 setTimeout(function(){
-                    $('.message').fadeOut('slow');}, 2000);
+                    $('.message').fadeOut('slow');}, 
+                2000);
+                    //checkNotification();
                     checkFailedProjectsMilestones();
+                    checkNotification();
                     toastr.options = {
                       "closeButton": false,
                       "debug": false,
@@ -171,6 +181,7 @@
                       "hideMethod": "fadeOut"
                     }
                 });
+
                 function checkFailedProjectsMilestones(){
                     $.ajaxSetup({
                         data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
@@ -194,8 +205,67 @@
                             clearInterval(check_failed_interval);
                         }
                     });
-            }
+                }
+
+                function checkNotification(){
+                    $.ajaxSetup({
+                        data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                    });
+                    $.ajax({
+                        url: '{% url 'social:get_main_notifications' %}',
+                        type: "GET",
+                        data: {},
+                        success: function(response){
+                            var statusParse = JSON.parse(response);
+                            var status = statusParse["status"];
+                            if (status == true){
+                                $("#show-notification-id").show();
+                                $("#show-no-notification").hide();
+                                console.log("Successfully Sent Notification");
+                            }
+                            else{
+                                
+                                console.log("No Notification!");
+                              }
+                        },
+                        error: function(xhr){
+                            $("#error-message").text(xhr.responseText).show();
+                            clearInterval(check_notif_interval);
+                        }
+                    });
+                }
+
+                function notificationReminder(){
+                    $.ajaxSetup({
+                        data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                    });
+                    $.ajax({
+                        url: '{% url 'social:get_main_notifications' %}',
+                        type: "GET",
+                        data: {},
+                        success: function(response){
+                            var statusParse = JSON.parse(response);
+                            var status = statusParse["status"];
+                            if (status == true){
+                                $("#show-notif-message").show();
+                                setTimeout(function(){
+                                  $("#show-notif-message").fadeOut('slow');}, 
+                                2000);
+                                console.log("Successfully Sent Notification");
+                            }
+                            else{
+                                
+                                console.log("No Notification!");
+                              }
+                        },
+                        error: function(xhr){
+                            $("#error-message").text(xhr.responseText).show();
+                            clearInterval(check_notif_interval);
+                        }
+                    });
+                }
             var check_failed_interval = setInterval(checkFailedProjectsMilestones, 30000);
+            var check_notif_interval = setInterval(notificationReminder, 200000);
         </script>
     {% endblock %}
     {% block footer %}
