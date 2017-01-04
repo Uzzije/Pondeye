@@ -2,17 +2,17 @@ from django.conf.urls import url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import JournalEntriesView, PictureUploadView, HomeActivityView, TodoFeed, SendFriendRequestView,\
-    FriendRequestView, AcceptFriendRequestView, RejectFriendRequestView, CreateVouch, MilestoneView, ProjectView, \
+from .views import JournalEntriesView, PictureUploadView, TodoFeed, SendFriendRequestView,\
+     AcceptFriendRequestView, RejectFriendRequestView, CreateVouch, MilestoneView, ProjectView, \
     TagSearchView, JournalCommentListView,NewPondertNotificationView, ProjectNotificationsView, LetDownsNotificationsView, \
     VouchedNotificationsView, NotificationsViews, CreateFollow, SearchResultsView, PondView, IndividualPondView, \
     NewPondEntryView, AddToPond, PondRequestView, AcceptPondRequest, DenyPondRequest, \
-    NewPondRequestNotificationView, GetNotification
+    NewPondRequestNotificationView, GetNotification,  EditPictureSetView, DeletePictureSet, \
+    FailedProjectNotificationView, FailedMilestonesNotificationView, EditIndividualPondView, EditPondView
 
 urlpatterns = [
     url(r'^journal-feed/$', JournalEntriesView.as_view(), name='journal_entries'),
     url(r'^pic-upload/$', PictureUploadView.as_view(), name='upload_picture'),
-    url(r'^activity/$', HomeActivityView.as_view(), name='home_activity'),
     url(r'^feed/$', TodoFeed.as_view(), name="todo_feed"),
 
     url(r'^send-friend-request/$', SendFriendRequestView.as_view(), name="send_friend_request"),
@@ -38,12 +38,18 @@ urlpatterns = [
     url(r'^pond-request/$', AcceptPondRequest.as_view(), name="pond_request_notifications"),
     url(r'^new-ponder-request/$', NewPondRequestNotificationView.as_view(), name="new_ponder_request_notifications"),
     url(r'^get-notification/$', GetNotification.as_view(), name="get_main_notifications"),
-
+    url(r'^failed-milestones/$', FailedMilestonesNotificationView.as_view(), name="failed_milestone_notification"),
+    url(r'^failed-projects/$', FailedProjectNotificationView.as_view(), name="failed_project_notification"),
     
     url(r'^all-ponds/$', PondView.as_view(), name="all_pond"),
     url(r'^pond/(?P<slug>[-\w\d\ ]+)/$', IndividualPondView.as_view(), name="individual_pond"),
     url(r'^pond-entry/$', NewPondEntryView.as_view(), name="new_pond_entry"),
     url(r'^add-to-pond/$', AddToPond.as_view(), name="add_to_pond"),
+
+    url(r'^edit-photo-set/$', EditPictureSetView.as_view(), name="edit_picture_sets"),
+    url(r'^delete-picture-set/$', DeletePictureSet.as_view(), name="delete_picture"),
+    url(r'^edit-pond-view/$', EditPondView.as_view(), name="edit_pond"),
+    url(r'^pond-edit-view/(?P<slug>[-\w\d\ ]+)/$', EditIndividualPondView.as_view(), name="indi_edit_pond")
 
 ]
 

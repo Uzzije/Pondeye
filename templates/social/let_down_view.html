@@ -17,6 +17,7 @@
                             {% if let_down_results %}
                             {% for letdown in let_down_results %}
                                  <div class="col-md-8">
+                                 {% if not letdown.mil.is_deleted %}
                                     <a href="{% url 'social:milestone_view' letdown.mil.slug %}">
                                         <span class="para-font">
                                             {% if letdown.count %}
@@ -27,6 +28,16 @@
                                             {% endif %}
                                         </span>
                                     </a>
+                                 {% else %}
+                                     <span class="para-font">
+                                        {% if letdown.count %}
+                                        You let down {{ letdown.count }} persons with milestone {{ letdown.name_of_burb }}
+                                        {% else %}
+                                            {{ letdown.mil.user.user.first_name }} {{ letdown.mil.user.user.last_name }} failed to complete milestone:
+                                            {{ letdown.name_of_blurb }}
+                                        {% endif %}
+                                     </span>
+                                 {% endif %}
                                  </div>
                             {% endfor %}
                             {% else %}

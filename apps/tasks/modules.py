@@ -38,7 +38,7 @@ def get_user_milestones(user):
         user = TikedgeUser.objects.get(user=user)
     except ObjectDoesNotExist:
         return []
-    list_of_milestone = user.milestone_set.all().filter(is_active=True)
+    list_of_milestone = user.milestone_set.all().filter(is_active=True, is_deleted=False)
     t_list= []
     for mil in list_of_milestone:
         temp_tup = ({'name':mil.name_of_milestone, 'id':mil.id})
@@ -118,7 +118,7 @@ def get_todays_milestones(user):
     #print "yesterday ", yesterday,
     try:
         result = user.milestone_set.all().filter(Q(reminder__lte=tommorrow),
-                                             Q(is_active=True))
+                                             Q(is_active=True), Q(is_deleted=False))
     except ObjectDoesNotExist:
         result = []
     return result
@@ -243,7 +243,7 @@ def json_all_pending_tasks(tasks):
 
 def get_status(user):
     tikedge_user = get_tikedge_user(user)
-    status = "The Learner"
+    status = "Learner"
     mil_all = tikedge_user.milestone_set.all().count()
     mil_success = get_completed_mil_count(user)
     milestone_count = mil_success + mil_all
@@ -255,25 +255,25 @@ def get_status(user):
     else:
         if milestone_count >= 10 and milestone_count < 50:
             if ratio_percentage > 75.5:
-                status = "The Doer"
+                status = "Doer"
             return status
         if milestone_count >= 50 and milestone_count < 150:
             if ratio_percentage > 75.5:
-                status = "The Motivator"
+                status = "Motivator"
             elif ratio_percentage > 60.5:
-                status = "The Doer"
+                status = "Doer"
             elif ratio_percentage > 45.5:
-                status = "The Learner"
+                status = "Learner"
             return status
         if milestone_count >= 150:
             if ratio_percentage > 75.5:
-                status = "The Inspirer"
+                status = "Inspirer"
             elif ratio_percentage > 65.5:
-                status = "The Motivator"
+                status = "Motivator"
             elif ratio_percentage > 45.5:
-                status = "The Doer"
+                status = "Doer"
             elif ratio_percentage > 25.5:
-                status = "The Learner"
+                status = "Learner"
             return status
 
 
@@ -353,44 +353,49 @@ def confirm_expired_milestone_and_project(tikedge_user):
 
 def get_failed_mil_count(user):
     tikedge_user = get_tikedge_user(user)
-    mil_count = tikedge_user.milestone_set.all().filter(Q(is_failed=True)).count()
+    mil_count = tikedge_user.milestone_set.all().filter(Q(is_failed=True), Q(is_deleted=False)).count()
     return mil_count
 
 
 def get_completed_mil_count(user):
     tikedge_user = get_tikedge_user(user)
-    mil_count = tikedge_user.milestone_set.all().filter(Q(is_completed=True)).count()
+    mil_count = tikedge_user.milestone_set.all().filter(Q(is_completed=True), Q(is_deleted=False)).count()
     return mil_count
 
 
 def get_failed_proj_count(user):
     tikedge_user = get_tikedge_user(user)
-    proj_count = tikedge_user.userproject_set.all().filter(Q(is_failed=True)).count()
+    proj_count = tikedge_user.userproject_set.all().filter(Q(is_failed=True), Q(is_deleted=False)).count()
     return proj_count
 
 
 def get_completed_proj_count(user):
     tikedge_user = get_tikedge_user(user)
-    proj_count = tikedge_user.userproject_set.all().filter(Q(is_completed=True)).count()
+    proj_count = tikedge_user.userproject_set.all().filter(Q(is_completed=True), Q(is_deleted=False)).count()
     return proj_count
 
 
 def get_recent_projects(user):
     tikedge_user = get_tikedge_user(user)
-    all_project = tikedge_user.userproject_set.all().filter(Q(is_live=True))
+    all_project = tikedge_user.userproject_set.all().filter(Q(is_live=True), Q(is_deleted=False))
     return all_project
 
+
 def display_error(form, request):
-	for field, mes in form.errors.items():
-		str_item = BeautifulSoup(mes[0], 'html.parser')
-		print (str_item.get_text())
-		messages.warning(request, "%s" % mes[0])
+    for field, mes in form.errors.items():
+        for error in mes:
+            str_item = BeautifulSoup(mes[0], 'html.parser')
+            print (str_item.get_text())
+            messages.warning(request, "Field Name: %s.  Error: %s" % (form.fields[field].label, error))
+
 
 def check_milestone_word_is_valid(word):
     if (len(word) > 600) or (len(word) == 0):
         return False
     else:
         return True
+
+
 
 
 

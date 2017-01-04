@@ -123,3 +123,29 @@ class AddMilestoneForm(forms.Form):
                                          widget=DateTimeWidget(attrs={'id':"mil_entry_id"}, usel10n = True, bootstrap_version=3), label="When?")
 
 
+class ChangePasswordForm(forms.Form):
+    password = forms.CharField(label="New Password", required=True, widget=forms.PasswordInput(attrs={'class':'form-group'}))
+    old_password = forms.CharField(label="Old Password", required=True, widget=forms.PasswordInput(attrs={'class':'form-group'}))
+    repeat_password = forms.CharField(label="Repeat Password", required=True, widget=forms.PasswordInput(attrs={'class':'form-group'}))
+
+    def clean(self):
+        cleaned_data = super(ChangePasswordForm, self).clean()
+        password = self.cleaned_data.get('password')
+        repeat_password = self.cleaned_data.get('repeat_password')
+        if password and repeat_password:
+            if password != repeat_password:
+                msg = "Passwords does not match"
+                self.add_error('password', msg)
+        return cleaned_data
+
+
+class ChangePersonalInformation(forms.Form):
+    first_name = forms.CharField(label='First Name', required=True, widget=forms.TextInput(attrs={'class':'form-group'}))
+    last_name = forms.CharField(label='Last Name', required=True, widget=forms.TextInput(attrs={'class':'form-group'}))
+    email = forms.CharField(label='Email', required=True, widget=forms.TextInput(attrs={'class':'form-group'}))
+
+
+class UpdateMilestoneForm(forms.Form):
+    milestone_input = forms.CharField(required=True, initial=None,
+                                         widget=forms.TextInput(attrs={'class':'form-control'}))
+

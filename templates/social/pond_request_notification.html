@@ -22,7 +22,10 @@
                                                 <span class="para-font">
                                                     <a href="{% url 'tasks:profile_view' each_req.user.user.username %}">
                                                         {{ each_req.user.user.first_name }} {{ each_req.user.user.last_name }}</a>
-                                                wants to join</span> <a href="{% url 'social:individual_pond' each_req.pond.slug %}">
+                                                wants to join</span>
+                                                {% if not each_req.pond.is_deleted %}
+                                                    <a href="{% url 'social:individual_pond' each_req.pond.slug %}">
+                                                {% endif %}
                                                 <span class="para-font">{{ each_req.pond.name_of_pond }}</span></a>
                                             </div><br>
                                            {% if not each_req.request_responded_to %}
@@ -31,8 +34,10 @@
                                                    <button id="deny-request-button" name="{{ each_req.id }}" class="btn btn-link">Deny From Pond</button>
                                                </div>
                                            {% else %}
+                                               <div class="col-md-6">
                                                 <span class="feed-font">{% if each_req.request_accepted %} ACCEPTED! {% else %} REQUEST NOT GRANTED! {% endif %}
                                                 </span>
+                                               </div>
                                            {% endif %}
                                        </div>
                                        <br><hr>

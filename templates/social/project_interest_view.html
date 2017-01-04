@@ -18,7 +18,12 @@
                                 {% for feed in interest_feed %}
                                     <p class="para-font">
                                         <a href="{% url 'tasks:profile_view' feed.username %}">{{ feed.first_name }} {{ feed.last_name }}</a>
-                                        is interested in <a href="{% url 'social:project_view' feed.slug %}">{{ feed.blurb }}</a>
+                                        is interested in
+                                        {% if not feed.is_deleted %}
+                                            <a href="{% url 'social:project_view' feed.slug %}">{{ feed.blurb }}</a>
+                                        {% else %}
+                                            {{ feed.blurb }}
+                                        {% endif %}
                                     </p>
                                     <hr>
                                 {% endfor %}

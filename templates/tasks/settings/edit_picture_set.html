@@ -1,0 +1,169 @@
+{% extends 'tasks/settings/settings.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block body %}
+  <!-- Timeline content -->
+    <div class="container" style="margin-top:50px;">
+      <div class="row">
+        <div class="col-md-10 no-paddin-xs">
+            <header>
+                <p class="feed-font">Settings</p>
+            </header>
+          <div class="profile-nav col-md-4">
+            <div class="panel">
+                <div class="user-heading round">
+                    <a href="{% url 'tasks:profile_view' tikedge_user.user.username %}">
+                        <img src="{{  has_prof_pic.profile_pics.url }}" alt="">
+                    </a>
+                    <h1><span class="para-font">
+                        {{ tikedge_user.user.first_name }} {{ tikedge_user.user.last_name }}
+                        </span>
+                    </h1>
+                </div>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="{% url 'social:edit_pond' %}"><span class="para-font">Pond Edit</span></a></li>
+                    <li class="active"><a href="{% url 'social:edit_picture_sets' %}"><span class="para-font">Picture Edit</span></a></li>
+                    <li><a href="{% url 'tasks:project_edit' %}"><span class="para-font">Project Edit</span></a></li>
+                    <li><a href="{% url 'tasks:milestone_edit' %}"><span class="para-font">Milestone Edit</span></a></li>
+                    <li><a href="{% url 'tasks:change_personal_info' %}">
+                        <span class="para-font">Personal Information Edit</span></a></li>
+                </ul>
+            </div>
+          </div>
+            <form method="post" action="{% url 'social:edit_picture_sets' %}" enctype="multipart/form-data">{% csrf_token %}
+              <div class="profile-info col-md-8  animated fadeInDown">
+               <!-- update info -->
+                <div class="superbox">
+                  {% for each_set in user_picture_set %}
+                    <div id="{{ each_set.id }}" class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row superbox-list">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <header class="display-font">{{ each_set.milestone.blurb }}
+                                                <a href="{% url 'social:milestone_view' each_set.milestone.slug %}">
+                                                    <span class="para-font">view...</span>
+                                                </a>
+                                            </header>
+                                        </div>
+                                        {% if not each_set.after_picture %}
+                                            <div class="col-md-2">
+                                                 <button type="button" class="btn btn-primary"
+                                                         onclick="showEditForm({{ each_set.before_picture.id }})">
+                                                 <span class="para-font">Edit</span></button>
+                                            </div>
+                                        {% else %}
+                                            <div class="col-md-6">
+                                                 <button type="button" class="btn btn-primary"
+                                                         onclick="showEditForm({{ each_set.after_picture.id }})">
+                                                    <span class="para-font">Edit</span>
+                                                 </button>
+                                                <button class="btn btn-link" onclick="return delete_picture_set({{ each_set.id }});">
+                                                    <span class="para-font">Delete Both Picture</span>
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    </div><br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <img src="{{  each_set.before_picture.milestone_pics.url }}" alt="" class="superbox-img">
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if not each_set.after_picture %}
+                                                <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=No%20After%20Shots&w=1080&h=560" class="superbox-img">
+                                            {% else %}
+                                                <img src="{{  each_set.after_picture.milestone_pics.url }}" class="superbox-img">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% if each_set.after_picture %}
+                                        <div hidden id="show_edit_{{ each_set.after_picture.id }}" class="row">
+                                            <div class="col-md-10">
+                                                {% include 'tasks/settings/change_after_shot.html' %}
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div hidden id="show_edit_{{ each_set.before_picture.id }}" class="row">
+                                            <div class="col-md-10">
+                                                {% include 'tasks/settings/change_before_shot.html' %}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      <br><hr>
+                  {% endfor %}
+              </div>
+              </div>
+            </form>
+
+             <div class="modal fade" id="modalImage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    ...
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+             </div>
+
+        </div>
+      </div>
+    </div>
+    <script>
+        function delete_picture_set(pic_set_id){
+            if (confirm("Are you Sure?")){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:delete_picture' %}',
+                    type: "POST",
+                    data: { pic_set_id:  pic_set_id},
+                    success: function(response){
+                        var statusParse = JSON.parse(response);
+                        var status = statusParse["status"];
+                        if(status == true){
+                            console.log("Successful Deleted Picture Set!");
+                            toastr.success("Successfully Deleted Picture Set!");
+                            $("#"+pic_set_id).hide(1000);
+                        }
+                        else{
+                            console.log("deleted a Picture Set!");
+                            toastr.warning("Picture Set Already Deleted!");
+                        }
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                        toastr.warning("Sorry, Something Went Wrong. Please Try Again!");
+                        console.log("Successful Added to Pond!");
+                    }
+                });
+                return false;
+            }
+            else{
+                return false;
+            }
+        }
+        function showEditForm(id){
+            $("#show_edit_"+id).toggle(1000);
+        }
+    </script>
+{% endblock %}
+</body>
+</html>

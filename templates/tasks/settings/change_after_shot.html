@@ -1,0 +1,26 @@
+<div class="col-md-10">
+    <div class="row">
+        <button type="submit" name="delete_picture_after" class="btn btn-lg btn-danger"
+                value="{{ each_set.after_picture.id }}">
+            <span class="para-font">Delete After Picture</span>
+        </button>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            <h4 class="para-font">{{ form.picture.label }}</h4>
+        </div>
+        <div class="col-md-9">
+            {{ form.picture }}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-10">
+            <button type="submit" name="change_picture_after" class="btn btn-lg btn-danger"
+                    value="{{ each_set.after_picture.id }}">
+                <span class="para-font">Change Picture</span>
+            </button>
+        </div>
+    </div>
+</div>

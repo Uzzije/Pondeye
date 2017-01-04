@@ -13,6 +13,7 @@ class JournalFeed:
 		self.is_proj = journal.is_project_entry
 		self.comment_id = journal.id
 		self.content = self.get_content()
+		self.is_deleted = journal.is_deleted
 
 	def get_content(self):
 		if self.is_mil:

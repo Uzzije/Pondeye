@@ -94,25 +94,10 @@
                     <div class="row" hidden id="pick_add_proj_id">
                         <hr>
                         <div class="col-md-10">
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <h4 class="display-font link-color"> What's the goal of this project?</h4>
-                                    <br>
-                                    <div class="col-md-6 para-font">
-                                        <input class="" type="radio" id="ls_proj" name="type_of_project" value="learn something"/>
-                                        <label for="ls_proj">Learn Something New </label>
-                                    </div>
-                                    <div class="col-md-6 para-font">
-                                        <input type="radio" id="ls_build" name="type_of_project" value="learn something"/>
-                                         <label for="ls_build">Build/Accomplish Something</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                            <div hidden id="proj_form">
+                            <div id="proj_form">
                                 <div class="row">
                                     <div class="col-sm-10">
-                                        <input id="user_plan" placeholder="" class="form-control" type="text" name="name_of_project">
+                                        <input id="user_plan" placeholder="My Goal is to..." class="form-control" type="text" name="name_of_project">
                                     </div>
                                 </div>
                                 <br>
@@ -145,12 +130,28 @@
                                     </div>
                                 </div>
                                 <br>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label><h4 class="display-font link-color">Who Can See This Goal?</h4></label>
+                                        <br><br>
+                                        <select id="public_status_time" name="public_status" class="form-control para-font link-color">
+                                            <option value="" selected>Public</option>
+                                            <option value="aps">All Ponds</option>
+                                            {% for each_pond in user_ponds %}
+                                                <option value={{ each_pond.slug }}>{{ each_pond.name_of_pond }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <button type="submit" id="" name="proj_create" class="btn btn-default content-float">Start Project</button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                  </form>

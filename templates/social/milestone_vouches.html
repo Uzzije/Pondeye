@@ -16,11 +16,17 @@
                         {% if mil_down_results %}
                             <div class="list-group">
                                 {% for mil_down in mil_down_results %}
+                                    {% if not mil_down.is_deleted %}
                                     <a class="list-group-item" href="{% url 'social:milestone_view' mil_down.slug %}">
                                         <span class="para-font">
                                             {{ mil_down.count }} person believes that you will get this milestone: {{ mil_down.blurb }} completed!
                                         </span>
                                     </a>
+                                    {% else %}
+                                         <span class="para-font">
+                                            {{ mil_down.count }} person believes that you will get this milestone: {{ mil_down.blurb }} completed!
+                                        </span>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         {% else %}

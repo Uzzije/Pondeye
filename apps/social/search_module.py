@@ -3,7 +3,7 @@ import re
 from django.db.models import Q
 from ..tasks.models import TikedgeUser, Milestone, UserProject
 from models import User
-from .models import ProfilePictures, Pond
+from .models import ProfilePictures, Pond, PondSpecificProject
 from django.core.exceptions import ObjectDoesNotExist
 
 
@@ -100,24 +100,44 @@ def find_everything(user, query_word):
 	result_list = []
 	query = str(query_word)
 	people = get_query(query, ['username', 'first_name', 'last_name'])
-	people_result = User.objects.filter(people).filter(~Q(username=user.username), (Q(is_staff=False) | Q(is_superuser=False)))
+	people_result = User.objects.filter(people).filter(~Q(username=user.username),
+	                                                   (Q(is_staff=False) | Q(is_superuser=False))).distinct()
 	projects = get_query(query, ['name_of_project', 'tags__name_of_tag'])
 	print query, " projddd"
-	#tikege_user = TikedgeUser.objects.get(user=user)
-	projects_result = UserProject.objects.filter(projects)
+	tikege_user = TikedgeUser.objects.get(user=user)
+	projects_result = UserProject.objects.filter(projects).filter(Q(is_deleted=False)).distinct()
 	milestones = get_query(query, ['name_of_milestone'])
-	milestones_result = Milestone.objects.filter(milestones)
+	milestones_result = Milestone.objects.filter(milestones).filter(Q(is_deleted=False)).distinct()
 	ponds = get_query(query, ['name_of_pond', 'tags__name_of_tag', 'purpose'])
-	pond_list = Pond.objects.filter(ponds)
+	pond_list = Pond.objects.filter(ponds).filter(Q(is_deleted=False)).distinct()
+	print "project %s \n" % projects_result
+
 	for pip in people_result:
 		search_obj = GeneralSearchFeed(pip, global_variables.PERSON_SEARCH)
 		result_list.append(search_obj)
 	for proj in projects_result:
-		search_obj = GeneralSearchFeed(proj, global_variables.PROJECT_NAME_SEARCH)
-		result_list.append(search_obj)
+
+		if not proj.is_public:
+			pond_spec = PondSpecificProject.objects.get(project=proj)
+			for each_pond in pond_spec.pond.all():
+				if tikege_user in each_pond.pond_members.all():
+					search_obj = GeneralSearchFeed(proj, global_variables.PROJECT_NAME_SEARCH)
+					result_list.append(search_obj)
+					break
+		else:
+			search_obj = GeneralSearchFeed(proj, global_variables.PROJECT_NAME_SEARCH)
+			result_list.append(search_obj)
 	for mil in milestones_result:
-		search_obj = GeneralSearchFeed(mil, global_variables.MILESTONE_NAME_SEARCH)
-		result_list.append(search_obj)
+		if not mil.project.is_public:
+			pond_spec = PondSpecificProject.objects.get(project=mil.project)
+			for each_pond in pond_spec.pond.all():
+				if tikege_user in each_pond.pond_members.all():
+					search_obj = GeneralSearchFeed(mil, global_variables.MILESTONE_NAME_SEARCH)
+					result_list.append(search_obj)
+					break
+		else:
+			search_obj = GeneralSearchFeed(mil, global_variables.MILESTONE_NAME_SEARCH)
+			result_list.append(search_obj)
 	for pond in pond_list:
 		search_obj = GeneralSearchFeed(pond, global_variables.POND_SEARCH_NAME)
 		result_list.append(search_obj)
@@ -126,3 +146,30 @@ def find_everything(user, query_word):
 	return sorted_list
 
 
+def find_project_and_milestone_by_tag(user, query_word):
+	result_list = []
+	query = str(query_word)
+	projects = get_query(query, ['name_of_project', 'tags__name_of_tag'])
+	projects_result = UserProject.objects.filter(Q(is_public=True),Q(is_deleted=False)).filter(projects)
+	milestones = get_query(query, ['name_of_milestone'])
+	milestones_result = Milestone.objects.filter(milestones).filter(Q(project__is_public=True), Q(is_deleted=False))
+	user_ponds = Pond.objects.filter(Q(pond_members__user=user), Q(is_deleted=False))
+	pond_specific_query = get_query(query, ['project__name_of_project', 'project__tags__name_of_tag'])
+	pond_specific_result = PondSpecificProject.objects.filter(pond__in=user_ponds).filter(pond_specific_query)
+
+	for proj in projects_result:
+		search_obj = GeneralSearchFeed(proj, global_variables.PROJECT_NAME_SEARCH)
+		result_list.append(search_obj)
+	for mil in milestones_result:
+		search_obj = GeneralSearchFeed(mil, global_variables.MILESTONE_NAME_SEARCH)
+		result_list.append(search_obj)
+	for each_spec in pond_specific_result:
+		search_obj = GeneralSearchFeed(each_spec.project, global_variables.PROJECT_NAME_SEARCH)
+		result_list.append(search_obj)
+		private_milestone = each_spec.project.milestone_set.filter(milestones)
+		for each_priv_mil in private_milestone:
+			search_obj = GeneralSearchFeed(each_priv_mil, global_variables.MILESTONE_NAME_SEARCH)
+			result_list.append(search_obj)
+	print result_list
+	sorted_list = sorted(result_list, key=lambda res: res.created)
+	return sorted_list

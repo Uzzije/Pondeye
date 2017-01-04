@@ -3,7 +3,7 @@ from django.views.generic import View
 from forms import social_forms, pond_form
 from models import (Notification, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
                     JournalPost, JournalComment, SeenProject, ProfilePictures, Pond, PondRequest,
-                    PondMembership)
+                    PondMembership, PondSpecificProject)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
@@ -20,7 +20,7 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 import json
 from django.contrib import messages
 from django.db.models import Q
-from search_module import find_everything
+from search_module import find_everything, find_project_and_milestone_by_tag
 from braces.views import LoginRequiredMixin
 from ..tasks.global_variables_tasks import TAG_NAMES_LISTS
 from datetime import datetime
@@ -123,6 +123,11 @@ class ProjectView(LoginRequiredMixin, View):
             follows = Follow.objects.get(tasks=project).users.count()
         except ObjectDoesNotExist:
             follows = 0
+        if not project.is_public:
+            pond_specific = PondSpecificProject.objects.get(project=project).pond.filter(is_deleted=False)
+        else:
+            pond_specific = None
+        user_owns_proj = request.user == project.user.user
         return render(request, 'social/individual_project.html', {'project_name':project_name,
                                                                   'motivations':motivations,
                                                                    'milestones':milestones,
@@ -130,7 +135,9 @@ class ProjectView(LoginRequiredMixin, View):
                                                                     'seen_count':seen_count,
                                                                     'interest_count':follows,
                                                                     'project':project,
-                                                                    'user':user
+                                                                    'user':user,
+                                                                    'pond_specific':pond_specific,
+                                                                    'user_owns_proj':user_owns_proj
                                                                   })
 
 
@@ -139,7 +146,6 @@ class PictureUploadView(LoginRequiredMixin, View):
     def get(self, request):
         existing_milestones = task_modules.get_user_milestones(request.user)
         user_picture_form = social_forms.PictureUploadForm()
-
         return render(request, 'social/upload_picture.html', {'user_picture_form':user_picture_form,
                                                               'existing_milestones':existing_milestones})
 
@@ -160,7 +166,7 @@ class PictureUploadView(LoginRequiredMixin, View):
                 is_before = True
                 # check that user is not creating concurrent before for current milestone
                 try:
-                    PictureSet.objects.get(milestone=milestone, after_picture=None)
+                    PictureSet.objects.get(milestone=milestone, after_picture=None, is_deleted=False)
                     messages.error(request, 'Sorry we first need an after picture for %s milestone' % milestone.name_of_milestone)
                     existing_milestones = task_modules.get_user_milestones(request.user)
                     return render(request, 'social/upload_picture.html', {'user_picture_form':user_picture_form,
@@ -187,10 +193,10 @@ class PictureUploadView(LoginRequiredMixin, View):
                                                                                         user=tkduser
                                                                                         )
                 new_journal_entry.save()
-                messages.success(request, 'Cool! the before visual entry added to %s milestone' % milestone.blurb)
+                messages.success(request, 'Cool! The before visual entry added to %s milestone' % milestone.blurb)
             else:
                 try:
-                    pic_set = PictureSet.objects.get(milestone=milestone, after_picture=None, tikedge_user=tkduser)
+                    pic_set = PictureSet.objects.get(milestone=milestone, after_picture=None, tikedge_user=tkduser, is_deleted=False)
                     pic_set.after_picture = picture_mod
                     pic_set.save()
                     day_entry = tkduser.journalpost_set.all().count()
@@ -203,7 +209,7 @@ class PictureUploadView(LoginRequiredMixin, View):
                                                  picture_set_entry=pic_set
                                                 )
                     new_journal_entry.save()
-                    messages.success(request, 'Great Job! the after visual entry added to %s milestone' % milestone.blurb)
+                    messages.success(request, 'Great Job! The after visual entry added to %s milestone' % milestone.blurb)
                 except ObjectDoesNotExist:
                     existing_milestones = task_modules.get_user_milestones(request.user)
                     messages.error(request, 'Hey we need a before visual entry before an after visual entry. This wow the crowd!')
@@ -214,13 +220,6 @@ class PictureUploadView(LoginRequiredMixin, View):
         messages.error(request, 'Oops, I think you forgot to upload a valid picture file')
         return render(request, 'social/upload_picture.html', {'user_picture_form':user_picture_form,
                                                               'existing_milestones':existing_milestones})
-
-
-class HomeActivityView(LoginRequiredMixin, View):
-
-    def get(self, request):
-        activities = modules.get_user_activities(request.user)
-        return render(request, 'social/home_activity_view.html', {'activities':activities})
 
 
 class TodoFeed(LoginRequiredMixin, View):
@@ -312,10 +311,15 @@ class CreateVouch(View):
         user = TikedgeUser.objects.get(user=request.user)
         try:
             vouch_obj = VoucheMilestone.objects.get(tasks=milestone)
+            if user in vouch_obj.users.all():
+                vouch_obj.users.remove(user)
+                vouch_obj.save()
+                response["status"] = "unvouch"
+                return HttpResponse(json.dumps(response), status=201)
         except ObjectDoesNotExist:
             vouch_obj = VoucheMilestone(tasks=milestone)
             vouch_obj.save()
-        if user not in vouch_obj.users.all() and (user != milestone.user):
+        if user not in vouch_obj.users.all() and (user != milestone.user) and milestone.is_active:
             vouch_obj.users.add(user)
             vouch_obj.save()
             try:
@@ -350,10 +354,16 @@ class CreateFollow(CSRFExemptView):
         tikedge_user = TikedgeUser.objects.get(user=request.user)
         try:
             follow_obj = Follow.objects.get(tasks=project)
+            if tikedge_user in follow_obj.users.all():
+                follow_obj.users.remove(tikedge_user)
+                follow_obj.save()
+                response["status"] = "unfollow"
+                response["count"] = follow_obj.users.all().count()
+                return HttpResponse(json.dumps(response), status=201)
         except ObjectDoesNotExist:
             follow_obj = Follow(tasks=project)
             follow_obj.save()
-        if not tikedge_user in follow_obj.users.all() and (tikedge_user != project.user):
+        if tikedge_user != project.user:
             response["status"] = True
             follow_obj.users.add(tikedge_user)
             follow_obj.save()
@@ -444,6 +454,32 @@ class NewPondRequestNotificationView(LoginRequiredMixin, View):
         return HttpResponse(json.dumps(data))
 
 
+class FailedMilestonesNotificationView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        notification = Notification.objects.filter(Q(user=request.user),
+                                                   Q(type_of_notification=global_variables.USER_DELETED_MILESTONE)).order_by('-created')
+        return render(request, 'social/failed_mil_notification.html', {'notifications':notification})
+
+    def post(self, request):
+        data = {}
+        data["status"] = modules.mark_milestone_failed_as_read(request.user)
+        return HttpResponse(json.dumps(data))
+
+
+class FailedProjectNotificationView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        notification = Notification.objects.filter(Q(user=request.user),
+                                                   Q(type_of_notification=global_variables.USER_DELETED_PROJECT)).order_by('-created')
+        return render(request, 'social/failed_proj_notification.html', {'notifications':notification})
+
+    def post(self, request):
+        data = {}
+        data["status"] = modules.mark_project_failed_as_read(request.user)
+        return HttpResponse(json.dumps(data))
+
+
 class GetNotification(LoginRequiredMixin, View):
 
     def get(self, request):
@@ -452,9 +488,10 @@ class GetNotification(LoginRequiredMixin, View):
         return HttpResponse(json.dumps((data)))
 
 
-class TagSearchView(View):
+class TagSearchView(LoginRequiredMixin, View):
     def get(self, request, word):
-        return render(request, 'social/tag_search_results.html')
+        results = find_project_and_milestone_by_tag(request.user, word)
+        return render(request, 'social/search_results.html', {'results':results})
 
 
 class SearchResultsView(LoginRequiredMixin, View):
@@ -632,13 +669,195 @@ class DenyPondRequest(LoginRequiredMixin, View):
                 return HttpResponse(json.dumps(data))
 
 
+class  EditPictureSetView(LoginRequiredMixin, View):
+    """
+    Remove Complete Pictures. Edit Pictures Without After Shot (i.e Delete Them or Change Them).
+    """
+
+    def get(self, request):
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        form = social_forms.EditPictureSetForm()
+        user_picture_set = PictureSet.objects.filter(tikedge_user=tikedge_user, is_deleted=False)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        return render(request, 'tasks/settings/edit_picture_set.html',
+                      {'user_picture_set':user_picture_set,
+                       'form':form,
+                       'has_prof_pic':has_prof_pic,
+                       'tikedge_user':tikedge_user
+                       })
+
+    def post(self, request):
+        form = social_forms.EditPictureSetForm(request.POST, request.FILES)
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        if 'change_picture_after' in request.POST:
+            pic_set_id = request.POST.get("change_picture_after")
+            picture = Picture.objects.get(id=int(pic_set_id))
+            if form.is_valid():
+                pic_file = request.FILES.get('picture', False)
+                if modules.file_is_picture(pic_file):
+                    pic_file.file = modules.resize_image(pic_file)
+                    picture.milestone_pics = pic_file
+                    picture.image_name = pic_file.name
+                    picture.last_edited = datetime.now()
+                    picture.save()
+                    messages.success(request, "Picture Information Updated!")
+                else:
+                    messages.error(request, 'Hey visual must be either jpg, jpeg or png file!')
+            else:
+                messages.success(request, "Invalid Picture Upload")
+        if 'change_picture_before' in request.POST:
+            pic_set_id = request.POST.get("change_picture_before")
+            picture = Picture.objects.get(id=int(pic_set_id))
+            if form.is_valid():
+                pic_file = request.FILES.get('picture', False)
+                if modules.file_is_picture(pic_file):
+                    pic_file.file = modules.resize_image(pic_file)
+                    picture.milestone_pics = pic_file
+                    picture.image_name = pic_file.name
+                    picture.last_edited = datetime.now()
+                    picture.save()
+                    messages.success(request, "Picture Information Updated!")
+                else:
+                    messages.error(request, 'Hey visual must be either jpg, jpeg or png file!')
+            else:
+                messages.success(request, "Invalid Picture Upload")
+        if 'delete_picture_after' in request.POST:
+            pic_id = request.POST.get("delete_picture_after")
+            picture = Picture.objects.get(id=int(pic_id))
+            picture.is_deleted = True
+            picture.last_edited = datetime.now()
+            picture.save()
+            picture_set = PictureSet.objects.get(after_picture=picture)
+            picture_set.after_picture = None
+            picture_set.save()
+            messages.success(request, "Picture Deleted")
+        if 'delete_picture_before' in request.POST:
+            pic_id = request.POST.get("delete_picture_before")
+            picture = Picture.objects.get(id=int(pic_id))
+            picture.is_deleted = True
+            picture.last_edited = datetime.now()
+            picture.save()
+            picture_set = PictureSet.objects.get(before_picture=picture)
+            picture_set.before_picture = None
+            picture_set.is_deleted = True
+            picture_set.save()
+            messages.success(request, "Picture Deleted")
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        user_picture_set = PictureSet.objects.filter(tikedge_user=tikedge_user, is_deleted=False)
+        return render(request, 'tasks/settings/edit_picture_set.html',
+                      {'user_picture_set':user_picture_set,
+                       'form':form,
+                       'has_prof_pic':has_prof_pic,
+                       'tikedge_user':tikedge_user
+                       })
 
 
+class DeletePictureSet(LoginRequiredMixin, View):
+
+    def post(self, request):
+        try:
+            pic_set_id = request.POST.get("pic_set_id")
+            pic_set = PictureSet.objects.get(id=int(pic_set_id))
+            pic_set.is_deleted = True
+            pic_set.save()
+            response = {'status':True}
+        except ObjectDoesNotExist:
+            response = {'status':False}
+        return HttpResponse(json.dumps(response))
 
 
+class EditPondView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        ponds = Pond.objects.filter(pond_members__user=tikedge_user.user, is_deleted=False)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        return render(request, 'tasks/settings/pond_edit.html',
+                      {
+                       'ponds':ponds,
+                       'tikedge_user':tikedge_user,
+                        'has_prof_pic':has_prof_pic
+                       })
+
+    def post(self, request):
+        response = {"status":False}
+        if 'pond_id' in request.POST:
+            pond_id = request.POST.get("pond_id")
+            pond = Pond.objects.get(id=int(pond_id))
+            pond.is_deleted = True
+            pond.save()
+            response = {"status":True}
+        return HttpResponse(json.dumps(response))
 
 
+class EditIndividualPondView(LoginRequiredMixin, View):
 
+    def get(self, request, slug):
+        pond = Pond.objects.get(slug=slug)
+        form = pond_form.EditPondEntryForm(initial={
+            'name_of_pond':pond.name_of_pond,
+            'purpose':pond.purpose,
+        })
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        select_tags = modules.get_tag_list(pond.tags.all())
+        pond_members = pond.pond_members.all()
+        return render(request, 'tasks/settings/individual_pond_edit.html',
+                                {
+                                 'tikedge_user':tikedge_user,
+                                 'form':form,
+                                 'tag_names':TAG_NAMES_LISTS,
+                                 'select_tags':select_tags,
+                                 'pond':pond,
+                                 'pond_members':pond_members
+                                 })
 
-
-
+    def post(self, request, slug):
+        form = pond_form.PondEntryForm(request.POST)
+        pond = Pond.objects.get(slug=slug)
+        pond_members = pond.pond_members.all()
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        if form.is_valid():
+            pond_name = form.cleaned_data.get('name_of_pond')
+            purpose = form.cleaned_data.get('purpose')
+            tags = request.POST.getlist('tags')
+            ponders = request.POST.getlist('ponders')
+            pond.name_of_pond = pond_name
+            pond.purpose = purpose
+            pond.save()
+            for item in pond.tags.all():
+                pond.tags.remove(item)
+            pond.save()
+            for item in tags:
+                try:
+                    item_obj = TagNames.objects.get(name_of_tag=item)
+                except ObjectDoesNotExist:
+                    item_obj = TagNames(name_of_tag=item)
+                    item_obj.save()
+                pond.tags.add(item_obj)
+            for pd in ponders:
+                tik = TikedgeUser.objects.get(id=pd)
+                pond.pond_members.remove(tik)
+            pond.save()
+            messages.success(request, "%s was updated!" % pond_name)
+            return HttpResponseRedirect(reverse('social:edit_pond'))
+        task_modules.display_error(form, request)
+        select_tags = modules.get_tag_list(pond.tags.all())
+        print "select tags", select_tags
+        return render(request, 'tasks/settings/individual_pond_edit.html',
+                      {
+                          'tikedge_user':tikedge_user,
+                          'form':form,
+                          'tag_names':TAG_NAMES_LISTS,
+                          'select_tags':select_tags,
+                          'pond':pond,
+                          'pond_members':pond_members
+                       })

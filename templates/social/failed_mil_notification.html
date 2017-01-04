@@ -1,0 +1,50 @@
+{% extends 'social/notification_view.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="page-header">
+                    <span class="h1 display-font">Milestone Quited On Notifications</span>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-1">
+                        <div class="list-group">
+                            {% if notifications %}
+                                {% for notif in notifications %}
+                                     <div class="list-group-item">
+                                            <span class="para-font">{{ notif.name_of_notification }}</span>
+                                     </div>
+                                {% endfor %}
+                            {% else %}
+                                    <span class="para-font">Yes! No one in your community have quit on a milestone.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:failed_milestone_notification' %}',
+                    type: "POST",
+                    success: function(){
+                        console.log("Successful sent request to remove new feature");
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                    }
+                })
+            });
+        </script>
+    {% endblock %}
+</body>
+</html>

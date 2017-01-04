@@ -36,11 +36,15 @@
                                             {% if journal_feed.is_pic_set %}
                                                     <p class="journal-font">{{ journal_feed.entry }}</p>
                                             {% elif journal_feed.is_mil %}
-                                                <a href="{% url 'social:milestone_view' journal_feed.content.slug %}">
+                                                {% if not journal_feed.is_deleted %}
+                                                    <a href="{% url 'social:milestone_view' journal_feed.content.slug %}">
+                                                {% endif %}
                                                     <p class="journal-font">{{ journal_feed.entry }}</p>
                                                 </a>
                                             {% else %}
-                                                <a href="{% url 'social:project_view' journal_feed.content.slug %}">
+                                                {% if not journal_feed.is_deleted %}
+                                                    <a href="{% url 'social:project_view' journal_feed.content.slug %}">
+                                                {% endif %}
                                                     <p class="journal-font">{{ journal_feed.entry }}</p>
                                                 </a>
                                             {% endif %}
@@ -114,6 +118,7 @@
                             if (status == true){
                                 console.log("sent");
                                 toastr.success('Comment Added!');
+                                $("#"+comment_id).hide(1000);
                             }
                             else{
                                 console.log("Can't be empty");

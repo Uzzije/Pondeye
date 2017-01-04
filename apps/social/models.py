@@ -24,7 +24,9 @@ class Picture(models.Model):
     cropping = ImageRatioField('milestone_pics', '5x5')
     tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     date_uploaded = models.DateTimeField(default=now)
+    last_edited = models.DateTimeField(null=True, blank=True)
     is_before = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s %s' % (self.tikedge_user.user.username, self.image_name)
@@ -35,9 +37,10 @@ class PictureSet(models.Model):
     after_picture = models.ForeignKey(Picture, blank=True, null=True, related_name="after_picture")
     milestone = models.ForeignKey(Milestone, blank=True, null=True)
     tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
-
+    is_deleted = models.BooleanField(default=False)
+    last_updated = models.DateTimeField(default=now)
     def __str__(self):
-        return '%s' % self.before_picture.image_name
+        return '%s' % self.milestone.name_of_milestone
 
 
 class Friends(models.Model):
@@ -87,7 +90,7 @@ class Notification(models.Model):
     created = models.DateTimeField(default=now)
     read = models.BooleanField(default=False)
     project_update = models.ForeignKey(UserProject, blank=True, null=True)
-    name_of_notification = models.CharField(max_length=300, default="")
+    name_of_notification = models.CharField(max_length=700, default="")
 
     def __str__(self):
         return self.name_of_notification
@@ -123,88 +126,6 @@ class JournalComment(models.Model):
     is_deleted = models.BooleanField(default=False)
 
 
-class Graded(models.Model):
-    credibility_count = models.IntegerField(default=0)
-    consistency_count = models.IntegerField(default=0)
-    max_credibility_count = models.IntegerField(default=0)
-    max_consistency_count = models.IntegerField(default=0)
-    correct_vouch = models.IntegerField(default=0, verbose_name="user vouch for tasks that got done")
-    vouch_fail = models.IntegerField(default=0, verbose_name="user vouch for tasks that didn't get done")
-    seen_without_vouch_fail = models.IntegerField(default=0, verbose_name="user saw tasks thats that didn't get done, and didn't vouche for it")
-    seen_without_vouch_success = models.IntegerField(default=0, verbose_name="user saw a tasks that got completed, but didn't vouche for it")
-    failed_tasks = models.IntegerField(default=0)
-    completed_tasks = models.IntegerField(default=0)
-    user = models.ForeignKey(TikedgeUser, blank=True, null=True)
-    prior_crediblity_count = models.IntegerField(default=0)
-    prior_consitency_count = models.IntegerField(default=0)
-
-    def get_grade_for_credibility(self):
-        credibility_grade = self.get_num_grade_credibility()
-        if (credibility_grade >= 0 and credibility_grade <= 59):
-            return 'F'
-        elif (credibility_grade > 59 and credibility_grade <= 63):
-            return 'D-'
-        elif (credibility_grade > 63 and credibility_grade <= 66):
-            return 'D'
-        elif (credibility_grade > 66 and credibility_grade <= 69):
-            return 'D+'
-        elif (credibility_grade > 69 and credibility_grade <= 73):
-            return 'C-'
-        elif (credibility_grade > 73 and credibility_grade <= 76):
-            return 'C'
-        elif (credibility_grade > 76 and credibility_grade <= 79):
-            return 'C+'
-        elif (credibility_grade > 79 and credibility_grade <= 83):
-            return 'B-'
-        elif (credibility_grade > 83 and credibility_grade <= 86):
-            return 'B'
-        elif (credibility_grade > 86 and credibility_grade <= 89):
-            return 'B+'
-        elif (credibility_grade > 90 and credibility_grade <= 93):
-            return 'A-'
-        elif (credibility_grade > 93 and credibility_grade <= 96):
-            return 'A'
-        elif (credibility_grade > 96 and credibility_grade <= 100):
-            return 'A+'
-
-    def get_grade_for_consistency(self):
-        consitency_grade = self.get_num_grade_consistency()
-        if (consitency_grade >= 0 and consitency_grade <= 59):
-            return 'F'
-        elif (consitency_grade > 59 and consitency_grade <= 63):
-            return 'D-'
-        elif (consitency_grade > 63 and consitency_grade <= 66):
-            return 'D'
-        elif (consitency_grade > 66 and consitency_grade <= 69):
-            return 'D+'
-        elif (consitency_grade > 69 and consitency_grade <= 73):
-            return 'C-'
-        elif (consitency_grade > 73 and consitency_grade <= 76):
-            return 'C'
-        elif (consitency_grade > 76 and consitency_grade <= 79):
-            return 'C+'
-        elif (consitency_grade > 79 and consitency_grade <= 83):
-            return 'B-'
-        elif (consitency_grade > 83 and consitency_grade <= 86):
-            return 'B'
-        elif (consitency_grade > 86 and consitency_grade <= 89):
-            return 'B+'
-        elif (consitency_grade > 90 and consitency_grade <= 93):
-            return 'A-'
-        elif (consitency_grade > 93 and consitency_grade <= 96):
-            return 'A'
-        elif (consitency_grade > 96 and consitency_grade <= 100):
-            return 'A+'
-        
-    def get_num_grade_consistency(self):
-        ratio = float(self.consistency_count/self.max_consistency_count)*100
-        return int(ratio)
-    
-    def get_num_grade_credibility(self):
-        ratio = float(self.credibility_count/self.max_credibility_count)*100
-        return int(ratio)
-
-
 class Pond(models.Model):
     name_of_pond = models.CharField(max_length=250)
     pond_creator = models.ForeignKey(TikedgeUser, null=True, blank=True, related_name='pond_creater')
@@ -215,6 +136,7 @@ class Pond(models.Model):
     slug = models.SlugField(default=None, max_length=100)
     purpose = models.CharField(max_length=110, default=None)
     blurb = models.CharField(max_length=51, default=None)
+    is_deleted = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if len(self.name_of_pond) > 50:
@@ -228,6 +150,9 @@ class Pond(models.Model):
             self.slug = slugify(the_slug)
         super(Pond, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.name_of_pond
+
 
 class PondRequest(models.Model):
     user = models.ForeignKey(TikedgeUser, blank=True, null=True)
@@ -239,16 +164,26 @@ class PondRequest(models.Model):
     request_responded_to = models.BooleanField(default=False)
     member_that_responded = models.ForeignKey(TikedgeUser, blank=True, null=True, related_name='the_member_that_responded')
 
+    def __str__(self):
+        return self.pond.name_of_pond
+
 
 class PondMembership(models.Model):
     user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     pond = models.ForeignKey(Pond, blank=True, null=True)
     date_joined = models.DateTimeField(default=now)
+    date_removed = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return self.user.user.username
 
 
+class PondSpecificProject(models.Model):
+    project = models.ForeignKey(UserProject, blank=True, null=True)
+    pond = models.ManyToManyField(Pond)
 
-
-
+    def __str__(self):
+        return self.project.name_of_project
             
 
 

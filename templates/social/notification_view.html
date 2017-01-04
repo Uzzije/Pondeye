@@ -57,6 +57,24 @@
                                 </a>
                             </div>
                         </div>
+                        <br>
+                        <div class="row">
+                            <div class="text-center">
+                                <a class="btn btn-lg btn-default" href="{% url 'social:failed_milestone_notification' %}">
+                                    <span class="theme-font">Milestones Quited On
+                                        {% if notif.milestone_failed %} <span style="color: red;" class="new-badge">New</span><i class="material-icons" style="color: red;">priority_high</i>{% endif %}</span>
+                                </a>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="text-center">
+                                <a class="btn btn-lg btn-default" href="{% url 'social:failed_project_notification' %}">
+                                    <span class="theme-font">Projects Quited On
+                                        {% if notif.project_failed %} <span style="color: red;" class="new-badge">New</span><i class="material-icons" style="color: red;">priority_high</i>{% endif %}</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

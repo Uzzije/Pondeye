@@ -5,6 +5,7 @@ from django.utils.timezone import now
 from random import randint
 from django.template.defaultfilters import slugify
 
+
 class TikedgeUser(models.Model):
     user = models.OneToOneField(User)
 
@@ -31,6 +32,8 @@ class UserProject(models.Model):
     slug = models.SlugField(default=None, max_length=100)
     blurb = models.CharField(max_length=150, default=None)
     is_completed = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=True, verbose_name="Can Be View By All People")
+    is_deleted =  models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if len(self.name_of_project) > 150:
@@ -43,6 +46,9 @@ class UserProject(models.Model):
             the_slug = str_slug + str_slug_two + str(self.created)
             self.slug = slugify(the_slug)
         super(UserProject, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name_of_project
 
 
 class Milestone(models.Model):
@@ -58,6 +64,8 @@ class Milestone(models.Model):
     slug = models.SlugField(default=None, max_length=100)
     blurb = models.CharField(max_length=150, default=None)
     is_completed = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False)
+    last_update = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.name_of_milestone

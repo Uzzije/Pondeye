@@ -13,7 +13,7 @@
                         <div class="col-md-9 col-md-offset-2">
                             <p class="h2 header-font">{{ journal_post.entry_blurb }}
                                 <a href="{% url 'social:journal_entries' %}">
-                                    <span class="para-font">View Journals</span>
+                                    <span class="para-font">View Journal</span>
                                 </a>
                             </p>
                         </div>
@@ -30,8 +30,8 @@
                         </div>
                     {% endfor %}
                 {% else %}
-                        <h4 class="flow-text">No thoughts created for this milestone</h4>
-                        <a href="{% url 'social:journal_entries' %}"><span class="para-font">Back to Journals</span></a>
+                        <h4 class="para-font">No thoughts created for this milestone</h4>
+                        <a href="{% url 'social:journal_entries' %}"><span class="para-font">Back to Journal</span></a>
                 {% endif %}
             </div>
         </div>

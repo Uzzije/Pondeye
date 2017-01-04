@@ -46,7 +46,7 @@
                                                             <div class="row">
                                                                 <span class="theme-font">
                                                                     {% if feed.tasks.is_completed %}
-                                                                        Completed!
+                                                                        Completed! <i style="color: green; font-size: 36px;" class="material-icons">check_circle</i>
                                                                     {% elif feed.tasks.is_failed %}
                                                                         Did Not Complete
                                                                     {% endif %}
@@ -65,10 +65,10 @@
                                                     <div class="panel-footer">
                                                         {% if feed.tasks.is_active %}
                                                         <button id="vouch" onclick="createVouch({{ feed.feed_id }})" name="{{ feed.feed_id }}"
-                                                            class="btn-link"><i class="material-icons">verified_user</i>(<span id="vouch_{{ feed.feed_id }}">{{ feed.vouche_count }}</span>)
+                                                            class="btn-link"><i class="material-icons">verified_user</i><span id="vouch_{{ feed.feed_id }}"> {{ feed.vouche_count }}</span>
                                                         </button>
                                                             {% endif %}
-                                                        <i class="material-icons">visibility</i>({{ feed.seen_count }})
+                                                        <i class="material-icons">visibility</i> {{ feed.seen_count }}
                                                     </div>
                                                  </div>
                                             {% elif feed.is_picture_feed %}
@@ -108,11 +108,11 @@
                                                     <div class="panel-footer">
                                                         {% if feed.tasks.is_active %}
                                                             <button onclick="createFollow({{ feed.tasks.id }})" class="btn-link">
-                                                                <i class="material-icons">hearing</i>
-                                                                <span id="inter_{{ feed.tasks.id }}">({{ feed.follow_count }})</span>
+                                                                <i class="material-icons">favorite</i>
+                                                                <span id="inter_{{ feed.tasks.id }}"> {{ feed.follow_count }} </span>
                                                             </button>
                                                         {% endif %}
-                                                        <i class="material-icons">visibility</i>({{ feed.seen_count }})
+                                                        <i class="material-icons">visibility</i> {{ feed.seen_count }}
                                                     </div>
                                                 </div>
                                             {% endif %}
@@ -126,6 +126,7 @@
                 </div>
             </div>
         </div>
+    </div>
     <script>
         function createVouch(pk){
             $.ajaxSetup({
@@ -144,6 +145,14 @@
                         $("#vouch_"+pk).empty();
                         count++;
                         $("#vouch_"+pk).text(count);
+                        toastr.success("Vouch Confirmed!");
+                    }
+                    else if(status == "unvouch"){
+                        count = $("#vouch_"+pk).text();
+                        $("#vouch_"+pk).empty();
+                        count--;
+                        $("#vouch_"+pk).text(count);
+                        toastr.success("Remove Vouch Confirmed!");
                     }
                     else{
                         console.log("already vouched");
@@ -173,6 +182,12 @@
                         $("#inter_"+pk).empty();
                         $("#inter_"+pk).text(count);
                         toastr.success("Interest Noted!")
+                    }
+                    else if(status == "unfollow"){
+                        count = statusParse["count"];
+                        $("#inter_"+pk).empty();
+                        $("#inter_"+pk).text(count);
+                        toastr.success("Removed Interest!")
                     }
                     else{
                         console.log("already follow");

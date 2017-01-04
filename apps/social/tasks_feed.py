@@ -44,6 +44,7 @@ class PondFeed:
 
     def is_picture_feed(self):
         if self.type_of_feed is global_variables.PICTURE_SET:
+            print " Lets get this going here ",
             return True
         else:
             return False
@@ -57,21 +58,21 @@ class PondFeed:
     def message(self):
         if self.type_of_feed is global_variables.MILESTONE:
             print self.task_owner_name, " slammer"
-            message = "I created a new milestone: %s . This is for project: %s." % \
-                      (self.tasks.name_of_milestone, self.tasks.project.blurb)
+            message = "Milestone: %s." % \
+                      self.tasks.blurb
             return message
         elif self.type_of_feed is global_variables.PICTURE_SET:
-            message = "I entered a journal entry for this milestone: %s." % self.tasks.milestone.blurb
+            message = "For milestone: %s." % self.tasks.milestone.blurb
             return message
         elif self.type_of_feed is global_variables.NEW_PROJECT:
-            message = "Hey, I am starting a new project. Project Name: %s" % self.tasks.blurb
+            message = "Project: %s" % self.tasks.blurb
             return message
         else:
             return None
 
     def get_date_created(self):
         if self.type_of_feed is global_variables.MILESTONE:
-            return self.tasks.created_date
+            return self.tasks.last_update
         elif self.type_of_feed is global_variables.PICTURE_SET:
             return self.tasks.after_picture.date_uploaded
         else:
@@ -189,6 +190,8 @@ class NotificationFeed:
         interested = False
         let_down = False
         milestone_vouch = False
+        milestone_failed = False
+        project_failed = False
         for each_notif in unread_notify:
             if each_notif.type_of_notification == global_variables.POND_REQUEST:
                 pond_request = True
@@ -202,13 +205,19 @@ class NotificationFeed:
                 let_down = True
             if each_notif.type_of_notification == global_variables.NEW_MILESTONE_VOUCH:
                 milestone_vouch = True
+            if each_notif.type_of_notification == global_variables.USER_DELETED_MILESTONE:
+                milestone_failed = True
+            if each_notif.type_of_notification == global_variables.USER_DELETED_PROJECT:
+                project_failed = True
         notification_dic = {
             "pond_request":pond_request,
             "pond_request_accepted":pond_request_accepted,
             "new_ponder":new_ponder,
             "interested":interested,
             "let_down":let_down,
-            "milestone_vouch":milestone_vouch
+            "milestone_vouch":milestone_vouch,
+            "milestone_failed":milestone_failed,
+            "project_failed":project_failed
         }
         return notification_dic
 

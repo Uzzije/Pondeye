@@ -19,15 +19,20 @@
                                  <div class="list-group-item">
                                         <span class="para-font">{{ pond_req.user.user.first_name }}
                                             {{ pond_req.user.user.last_name }} has been added to</span>
-                                         <a href="{% url 'social:individual_pond' pond_req.pond.slug %}">
-                                             <span class="para-font"> {{ pond_req.pond.blurb }}</span></a><span class="para-font"> pond.</span>
+                                         {% if not pond_req.pond.is_deleted %}
+                                             <a href="{% url 'social:individual_pond' pond_req.pond.slug %}">
+                                             <span class="para-font"> {{ pond_req.pond.blurb }}</span></a>
+                                         {% else %}
+                                             <span class="para-font"> {{ pond_req.pond.blurb }}</span>
+                                         {% endif %}
+                                            <span class="para-font"> pond.</span>
                                      <a class="" href="{% url 'tasks:profile_view' pond_req.user.user.username %}">
                                          <span class="para-font">view member</span>
                                     </a>
                                  </div>
                             {% endfor %}
                                 {% else %}
-                                    <span class="para-font">No new persons add to your pond recently</span>
+                                    <span class="para-font">No new persons was added to your pond recently</span>
                             {% endif %}
                         </div>
                     </div>

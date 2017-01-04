@@ -1,0 +1,106 @@
+{% extends 'tasks/settings/settings.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block body %}
+  <!-- Timeline content -->
+    <div class="container" style="margin-top:50px;">
+      <div class="row">
+        <div class="col-md-10 no-paddin-xs">
+            <header>
+                <p class="feed-font">Settings</p>
+            </header>
+          <div class="profile-nav col-md-4">
+            <div class="panel">
+                <div class="user-heading round">
+                    <a href="{% url 'tasks:profile_view' tikedge_user.user.username %}">
+                        <img src="{{  has_prof_pic.profile_pics.url }}" alt="">
+                    </a>
+                    <h1><span class="para-font">
+                        {{ tikedge_user.user.first_name }} {{ tikedge_user.user.last_name }}
+                        </span>
+                    </h1>
+                </div>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><a href="{% url 'social:edit_pond' %}"><span class="para-font">Pond Edit</span></a></li>
+                    <li><a href="{% url 'social:edit_picture_sets' %}"><span class="para-font">Picture Edit</span></a></li>
+                    <li><a href="{% url 'tasks:project_edit' %}"><span class="para-font">Project Edit</span></a></li>
+                    <li><a href="{% url 'tasks:milestone_edit' %}"><span class="para-font">Milestone Edit</span></a></li>
+                    <li class="active"><a href="{% url 'tasks:change_personal_info' %}">
+                        <span class="para-font">Personal Information Edit</span></a></li>
+                </ul>
+            </div>
+          </div>
+            <form method="post" action="{% url 'tasks:change_personal_info' %}">{% csrf_token %}
+              <div class="profile-info col-md-8">
+               <!-- update info -->
+                <div class="widget post panel-shadow animated fadeInUp">
+                  <div class="widget-header">
+                    <h3 class="widget-caption"><span class="para-font">Edit info</span></h3>
+                  </div>
+                  <div class="widget-body">
+                    <div class="form-group">
+                      <label class="col-md-3 control-label"><span class="para-font">First name</span></label>
+                      <div class="col-md-8">
+                        {{ change_personal_information.first_name }}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label"><span class="para-font">Last name</span></label>
+                      <div class="col-md-8">
+                        {{ change_personal_information.last_name }}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label"><span class="para-font">Email</span></label>
+                      <div class="col-md-8">
+                        {{ change_personal_information.email }}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" name="save_changes" class="btn btn-danger"><span class="para-font">Save Changes</span></button>
+                    </div>
+                  </div>
+                </div><!-- end update info-->
+               <!-- update info -->
+                <div class="widget post panel-shadow">
+                  <div class="widget-header">
+                    <h3 class="widget-caption"><span class="para-font">Change password</span></h3>
+                  </div>
+                  <div class="widget-body">
+                    <div class="form-group">
+                      <label class="col-md-4 control-label"><span class="para-font">Current password</span></label>
+                      <div class="col-md-7">
+                        {{ change_password_form.old_password }}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-4 control-label"><span class="para-font">New password</span></label>
+                      <div class="col-md-7">
+                        {{ change_password_form.password }}
+                      </div>
+                    </div>
+                      <div class="form-group">
+                          <label class="col-md-4 control-label"><span class="para-font">Repeat Password</span></label>
+                          <div class="col-md-7">
+                            {{ change_password_form.repeat_password }}
+                          </div>
+                      </div>
+                    <div class="form-group">
+                      <button type="submit" name="save_password" class="btn btn-danger"><span class="para-font">Save New Password</span></button>
+                    </div>
+                  </div>
+                </div><!-- end update info-->
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+</body>
+</html>

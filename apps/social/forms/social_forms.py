@@ -12,3 +12,8 @@ class CommentForms(forms.Form):
             'class':'materialize-textarea',
         }
     ))
+
+
+class EditPictureSetForm(forms.Form):
+    picture = forms.ImageField(label="Upload Picture", required=True)
+

@@ -11,7 +11,7 @@
                 <div class="page-header">
                    <span class="h1 display-font">Project Name:</span>
                         <span class="h1 display-font">{{ project_name }}</span>
-                    <button onclick="createFollow({{ project.id }})" class="btn-link"><i class="material-icons">hearing</i></button>
+                    <button onclick="createFollow({{ project.id }})" class="btn-link"><i class="material-icons">favorite</i></button>
                 </div>
                 <div classs="page-header">
                     <a href="{% url 'tasks:profile_view' user.user.username %}">
@@ -32,12 +32,16 @@
                         <div class="col-md-8 col-md-offset-2">
                             <p class="h2 display-font">Project Motivations</p>
                             <div class="col-md-4">
+                                {% if motivations %}
                                 <ul class="list-group">
                                     {% for motif in motivations %}
                                         <li class="list-group-item"><a href="{% url 'social:tag_search' motif.name_of_tag %}">
                                             <span class="para-font">{{ motif.name_of_tag }}</span></a></li>
                                     {% endfor %}
                                 </ul>
+                                {% else %}
+                                    <p class="para-font">No Motivation Listed!</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -46,31 +50,73 @@
                             <p class="h2 display-font">Milestones of Projects</p>
                         </div>
                     </div>
-
-                    {% for each_mil, vouches, views in milestones %}
-                    <div class="row">
-                        <div class="col-md-6 col-md-offset-2">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <span class="para-font">{{ each_mil.blurb }}</span>
-                                                <a href="{% url 'social:milestone_view' each_mil.slug %}"> view...
-                                                </a>
-                                                <i class="material-icons">verified_user</i>( {{ vouches }} )
-                                                <i class="material-icons">visibility</i>( {{ views }} )
+                    {% if milestones %}
+                        {% for each_mil, vouches, views in milestones %}
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-2">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <span class="para-font">{{ each_mil.blurb }}</span>
+                                                    <a href="{% url 'social:milestone_view' each_mil.slug %}"> view...
+                                                    </a>
+                                                    <i class="material-icons">favorite</i> {{ vouches }}
+                                                    <i class="material-icons">visibility</i> {{ views }}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <br>
+                                            <br>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-2">
+                                <p class="para-font">No Milestones Listed!</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if user_owns_proj %}
+                        {% if pond_specific %}
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-2">
+                                    <p class="h2 display-font">Ponds Project is Visible In</p>
+                                </div>
+                            </div>
+                        {% for pond in pond_specific %}
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-2">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <span class="para-font">{{ pond.blurb }}</span>
+                                                    <a href="{% url 'social:individual_pond' pond.slug %}"> view...
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% else %}
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-2">
+                                    <p class="para-font text-center"><h1>Project is Public!</h1></p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
+
         <script>
             function createFollow(pk){
                 $.ajaxSetup({
@@ -88,6 +134,7 @@
                             count = statusParse["count"];
                             $("#inter_"+pk).empty();
                             $("#inter_"+pk).text(count);
+                            toastr.success("Interest Noted!");
                         }
                         else{
                             console.log("already follow");
@@ -99,8 +146,8 @@
                     }
                 })
             }
-
         </script>
+
     {% endblock %}
 
 </body>

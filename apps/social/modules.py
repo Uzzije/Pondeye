@@ -1,18 +1,18 @@
 from ..tasks.models import TikedgeUser, UserProject
-from .models import ProfilePictures, Graded, \
-    Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, Milestone, PictureSet, \
+from ..tasks.forms.form_module import get_current_datetime
+from .models import ProfilePictures, \
+    Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, PondSpecificProject, \
      PondRequest, Pond, PondMembership
 from django.db.models import Q
 from tasks_feed import NotificationFeed
-from friendship.models import Friend
 from django.core.exceptions import ObjectDoesNotExist
 import global_variables
 import StringIO
 from PIL import Image
-from random import randint
 from journal_feed import JournalFeed
 from tasks_feed import PondFeed
 from itertools import chain
+from datetime import timedelta
 
 
 def resize_image(image_field, is_profile_pic=False):
@@ -79,11 +79,6 @@ def get_credibility_notification(user_obj):
     return notif_list
 
 
-def create_grade_for_user(tikedge):
-    grade_user = Graded(user=tikedge)
-    grade_user.save()
-
-
 def milestone_tuple(project):
     tuple_list = []
     milestones = project.milestone_set.all()
@@ -112,7 +107,8 @@ def get_interest_notification(all_project):
                     'last_name':each_follow.user.last_name,
                     'slug':project.slug,
                     'blurb':project.blurb,
-                    'created':project.created
+                    'created':project.created,
+                    'is_deleted':project.is_deleted
                 })
         except ObjectDoesNotExist:
             pass
@@ -163,7 +159,7 @@ def increment_project_view(user_obj, project):
 
 
 def get_journal_message(type_of_message, milestone=None, project=None):
-    message = input_message(type_of_message, milestone, project)[randint(0, 2)]
+    message = input_message(type_of_message, milestone, project)[0]
     return message
 
 
@@ -171,67 +167,105 @@ def input_message(type_of_message, milestone_name, project_name):
     if type_of_message == global_variables.MILESTONE:
         LIST_OF_RANDOM_MESSAGE = [
             'I created a new milestone named: %s, for this %s project' % (milestone_name, project_name),
-            'This %s milestone belongs to the %s project' % (milestone_name, project_name),
-            '%s milestone was created for this project: %s' % (milestone_name, project_name),
         ]
     elif type_of_message == global_variables.BEFORE_PICTURE:
         LIST_OF_RANDOM_MESSAGE = [
-            "I took a new before picture set: %s" % milestone_name,
-            "Just took a new before picture for %s milestone" % milestone_name,
             "I added a new before picture to %s milestone" % milestone_name,
         ]
     elif type_of_message == global_variables.AFTER_PICTURE:
         LIST_OF_RANDOM_MESSAGE = [
-            "I took a new after picture set: %s" % milestone_name,
-            "Just took a new after picture for %s milestone" % milestone_name,
             "I added a new after picture to %s milestone" % milestone_name,
         ]
     else:
         LIST_OF_RANDOM_MESSAGE = [
             "Created a new project: %s." % project_name,
-            "This project will get done: %s." % project_name,
-            "Looking forward to this project %s" % project_name,
         ]
     return LIST_OF_RANDOM_MESSAGE
 
 
 def get_user_journal_feed(tikege_user):
     journal_list = []
-    journals = tikege_user.journalpost_set.all()
+    journals = tikege_user.journalpost_set.all().order_by('-day_created')
     for journal in journals:
         journal_feed = JournalFeed(journal)
         journal_list.append(journal_feed)
-        sorted(journal_list,  key=lambda x: x.day_entry, reverse=True)
+        sorted(journal_list,  key=lambda x: int(x.feed_entry.day_entry), reverse=True)
     return journal_list
 
 
 def get_users_feed(user):
     list_of_feed = []
-    #user_friends = Friend.objects.friends(user)
-    #tkdge_friends = TikedgeUser.objects.filter(user__in=user_friends)
-    tkdge_friends = TikedgeUser.objects.all()
-    milestone_feed = Milestone.objects.filter(Q(user__in=tkdge_friends))
-    project_feed = UserProject.objects.filter(Q(is_live=True))
-    picture_feed = PictureSet.objects.filter(~Q(after_picture=None))
-    print "picture feed", picture_feed
-    #print tasks_feed
-    for each_tasks in milestone_feed:
-         feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE)
-         list_of_feed.append(feed)
-    for each_tasks in project_feed:
-         feed = PondFeed(each_tasks, type_of_feed=global_variables.NEW_PROJECT)
-         list_of_feed.append(feed)
-    for each_tasks in picture_feed:
-         feed = PondFeed(each_tasks, type_of_feed=global_variables.PICTURE_SET)
-         list_of_feed.append(feed)
+    project_public = UserProject.objects.filter(Q(is_live=True), Q(is_deleted=False), Q(is_public=True))
+    user_ponds = Pond.objects.filter(Q(pond_members__user=user), Q(is_deleted=False))
+    pond_specific_project = PondSpecificProject.objects.filter(pond__in=user_ponds)
+    project_feed = list(project_public)
+    for each_proj in pond_specific_project:
+        project_feed.append(each_proj.project)
+    for each_proj_feed in project_feed:
+        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT)
+        list_of_feed.append(feed)
+        milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False))
+        for each_tasks in milestone_feed:
+            feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE)
+            list_of_feed.append(feed)
+            picture_feed = each_tasks.pictureset_set.filter(~Q(after_picture=None), Q(is_deleted=False))
+            print "these are pictures ", picture_feed
+            for each_pic in picture_feed:
+                feed = PondFeed(each_pic, type_of_feed=global_variables.PICTURE_SET)
+                list_of_feed.append(feed)
     sorted_list = sorted(list_of_feed, key=lambda x: x.created, reverse=True)
     return sorted_list
 
 
 def get_notifications_alert(user):
-    notifications = user.notification_set.all()
+    notifications = user.notification_set.filter(read=False)
     nofication_feed = NotificationFeed(user, notifications)
     return nofication_feed.highight_new_notification()
+
+
+def get_tag_list(tags):
+    list_tag = []
+    for t in tags:
+        list_tag.append(t.name_of_tag)
+    return list_tag
+
+
+def create_failed_notification(milestone):
+    yesterday = get_current_datetime() - timedelta(hours=18)
+    if milestone.is_active and milestone.created_date > yesterday:
+        ponds = Pond.objects.filter(pond_members__user=milestone.user.user)
+        try:
+            vouches = VoucheMilestone.objects.get(tasks=milestone)
+        except ObjectDoesNotExist:
+            vouches = None
+        mes = "%s %s quit on the milestone: %s" % (milestone.user.user.first_name, milestone.user.user.last_name,
+                                                      milestone.name_of_milestone)
+        if vouches:
+            for each_user in vouches.users.all():
+
+                new_notif = Notification(user=each_user.user, name_of_notification=mes,
+                                         type_of_notification=global_variables.USER_DELETED_MILESTONE)
+                new_notif.save()
+        for each_pond in ponds:
+            for each_user in each_pond.pond_members.all():
+
+                new_notif = Notification(user=each_user.user, name_of_notification=mes,
+                                         type_of_notification=global_variables.USER_DELETED_MILESTONE)
+                print "stay there please ", new_notif.user.username
+                new_notif.save()
+
+
+def create_failed_notification_proj(project):
+    yesterday = get_current_datetime() - timedelta(hours=18)
+    if project.is_live and project.created < yesterday:
+        ponds = Pond.objects.filter(pond_members__user=project.user.user)
+        mes = "%s %s quit on the goal: %s" % (project.user.user.first_name, project.user.user.last_name,
+                                                      project.name_of_project)
+        for each_pond in ponds:
+            for each_user in each_pond.pond_members.all():
+                new_notif = Notification(user=each_user.user, name_of_notification=mes,
+                                         type_of_notification=global_variables.USER_DELETED_PROJECT)
+                new_notif.save()
 
 
 def notification_exist(user):
@@ -279,7 +313,7 @@ def get_pond_profile(tikedge_users, owner):
 
 
 def get_pond(user):
-    ponds = Pond.objects.filter(pond_members__user=user)
+    ponds = Pond.objects.filter(pond_members__user=user, is_deleted=False)
     return ponds
 
 
@@ -290,7 +324,7 @@ def get_let_down_notifications(user):
     :return:
     """
     tikedge_user = TikedgeUser.objects.get(user=user)
-    milestones = tikedge_user.milestone_set.all()
+    milestones = tikedge_user.milestone_set.filter(is_deleted=False)
     let_down_list = []
     for each_mil in milestones:
         try:
@@ -304,7 +338,8 @@ def get_let_down_notifications(user):
             })
         except ObjectDoesNotExist:
             pass
-    return let_down_list
+    sorted_let_down_list = sorted(let_down_list, key=lambda x: x.created, reverse=True)
+    return sorted_let_down_list
 
 
 def notification_of_people_that_let_you_down(user):
@@ -322,7 +357,8 @@ def notification_of_people_that_let_you_down(user):
             'count': None,
             'created':each_mil.tasks.created_date
         })
-    return let_down_list
+    sorted_let_down_list = sorted(let_down_list, key=lambda x: x.created, reverse=True)
+    return sorted_let_down_list
 
 
 def let_downs(user):
@@ -333,7 +369,7 @@ def let_downs(user):
 
 def get_milestone_vouch_notifications(user):
     tikedge_user = TikedgeUser.objects.get(user=user)
-    milestones = tikedge_user.milestone_set.all()
+    milestones = tikedge_user.milestone_set.filter(is_deleted=False)
     mil_vouch_list = []
     for each_mil in milestones:
         print " each mil", each_mil
@@ -383,7 +419,7 @@ def available_ponds(tikedge_user, owner):
 
 def get_new_pond_member_notification(tikedge_user):
     pond_request_list = []
-    pond = Pond.objects.filter(pond_members__user=tikedge_user.user)
+    pond = Pond.objects.filter(pond_members__user=tikedge_user.user, is_deleted=False)
     for each_pond in pond:
         pond_membership = PondMembership.objects.get(user=tikedge_user, pond=each_pond)
         pond_requests = each_pond.pondrequest_set.all().filter(request_accepted=True, pond__pond_members=tikedge_user,
@@ -425,6 +461,32 @@ def mark_milestone_vouch_as_read(user):
     """
     notifcation = user.notification_set.all().filter(read=False, 
                                                      type_of_notification=global_variables.NEW_MILESTONE_VOUCH)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_milestone_failed_as_read(user):
+    """
+    Noftication for a new vouch on milestone marked as read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.USER_DELETED_MILESTONE)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_project_failed_as_read(user):
+    """
+    Noftication for a new vouch on milestone marked as read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.USER_DELETED_PROJECT)
     for each_notif in notifcation:
         each_notif.read = True
         each_notif.save()

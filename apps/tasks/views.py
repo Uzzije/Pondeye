@@ -2,13 +2,13 @@ from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
 from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
-from ..social.models import ProfilePictures, JournalPost
+from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, Pond
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from ..social.modules import get_journal_message, \
-    get_notifications_alert, get_pond, resize_image, available_ponds
+    get_notifications_alert, get_pond, resize_image, available_ponds, create_failed_notification, create_failed_notification_proj
 from modules import get_user_projects, \
     time_has_past,\
     get_todays_milestones, \
@@ -18,7 +18,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from datetime import datetime
-from ..social.global_variables import MILESTONE, NEW_PROJECT
+from ..social.global_variables import MILESTONE, NEW_PROJECT, ALL_POND_STATUS
 from friendship.models import Friend
 import json
 from django.contrib import messages
@@ -27,6 +27,7 @@ from global_variables_tasks import TAG_NAMES_LISTS
 from .forms import launch_form
 import modules
 from forms.form_module import get_current_datetime
+from django.db.models import Q
 
 
 class RegisterView(View):
@@ -252,13 +253,15 @@ class AddProject(LoginRequiredMixin, View):
     def get(self, request):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('tasks:login'))
+        user_ponds = Pond.objects.filter(Q(pond_members__user=request.user), Q(is_deleted=False))
         form = tasks_forms.AddTaskForm(user=request.user)
         proj_form = tasks_forms.AddProjectForm()
         mil_form = tasks_forms.AddMilestoneForm()
         return render(request, 'tasks/add_view.html', {'form':form,'tag_names':TAG_NAMES_LISTS,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,
-                                                       'mil_form': mil_form
+                                                       'mil_form': mil_form,
+                                                       'user_ponds':user_ponds
                                                        })
 
     def post(self, request):
@@ -266,7 +269,7 @@ class AddProject(LoginRequiredMixin, View):
         tag_names = TagNames.objects.all()
         proj_form = tasks_forms.AddProjectForm(request.POST)
         mil_form = tasks_forms.AddMilestoneForm(request.POST)
-
+        user_ponds = Pond.objects.filter(Q(pond_members__user=request.user), Q(is_deleted=False))
         if 'mil_create' in request.POST:
             name_of_milestone= request.POST.get('milestone_name')
             name_of_project = request.POST.get('name_of_mil_proj')
@@ -278,13 +281,17 @@ class AddProject(LoginRequiredMixin, View):
                 return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
                                                                'existing_project':get_user_projects(request.user),
                                                                'proj_form': proj_form,
-                                                               'mil_form': mil_form})
+                                                               'mil_form': mil_form,
+                                                               'user_ponds':user_ponds
+                                                               })
             if not valid_project_name:
                 messages.error(request, "Milestone must be part of project!")
                 return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
                                                                'existing_project':get_user_projects(request.user),
                                                                'proj_form': proj_form,
-                                                               'mil_form': mil_form})
+                                                               'mil_form': mil_form,
+                                                               'user_ponds':user_ponds
+                                                               })
             if mil_form.is_valid() and mil_form.cleaned_data.get('milestone_date'):
                 done_by = mil_form.cleaned_data.get('milestone_date')
                 if time_has_past(done_by):
@@ -292,13 +299,17 @@ class AddProject(LoginRequiredMixin, View):
                     return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
                                                                'existing_project':get_user_projects(request.user),
                                                                'proj_form': proj_form,
-                                                               'mil_form': mil_form})
+                                                               'mil_form': mil_form,
+                                                               'user_ponds':user_ponds
+                                                                   })
             else:
                 messages.error(request, "Your date input seems to be wrong!")
                 return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
                                                                'existing_project':get_user_projects(request.user),
                                                                'proj_form': proj_form,
-                                                               'mil_form': mil_form})
+                                                               'mil_form': mil_form,
+                                                               'user_ponds':user_ponds
+                                                               })
             
             user_project = UserProject.objects.get(name_of_project=name_of_project, user=user)
             if len(length_of_time) != 0 and length_of_time != '-1':
@@ -308,7 +319,9 @@ class AddProject(LoginRequiredMixin, View):
                     return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
                                                                'existing_project':get_user_projects(request.user),
                                                                'proj_form': proj_form,
-                                                               'mil_form': mil_form})
+                                                               'mil_form': mil_form,
+                                                                   'user_ponds':user_ponds
+                                                                   })
             else:
                 start_time = done_by - timedelta(minutes=20)
                 if time_has_past(start_time):
@@ -318,7 +331,8 @@ class AddProject(LoginRequiredMixin, View):
                        return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
                                                                'existing_project':get_user_projects(request.user),
                                                                'proj_form': proj_form,
-                                                               'mil_form': mil_form})
+                                                               'mil_form': mil_form,
+                                                                'user_ponds':user_ponds})
 
             if user_project.length_of_project >= done_by:
                 print start_time, done_by
@@ -344,12 +358,15 @@ class AddProject(LoginRequiredMixin, View):
             name_of_project = request.POST.get('name_of_project')
             valid_project_name_entry = modules.check_milestone_word_is_valid(name_of_project)
             tags = request.POST.getlist('tags')
+            project_public_status = request.POST.get('public_status')
             if not valid_project_name_entry:
                 messages.error(request, "Words must be between 0 and 600!")
                 return render(request, 'tasks/add_view.html', {'tag_names':TAG_NAMES_LISTS,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,
-                                                       'mil_form': mil_form})
+                                                       'mil_form': mil_form,
+                                                        'user_ponds':user_ponds
+                                                               })
             if proj_form.is_valid() and proj_form.cleaned_data.get('project_date'):
                end_by = proj_form.cleaned_data.get('project_date')
             else:
@@ -357,14 +374,17 @@ class AddProject(LoginRequiredMixin, View):
                 return render(request, 'tasks/add_view.html', {'tag_names':TAG_NAMES_LISTS,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,
-                                                       'mil_form': mil_form})
+                                                       'mil_form': mil_form,
+                                                       'user_ponds':user_ponds
+                                                               })
                 
             if time_has_past(end_by):
                 messages.error(request, "It seems like your date input is in the past!")
                 return render(request, 'tasks/add_view.html', {'tag_names':TAG_NAMES_LISTS,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,
-                                                       'mil_form': mil_form})
+                                                       'mil_form': mil_form,
+                                                        'user_ponds':user_ponds})
 
             new_project = UserProject(name_of_project=name_of_project, user=user, length_of_project=end_by)
             new_project.save()
@@ -392,11 +412,25 @@ class AddProject(LoginRequiredMixin, View):
                                             user=user
                                             )
             new_journal_entry.save()
+            if len(project_public_status) > 0:
+                new_project.is_public = False
+                new_project.save()
+                public_status = PondSpecificProject(project=new_project)
+                public_status.save()
+                if project_public_status == ALL_POND_STATUS:
+                    for each_pond in user_ponds:
+                        public_status.pond.add(each_pond)
+                    public_status.save()
+                else:
+                    pond = Pond.objects.get(slug=project_public_status)
+                    public_status.pond.add(pond)
+                    public_status.save()
             return HttpResponseRedirect(reverse('tasks:home'))
         return render(request, 'tasks/add_view.html', {'tag_names':tag_names,
                                                        'existing_project':get_user_projects(request.user),
                                                        'proj_form': proj_form,
-                                                       'mil_form': mil_form
+                                                       'mil_form': mil_form,
+                                                       'user_ponds':user_ponds
                                                        })
 
 
@@ -428,7 +462,7 @@ class CheckPojectDone(View):
             proj_stone.is_live = False
             proj_stone.save()
             response["status"] = True
-            all_milestones = proj_stone.milestone_set.all()
+            all_milestones = proj_stone.milestone_set.filter(is_delete=False)
             for each_mil in all_milestones:
                 each_mil.is_active = False
                 if not each_mil.is_failed:
@@ -452,4 +486,172 @@ class CheckFailedProjectMilestoneView(View):
         return HttpResponse(json.dumps(response), status=201)
 
 
+class ChangePersonalInformationView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        change_password_information = tasks_forms.ChangePasswordForm()
+        change_personal_information = tasks_forms.ChangePersonalInformation(initial={
+            'first_name':tikedge_user.user.first_name,
+            'last_name':tikedge_user.user.last_name,
+            'email':tikedge_user.user.email
+        })
+
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        return render(request, 'tasks/settings/personal_information_edit.html',
+                      {'change_password_form':change_password_information,
+                       'change_personal_information':change_personal_information,
+                       'tikedge_user':tikedge_user,
+                       'has_prof_pic':has_prof_pic
+                       })
+
+    def post(self, request):
+        change_password_information = tasks_forms.ChangePasswordForm(request.POST)
+        change_personal_information = tasks_forms.ChangePersonalInformation(request.POST)
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        if 'save_changes' in request.POST:
+            if change_personal_information.is_valid():
+                tikedge_user.user.first_name = change_personal_information.cleaned_data.get('first_name')
+                tikedge_user.user.last_name = change_personal_information.cleaned_data.get('last_name')
+                tikedge_user.user.email = change_personal_information.cleaned_data.get('email')
+                tikedge_user.save()
+                messages.success(request, "Information Updated!")
+            else:
+                display_error(change_personal_information, request)
+        if 'save_password' in request.POST:
+            if change_password_information.is_valid():
+                new_password = change_password_information.cleaned_data.get("password")
+                old_password = change_password_information.cleaned_data.get("old_password")
+                if authenticate(username=request.user.username, password=old_password):
+                    request.user.set_password(new_password)
+                    request.user.save()
+                    messages.success(request, "Password Information Updated!")
+                else:
+                    messages.success(request, "Original Password is Invalid!")
+                    display_error(change_password_information, request)
+            else:
+                display_error(change_password_information, request)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        return render(request, 'tasks/settings/personal_information_edit.html',
+                      {'change_password_form':change_password_information,
+                       'change_personal_information':change_personal_information,
+                       'tikedge_user':tikedge_user,
+                       'has_prof_pic': has_prof_pic,
+                       })
+
+
+class MilestoneEditView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        milestones = Milestone.objects.filter(user=tikedge_user, is_deleted=False)
+        return render(request, 'tasks/settings/edit_milestones.html',
+                      {'milestones':milestones,
+                       'tikedge_user':tikedge_user,
+                       'has_prof_pic': has_prof_pic,
+                       })
+
+    def post(self, request):
+        if 'update_milestone' in request.POST:
+            mil_id = request.POST.get("update_milestone")
+            mil_id_name = "the_message"
+            milestone_name = request.POST.get(mil_id_name)
+            milestone = Milestone.objects.get(id=int(mil_id))
+            milestone.name_of_milestone = milestone_name
+            milestone.last_update = datetime.now()
+            milestone.save()
+            response = { "status":True }
+            return HttpResponse(json.dumps(response))
+        if 'mil_id' in request.POST:
+            mil_id = request.POST.get("mil_id")
+            milestone = Milestone.objects.get(id=int(mil_id))
+            milestone.is_deleted = True
+            journal = JournalPost.objects.get(milestone_entry=milestone)
+            journal.is_deleted = True
+            journal.save()
+            if not milestone.is_completed:
+                milestone.is_failed = True
+                create_failed_notification(milestone)
+                milestone.is_active = False
+            milestone.save()
+            response = {"status":True}
+            return HttpResponse(json.dumps(response))
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        milestones = Milestone.objects.filter(user=tikedge_user, is_deleted=False).order_by('-last_update')
+        return render(request, 'tasks/settings/edit_milestones.html',
+                      {'milestones':milestones,
+                       'tikedge_user':tikedge_user,
+                       'has_prof_pic': has_prof_pic,
+                       })
+
+
+class ProjectEditView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        projects = UserProject.objects.filter(user=tikedge_user, is_deleted=False).order_by('-created')
+        print "projects", projects
+        return render(request, 'tasks/settings/edit_projects.html',
+                      {'projects':projects,
+                       'tikedge_user':tikedge_user,
+                       'has_prof_pic': has_prof_pic,
+                       })
+
+    def post(self, request):
+        if 'update_project' in request.POST:
+            mil_id = request.POST.get("update_project")
+            proj_id_name = "the_message"
+            project_name = request.POST.get(proj_id_name)
+            project = UserProject.objects.get(id=int(mil_id))
+            project.name_of_project = project_name
+            project.last_update = datetime.now()
+            project.save()
+            response = { "status":True }
+            return HttpResponse(json.dumps(response))
+        if 'proj_id' in request.POST:
+            proj_id = request.POST.get("proj_id")
+            project = UserProject.objects.get(id=int(proj_id))
+            project.is_deleted = True
+            journal = JournalPost.objects.get(new_project_entry=project)
+            journal.is_deleted = True
+            journal.save()
+            if (not project.is_completed) and project.made_live:
+                project.is_failed = True
+                for each_proj in project.milestone_set.filter(is_deleted=False, is_active=True):
+                    create_failed_notification(each_proj)
+                    each_proj.is_live = False
+                    each_proj.save()
+                project.save()
+                create_failed_notification_proj(project)
+            response = {"status":True}
+            return HttpResponse(json.dumps(response))
+        tikedge_user = TikedgeUser.objects.get(user=request.user)
+        try:
+            has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            has_prof_pic = None
+        project = UserProject.objects.filter(user=tikedge_user, is_deleted=False)
+        return render(request, 'tasks/settings/edit_projects.html',
+                      {'projects':project,
+                       'tikedge_user':tikedge_user,
+                       'has_prof_pic': has_prof_pic,
+                       })
 

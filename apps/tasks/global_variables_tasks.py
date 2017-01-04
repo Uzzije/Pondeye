@@ -4,8 +4,8 @@ DECODE_DICTIONARY = {'a':'c', 'b':'z', 'c':'g', 'd':'h', 'e':'w', 'f':'x', 'g':'
                      'p':'m', 'q':'o', 'r':'p', 's':'q', 't':'r',
                     'u':'s', 'v':'t', 'w':'y', 'x':'v', 'y':'u', 'z':'n'}
 
-TAG_NAMES_LISTS = ['Learning an Instrument','Social Cause', 'Learning a Language','Habitat for Humanity',
-                   'Self Improvement', 'Family']
+TAG_NAMES_LISTS = ['Learning Something','Social Cause','Fitness', 'Spiritual','Curiosity',
+                   'Educational', 'Relationship', 'Food', 'Career', 'Self Improvement']
 
 POND_FIRST_STAGE = "Learning to Support Each Other"
 POND_SECOND_STAGE = "Supporting Each Other"
