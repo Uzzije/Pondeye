@@ -8,9 +8,15 @@ from django.template.defaultfilters import slugify
 
 class TikedgeUser(models.Model):
     user = models.OneToOneField(User)
+    slug = models.SlugField(default=None, max_length=100)
 
     def __str__(self):
         return self.user.username
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.user.username)
+        super(TikedgeUser, self).save(*args, **kwargs)
 
 
 class TagNames(models.Model):

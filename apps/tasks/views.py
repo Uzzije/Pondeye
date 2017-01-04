@@ -113,7 +113,8 @@ class HomeView(LoginRequiredMixin, View):
                                                    'complete_proj_count':completed_proj_count,
                                                     'current_projs':current_projs,
                                                     'status_of_user':status_of_user,
-                                                    'tikedge_user':tikedge_user
+                                                    'tikedge_user':tikedge_user,
+                                                    'slug':tikedge_user.slug
                                                    })
 
     def post(self, request):
@@ -159,7 +160,8 @@ class HomeView(LoginRequiredMixin, View):
                                                        'complete_proj_count':completed_proj_count,
                                                         'current_projs':current_projs,
                                                         'status_of_user':status_of_user,
-                                                        'tikedge_user':tikedge_user
+                                                        'tikedge_user':tikedge_user,
+                                                        'slug':tikedge_user.slug
                                                        })
         print "something went wrong"
 
@@ -168,19 +170,17 @@ class HomeView(LoginRequiredMixin, View):
 
 class ProfileView(LoginRequiredMixin, View):
 
-    def get(self, request, user_name):
+    def get(self, request, slug):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('tasks:login'))
-        user = User.objects.get(username=user_name)
-        current_tasks = get_todays_milestones(user)
-        current_projs = get_recent_projects(user)
-        tikedge_user = TikedgeUser.objects.get(user=user)
-        failed_mil_count = get_failed_mil_count(user)
-        completed_mil_count = get_completed_mil_count(user)
-        failed_proj_count = get_failed_proj_count(user)
-        completed_proj_count = get_completed_proj_count(user)
-        status_of_user = get_status(user)
-        print " friend request ", Friend.objects.unrejected_requests(user=request.user)
+        tikedge_user = TikedgeUser.objects.get(slug=slug)
+        current_tasks = get_todays_milestones(tikedge_user.user)
+        current_projs = get_recent_projects(tikedge_user.user)
+        failed_mil_count = get_failed_mil_count(tikedge_user.user)
+        completed_mil_count = get_completed_mil_count(tikedge_user.user)
+        failed_proj_count = get_failed_proj_count(tikedge_user.user)
+        completed_proj_count = get_completed_proj_count(tikedge_user.user)
+        status_of_user = get_status(tikedge_user.user)
         try:
             has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
         except ObjectDoesNotExist:
@@ -196,8 +196,9 @@ class ProfileView(LoginRequiredMixin, View):
                                                     'failed_mil_count':failed_mil_count,
                                                     'current_projs':current_projs,
                                                     'status_of_user':status_of_user,
-                                                    "user_name":user.username,
-                                                    "aval_pond":aval_pond
+                                                    "user_name":tikedge_user.user.username,
+                                                    "aval_pond":aval_pond,
+                                                    "slug":tikedge_user.slug
                                                    })
 
 

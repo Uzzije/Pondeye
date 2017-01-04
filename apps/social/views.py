@@ -238,7 +238,8 @@ class TodoFeed(LoginRequiredMixin, View):
         return render(request, 'social/news_feed.html', {'all_feeds':all_feeds,
                                                          'notifications':unread_list,
                                                          'user_pic_url': user_pic_url,
-                                                         'user':request.user
+                                                         'user':request.user,
+                                                         'slug':tikedge_user.slug
                                                          })
 
 

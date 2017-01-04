@@ -18,7 +18,7 @@
               <div class="profile-nav col-md-4">
                 <div class="panel">
                     <div class="user-heading round">
-                        <a href="{% url 'tasks:profile_view' tikedge_user.user.username %}">
+                        <a href="{% url 'tasks:profile_view' tikedge_user.slug %}">
                             <img src="{{  has_prof_pic.profile_pics.url }}" alt="">
                         </a>
                         <h1><span class="para-font">

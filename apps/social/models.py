@@ -39,6 +39,7 @@ class PictureSet(models.Model):
     tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
     last_updated = models.DateTimeField(default=now)
+
     def __str__(self):
         return '%s' % self.milestone.name_of_milestone
 

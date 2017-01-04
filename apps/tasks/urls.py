@@ -10,7 +10,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^home/$', HomeView.as_view(), name='home'),
-    url(r'^profile/(?P<user_name>[-\w\d\ ]+)$', ProfileView.as_view(), name='profile_view'),
+    url(r'^profile/(?P<slug>[-\w\d\ ]+)$', ProfileView.as_view(), name='profile_view'),
     url(r'^new-tasks/$', AddProject.as_view(), name='add_proj'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
     url(r'^api/milstone-done', CheckMilestoneDone.as_view(), name="milestone_done"),

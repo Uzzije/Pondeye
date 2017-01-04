@@ -20,7 +20,7 @@
                 <div class="profile-nav col-md-4">
                     <div class="panel">
                       <div class="user-heading round">
-                          <a href="{% url 'tasks:profile_view' user.username %}">
+                          <a href="{% url 'tasks:profile_view' slug %}">
                               <img src="{{ user_pic_url }}" alt="">
                           </a>
                           <h1>{{ user.first_name }}  {{ user.last_name }}</h1>
