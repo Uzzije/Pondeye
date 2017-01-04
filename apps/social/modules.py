@@ -232,7 +232,7 @@ def get_tag_list(tags):
 
 def create_failed_notification(milestone):
     yesterday = get_current_datetime() - timedelta(hours=18)
-    if milestone.is_active and milestone.created_date > yesterday:
+    if milestone.is_active and milestone.created_date < yesterday:
         ponds = Pond.objects.filter(pond_members__user=milestone.user.user)
         try:
             vouches = VoucheMilestone.objects.get(tasks=milestone)
