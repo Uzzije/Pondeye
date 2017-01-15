@@ -2,7 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from models import TikedgeUser
 
 from django.db.models import Q
-from datetime import timedelta
+from datetime import timedelta, datetime
 from forms import form_module
 from forms.form_module import get_current_datetime
 import pytz
@@ -13,6 +13,7 @@ from django.contrib import messages
 import global_variables_tasks
 from ..social.models import Notification, LetDownMilestone, VoucheMilestone
 from ..social import global_variables
+from django.utils.dateparse import parse_datetime
 
 
 def get_user_projects(user):
@@ -23,8 +24,20 @@ def get_user_projects(user):
     list_of_project = user.userproject_set.all().filter(is_live=True)
     t_list= []
     for proj in list_of_project:
-        temp_tup = (proj.name_of_project)
+        temp_tup = proj.name_of_project
         t_list.append(temp_tup)
+    return t_list
+
+
+def api_get_user_projects(user):
+    try:
+        user = TikedgeUser.objects.get(user=user)
+    except ObjectDoesNotExist:
+        return []
+    list_of_project = user.userproject_set.all().filter(is_live=True)
+    t_list= []
+    for proj in list_of_project:
+        t_list.append({'id':proj.id, 'name':proj.name_of_project})
     return t_list
 
 
@@ -187,13 +200,18 @@ def decode_password(password):
 
 
 def convert_html_to_datetime(date_time):
-    datetimearray = date_time.split('T')
-    date = datetimearray[0]
-   # print date
-    time = datetimearray[1]
-    new_date_time = date + ' '+time
-    print new_date_time
-    return new_date_time
+    if date_time:
+        datetimearray = date_time.split('T')
+        date = datetimearray[0]
+       # print date
+        time = datetimearray[1]
+        new_date_time = date + ' '+time
+        print new_date_time
+        end_by_naive = datetime.strptime(new_date_time, '%Y-%m-%d %H:%M')
+        new_aware = end_by_naive.replace(tzinfo=get_localzone())
+        return new_aware
+    else:
+        return False
 
 
 def time_has_past(time_infos):
@@ -390,10 +408,13 @@ def display_error(form, request):
 
 
 def check_milestone_word_is_valid(word):
-    if (len(word) > 600) or (len(word) == 0):
-        return False
+    if word:
+        if (len(word) > 600) or (len(word) == 0):
+            return False
+        else:
+            return True
     else:
-        return True
+        return False
 
 
 
