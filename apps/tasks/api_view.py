@@ -215,6 +215,7 @@ class ApiNewProject(CSRFExemptView):
         print "public status %s " % project_public_status
         tags_obj = request.POST.get('tags')
         tags = tags_obj.split(",")
+
         if not valid_project_name_entry:
             response["status"] = False
             response["error"] = "Words must be between 0 and 600!"
@@ -270,3 +271,179 @@ class ApiNewProject(CSRFExemptView):
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
+
+class ApiProjectEditView(CSRFExemptView):
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        projects = UserProject.objects.filter(user=tikedge_user, is_deleted=False).order_by('-created')
+        print "projects", projects
+        project_list = []
+        tag_list = []
+
+        for each_proj in projects:
+            for item in each_proj.tags.all():
+                tag_list.append(item.name_of_tag)
+            project_list.append({
+                'proj_name':each_proj.name_of_project,
+                'id':each_proj.id,
+                'hidden':False,
+                'tag_list':tag_list
+            })
+        response["status"] = True
+        response["project_list"] = project_list
+        return HttpResponse(json.dumps(response), status=201)
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        response = { "status":True }
+        if 'update_project' in request.POST:
+            mil_id = request.POST.get("update_project")
+            tags_obj = request.POST.get("tags")
+            tags = tags_obj.split(",")
+            proj_id_name = "the_message"
+            project_name = request.POST.get(proj_id_name)
+            project = UserProject.objects.get(id=int(mil_id))
+            project.name_of_project = project_name
+            project.last_update = datetime.now()
+            for item in project.tags.all():
+                project.tags.remove(item)
+                project.save()
+            for item in tags:
+                try:
+                    item_obj = TagNames.objects.get(name_of_tag=item)
+                except ObjectDoesNotExist:
+                    item_obj = TagNames(name_of_tag=item)
+                    item_obj.save()
+                project.tags.add(item_obj)
+            project.save()
+        if 'proj_id' in request.POST:
+            proj_id = request.POST.get("proj_id")
+            project = UserProject.objects.get(id=int(proj_id))
+            project.is_deleted = True
+            journal = JournalPost.objects.get(new_project_entry=project)
+            journal.is_deleted = True
+            journal.save()
+            if (not project.is_completed) and project.made_live:
+                for each_proj in project.milestone_set.filter(is_deleted=False, is_active=True):
+                    create_failed_notification(each_proj)
+                    each_proj.is_live = False
+                    each_proj.save()
+                project.save()
+                create_failed_notification_proj(project)
+            response = {"status":True}
+        return HttpResponse(json.dumps(response))
+
+
+class ApiMilestoneEditView(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        milestones = Milestone.objects.filter(user=tikedge_user, is_deleted=False)
+        milestones_list = []
+        for each_mil in milestones:
+            milestones_list.append({
+                'mil_name':each_mil.name_of_milestone,
+                'id':each_mil.id,
+                'hidden': False
+            })
+        response["status"] = True
+        response["milestones_list"] = milestones_list
+        return HttpResponse(json.dumps(response), status=201)
+
+    def post(self, request, *args, **kwargs):
+        response = {"status": False}
+        response["error"] = "No update action was taken!"
+        if 'update_milestone' in request.POST:
+            mil_id = request.POST.get("update_milestone")
+            mil_id_name = "updated_name"
+            milestone_name = request.POST.get(mil_id_name)
+            milestone = Milestone.objects.get(id=int(mil_id))
+            milestone.name_of_milestone = milestone_name
+            milestone.last_update = datetime.now()
+            milestone.save()
+            response = { "status":True }
+        if 'delete_milestone' in request.POST:
+            mil_id = request.POST.get("delete_milestone")
+            milestone = Milestone.objects.get(id=int(mil_id))
+            milestone.is_deleted = True
+            try:
+                journal = JournalPost.objects.get(milestone_entry=milestone)
+                journal.is_deleted = True
+                journal.save()
+            except ObjectDoesNotExist:
+                pass
+            if not milestone.is_completed:
+                create_failed_notification(milestone)
+                milestone.is_active = False
+            milestone.save()
+            response = {"status":True}
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiChangePersonalInformationView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        response['first_name'] = tikedge_user.user.first_name,
+        response['last_name'] = tikedge_user.user.last_name,
+        response['email'] = tikedge_user.user.email
+        return HttpResponse(json.dumps(response), status=201)
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        if 'save_changes' in request.POST:
+            tikedge_user.user.first_name = request.POST.get('first_name')
+            tikedge_user.user.last_name = request.POST.get('last_name')
+            tikedge_user.user.email = request.POST.get('email')
+            tikedge_user.save()
+        if 'save_password' in request.POST:
+            new_password = request.POST.get("password")
+            old_password = request.POST.get("old_password")
+            if authenticate(username=user.username, password=old_password):
+                request.user.set_password(new_password)
+                request.user.save()
+            else:
+                response["status"] = False
+                response["error"] = "Original Password is Invalid!"
+                return HttpResponse(json.dumps(response), status=201)
+        return HttpResponse(json.dumps(response), status=201)

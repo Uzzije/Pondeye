@@ -83,12 +83,12 @@ class ApiNewPondEntryView(CSRFExemptView):
         return HttpResponse(json.dumps(response), status=201)
 
 
-class ApiPictureUploadView(LoginRequiredMixin, View):
+class ApiPictureUploadView(CSRFExemptView):
 
     def get(self, request):
         response = {}
         try:
-            username = request.POST.get("username")
+            username = request.GET.get("username")
             user = User.objects.get(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
@@ -103,7 +103,7 @@ class ApiPictureUploadView(LoginRequiredMixin, View):
 	        response["status"] = False
 	        response["error"] = "You need to have a milestone to capture your event!"
 	        response["has_mil"] = False
-		return HttpResponse(json.dumps(response), status=201)
+        return HttpResponse(json.dumps(response), status=201)
 
 
     def post(self, request):
@@ -121,7 +121,7 @@ class ApiPictureUploadView(LoginRequiredMixin, View):
             response["error"] = "Hey visual must be either jpg, jpeg or png file!"
             return HttpResponse(json.dumps(response), status=201)
         milestone_name = request.POST.get('milestone_name')
-        milestone = Milestone.objects.get(id=milestone_name)
+        milestone = Milestone.objects.get(id=int(milestone_name))
         if request.POST.get("type_of_picture") == global_variables.BEFORE_PICTURE:
             is_before = True
             # check that user is not creating concurrent before for current milestone
@@ -173,3 +173,220 @@ class ApiPictureUploadView(LoginRequiredMixin, View):
 	    response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
+
+class  ApiEditPictureSetView(CSRFExemptView):
+    """
+    Remove Complete Pictures. Edit Pictures Without After Shot (i.e Delete Them or Change Them).
+    """
+
+    def get(self, request):
+        response = {}
+        response["status"] = False
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        user_picture_set = PictureSet.objects.filter(tikedge_user=tikedge_user, is_deleted=False)
+        picture_set = []
+        for each_pic in user_picture_set:
+            if each_pic.after_picture:
+                hasPic = True
+            else:
+                hasPic = True
+            picture_set.append({
+                'before_picture':{'id':each_pic.before_picture.id,
+                                  'url':each_pic.before_picture.milestone_pics.url,
+                                  },
+                'after_picture':{'id':each_pic.after_picture.id,
+                                 'url':each_pic.after_picture.milestone_pics.url
+                                 },
+                'blurb':each_pic.milestone.blurb,
+                'id':each_pic.id,
+                'slug':each_pic.milestone.slug,
+                'hidden':False,
+                'hasAfterPicture':hasPic
+            })
+        response["user_picture_set"] = picture_set
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+    def post(self, request):
+        response = {}
+        response["status"] = False
+        try:
+            username = request.POST.get("username")
+            User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        if 'change_picture_after' in request.POST:
+            pic_set_id = request.POST.get("change_picture_after")
+            picture = Picture.objects.get(id=int(pic_set_id))
+            pic_file = request.FILES.get('picture', False)
+            if modules.file_is_picture(pic_file):
+                pic_file.file = modules.resize_image(pic_file)
+                picture.milestone_pics = pic_file
+                picture.image_name = pic_file.name
+                picture.last_edited = datetime.now()
+                picture.save()
+            else:
+                response["error"] = 'Hey visual must be either jpg, jpeg or png file!'
+                return HttpResponse(json.dumps(response), status=201)
+        if 'change_picture_before' in request.POST:
+            pic_set_id = request.POST.get("change_picture_before")
+            picture = Picture.objects.get(id=int(pic_set_id))
+            pic_file = request.FILES.get('picture', False)
+            if modules.file_is_picture(pic_file):
+                pic_file.file = modules.resize_image(pic_file)
+                picture.milestone_pics = pic_file
+                picture.image_name = pic_file.name
+                picture.last_edited = datetime.now()
+                picture.save()
+            else:
+                response["error"] = 'Hey visual must be either jpg, jpeg or png file!'
+                return HttpResponse(json.dumps(response), status=201)
+        if 'delete_picture_after' in request.POST:
+            pic_id = request.POST.get("delete_picture_after")
+            picture = Picture.objects.get(id=int(pic_id))
+            picture.is_deleted = True
+            picture.last_edited = datetime.now()
+            picture.save()
+            picture_set = PictureSet.objects.get(after_picture=picture)
+            picture_set.after_picture = None
+            picture_set.save()
+        if 'delete_picture_before' in request.POST:
+            pic_id = request.POST.get("delete_picture_before")
+            picture = Picture.objects.get(id=int(pic_id))
+            picture.is_deleted = True
+            picture.last_edited = datetime.now()
+            picture.save()
+            picture_set = PictureSet.objects.get(before_picture=picture)
+            picture_set.before_picture = None
+            picture_set.is_deleted = True
+            picture_set.save()
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiDeletePictureSet(CSRFExemptView):
+
+    def post(self, request):
+        try:
+            pic_set_id = request.POST.get("pic_set_id")
+            pic_set = PictureSet.objects.get(id=int(pic_set_id))
+            pic_set.is_deleted = True
+            pic_set.save()
+            response = {'status':True}
+        except ObjectDoesNotExist:
+            response = {'status':False}
+        return HttpResponse(json.dumps(response))
+
+
+class ApiEditPondView(CSRFExemptView):
+
+    def get(self, request):
+        response = {}
+        response["status"] = False
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        ponds = Pond.objects.filter(pond_members__user=tikedge_user.user, is_deleted=False)
+        pond_list = []
+        for pond in ponds:
+            tag_list = []
+            pond_mem_list = []
+            for item in pond.tags.all():
+                tag_list.append(item.name_of_tag)
+            for pond_mem in pond.pond_members.all():
+                if pond_mem != pond.pond_creator:
+                    pond_mem_list.append({
+                        'first_name':pond_mem.user.first_name,
+                        'last_name':pond_mem.user.last_name,
+                        'username':pond_mem.user.username
+                    })
+            pond_list.append({
+                'id':pond.id,
+                'blurb':pond.blurb,
+                'slug':pond.slug,
+                'pond_list':tag_list,
+                'pond_members': pond_mem_list,
+                'purpose':pond.purpose
+            })
+        if pond_list:
+            response["status"] = True
+        response["pond_list"] = pond_list
+        return HttpResponse(json.dumps(response), status=201)
+
+    def post(self, request):
+        response = {"status":False}
+        if 'pond_id' in request.POST:
+            pond_id = request.POST.get("pond_id")
+            pond = Pond.objects.get(id=int(pond_id))
+            pond.is_deleted = True
+            pond.save()
+            response = {"status":True}
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiEditIndividualPondView(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        slug = request.GET.get("slug")
+        response = {}
+        response["status"] = False
+        pond = Pond.objects.get(slug=slug)
+        response['name_of_pond'] = pond.name_of_pond,
+        response['purpose'] = pond.purpose,
+        select_tags = modules.get_tag_list(pond.tags.all())
+        pond_members = pond.pond_members.all()
+        response["select_tags"] = select_tags
+        pond_members_list = []
+        for each_mem in pond_members:
+            pond_members_list.append({
+                'pond_member_first_name':each_mem.user.first_name,
+                'pond_member_last_name':each_mem.user.last_name,
+                'slug':each_mem.slug,
+                'id':each_mem.id
+            })
+
+        response["pond_members"] = pond_members_list
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        response["status"] = False
+        pond_id = request.POST.get("pond_id")
+        pond = Pond.objects.get(id=int(pond_id))
+        pond_name = request.POST.get('name_of_pond')
+        purpose = request.POST.get('purpose')
+        tags_obj = request.POST.get('tags')
+        tags = tags_obj.split(",")
+        ponders_obj = request.POST.get('ponders')
+        ponders = ponders_obj.split(",")
+        pond.name_of_pond = pond_name
+        pond.purpose = purpose
+        pond.save()
+        for item in pond.tags.all():
+            pond.tags.remove(item)
+        pond.save()
+        for item in tags:
+            try:
+                item_obj = TagNames.objects.get(name_of_tag=item)
+            except ObjectDoesNotExist:
+                item_obj = TagNames(name_of_tag=item)
+                item_obj.save()
+            pond.tags.add(item_obj)
+        for pd in ponders:
+            tik = TikedgeUser.objects.get(id=pd)
+            pond.pond_members.remove(tik)
+        pond.save()
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)

@@ -10,7 +10,8 @@ from .views import JournalEntriesView, PictureUploadView, TodoFeed, SendFriendRe
     NewPondRequestNotificationView, GetNotification,  EditPictureSetView, DeletePictureSet, \
     FailedProjectNotificationView, FailedMilestonesNotificationView, EditIndividualPondView, EditPondView
 
-from .api_view import ApiNewPondEntryView, ApiPictureUploadView
+from .api_view import ApiNewPondEntryView, ApiPictureUploadView, ApiDeletePictureSet, \
+    ApiEditIndividualPondView, ApiEditPictureSetView, ApiEditPondView
 
 urlpatterns = [
     url(r'^journal-feed/$', JournalEntriesView.as_view(), name='journal_entries'),
@@ -56,7 +57,12 @@ urlpatterns = [
     ######################### App Api Calls
 
     url(r'^api/new-pond-entry/$', ApiNewPondEntryView.as_view(), name="new_pond_entry"),
-    url(r'^api/new-pic-entry/$', ApiPictureUploadView.as_view(), name="new_pond_entry")
+    url(r'^api/new-picture-entry/$', ApiPictureUploadView.as_view(), name="new_picture_entry"),
+    url(r'^api/picture-set-edit', ApiEditPictureSetView.as_view(), name="api_picture_set_edit"),
+    url(r'^api/pond-edit', ApiEditPondView.as_view(), name="api_project_edit"),
+    url(r'^api/picture-set-delete', ApiDeletePictureSet.as_view(), name="api_delete_edit"),
+    url(r'^api/individual-pond', ApiEditIndividualPondView.as_view(), name="api_individual_view")
+
 
 ]
 

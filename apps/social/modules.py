@@ -233,6 +233,8 @@ def get_tag_list(tags):
 def create_failed_notification(milestone):
     yesterday = get_current_datetime() - timedelta(hours=18)
     if milestone.is_active and milestone.created_date < yesterday:
+        if not milestone.is_completed:
+            milestone.is_failed = True
         ponds = Pond.objects.filter(pond_members__user=milestone.user.user)
         try:
             vouches = VoucheMilestone.objects.get(tasks=milestone)
@@ -258,6 +260,7 @@ def create_failed_notification(milestone):
 def create_failed_notification_proj(project):
     yesterday = get_current_datetime() - timedelta(hours=18)
     if project.is_live and project.created < yesterday:
+        project.is_failed = True
         ponds = Pond.objects.filter(pond_members__user=project.user.user)
         mes = "%s %s quit on the goal: %s" % (project.user.user.first_name, project.user.user.last_name,
                                                       project.name_of_project)
