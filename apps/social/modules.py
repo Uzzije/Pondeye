@@ -206,11 +206,11 @@ def get_users_feed(user):
         project_feed.append(each_proj.project)
     for each_proj_feed in project_feed:
         print "Project Name %s \n" % each_proj_feed.name_of_project
-        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT)
+        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT, url_domain=CURRENT_URL)
         list_of_feed.append(feed)
         milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
         for each_tasks in milestone_feed:
-            feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE)
+            feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE, url_domain=CURRENT_URL)
             list_of_feed.append(feed)
             picture_feed = each_tasks.pictureset_set.filter(
                 ~Q(after_picture=None), Q(is_deleted=False)).order_by('-last_updated').distinct()
@@ -237,7 +237,7 @@ def get_users_feed_json(user):
 
     for each_proj_feed in project_feed:
         print "Project Name %s \n" % each_proj_feed.name_of_project
-        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT)
+        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT, url_domain=CURRENT_URL)
         list_of_feed.append(feed)
         list_of_feed_json.append({
            'name': feed.task_owner_name,
@@ -255,7 +255,7 @@ def get_users_feed_json(user):
         })
         milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
         for each_tasks in milestone_feed:
-            feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE)
+            feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE, url_domain=CURRENT_URL)
             list_of_feed.append(feed)
             list_of_feed_json.append({
             'name': feed.task_owner_name,
@@ -277,7 +277,7 @@ def get_users_feed_json(user):
                 ~Q(after_picture=None), Q(is_deleted=False)).order_by('-last_updated').distinct()
             print "these are pictures ", picture_feed
             for each_pic in picture_feed:
-                feed = PondFeed(each_pic, type_of_feed=global_variables.PICTURE_SET)
+                feed = PondFeed(each_pic, type_of_feed=global_variables.PICTURE_SET, url_domain=CURRENT_URL)
                 list_of_feed.append(feed)
                 list_of_feed_json.append({
                     'name': feed.task_owner_name,
@@ -299,8 +299,8 @@ def get_pic_list(pic_list):
     pic_list_arr = []
     for each_pic in pic_list:
         pic_list_arr.append({
-            'picture_before':global_variables.LOCAL_URL+each_pic.before_picture.milestone_pics.url,
-            'picture_after':global_variables.LOCAL_URL+each_pic.after_picture.milestone_pics.url
+            'picture_before':CURRENT_URL+each_pic.before_picture.milestone_pics.url,
+            'picture_after':CURRENT_URL+each_pic.after_picture.milestone_pics.url
         })
     return pic_list_arr
 
@@ -385,7 +385,7 @@ def get_pond_profile(tikedge_users, owner):
     for tikedge_user in tikedge_users:
         try:
             picture = ProfilePictures.objects.get(tikedge_user=tikedge_user, is_deleted=False)
-            picture_url = global_variables.LOCAL_URL+picture.profile_pics.url
+            picture_url = CURRENT_URL+picture.profile_pics.url
         except ObjectDoesNotExist:
             picture_url = None
         if owner == tikedge_user:
@@ -414,7 +414,7 @@ def pond_to_json(ponds):
     for each_pond in ponds:
         try:
             profile_pic = ProfilePictures.objects.get(tikedge_user=each_pond.pond_creator, is_deleted=False)
-            profile_pic_url = global_variables.LOCAL_URL+profile_pic.profile_pics.url
+            profile_pic_url = CURRENT_URL+profile_pic.profile_pics.url
         except ObjectDoesNotExist:
             profile_pic_url = None
         pond_list.append({

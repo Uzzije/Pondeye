@@ -2,68 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0002_buildcred_follow_friends_letdown_notification_seen_vouche.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0003_taskpicture.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0004_auto_20161002_0353.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0005_auto_20161002_0427.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0006_auto_20161002_0427.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0007_auto_20161002_2303.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0008_auto_20161002_2340.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0009_auto_20161016_0428.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0010_graded_tasks.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0011_auto_20161016_0435.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0012_auto_20161016_2141.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0013_auto_20161016_2214.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0014_auto_20161016_2251.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0015_auto_20161112_0319.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0016_picture_pictureset.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0017_pictureset_tikedge_user.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0018_auto_20161112_2209.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0019_buildcredmilestone_letdownmilestone_seenmilestone_seenpictureset_seenproject_vouchemilestone.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0020_journalpost.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0021_journalpost_comment.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0022_auto_20161121_1645.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0023_auto_20161121_2006.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0024_auto_20161121_2110.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0025_auto_20161122_2349.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/social/migrations/0026_auto_20161126_2224.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0002_auto_20160704_0028.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0003_auto_20160704_0302.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0004_auto_20160704_0422.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0005_tasks_is_active.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0006_auto_20160708_0412.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0007_auto_20161015_0424.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0008_auto_20161015_0810.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0009_pendingtasks_is_removed.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0010_milestone.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0011_auto_20161112_0524.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0012_auto_20161112_0614.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0013_auto_20161112_0621.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0014_auto_20161120_0557.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0015_auto_20161120_0601.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0016_auto_20161120_0628.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0017_auto_20161120_0720.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0020_auto_20161123_0911.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0021_auto_20161123_1848.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/apps/tasks/migrations/0022_auto_20161126_2224.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/global_variables.py" afterPath="$PROJECT_DIR$/apps/social/global_variables.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/models.py" afterPath="$PROJECT_DIR$/apps/social/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/tasks_feed.py" afterPath="$PROJECT_DIR$/apps/social/tasks_feed.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/urls.py" afterPath="$PROJECT_DIR$/apps/social/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/views.py" afterPath="$PROJECT_DIR$/apps/social/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/api_view.py" afterPath="$PROJECT_DIR$/apps/tasks/api_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/models.py" afterPath="$PROJECT_DIR$/apps/tasks/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/modules.py" afterPath="$PROJECT_DIR$/apps/tasks/modules.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/urls.py" afterPath="$PROJECT_DIR$/apps/tasks/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/views.py" afterPath="$PROJECT_DIR$/apps/tasks/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/base.html" afterPath="$PROJECT_DIR$/templates/base/base.html" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,7 +22,7 @@
     <SUITE FILE_PATH="coverage/tikedge$views.coverage" NAME="views Coverage Results" MODIFIED="1482627094111" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/social" />
     <SUITE FILE_PATH="coverage/tikedge$Test__templates_base_base.coverage" NAME="Test: templates.base.base Coverage Results" MODIFIED="1480753394626" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/tikedge$modules__1_.coverage" NAME="modules (1) Coverage Results" MODIFIED="1480613070127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/tasks" />
-    <SUITE FILE_PATH="coverage/tikedge$api_view.coverage" NAME="api_view Coverage Results" MODIFIED="1486197945954" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/social" />
+    <SUITE FILE_PATH="coverage/tikedge$api_view.coverage" NAME="api_view Coverage Results" MODIFIED="1486198034473" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/social" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -133,9 +73,10 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="19" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+            <state vertical-scroll-proportion="2.883549">
+              <caret line="285" column="43" selection-start-line="285" selection-start-column="43" selection-end-line="285" selection-end-column="43" />
               <folding>
+                <element signature="e#0#51#0" expanded="true" />
                 <element signature="e#715#1056#0" expanded="false" />
                 <element signature="e#1103#1476#0" expanded="false" />
                 <element signature="e#1533#1888#0" expanded="false" />
@@ -146,9 +87,19 @@
                 <element signature="e#4620#5042#0" expanded="false" />
                 <element signature="e#5100#5429#0" expanded="false" />
                 <element signature="e#5483#5804#0" expanded="false" />
-                <element signature="e#12929#14224#0" expanded="false" />
-                <element signature="e#14277#14993#0" expanded="false" />
+                <element signature="e#13019#14314#0" expanded="false" />
+                <element signature="e#14367#15083#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.333333">
+              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -173,6 +124,36 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="36" column="49" selection-start-line="36" selection-start-column="49" selection-end-line="36" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="0002_remove_profilepictures_is_deleted.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/social/migrations/0002_remove_profilepictures_is_deleted.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="81" selection-start-line="15" selection-start-column="81" selection-end-line="15" selection-end-column="81" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -191,7 +172,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/social/journal.html" />
         <option value="$PROJECT_DIR$/apps/tasks/admin.py" />
         <option value="$PROJECT_DIR$/apps/tasks/forms/launch_form.py" />
         <option value="$PROJECT_DIR$/apps/tasks/forms/tasks_forms.py" />
@@ -241,6 +221,7 @@
         <option value="$PROJECT_DIR$/apps/social/migrations/0030_auto_20170204_0140.py" />
         <option value="$PROJECT_DIR$/apps/social/models.py" />
         <option value="$PROJECT_DIR$/apps/social/api_view.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
       </list>
     </option>
@@ -251,8 +232,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1815" />
-    <option name="y" value="437" />
+    <option name="x" value="1687" />
+    <option name="y" value="287" />
     <option name="width" value="1539" />
     <option name="height" value="745" />
   </component>
@@ -374,6 +355,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="social" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="social" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="migrations" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -790,7 +793,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1815" y="437" width="1539" height="745" extended-state="0" />
+    <frame x="1687" y="287" width="1539" height="745" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14696059" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -926,16 +929,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding>
-            <element signature="e#92#220#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/social/pond.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.0">
@@ -948,14 +941,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="49" selection-start-line="36" selection-start-column="49" selection-end-line="36" selection-end-column="49" />
           <folding />
         </state>
       </provider>
@@ -1063,11 +1048,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.333333">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="19" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+          <caret line="36" column="49" selection-start-line="36" selection-start-column="49" selection-end-line="36" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/migrations/0002_remove_profilepictures_is_deleted.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="81" selection-start-line="15" selection-start-column="81" selection-end-line="15" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.883549">
+          <caret line="285" column="43" selection-start-line="285" selection-start-column="43" selection-end-line="285" selection-end-column="43" />
           <folding>
+            <element signature="e#0#51#0" expanded="true" />
             <element signature="e#715#1056#0" expanded="false" />
             <element signature="e#1103#1476#0" expanded="false" />
             <element signature="e#1533#1888#0" expanded="false" />
@@ -1078,8 +1096,8 @@
             <element signature="e#4620#5042#0" expanded="false" />
             <element signature="e#5100#5429#0" expanded="false" />
             <element signature="e#5483#5804#0" expanded="false" />
-            <element signature="e#12929#14224#0" expanded="false" />
-            <element signature="e#14277#14993#0" expanded="false" />
+            <element signature="e#13019#14314#0" expanded="false" />
+            <element signature="e#14367#15083#0" expanded="false" />
           </folding>
         </state>
       </provider>
