@@ -404,7 +404,7 @@ class ApiMilestoneEditView(CSRFExemptView):
         return HttpResponse(json.dumps(response), status=201)
 
 
-class ApiChangePersonalInformationView(LoginRequiredMixin, View):
+class ApiChangePersonalInformationView(CSRFExemptView):
 
     def get(self, request):
         response = {}
@@ -435,15 +435,18 @@ class ApiChangePersonalInformationView(LoginRequiredMixin, View):
             tikedge_user.user.first_name = request.POST.get('first_name')
             tikedge_user.user.last_name = request.POST.get('last_name')
             tikedge_user.user.email = request.POST.get('email')
+            tikedge_user.user.save()
             tikedge_user.save()
         if 'save_password' in request.POST:
             new_password = request.POST.get("password")
             old_password = request.POST.get("old_password")
+            print "tikedge user edit first name ", request.POST.get('password') , " ", request.POST.get("old_password")
             if authenticate(username=user.username, password=old_password):
-                request.user.set_password(new_password)
-                request.user.save()
+                user.set_password(new_password)
+                user.save()
             else:
                 response["status"] = False
                 response["error"] = "Original Password is Invalid!"
                 return HttpResponse(json.dumps(response), status=201)
+            response["status"] = True
         return HttpResponse(json.dumps(response), status=201)

@@ -390,3 +390,350 @@ class ApiEditIndividualPondView(CSRFExemptView):
         pond.save()
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiTodoFeed(CSRFExemptView):
+
+    def get(self, request):
+        response = {}
+        response["status"] = False
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        all_feeds = modules.get_users_feed_json(user)
+        response["status"] = True
+        response["all_feeds"] = all_feeds
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiCreateVouch(CSRFExemptView):
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        milestone_id = request.POST.get("mil_id")
+        milestone = Milestone.objects.get(id=int(milestone_id))
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        user = TikedgeUser.objects.get(user=user)
+        try:
+            vouch_obj = VoucheMilestone.objects.get(tasks=milestone)
+            if user in vouch_obj.users.all():
+                vouch_obj.users.remove(user)
+                vouch_obj.save()
+                response["status"] = "unvouch"
+                return HttpResponse(json.dumps(response), status=201)
+        except ObjectDoesNotExist:
+            vouch_obj = VoucheMilestone(tasks=milestone)
+            vouch_obj.save()
+        if user not in vouch_obj.users.all() and (user != milestone.user) and milestone.is_active:
+            vouch_obj.users.add(user)
+            vouch_obj.save()
+            try:
+                view = SeenMilestone.objects.get(tasks=milestone)
+            except ObjectDoesNotExist:
+                view = SeenMilestone(tasks=milestone)
+                view.save()
+            if user not in view.users.all():
+                view.users.add(user)
+                view.save()
+                response["status"] = True
+                vouch_notif = Notification(user=milestone.user.user,
+                                        type_of_notification=global_variables.NEW_MILESTONE_VOUCH)
+                vouch_notif.save()
+            response["count"] = view.users.all().count()
+        else:
+            response["status"] = False
+            response["error"] = "Can't vouch for inactive milestone"
+        print "Tried to print vouch!!!!!!\n"
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiCreateFollow(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('')
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        proj_id = request.POST.get("proj_id")
+        project = UserProject.objects.get(id=int(proj_id))
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        try:
+            follow_obj = Follow.objects.get(tasks=project)
+            if tikedge_user in follow_obj.users.all():
+                follow_obj.users.remove(tikedge_user)
+                follow_obj.save()
+                response["status"] = "unfollow"
+                response["count"] = follow_obj.users.all().count()
+                return HttpResponse(json.dumps(response), status=201)
+        except ObjectDoesNotExist:
+            follow_obj = Follow(tasks=project)
+            follow_obj.save()
+        if tikedge_user != project.user:
+            response["status"] = True
+            follow_obj.users.add(tikedge_user)
+            follow_obj.save()
+            follow_notif = Notification(user=project.user.user,
+                                        type_of_notification=global_variables.NEW_PROJECT_INTERESTED)
+            follow_notif.save()
+        response["count"] = follow_obj.users.all().count()
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiMilestoneView(CSRFExemptView):
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        mil_id = request.GET.get("mil_id")
+        milestone = Milestone.objects.get(id=int(mil_id))
+        project = milestone.project
+        project_name = project.name_of_project
+        feed_id = milestone.id
+        modules.increment_milestone_view(user, milestone)
+        try:
+            vouch_count = VoucheMilestone.objects.get(tasks=milestone).users.count()
+        except ObjectDoesNotExist:
+            vouch_count = 0
+        try:
+            seen_count = SeenMilestone.objects.get(tasks=milestone).users.count()
+            print "seen count ", seen_count
+            print "seen count ", seen_count
+        except ObjectDoesNotExist:
+            seen_count = 0
+        project_completed = task_modules.time_has_past(project.length_of_project)
+        user_first_name = milestone.user.user.first_name
+        pic_list = milestone.pictureset_set.all().filter(~Q(after_picture=None))
+        percentage = modules.get_milestone_percentage(milestone)
+        start_time = task_modules.utc_to_local(milestone.reminder).strftime("%B %d %Y %I:%M %p")
+        end_time = task_modules.utc_to_local(milestone.done_by).strftime("%B %d %Y %I:%M %p")
+        percent_sign = str(percentage) + "%"
+        percentage_statement = "Based on %s %s's community, there was a %s  chance of completing " \
+                               "this milestone" % (user_first_name, milestone.user.user.last_name, percent_sign)
+        if milestone.is_completed:
+            is_completed = "Completed!"
+        elif milestone.is_failed:
+            is_completed = "Failed!"
+        else:
+            is_completed = None
+        response = {
+            'status':True,
+            'project_completed': project_completed,
+            'feed_id':feed_id,
+            'project_name':project_name,
+            'seen_count': seen_count,
+            'pic_list':modules.get_pic_list(pic_list),
+            'percentage_statement':percentage_statement,
+            'end_time':end_time,
+            'start_time':start_time,
+            'project_id':project.id,
+            'user_first_name':user_first_name,
+            'user_last_name':milestone.user.user.last_name,
+            'milestone_name':milestone.name_of_milestone,
+            'vouch_count':vouch_count,
+            'is_completed':is_completed
+        }
+
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiProjectView(CSRFExemptView):
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            req_user = User.objects.get(username=username)
+            proj_id = request.GET.get("proj_id")
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        project = UserProject.objects.get(id=int(proj_id))
+        project_name = project.name_of_project
+        motivations = project.tags.all()
+        print "motivations ", motivations
+        modules.increment_project_view(req_user, project)
+        milestones = project.milestone_set.all().filter(Q(is_active=True, is_deleted=False))
+        try:
+            seen_count = SeenProject.objects.get(tasks=project).users.count()
+        except ObjectDoesNotExist:
+            seen_count = 0
+        try:
+            follows = Follow.objects.get(tasks=project).users.count()
+        except ObjectDoesNotExist:
+            follows = 0
+        if not project.is_public:
+            pond_specific = PondSpecificProject.objects.get(project=project).pond.filter(is_deleted=False)
+        else:
+            pond_specific = None
+        user_owns_proj = TikedgeUser.objects.get(user=req_user) == project.user.user
+        public_status = "Project is in Pond"
+        if project.is_public:
+            public_status = "Project is Public"
+        if project.is_completed:
+            is_completed = "Completed!"
+        elif project.is_failed:
+            is_completed = "Failed!"
+        else:
+            is_completed = None
+        response = {
+            'status':True,
+            'project_name':project_name,
+            'user_first_name':project.user.user.first_name,
+            'user_last_name':project.user.user.last_name,
+            'start_time':task_modules.utc_to_local(project.made_live).strftime("%B %d %Y %I:%M %p"),
+            'end_time':task_modules.utc_to_local(project.length_of_project).strftime("%B %d %Y %I:%M %p"),
+            'seen_count':seen_count,
+            'follow_count':follows,
+            'public_status':public_status,
+            'mil_list':modules.milestone_project_app_view(milestones),
+            'motif':modules.motivation_for_project_app_view(motivations),
+            'pond':modules.pond_for_project_app_view(pond_specific),
+            'user_owns_proj':user_owns_proj,
+            'is_completed':is_completed
+        }
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiProjectSeenCounter(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        proj_id = request.POST.get("proj_id")
+        try:
+            project = UserProject.objects.get(id=int(proj_id))
+            modules.increment_project_view(user, project)
+        except (ObjectDoesNotExist, ValueError, AttributeError):
+            pass
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiMilestoneSeenCounter(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        proj_id = request.POST.get("mil_id")
+        try:
+            milestone = Milestone.objects.get(id=int(proj_id))
+            modules.increment_milestone_view(user, milestone)
+        except (ObjectDoesNotExist, ValueError, AttributeError):
+            pass
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiGetPondList(CSRFExemptView):
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        ponds = modules.get_pond(user)
+        pond_list = modules.pond_to_json(ponds)
+        response = {
+            "status":True,
+            "pond_list":pond_list,
+        }
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiGetPond(CSRFExemptView):
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        pond_id = request.GET.get("pond_id")
+        try:
+            the_pond = Pond.objects.get(id=int(pond_id))
+            pond_list_members = the_pond.pond_members.all()
+            ponders = modules.get_pond_profile(pond_list_members, the_pond.pond_creator)
+            tikedge_user = task_modules.get_tikedge_user(user)
+            pond_member = pond_list_members.filter(user=tikedge_user.user)
+            pond_tags = modules.get_tag_list(the_pond.tags.all())
+            if pond_member:
+                is_pond_member = True
+            else:
+                is_pond_member = False
+            pond_status = task_modules.get_pond_status(pond_list_members)
+            response["status"] = True
+            response["pond_info"] = {
+                "ponders":ponders,
+                "pond_status":pond_status,
+                "purpose":the_pond.purpose,
+                "name_of_pond":the_pond.name_of_pond,
+                "is_member":is_pond_member,
+                "tags":pond_tags,
+                'id':int(pond_id)
+            }
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Something went wrong refresh the page!"
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiPondRequestView(CSRFExemptView):
+    """
+        Send Pond Request to pond members
+    """
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        try:
+            pond_id = request.POST.get("pond_id")
+            pond = Pond.objects.get(id=int(pond_id))
+            response = modules.send_pond_request(pond, user)
+        except ObjectDoesNotExist:
+            pass
+        return HttpResponse(json.dumps(response))

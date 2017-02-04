@@ -40,6 +40,7 @@ class UserProject(models.Model):
     is_completed = models.BooleanField(default=False)
     is_public = models.BooleanField(default=True, verbose_name="Can Be View By All People")
     is_deleted =  models.BooleanField(default=False)
+    last_update = models.DateTimeField(default=now)
 
     def save(self, *args, **kwargs):
         if len(self.name_of_project) > 150:

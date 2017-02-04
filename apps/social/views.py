@@ -518,25 +518,30 @@ class AddToPond(LoginRequiredMixin, View):
         user_id = request.POST.get("user_id")
         other_user = TikedgeUser.objects.get(id=int(user_id))
         try:
-            for each_member in pond.pond_members.all():
-                notification = Notification(user=each_member.user,
-                                        type_of_notification=global_variables.NEW_PONDERS)
+            pond_members = pond.pond_members.all()
+            if other_user not in pond_members:
+                for each_member in pond_members:
+                    notification = Notification(user=each_member.user,
+                                            type_of_notification=global_variables.NEW_PONDERS)
+                    notification.save()
+                pond.pond_members.add(other_user)
+                pond.save()
+                pond_membership = PondMembership(user=other_user, pond=pond)
+                pond_membership.save()
+                pond_request = PondRequest(user=other_user, pond=pond, date_response=datetime.now(),
+                                           request_accepted=True,
+                                           member_that_responded=task_modules.get_tikedge_user(request.user),
+                                           request_responded_to=True)
+                pond_request.save()
+                notification = Notification(user=other_user.user,
+                                            type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
                 notification.save()
-            pond.pond_members.add(other_user)
-            pond.save()
-            pond_membership = PondMembership(user=other_user, pond=pond)
-            pond_membership.save()
-            pond_request = PondRequest(user=other_user, pond=pond, date_response=datetime.now(),
-                                       request_accepted=True,
-                                       member_that_responded=task_modules.get_tikedge_user(request.user),
-                                       request_responded_to=True)
-            pond_request.save()
-            notification = Notification(user=other_user.user,
-                                        type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
-            notification.save()
-            data['status'] = True
+                data['status'] = True
+            else:
+                print "others is here!!!!!!!!!"
         except (AttributeError, ValueError, TypeError):
             data['status'] = False
+            data['error'] = "Something Went Wrong, Try Again!"
             pass
         return HttpResponse(json.dumps(data))
 

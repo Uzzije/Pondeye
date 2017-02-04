@@ -413,7 +413,7 @@ class AddProject(LoginRequiredMixin, View):
                                             user=user
                                             )
             new_journal_entry.save()
-            if len(project_public_status) > 0:
+            if len(project_public_status) > 1:
                 new_project.is_public = False
                 new_project.save()
                 public_status = PondSpecificProject(project=new_project)

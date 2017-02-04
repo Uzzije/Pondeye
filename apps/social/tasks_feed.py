@@ -7,14 +7,17 @@ from models import ProfilePictures,\
 from friendship.models import FriendshipRequest
 from django.db.models import Q
 import global_variables
+from ..tasks.modules import utc_to_local
 from django.core.exceptions import ObjectDoesNotExist
 
 
 class PondFeed:
 
-    def __init__(self, tasks, type_of_feed):
+    def __init__(self, tasks, type_of_feed, url_domain=global_variables.LOCAL_URL):
         self.tasks = tasks
         self.type_of_feed = type_of_feed
+        self.url_domain = url_domain
+        self.tikedge_user = self.get_user_tikedge()
         self.seen_count = self.seens()
         self.vouche_count = self.vouche()
         self.follow_count = self.follow()
@@ -26,9 +29,10 @@ class PondFeed:
         self.before_url = self.get_before_url()
         self.after_url = self.get_after_url()
         self.feed_id = self.tasks.id
-        self.created = self.get_date_created()
+        self.created = utc_to_local(self.get_date_created())
         self.profile_url = self.task_owner_profile_pic_url()
         self.feed_user = self.get_user_tikedge().user
+
 
     def get_user_tikedge(self):
         if self.type_of_feed is global_variables.PICTURE_SET:
@@ -76,17 +80,17 @@ class PondFeed:
         elif self.type_of_feed is global_variables.PICTURE_SET:
             return self.tasks.after_picture.date_uploaded
         else:
-            return self.tasks.made_live
+            return self.tasks.last_update #it is a project feed
 
     def get_before_url(self):
         if self.type_of_feed is global_variables.PICTURE_SET:
-            return self.tasks.before_picture.milestone_pics.url
+            return self.url_domain+self.tasks.before_picture.milestone_pics.url
         else:
             return None
 
     def get_after_url(self):
         if self.type_of_feed is global_variables.PICTURE_SET:
-            return self.tasks.after_picture.milestone_pics.url
+            return self.url_domain+self.tasks.after_picture.milestone_pics.url
         else:
             return None
 
@@ -157,9 +161,9 @@ class PondFeed:
 
     def task_owner_profile_pic_url(self):
         try:
-            profile_picture = ProfilePictures.objects.get(tikedge_user=self.get_user_tikedge())
-            return profile_picture.profile_pics.url
-        except (AttributeError, ObjectDoesNotExist):
+            profile_picture = ProfilePictures.objects.get(tikedge_user=self.tikedge_user)
+            return self.url_domain+profile_picture.profile_pics.url
+        except (AttributeError, ValueError, ObjectDoesNotExist):
             return None
 
 

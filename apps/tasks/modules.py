@@ -417,7 +417,8 @@ def check_milestone_word_is_valid(word):
         return False
 
 
-
+def get_pic_list(pic_list):
+    pass
 
 
 

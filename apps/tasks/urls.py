@@ -4,7 +4,7 @@ from .views import RegisterView, LoginView, HomeView, AddProject, LogoutView,\
     CheckFailedProjectMilestoneView, CheckPojectDone, PreLaunchView, ChangePersonalInformationView, MilestoneEditView, \
     ProjectEditView
 from .api_view import ApiLoginView, ApiRegistrationView, ApiGetPostInfo, ApiNewProject, \
-    ApiNewMilestone, ApiProjectEditView, ApiMilestoneEditView
+    ApiNewMilestone, ApiProjectEditView, ApiMilestoneEditView, ApiChangePersonalInformationView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^api/create-new-milestone', ApiNewMilestone.as_view(), name="api_create_new_milestone"),
     url(r'^api/project-edit', ApiProjectEditView.as_view(), name="api_project_edit"),
     url(r'^api/milestone-edit', ApiMilestoneEditView.as_view(), name="api_milestone_edit"),
-    url(r'^api/personal-info-edit', ApiProjectEditView.as_view(), name="api_personal_info_edit"),
+    url(r'^api/personal-info-edit', ApiChangePersonalInformationView.as_view(), name="api_personal_info_edit"),
 ]
 
 

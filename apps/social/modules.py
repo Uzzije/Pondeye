@@ -15,6 +15,7 @@ from itertools import chain
 from datetime import timedelta
 
 
+CURRENT_URL = global_variables.BETA_URL
 def resize_image(image_field, is_profile_pic=False):
     image_file = StringIO.StringIO(image_field.read())
     image = Image.open(image_file)
@@ -195,26 +196,113 @@ def get_user_journal_feed(tikege_user):
 
 def get_users_feed(user):
     list_of_feed = []
-    project_public = UserProject.objects.filter(Q(is_live=True), Q(is_deleted=False), Q(is_public=True))
+    project_public = UserProject.objects.filter(Q(is_live=True),
+                                                Q(is_deleted=False), Q(is_public=True)).order_by('-made_live')
     user_ponds = Pond.objects.filter(Q(pond_members__user=user), Q(is_deleted=False))
-    pond_specific_project = PondSpecificProject.objects.filter(pond__in=user_ponds)
+    pond_specific_project = PondSpecificProject.objects.filter(Q(pond__in=user_ponds)).\
+        exclude(project__in=project_public).order_by('-project__made_live').distinct()
     project_feed = list(project_public)
     for each_proj in pond_specific_project:
         project_feed.append(each_proj.project)
     for each_proj_feed in project_feed:
+        print "Project Name %s \n" % each_proj_feed.name_of_project
         feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT)
         list_of_feed.append(feed)
-        milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False))
+        milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
         for each_tasks in milestone_feed:
             feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE)
             list_of_feed.append(feed)
-            picture_feed = each_tasks.pictureset_set.filter(~Q(after_picture=None), Q(is_deleted=False))
+            picture_feed = each_tasks.pictureset_set.filter(
+                ~Q(after_picture=None), Q(is_deleted=False)).order_by('-last_updated').distinct()
             print "these are pictures ", picture_feed
             for each_pic in picture_feed:
                 feed = PondFeed(each_pic, type_of_feed=global_variables.PICTURE_SET)
                 list_of_feed.append(feed)
     sorted_list = sorted(list_of_feed, key=lambda x: x.created, reverse=True)
     return sorted_list
+
+
+def get_users_feed_json(user):
+    list_of_feed = []
+    list_of_feed_json = []
+    project_public = UserProject.objects.filter(Q(is_live=True),
+                                                Q(is_deleted=False), Q(is_public=True)).order_by('-made_live')
+    user_ponds = Pond.objects.filter(Q(pond_members__user=user), Q(is_deleted=False))
+    pond_specific_project = PondSpecificProject.objects.filter(Q(pond__in=user_ponds)).\
+        exclude(project__in=project_public).order_by('-project__made_live').distinct()
+    project_feed = list(project_public)
+
+    for each_proj in pond_specific_project:
+        project_feed.append(each_proj.project)
+
+    for each_proj_feed in project_feed:
+        print "Project Name %s \n" % each_proj_feed.name_of_project
+        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT)
+        list_of_feed.append(feed)
+        list_of_feed_json.append({
+           'name': feed.task_owner_name,
+           'is_picture_feed': False,
+           'is_milestone_feed': False,
+           'is_project_feed': True,
+           'message':feed.message,
+           'project_slug':feed.tasks.slug,
+           'is_active': feed.tasks.is_live,
+           'follow_count':feed.follow_count,
+           'seen_count': feed.seen_count,
+           'created':feed.created.strftime("%B %d %Y %I:%M %p"),
+           'profile_url':feed.profile_url,
+           'id': feed.tasks.id,
+        })
+        milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
+        for each_tasks in milestone_feed:
+            feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE)
+            list_of_feed.append(feed)
+            list_of_feed_json.append({
+            'name': feed.task_owner_name,
+            'is_milestone_feed': True,
+            'is_picture_feed': False,
+            'is_project_feed': False,
+            'profile_url':feed.profile_url,
+            'is_active': feed.tasks.is_active,
+            'is_completed':feed.tasks.is_completed,
+            'message':feed.message,
+            'milestone_slug': feed.tasks.slug,
+            'feed_id':feed.feed_id,
+            'vouch_count':feed.vouche_count,
+            'seen_count':feed.seen_count,
+            'created':feed.created.strftime("%B %d %Y %I:%M %p"),
+            'id': feed.tasks.id,
+            })
+            picture_feed = each_tasks.pictureset_set.filter(
+                ~Q(after_picture=None), Q(is_deleted=False)).order_by('-last_updated').distinct()
+            print "these are pictures ", picture_feed
+            for each_pic in picture_feed:
+                feed = PondFeed(each_pic, type_of_feed=global_variables.PICTURE_SET)
+                list_of_feed.append(feed)
+                list_of_feed_json.append({
+                    'name': feed.task_owner_name,
+                    'after_url':feed.after_url,
+                    'before_url':feed.before_url,
+                    'message':feed.message,
+                    'is_picture_feed': True,
+                    'is_milestone_feed': False,
+                    'is_project_feed': False,
+                    'created':feed.created.strftime("%B %d %Y %I:%M %p"),
+                    'profile_url':feed.profile_url,
+                    'id': feed.tasks.id,
+                    'milestone_id': feed.tasks.milestone.id
+                })
+    #sorted_list = sorted(list_of_feed_json, key=lambda x: x['created'], reverse=True)
+    return list_of_feed_json
+
+def get_pic_list(pic_list):
+    pic_list_arr = []
+    for each_pic in pic_list:
+        pic_list_arr.append({
+            'picture_before':global_variables.LOCAL_URL+each_pic.before_picture.milestone_pics.url,
+            'picture_after':global_variables.LOCAL_URL+each_pic.after_picture.milestone_pics.url
+        })
+    return pic_list_arr
 
 
 def get_notifications_alert(user):
@@ -296,8 +384,8 @@ def get_pond_profile(tikedge_users, owner):
     dict_list_of_pond = []
     for tikedge_user in tikedge_users:
         try:
-            picture = ProfilePictures.objects.get(tikedge_user=tikedge_user)
-            picture_url = picture.profile_pics.url
+            picture = ProfilePictures.objects.get(tikedge_user=tikedge_user, is_deleted=False)
+            picture_url = global_variables.LOCAL_URL+picture.profile_pics.url
         except ObjectDoesNotExist:
             picture_url = None
         if owner == tikedge_user:
@@ -309,7 +397,8 @@ def get_pond_profile(tikedge_users, owner):
             'username':tikedge_user.user.username,
             'first_name':tikedge_user.user.first_name,
             'last_name':tikedge_user.user.last_name,
-            'is_creator':is_creator
+            'is_creator':is_creator,
+            'id':tikedge_user.id
         })
     sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['last_name'])
     return sorted_pond
@@ -318,6 +407,24 @@ def get_pond_profile(tikedge_users, owner):
 def get_pond(user):
     ponds = Pond.objects.filter(pond_members__user=user, is_deleted=False)
     return ponds
+
+
+def pond_to_json(ponds):
+    pond_list = []
+    for each_pond in ponds:
+        try:
+            profile_pic = ProfilePictures.objects.get(tikedge_user=each_pond.pond_creator, is_deleted=False)
+            profile_pic_url = global_variables.LOCAL_URL+profile_pic.profile_pics.url
+        except ObjectDoesNotExist:
+            profile_pic_url = None
+        pond_list.append({
+            "owner_profile_pic": profile_pic_url,
+            "name": each_pond.name_of_pond,
+            "id":each_pond.id
+        })
+    return pond_list
+
+
 
 
 def get_let_down_notifications(user):
@@ -341,7 +448,7 @@ def get_let_down_notifications(user):
             })
         except ObjectDoesNotExist:
             pass
-    sorted_let_down_list = sorted(let_down_list, key=lambda x: x.created, reverse=True)
+    sorted_let_down_list = sorted(let_down_list, key=lambda x: x["created"], reverse=True)
     return sorted_let_down_list
 
 
@@ -389,6 +496,36 @@ def get_milestone_vouch_notifications(user):
     return mil_vouch_list
 
 
+def milestone_project_app_view(milestones):
+    mil_list = []
+    for each_mil in milestones:
+        mil_list.append({
+            'id':each_mil.id,
+            'blurb':each_mil.blurb
+        })
+    return mil_list
+
+
+def motivation_for_project_app_view(motivation):
+    motif_list = []
+    for each_motif in motivation:
+        motif_list.append(
+            each_motif.name_of_tag
+        )
+    return motif_list
+
+
+def pond_for_project_app_view(pond_specific):
+    if pond_specific:
+        pond_list = {
+            'blurb':pond_specific.pond.blurb,
+            'id':pond_specific.pond.id
+        }
+    else:
+        pond_list = None
+    return pond_list
+
+
 def send_pond_request(pond, user):
     tikedge_user = TikedgeUser.objects.get(user=user)
     data = {}
@@ -404,7 +541,7 @@ def send_pond_request(pond, user):
        data['status'] = True
     return data
 
-
+ƒ
 def available_ponds(tikedge_user, owner):
     """
     The available ponds of a user that they can add other user to.

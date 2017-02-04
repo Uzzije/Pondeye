@@ -16,6 +16,7 @@ class ProfilePictures(models.Model):
     cropping = ImageRatioField('profile_pics', '5x5')
     tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     date_uploaded =  models.DateTimeField(default=now)
+    is_deleted = models.BooleanField(default=False)
 
 
 class Picture(models.Model):
@@ -26,7 +27,6 @@ class Picture(models.Model):
     date_uploaded = models.DateTimeField(default=now)
     last_edited = models.DateTimeField(null=True, blank=True)
     is_before = models.BooleanField(default=True)
-    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s %s' % (self.tikedge_user.user.username, self.image_name)
