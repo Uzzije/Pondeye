@@ -57,10 +57,11 @@ class ApiLoginView(CSRFExemptView):
                 user.is_active = True
                 user.save()
             login(self.request, user)
-            response_data['success'] = "true"
+            response_data['status'] = True
             login(self.request, user)
         else:
-            response_data['success'] = "false"
+            response_data['error'] = "Username or Password is Invalid"
+            response_data['status'] = False
         return HttpResponse(json.dumps(response_data), status=201)
 
 

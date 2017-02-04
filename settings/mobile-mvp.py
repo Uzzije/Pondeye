@@ -3,7 +3,7 @@ from secret_keys import *
 DATABASES = {
 	'default':{
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'Uzzije$default',
+		'NAME': 'Uzzije$mobile-data-base',
 		'USER': 'Uzzije',
 		'PASSWORD': DATABASE_PASSWORD,
 		'HOST': 'Uzzije.mysql.pythonanywhere-services.com',
