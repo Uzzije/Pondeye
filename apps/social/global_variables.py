@@ -33,7 +33,7 @@ USER_DELETED_MILESTONE = 'udf'
 USER_DELETED_PROJECT = "udp"
 POND_NAME_CHAR_COUNT = 245
 POND_PURPOSE_CHAR_COUNT = 100
-BETA_URL = "uzzije.pythonanywhere.com"
+BETA_URL = "http://Uzzije.pythonanywhere.com"
 LOCAL_URL = "http://localhost:8000"
 
 

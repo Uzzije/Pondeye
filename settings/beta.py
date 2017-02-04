@@ -1,5 +1,5 @@
 from .base import *
-from secret_keys import *
+from .secret_keys import *
 DATABASES = {
 	'default':{
 		'ENGINE': 'django.db.backends.mysql',

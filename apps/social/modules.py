@@ -216,7 +216,7 @@ def get_users_feed(user):
                 ~Q(after_picture=None), Q(is_deleted=False)).order_by('-last_updated').distinct()
             print "these are pictures ", picture_feed
             for each_pic in picture_feed:
-                feed = PondFeed(each_pic, type_of_feed=global_variables.PICTURE_SET)
+                feed = PondFeed(each_pic, type_of_feed=global_variables.PICTURE_SET, url_domain=CURRENT_URL)
                 list_of_feed.append(feed)
     sorted_list = sorted(list_of_feed, key=lambda x: x.created, reverse=True)
     return sorted_list
