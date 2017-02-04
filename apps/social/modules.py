@@ -541,7 +541,7 @@ def send_pond_request(pond, user):
        data['status'] = True
     return data
 
-ƒ
+
 def available_ponds(tikedge_user, owner):
     """
     The available ponds of a user that they can add other user to.
