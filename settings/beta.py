@@ -9,3 +9,6 @@ DATABASES = {
 		'HOST': 'Uzzije.mysql.pythonanywhere-services.com',
 	}
 }
+CORS_ORIGIN_WHITELIST = (
+	'http://localhost:8100'
+)
