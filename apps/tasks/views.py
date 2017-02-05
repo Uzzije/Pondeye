@@ -354,6 +354,7 @@ class AddProject(LoginRequiredMixin, View):
                 messages.success(request, "Successfully added a Milestone to %s project" % name_of_project)
                 return HttpResponseRedirect(reverse('tasks:home'))
             else:
+                print "%s %s when it matters" % (str(user_project.length_of_project), str(done_by))
                 messages.error(request, "Hey, can't fit this milestone into the project scope!")
         if 'proj_create' in request.POST or 'proj_save' in request.POST:
             name_of_project = request.POST.get('name_of_project')
