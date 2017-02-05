@@ -335,7 +335,7 @@ class AddProject(LoginRequiredMixin, View):
                                                                'mil_form': mil_form,
                                                                 'user_ponds':user_ponds})
 
-            if user_project.length_of_project >= done_by:
+            if modules.utc_to_local(user_project.length_of_project) >= done_by:
                 print "%s %s when it matters" % (str(user_project.length_of_project), str(done_by))
                 new_milestone = Milestone(name_of_milestone=name_of_milestone, user=user, reminder=start_time,
                                       done_by=done_by, project=user_project)

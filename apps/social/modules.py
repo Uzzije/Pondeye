@@ -15,7 +15,8 @@ from itertools import chain
 from datetime import timedelta
 
 
-CURRENT_URL = global_variables.BETA_URL
+CURRENT_URL = global_variables.LOCAL_URL
+
 def resize_image(image_field, is_profile_pic=False):
     image_file = StringIO.StringIO(image_field.read())
     image = Image.open(image_file)

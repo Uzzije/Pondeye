@@ -217,6 +217,8 @@ def convert_html_to_datetime(date_time):
 def time_has_past(time_infos):
         if time_infos:
             if time_infos <= get_current_datetime():
+                print "current date and time %s local date and time %s"% (str(get_current_datetime()),
+                                                                        str(utc_to_local(get_current_datetime())))
                 return True
             else:
                 return False
