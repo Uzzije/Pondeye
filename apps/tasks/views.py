@@ -336,7 +336,7 @@ class AddProject(LoginRequiredMixin, View):
                                                                 'user_ponds':user_ponds})
 
             if user_project.length_of_project >= done_by:
-                print start_time, done_by
+                print "%s %s when it matters" % (str(user_project.length_of_project), str(done_by))
                 new_milestone = Milestone(name_of_milestone=name_of_milestone, user=user, reminder=start_time,
                                       done_by=done_by, project=user_project)
                 new_milestone.save()

@@ -33,7 +33,6 @@ class PondFeed:
         self.profile_url = self.task_owner_profile_pic_url()
         self.feed_user = self.get_user_tikedge().user
 
-
     def get_user_tikedge(self):
         if self.type_of_feed is global_variables.PICTURE_SET:
             return self.tasks.tikedge_user
