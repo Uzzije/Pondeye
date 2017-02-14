@@ -13,7 +13,8 @@ from .views import JournalEntriesView, PictureUploadView, TodoFeed, SendFriendRe
 from .api_view import ApiNewPondEntryView, ApiPictureUploadView, ApiDeletePictureSet, \
     ApiEditIndividualPondView, ApiEditPictureSetView, ApiEditPondView, ApiTodoFeed, ApiCreateFollow, ApiCreateVouch, \
     ApiMilestoneView, ApiProjectView, ApiMilestoneSeenCounter, ApiProjectSeenCounter, ApiGetPondList, ApiGetPond, \
-    ApiPondRequestView
+    ApiPondRequestView, ApiGetSearchResult, ApiAddToPond, ApiDenyPondRequest, ApiNotificationView, ApiAcceptPondRequest, \
+    ApiGetNotification
 
 urlpatterns = [
     url(r'^journal-feed/$', JournalEntriesView.as_view(), name='journal_entries'),
@@ -61,7 +62,6 @@ urlpatterns = [
     url(r'^api/new-pond-entry/$', ApiNewPondEntryView.as_view(), name="api_new_pond_entry"),
     url(r'^api/new-picture-entry/$', ApiPictureUploadView.as_view(), name="new_picture_entry"),
     url(r'^api/picture-set-edit', ApiEditPictureSetView.as_view(), name="api_picture_set_edit"),
-    url(r'^api/pond-edit', ApiEditPondView.as_view(), name="api_project_edit"),
     url(r'^api/picture-set-delete', ApiDeletePictureSet.as_view(), name="api_delete_edit"),
     url(r'^api/individual-pond', ApiEditIndividualPondView.as_view(), name="api_edit_individual_view"),
     url(r'^api/news-feed', ApiTodoFeed.as_view(), name="api_to_do_view"),
@@ -73,8 +73,14 @@ urlpatterns = [
     url(r'^api/create-project-seen-count', ApiProjectSeenCounter.as_view(), name="api_project_seen_view"),
     url(r'^api/get-ponds-data', ApiGetPondList.as_view(), name="api_pond_list"),
     url(r'^api/get-pond-data', ApiGetPond.as_view(), name="api_pond"),
-    url(r'^api/pond-request', ApiPondRequestView.as_view(), name="api_pond_request_view")
-
+    url(r'^api/pond-request', ApiPondRequestView.as_view(), name="api_pond_request_view"),
+    url(r'^api/get-search-results', ApiGetSearchResult.as_view(), name="api_search_result"),
+    url(r'^api/add-user-to-pond', ApiAddToPond.as_view(), name="api_add_to_pond_view"),
+    url(r'^api/deny-user-from-pond', ApiDenyPondRequest.as_view(), name="api_add_to_pond_view"),
+    url(r'^api/get-notification', ApiNotificationView.as_view(), name="api_add_to_pond_view"),
+    url(r'^api/accept-user-pond-request', ApiAcceptPondRequest.as_view(), name="api_accept_pond_request"),
+    url(r'^api/pond-edit/', ApiEditPondView.as_view(), name="api_delete_pond"),
+    url(r'^api/notification-status', ApiGetNotification.as_view(), name="api_notification_view")
 
 ]
 

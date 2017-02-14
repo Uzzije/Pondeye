@@ -8,12 +8,13 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from ..social.modules import get_journal_message, \
-    get_notifications_alert, get_pond, resize_image, available_ponds, create_failed_notification, create_failed_notification_proj
+    get_notifications_alert, get_pond, file_is_picture, resize_image, available_ponds_json, create_failed_notification, create_failed_notification_proj
 from modules import get_user_projects, \
     time_has_past, convert_html_to_datetime,\
-    get_todays_milestones, \
+    get_todays_milestones_json, \
     confirm_expired_milestone_and_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
-    get_failed_proj_count, get_recent_projects, get_status, display_error, api_get_user_projects
+    get_failed_proj_count, get_recent_projects_json, get_status, display_error, api_get_user_projects, get_profile_pic_json
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
@@ -158,6 +159,7 @@ class ApiNewMilestone(CSRFExemptView):
             response["error"] = "Your date input seems to be wrong!"
             return HttpResponse(json.dumps(response), status=201)
         user_project = UserProject.objects.get(id=name_of_project, user=tikedge_user)
+        print "Hey Milestone why don't you work ", length_of_time
         if len(length_of_time) != 0 and length_of_time != '-1':
                 start_time = done_by - timedelta(hours=int(length_of_time))
                 if time_has_past(start_time):
@@ -173,30 +175,29 @@ class ApiNewMilestone(CSRFExemptView):
                     response["error"] = "The time for milestone completion is not enough!"
                     return HttpResponse(json.dumps(response), status=201)
                         
-            if user_project.length_of_project >= done_by:
-                print start_time," motor", done_by
-                new_milestone = Milestone(name_of_milestone=name_of_milestone, user=tikedge_user, reminder=start_time,
-                                      done_by=done_by, project=user_project)
-                new_milestone.save()
-                day_entry = tikedge_user.journalpost_set.all().count()
-                new_journal_entry = JournalPost(entry_blurb=get_journal_message(MILESTONE,
-                                                                                milestone=new_milestone.blurb,
-                                                                                project=user_project.blurb),
-                                                                                day_entry=day_entry + 1,
-                                                                                event_type=MILESTONE,
-                                                                                is_milestone_entry=True,
-                                                                                milestone_entry=new_milestone,
-                                                                                user=tikedge_user,
-                                                                             )
-                new_journal_entry.save()
-                response["status"] = True
-                return HttpResponse(json.dumps(response), status=201)
-            else:
-                response["status"] = False
-                response["error"] = "Hey, can't fit this milestone into the project scope!"
-                return HttpResponse(json.dumps(response), status=201)
-        response["status"] = True
-        return HttpResponse(json.dumps(response), status=201)
+        if user_project.length_of_project >= done_by:
+            print start_time," motor", done_by
+            new_milestone = Milestone(name_of_milestone=name_of_milestone, user=tikedge_user, reminder=start_time,
+                                  done_by=done_by, project=user_project)
+
+            new_milestone.save()
+            day_entry = tikedge_user.journalpost_set.all().count()
+            new_journal_entry = JournalPost(entry_blurb=get_journal_message(MILESTONE,
+                                                                            milestone=new_milestone.blurb,
+                                                                            project=user_project.blurb),
+                                                                            day_entry=day_entry + 1,
+                                                                            event_type=MILESTONE,
+                                                                            is_milestone_entry=True,
+                                                                            milestone_entry=new_milestone,
+                                                                            user=tikedge_user,
+                                                                         )
+            new_journal_entry.save()
+            response["status"] = True
+            return HttpResponse(json.dumps(response), status=201)
+        else:
+            response["status"] = False
+            response["error"] = "Hey, can't fit this milestone into the project scope!"
+            return HttpResponse(json.dumps(response), status=201)
 
 
 class ApiNewProject(CSRFExemptView):
@@ -450,4 +451,164 @@ class ApiChangePersonalInformationView(CSRFExemptView):
                 response["error"] = "Original Password is Invalid!"
                 return HttpResponse(json.dumps(response), status=201)
             response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiProfileView(CSRFExemptView):
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        other_user_id = request.GET.get("other_user_id")
+        try:
+            other_user = User.objects.get(id=int(other_user_id))
+        except ValueError:
+            other_user = user
+        tikedge_user = TikedgeUser.objects.get(user=other_user)
+        current_tasks = get_todays_milestones_json(tikedge_user.user)
+        current_projs = get_recent_projects_json(tikedge_user.user)
+        failed_mil_count = get_failed_mil_count(tikedge_user.user)
+        completed_mil_count = get_completed_mil_count(tikedge_user.user)
+        failed_proj_count = get_failed_proj_count(tikedge_user.user)
+        completed_proj_count = get_completed_proj_count(tikedge_user.user)
+        status_of_user = get_status(tikedge_user.user)
+        profile_url = get_profile_pic_json(tikedge_user)
+        try:
+            prof_storage = ProfilePictures.objects.get(tikedge_user=tikedge_user).profile_pics.url
+        except (ValueError, AttributeError, ObjectDoesNotExist):
+            prof_storage = None
+
+        aval_pond = available_ponds_json(tikedge_user, user)
+        profile_info = {
+            'first_name':tikedge_user.user.first_name,
+            'last_name':tikedge_user.user.last_name,
+            'user_id':tikedge_user.id,
+            'current_tasks':current_tasks,
+            'current_projs':current_projs,
+            'failed_mil_count':failed_mil_count,
+            'completed_mil_count':completed_mil_count,
+            'failed_proj_count':failed_proj_count,
+            'completed_proj_count':completed_proj_count,
+            'status_of_user':status_of_user,
+            'profile_url': profile_url,
+            'profile_url_storage': prof_storage,
+            'aval_pond':aval_pond,
+            'is_own_profile': user == other_user,
+        }
+        response['user_details'] = profile_info
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiProfilePictureView(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        picture_file = request.FILES.get('picture', False)
+        if not file_is_picture(picture_file):
+            response['status'] = False
+            response["error"] = "Hey visual must be either jpg, jpeg or png file!"
+            return HttpResponse(json.dumps(response), status=201)
+        tkduser = TikedgeUser.objects.get(user=user)
+        try:
+           ProfilePictures.objects.get(tikedge_user=tkduser).delete()
+        except ObjectDoesNotExist:
+            pass
+        picture_file.file = resize_image(picture_file, is_profile_pic=True)
+        try:
+           picture_mod = ProfilePictures.objects.get(tikedge_user=tkduser)
+           picture_mod.profile_pics = picture_file
+           picture_mod.image_name = picture_file.name
+        except ObjectDoesNotExist:
+           picture_mod = ProfilePictures(image_name=picture_file.name, profile_pics=picture_file, tikedge_user=tkduser)
+        picture_mod.save()
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        profile_url = get_profile_pic_json(tikedge_user)
+        response = {
+           'status':True,
+           'url':profile_url
+        }
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiCheckMilestoneDone(CSRFExemptView):
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        try:
+            mil_stone = Milestone.objects.get(id=int(request.POST.get("mil_id")))
+            if not mil_stone.is_failed:
+                mil_stone.is_completed = True
+                mil_stone.is_active = False
+                mil_stone.save()
+            response["status"] = True
+        except (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
+            response["status"] = False
+            response["error"] = "Something Went Wrong Try Again!"
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiCheckPojectDone(CSRFExemptView):
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        try:
+            proj_stone = UserProject.objects.get(id=int(request.POST.get("proj_id")))
+            proj_stone.is_completed = True
+            proj_stone.is_live = False
+            proj_stone.save()
+            response["status"] = True
+            all_milestones = proj_stone.milestone_set.filter(is_deleted=False)
+            for each_mil in all_milestones:
+                each_mil.is_active = False
+                if not each_mil.is_failed:
+                    each_mil.is_completed = True
+                each_mil.save()
+        except (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
+            response["status"] = False
+            response["error"] = "Something Went Wrong Try Again!"
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiCheckFailedProjectMilestoneView(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        try:
+            tikedge_user = TikedgeUser.objects.get(user=user)
+            confirm_expired_milestone_and_project(tikedge_user)
+            response["status"] = True
+        except ObjectDoesNotExist:
+            response["status"] = False
         return HttpResponse(json.dumps(response), status=201)

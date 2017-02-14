@@ -20,7 +20,7 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 import json
 from django.contrib import messages
 from django.db.models import Q
-from search_module import find_everything, find_project_and_milestone_by_tag
+from search_module import find_everything, search_result_jsonified
 from braces.views import LoginRequiredMixin
 from ..tasks.global_variables_tasks import TAG_NAMES_LISTS
 from datetime import datetime
@@ -194,15 +194,25 @@ class  ApiEditPictureSetView(CSRFExemptView):
         for each_pic in user_picture_set:
             if each_pic.after_picture:
                 hasPic = True
+                picture_set.append({
+                   'before_picture':{'id':each_pic.before_picture.id,
+                                     'url':each_pic.before_picture.milestone_pics.url,
+                                     },
+                   'after_picture':{'id':each_pic.after_picture.id,
+                                    'url':each_pic.after_picture.milestone_pics.url
+                                    },
+                   'blurb':each_pic.milestone.blurb,
+                   'id':each_pic.id,
+                   'slug':each_pic.milestone.slug,
+                   'hidden':False,
+                   'hasAfterPicture':hasPic
+               })
             else:
-                hasPic = True
+                hasPic = False
             picture_set.append({
                 'before_picture':{'id':each_pic.before_picture.id,
                                   'url':each_pic.before_picture.milestone_pics.url,
                                   },
-                'after_picture':{'id':each_pic.after_picture.id,
-                                 'url':each_pic.after_picture.milestone_pics.url
-                                 },
                 'blurb':each_pic.milestone.blurb,
                 'id':each_pic.id,
                 'slug':each_pic.milestone.slug,
@@ -210,6 +220,10 @@ class  ApiEditPictureSetView(CSRFExemptView):
                 'hasAfterPicture':hasPic
             })
         response["user_picture_set"] = picture_set
+        if picture_set:
+            response["has_set"] = True
+        else:
+            response["has_set"] = False
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
@@ -315,7 +329,7 @@ class ApiEditPondView(CSRFExemptView):
                 'id':pond.id,
                 'blurb':pond.blurb,
                 'slug':pond.slug,
-                'pond_list':tag_list,
+                'tag_list':tag_list,
                 'pond_members': pond_mem_list,
                 'purpose':pond.purpose
             })
@@ -325,7 +339,15 @@ class ApiEditPondView(CSRFExemptView):
         return HttpResponse(json.dumps(response), status=201)
 
     def post(self, request):
-        response = {"status":False}
+        response = {}
+        response["status"] = False
+        try:
+            username = request.POST.get("username")
+            User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        response = {"status":False, "error":"Something Went Wrong"}
         if 'pond_id' in request.POST:
             pond_id = request.POST.get("pond_id")
             pond = Pond.objects.get(id=int(pond_id))
@@ -377,17 +399,23 @@ class ApiEditIndividualPondView(CSRFExemptView):
         for item in pond.tags.all():
             pond.tags.remove(item)
         pond.save()
-        for item in tags:
-            try:
-                item_obj = TagNames.objects.get(name_of_tag=item)
-            except ObjectDoesNotExist:
-                item_obj = TagNames(name_of_tag=item)
-                item_obj.save()
-            pond.tags.add(item_obj)
-        for pd in ponders:
-            tik = TikedgeUser.objects.get(id=pd)
-            pond.pond_members.remove(tik)
-        pond.save()
+        try:
+            for item in tags:
+                try:
+                    item_obj = TagNames.objects.get(name_of_tag=item)
+                except ObjectDoesNotExist:
+                    item_obj = TagNames(name_of_tag=item)
+                    item_obj.save()
+                pond.tags.add(item_obj)
+        except ValueError:
+            pass
+        try:
+            for pd in ponders:
+                tik = TikedgeUser.objects.get(id=pd)
+                pond.pond_members.remove(tik)
+            pond.save()
+        except ValueError:
+            pass
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
@@ -428,7 +456,7 @@ class ApiCreateVouch(CSRFExemptView):
             if user in vouch_obj.users.all():
                 vouch_obj.users.remove(user)
                 vouch_obj.save()
-                response["status"] = "unvouch"
+                response["status"] = True
                 return HttpResponse(json.dumps(response), status=201)
         except ObjectDoesNotExist:
             vouch_obj = VoucheMilestone(tasks=milestone)
@@ -448,10 +476,14 @@ class ApiCreateVouch(CSRFExemptView):
                 vouch_notif = Notification(user=milestone.user.user,
                                         type_of_notification=global_variables.NEW_MILESTONE_VOUCH)
                 vouch_notif.save()
-            response["count"] = view.users.all().count()
+            response["count"] = vouch_obj.users.all().count()
         else:
-            response["status"] = False
-            response["error"] = "Can't vouch for inactive milestone"
+            if user != milestone.user:
+                response["status"] = False
+                response["error"] = "Can't vouch for inactive milestone"
+            else:
+                response['status'] = True
+            response["count"] = vouch_obj.users.all().count()
         print "Tried to print vouch!!!!!!\n"
         return HttpResponse(json.dumps(response), status=201)
 
@@ -552,7 +584,8 @@ class ApiMilestoneView(CSRFExemptView):
             'user_last_name':milestone.user.user.last_name,
             'milestone_name':milestone.name_of_milestone,
             'vouch_count':vouch_count,
-            'is_completed':is_completed
+            'is_completed':is_completed,
+            'user_id':milestone.user.user.id
         }
 
         return HttpResponse(json.dumps(response), status=201)
@@ -612,7 +645,8 @@ class ApiProjectView(CSRFExemptView):
             'motif':modules.motivation_for_project_app_view(motivations),
             'pond':modules.pond_for_project_app_view(pond_specific),
             'user_owns_proj':user_owns_proj,
-            'is_completed':is_completed
+            'is_completed':is_completed,
+            'proj_id':project.id
         }
         return HttpResponse(json.dumps(response), status=201)
 
@@ -670,10 +704,17 @@ class ApiGetPondList(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         ponds = modules.get_pond(user)
-        pond_list = modules.pond_to_json(ponds)
+        if ponds:
+            pond_list = modules.pond_to_json(ponds)
+            no_pond = False
+        else:
+            pond_list = modules.pond_to_json(Pond.objects.filter(is_deleted=False))
+            no_pond = True
+
         response = {
             "status":True,
             "pond_list":pond_list,
+            "no_pond":no_pond
         }
         return HttpResponse(json.dumps(response), status=201)
 
@@ -737,3 +778,194 @@ class ApiPondRequestView(CSRFExemptView):
         except ObjectDoesNotExist:
             pass
         return HttpResponse(json.dumps(response))
+
+
+class ApiGetSearchResult(CSRFExemptView):
+    """
+        Api Call for Search Result
+    """
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        query_word = request.GET["query_word"]
+        results = find_everything(user, query_word)
+        response["status"] = True
+        print type(results)
+        response["result_list"] = search_result_jsonified(results)
+        return HttpResponse(json.dumps(response))
+
+
+class ApiAddToPond(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        data = {}
+        pond_id = request.POST.get("pond_id")
+        pond = Pond.objects.get(id=int(pond_id))
+        user_id = request.POST.get("user_id")
+        other_user = TikedgeUser.objects.get(id=int(user_id))
+        try:
+            pond_members = pond.pond_members.all()
+            if other_user not in pond_members:
+                for each_member in pond_members:
+                    notification = Notification(user=each_member.user,
+                                            type_of_notification=global_variables.NEW_PONDERS)
+                    notification.save()
+                pond.pond_members.add(other_user)
+                pond.save()
+                pond_membership = PondMembership(user=other_user, pond=pond)
+                pond_membership.save()
+                pond_request = PondRequest(user=other_user, pond=pond, date_response=datetime.now(),
+                                           request_accepted=True,
+                                           member_that_responded=task_modules.get_tikedge_user(user),
+                                           request_responded_to=True)
+                pond_request.save()
+                notification = Notification(user=other_user.user,
+                                            type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
+                notification.save()
+            else:
+                print "others is here!!!!!!!!!"
+            data['status'] = True
+            aval_pond = modules.available_ponds_json(other_user, user)
+            data['aval_pond'] = aval_pond
+        except (AttributeError, ValueError, TypeError):
+            data['status'] = False
+            data['error'] = "Something Went Wrong, Try Again!"
+            pass
+        return HttpResponse(json.dumps(data))
+
+
+class ApiDenyPondRequest(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        data = {}
+        pond_request_id = request.POST.get("pond_request_id")
+        pond_request = PondRequest.objects.get(id=int(pond_request_id))
+        if pond_request.request_responded_to or pond_request.pond.is_deleted:
+            data["status"] = True
+            return HttpResponse(json.dumps(data))
+        else:
+            try:
+                pond_request.date_response = datetime.now()
+                pond_request.request_accepted = False
+                pond_request.request_denied = True
+                pond_request.request_responded_to = True
+                pond_request.member_that_responded = task_modules.get_tikedge_user(user)
+                pond_request.save()
+                data["status"] = True
+                return  HttpResponse(json.dumps(data))
+            except (AttributeError, ValueError, TypeError):
+                data["status"] = False
+                data["error"] = "An error occurred try again!"
+                return HttpResponse(json.dumps(data))
+
+
+class ApiNotificationView(CSRFExemptView):
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+
+        notification_list = modules.get_notification_of_user(user)
+        response['status'] = True
+        response['notification_list'] = notification_list
+        modules.mark_new_ponder_notification_as_read(user)
+        modules.mark_milestone_new_project_interested_as_read(user)
+        modules.mark_milestone_let_down_as_read(user)
+        modules.mark_milestone_vouch_as_read(user)
+        modules.mark_pond_request_notification_as_read(user)
+        modules.mark_milestone_pond_request_accepted_as_read(user)
+        modules.mark_milestone_failed_as_read(user)
+        modules.mark_project_failed_as_read(user)
+        return HttpResponse(json.dumps(response))
+
+
+class ApiAcceptPondRequest(CSRFExemptView):
+
+    def post(self, request):
+        data = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            data["status"] = False
+            data["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(data), status=201)
+        pond_request_id = request.POST.get("pond_request_id")
+        pond_request = PondRequest.objects.get(id=int(pond_request_id))
+        if pond_request.request_responded_to or pond_request.pond.is_deleted:
+            if pond_request.pond.is_deleted:
+                pond_request.date_response = datetime.now()
+                pond_request.request_accepted = False
+                pond_request.request_denied = True
+                pond_request.request_responded_to = True
+                pond_request.member_that_responded = task_modules.get_tikedge_user(user)
+                pond_request.save()
+            data["status"] = True
+            return HttpResponse(json.dumps(data))
+        else:
+            try:
+                pond_request.date_response = datetime.now()
+                pond_request.request_accepted = True
+                pond_request.request_responded_to = True
+                pond_request.member_that_responded = task_modules.get_tikedge_user(user)
+                pond_request.save()
+                data["status"] = True
+                new_notif = Notification(user=pond_request.user.user, type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
+                new_notif.save()
+                for each_member in pond_request.pond.pond_members.all():
+                    new_notif = Notification(user=each_member.user, type_of_notification=global_variables.NEW_PONDERS)
+                    new_notif.save()
+                pond_request.pond.pond_members.add(pond_request.user)
+                pond_request.pond.save()
+                pond_membership = PondMembership(user=pond_request.user, pond=pond_request.pond)
+                pond_membership.save()
+                return  HttpResponse(json.dumps(data))
+            except (AttributeError, ValueError, TypeError):
+                data["status"] = False
+                data["error"] = "An error occurred. Please try again!"
+                return HttpResponse(json.dumps(data))
+
+
+class ApiGetNotification(CSRFExemptView):
+
+    def get(self, request):
+        data = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            data["status"] = False
+            data["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(data), status=201)
+        data = {}
+        data["status"] = modules.notification_exist(user)
+        return HttpResponse(json.dumps((data)))

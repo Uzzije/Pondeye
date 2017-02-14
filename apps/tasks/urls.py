@@ -4,7 +4,8 @@ from .views import RegisterView, LoginView, HomeView, AddProject, LogoutView,\
     CheckFailedProjectMilestoneView, CheckPojectDone, PreLaunchView, ChangePersonalInformationView, MilestoneEditView, \
     ProjectEditView
 from .api_view import ApiLoginView, ApiRegistrationView, ApiGetPostInfo, ApiNewProject, \
-    ApiNewMilestone, ApiProjectEditView, ApiMilestoneEditView, ApiChangePersonalInformationView
+    ApiNewMilestone, ApiProjectEditView, ApiMilestoneEditView, ApiChangePersonalInformationView, ApiProfileView,\
+    ApiProfilePictureView, ApiCheckMilestoneDone, ApiCheckPojectDone, ApiCheckFailedProjectMilestoneView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
@@ -34,6 +35,14 @@ urlpatterns = [
     url(r'^api/project-edit', ApiProjectEditView.as_view(), name="api_project_edit"),
     url(r'^api/milestone-edit', ApiMilestoneEditView.as_view(), name="api_milestone_edit"),
     url(r'^api/personal-info-edit', ApiChangePersonalInformationView.as_view(), name="api_personal_info_edit"),
+    url(r'^api/profile-view', ApiProfileView.as_view(), name="api_profile_view"),
+    url(r'^api/add-profile-picture', ApiProfilePictureView.as_view(), name="api_add_profile_picture"),
+    url(r'^api/milestone-marked-done', ApiCheckMilestoneDone.as_view(), name="api_milestone_done"),
+    url(r'^api/project-marked-done', ApiCheckPojectDone.as_view(), name="api_project_done"),
+    url(r'^api/check-proj-and-mil-failed', ApiCheckFailedProjectMilestoneView.as_view(), name="api_check_milestone_proj_failed"),
+
+
+
 ]
 
 

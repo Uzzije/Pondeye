@@ -11,10 +11,11 @@ from global_variables_tasks import DECODE_DICTIONARY
 from bs4 import BeautifulSoup
 from django.contrib import messages
 import global_variables_tasks
-from ..social.models import Notification, LetDownMilestone, VoucheMilestone
+from ..social.models import Notification, LetDownMilestone, VoucheMilestone, ProfilePictures
 from ..social import global_variables
 from django.utils.dateparse import parse_datetime
 
+CURRENT_URL = global_variables.CURRENT_URL
 
 def get_user_projects(user):
     try:
@@ -34,7 +35,7 @@ def api_get_user_projects(user):
         user = TikedgeUser.objects.get(user=user)
     except ObjectDoesNotExist:
         return []
-    list_of_project = user.userproject_set.all().filter(is_live=True)
+    list_of_project = user.userproject_set.all().filter(is_live=True, is_deleted=False)
     t_list= []
     for proj in list_of_project:
         t_list.append({'id':proj.id, 'name':proj.name_of_project})
@@ -263,37 +264,37 @@ def json_all_pending_tasks(tasks):
 
 def get_status(user):
     tikedge_user = get_tikedge_user(user)
-    status = "Learner"
+    status = "Learner ( Top 100 Percentile )"
     mil_all = tikedge_user.milestone_set.all().count()
     mil_success = get_completed_mil_count(user)
     milestone_count = mil_success + mil_all
     if mil_all == 0:
         return status
     ratio_percentage = float(mil_success/mil_all)*100
-    if milestone_count < 10:
+    if milestone_count < 5:
         return status
     else:
-        if milestone_count >= 10 and milestone_count < 50:
+        if milestone_count >= 5 and milestone_count < 10:
             if ratio_percentage > 75.5:
-                status = "Doer"
+                status = "Doer ( Top 75 Percentile )"
             return status
-        if milestone_count >= 50 and milestone_count < 150:
+        if milestone_count >= 10 and milestone_count < 15:
             if ratio_percentage > 75.5:
-                status = "Motivator"
+                status = "Motivator ( Top 50 Percentile )"
             elif ratio_percentage > 60.5:
-                status = "Doer"
+                status = "Doer ( Top 75 Percentile )"
             elif ratio_percentage > 45.5:
-                status = "Learner"
+                status = "Learner ( Top 95 Percentile )"
             return status
-        if milestone_count >= 150:
+        if milestone_count >= 15:
             if ratio_percentage > 75.5:
-                status = "Inspirer"
+                status = "Inspires ( Top 25 Percentile )"
             elif ratio_percentage > 65.5:
-                status = "Motivator"
+                status = "Motivator ( Top 50 Percentile )"
             elif ratio_percentage > 45.5:
-                status = "Doer"
+                status = "Doer ( Top 75 Percentile )"
             elif ratio_percentage > 25.5:
-                status = "Learner"
+                status = "Learner ( Top 95 Percentile )"
             return status
 
 
@@ -339,7 +340,7 @@ def get_pond_status(pond_members):
 def confirm_expired_milestone_and_project(tikedge_user):
     yesterday = form_module.get_current_datetime()
     all_milestones = tikedge_user.milestone_set.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False),
-                                                             Q(is_failed=False))
+                                                             Q(is_failed=False), Q(is_deleted=False))
     print "all milestone, ", all_milestones
     for each_mil in all_milestones:
         if time_has_past(each_mil.done_by):
@@ -363,7 +364,7 @@ def confirm_expired_milestone_and_project(tikedge_user):
             except ObjectDoesNotExist:
                 pass
     all_project = tikedge_user.userproject_set.all().filter(Q(length_of_project__lte=yesterday), Q(is_completed=False),
-                                                            ~Q(made_live=None), Q(is_failed=False))
+                                                            ~Q(made_live=None), Q(is_failed=False), Q(is_deleted=False))
     for each_proj in all_project:
         if time_has_past(each_proj.length_of_project):
             each_proj.is_failed = True
@@ -422,6 +423,45 @@ def check_milestone_word_is_valid(word):
 def get_pic_list(pic_list):
     pass
 
+### Api Profile Calls
+
+
+def get_todays_milestones_json(user):
+    """
+    Return todays milestone that are due for the given user
+    :param user:
+    :return:
+    """
+    milestone_list = []
+    mil_list = get_todays_milestones(user)
+    for milestone in mil_list:
+        milestone_list.append({
+            'blurb':milestone.blurb,
+            'id':milestone.id
+        })
+    return milestone_list
+
+
+def get_recent_projects_json(user):
+    project_list = []
+    projects = get_recent_projects(user)
+    for each_proj in projects:
+        project_list.append({
+            'blurb':each_proj.blurb,
+            'id':each_proj.id
+        })
+    return project_list
+
+
+def get_profile_pic_json(tikedge_user):
+    try:
+        has_prof_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+    except ObjectDoesNotExist:
+        has_prof_pic = None
+    if has_prof_pic:
+        pic_url  = CURRENT_URL + has_prof_pic.profile_pics.url
+        return pic_url
+    return None
 
 
 

@@ -6,6 +6,8 @@ from models import User
 from .models import ProfilePictures, Pond, PondSpecificProject
 from django.core.exceptions import ObjectDoesNotExist
 
+CURRENT_URL = global_variables.CURRENT_URL
+
 
 class GeneralSearchFeed:
 	def __init__(self, return_object, type_of_result):
@@ -16,6 +18,7 @@ class GeneralSearchFeed:
 		self.is_milestone = self.get_is_milestone()
 		self.is_pond = self.get_is_pond()
 		self.created = self.date_created()
+		self.creator_profile_pic_url = self.get_profile_pic()
 
 	def get_is_person(self):
 		if self.type_of_result == global_variables.PERSON_SEARCH:
@@ -28,6 +31,21 @@ class GeneralSearchFeed:
 			return profile_pic
 		else:
 			return False
+
+	def get_profile_pic(self):
+		if self.type_of_result == global_variables.POND_SEARCH_NAME:
+			tikedge_user = self.feed_object.pond_creator
+		elif (self.type_of_result == global_variables.PROJECT_NAME_SEARCH \
+				or self.type_of_result == global_variables.MILESTONE_NAME_SEARCH):
+			tikedge_user = self.feed_object.user
+		else:
+			tikedge_user = TikedgeUser.objects.get(user=self.feed_object)
+		try:
+			profile_pic = ProfilePictures.objects.get(tikedge_user=tikedge_user)
+			profile_url = CURRENT_URL+profile_pic.profile_pics.url
+		except ObjectDoesNotExist:
+			profile_url = None
+		return profile_url
 
 	def get_is_project(self):
 		if (self.type_of_result == global_variables.PROJECT_NAME_SEARCH):
@@ -110,7 +128,6 @@ def find_everything(user, query_word):
 	milestones_result = Milestone.objects.filter(milestones).filter(Q(is_deleted=False)).distinct()
 	ponds = get_query(query, ['name_of_pond', 'tags__name_of_tag', 'purpose'])
 	pond_list = Pond.objects.filter(ponds).filter(Q(is_deleted=False)).distinct()
-	print "project %s \n" % projects_result
 
 	for pip in people_result:
 		search_obj = GeneralSearchFeed(pip, global_variables.PERSON_SEARCH)
@@ -141,7 +158,6 @@ def find_everything(user, query_word):
 	for pond in pond_list:
 		search_obj = GeneralSearchFeed(pond, global_variables.POND_SEARCH_NAME)
 		result_list.append(search_obj)
-	print result_list
 	sorted_list = sorted(result_list, key=lambda res: res.created)
 	return sorted_list
 
@@ -170,6 +186,56 @@ def find_project_and_milestone_by_tag(user, query_word):
 		for each_priv_mil in private_milestone:
 			search_obj = GeneralSearchFeed(each_priv_mil, global_variables.MILESTONE_NAME_SEARCH)
 			result_list.append(search_obj)
-	print result_list
 	sorted_list = sorted(result_list, key=lambda res: res.created)
 	return sorted_list
+
+
+def search_result_jsonified(results):
+	result_list = []
+	for each_res in results:
+		if each_res.is_person:
+			res_dic = {
+				'is_person':True,
+				'is_pond':False,
+				'is_project':False,
+				'is_milestone': False,
+				'id':each_res.feed_object.id,
+				'first_name':each_res.feed_object.first_name,
+				'last_name':each_res.feed_object.last_name,
+				'profile_pic_url':each_res.creator_profile_pic_url
+			}
+			result_list.append(res_dic)
+		elif each_res.is_project:
+			res_dic = {
+				'is_person':False,
+				'is_pond':False,
+				'is_project':True,
+				'is_milestone': False,
+				'id':each_res.feed_object.id,
+				'owner_profile_pic':each_res.creator_profile_pic_url,
+				'blurb':each_res.feed_object.blurb
+			}
+			result_list.append(res_dic)
+		elif each_res.is_milestone:
+			res_dic = {
+				'is_person':False,
+				'is_pond':False,
+				'is_project':False,
+				'is_milestone': True,
+				'id':each_res.feed_object.id,
+				'owner_profile_pic':each_res.creator_profile_pic_url,
+				'blurb':each_res.feed_object.blurb
+			}
+			result_list.append(res_dic)
+		elif each_res.is_pond:
+			res_dic = {
+				'is_person':False,
+				'is_pond':True,
+				'is_project':False,
+				'is_milestone': False,
+				'id':each_res.feed_object.id,
+				'owner_profile_pic':each_res.creator_profile_pic_url,
+				'blurb':each_res.feed_object.blurb
+			}
+			result_list.append(res_dic)
+	return result_list

@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class PondFeed:
 
-    def __init__(self, tasks, type_of_feed, url_domain=global_variables.LOCAL_URL):
+    def __init__(self, tasks, type_of_feed, url_domain=global_variables.CURRENT_URL):
         self.tasks = tasks
         self.type_of_feed = type_of_feed
         self.url_domain = url_domain

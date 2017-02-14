@@ -13,9 +13,11 @@ from journal_feed import JournalFeed
 from tasks_feed import PondFeed
 from itertools import chain
 from datetime import timedelta
+import datetime
+from ..tasks.modules import utc_to_local
+#import magic
 
-
-CURRENT_URL = global_variables.LOCAL_URL
+CURRENT_URL = global_variables.CURRENT_URL
 
 def resize_image(image_field, is_profile_pic=False):
     image_file = StringIO.StringIO(image_field.read())
@@ -109,8 +111,10 @@ def get_interest_notification(all_project):
                     'last_name':each_follow.user.last_name,
                     'slug':project.slug,
                     'blurb':project.blurb,
-                    'created':project.created,
-                    'is_deleted':project.is_deleted
+                    'is_deleted':project.is_deleted,
+                    'user_id':project.user.user.id,
+                    'proj_id':project.id,
+                    'created':seen_project.latest_follow
                 })
         except ObjectDoesNotExist:
             pass
@@ -253,6 +257,7 @@ def get_users_feed_json(user):
            'created':feed.created.strftime("%B %d %Y %I:%M %p"),
            'profile_url':feed.profile_url,
            'id': feed.tasks.id,
+           'user_id':feed.feed_user.id
         })
         milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
         for each_tasks in milestone_feed:
@@ -273,6 +278,7 @@ def get_users_feed_json(user):
             'seen_count':feed.seen_count,
             'created':feed.created.strftime("%B %d %Y %I:%M %p"),
             'id': feed.tasks.id,
+            'user_id':feed.feed_user.id
             })
             picture_feed = each_tasks.pictureset_set.filter(
                 ~Q(after_picture=None), Q(is_deleted=False)).order_by('-last_updated').distinct()
@@ -291,7 +297,8 @@ def get_users_feed_json(user):
                     'created':feed.created.strftime("%B %d %Y %I:%M %p"),
                     'profile_url':feed.profile_url,
                     'id': feed.tasks.id,
-                    'milestone_id': feed.tasks.milestone.id
+                    'milestone_id': feed.tasks.milestone.id,
+                    'user_id':feed.feed_user.id
                 })
     #sorted_list = sorted(list_of_feed_json, key=lambda x: x['created'], reverse=True)
     return list_of_feed_json
@@ -375,10 +382,16 @@ def notification_exist(user):
 
 def file_is_picture(picture):
     picture_file = str(picture)
-    if picture_file.lower().endswith(('png', 'jpg', 'jpeg')):
-        return 'image'
+    if picture_file.lower().endswith(('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG')):
+        return True
+    '''
     else:
-        return False
+        file_type = magic.from_file(picture)
+        if ('PNG' in file_type or 'JPG' in file_type or 'JPEG' in file_type \
+                or 'png' in file_type or 'jpg' in file_type or 'jpeg' in file_type):
+            return True
+    '''
+    return False
 
 
 def get_pond_profile(tikedge_users, owner):
@@ -426,8 +439,6 @@ def pond_to_json(ponds):
     return pond_list
 
 
-
-
 def get_let_down_notifications(user):
     """
     Get all the people that you let down
@@ -445,12 +456,158 @@ def get_let_down_notifications(user):
                 'name_of_blurb':each_mil.blurb,
                 'mil':each_mil,
                 'count':count,
-                'created':each_mil.created_date
+                'created':each_mil.created_date,
+                'id':each_mil.id,
+                'first_name':None,
+                'last_name':None
+
             })
         except ObjectDoesNotExist:
             pass
     sorted_let_down_list = sorted(let_down_list, key=lambda x: x["created"], reverse=True)
     return sorted_let_down_list
+
+
+def get_notification_of_user(user):
+    try:
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        let_down = let_downs(user)
+        mil_vouches = get_milestone_vouch_notifications(user)
+        new_ponder = get_new_pond_member_notification(tikedge_user)
+        interests = get_interest_notification(tikedge_user.userproject_set.all())
+        quited_on_milestone = Notification.objects.filter(Q(user=user),
+                                                           Q(type_of_notification=global_variables.USER_DELETED_MILESTONE)).order_by('-created')
+        quited_on_project = Notification.objects.filter(Q(user=user),
+                                                          Q(type_of_notification=global_variables.USER_DELETED_PROJECT)).order_by('-created')
+        ponder_request = PondRequest.objects.filter(pond__pond_members__user=user).order_by('-date_requested')
+        notif_list = []
+        for each_mil in let_down:
+            created = int(each_mil['created'].strftime('%s'))
+            notif_list.append({
+                'blurb':each_mil['name_of_blurb'],
+                'first_name':each_mil['first_name'],
+                'last_name':each_mil['last_name'],
+                'count': each_mil['count'],
+                'created_view':utc_to_local(each_mil['created']).strftime("%B %d %Y %I:%M %p"),
+                'is_let_down':True,
+                'is_milestone_vouch':False,
+                'is_new_ponder':False,
+                'is_interests':False,
+                'is_mil_quit': False,
+                'is_proj_quit':False,
+                'is_pond_request':False,
+                'id':each_mil['id'],
+                'mil_is_deleted':each_mil['mil'].is_deleted,
+                'created':created
+            })
+        for each_mil in mil_vouches:
+            created = int(each_mil['created'].strftime('%s'))
+            notif_list.append({
+                'blurb':each_mil['blurb'],
+                'is_let_down':False,
+                'is_milestone_vouch':True,
+                'is_new_ponder':False,
+                'is_interests':False,
+                'is_mil_quit': False,
+                'is_proj_quit':False,
+                'is_pond_request':False,
+                'id':each_mil['id'],
+                'created':created,
+                'mil_is_deleted':each_mil['is_mil_deleted'],
+                'count': each_mil['count']
+            })
+        for each_mil in ponder_request:
+            created = int(each_mil.date_requested.strftime('%s'))
+            notif_list.append({
+                'first_name':each_mil.user.user.first_name,
+                'last_name':each_mil.user.user.last_name,
+                'count': None,
+                'is_let_down':False,
+                'is_milestone_vouch':False,
+                'is_new_ponder':False,
+                'is_interests':False,
+                'is_mil_quit': False,
+                'is_proj_quit':False,
+                'is_pond_request':True,
+                'id':each_mil.user.user.id,
+                'pond_id':each_mil.pond.id,
+                'request_id':each_mil.id,
+                'request_accepted':each_mil.request_accepted,
+                'created':created,
+                'blurb':each_mil.pond.blurb,
+                'is_pond_deleted':each_mil.pond.is_deleted,
+                'request_responded_to': each_mil.request_responded_to,
+                'request_denied':each_mil.request_denied
+            })
+        for each_mil in interests:
+            created = int(each_mil['created'].strftime('%s'))
+            notif_list.append({
+                'blurb':each_mil['blurb'],
+                'is_let_down':False,
+                'is_milestone_vouch':False,
+                'is_new_ponder':False,
+                'is_interests':True,
+                'is_mil_quit': False,
+                'is_proj_quit':False,
+                'is_pond_request':False,
+                'user_id':each_mil['user_id'],
+                'proj_id':each_mil['proj_id'],
+                'username':each_mil['username'],
+                'first_name':each_mil['first_name'],
+                'last_name':each_mil['last_name'],
+                'is_deleted':each_mil['is_deleted'],
+                'created':created
+
+            })
+        for each_mil in quited_on_milestone:
+            created = int(each_mil.created.strftime('%s'))
+            notif_list.append({
+                'blurb':each_mil.name_of_notification,
+                'is_let_down':False,
+                'is_milestone_vouch':False,
+                'is_new_ponder':False,
+                'is_interests':False,
+                'is_mil_quit': True,
+                'is_proj_quit':False,
+                'is_pond_request':False,
+                'created':created
+            })
+        for each_mil in quited_on_project:
+            created = int(each_mil.created.strftime('%s'))
+            notif_list.append({
+                'blurb':each_mil.name_of_notification,
+                'is_let_down':False,
+                'is_milestone_vouch':False,
+                'is_new_ponder':False,
+                'is_interests':False,
+                'is_mil_quit': False,
+                'is_proj_quit':True,
+                'is_pond_request':False,
+                'created':created
+            })
+        for each_mil in new_ponder:
+            created = int(each_mil.date_response.strftime('%s'))
+            notif_list.append({
+                'first_name':each_mil.user.user.first_name,
+                'last_name':each_mil.user.user.last_name,
+                'count': None,
+                'is_let_down':False,
+                'is_milestone_vouch':False,
+                'is_new_ponder':True,
+                'is_interests':False,
+                'is_mil_quit': False,
+                'is_proj_quit':False,
+                'is_pond_request':False,
+                'is_deleted':each_mil.pond.is_deleted,
+                'user_id':each_mil.user.user.id,
+                'blurb':each_mil.pond.blurb,
+                'pond_id':each_mil.pond.id,
+                'created':created
+            })
+        sort_notif_list = sorted(notif_list, key=lambda x: x['created'], reverse=True)
+        return sort_notif_list
+    except ObjectDoesNotExist:
+        return []
 
 
 def notification_of_people_that_let_you_down(user):
@@ -465,10 +622,13 @@ def notification_of_people_that_let_you_down(user):
         let_down_list.append({
             'name_of_blurb':each_mil.tasks.blurb,
             'mil':each_mil.tasks,
-            'count': None,
-            'created':each_mil.tasks.created_date
+            'count': -1,
+            'created':each_mil.tasks.created_date,
+            'id':each_mil.tasks.id,
+            'first_name':each_mil.tasks.user.user.first_name,
+            'last_name':each_mil.tasks.user.user.last_name
         })
-    sorted_let_down_list = sorted(let_down_list, key=lambda x: x.created, reverse=True)
+    sorted_let_down_list = sorted(let_down_list, key=lambda x: x['created'], reverse=True)
     return sorted_let_down_list
 
 
@@ -490,7 +650,10 @@ def get_milestone_vouch_notifications(user):
             mil_vouch_list.append({
                 'blurb':each_mil.blurb,
                 'slug':each_mil.slug,
-                'count':count
+                'count':count,
+                'id':each_mil.id,
+                'created':mil_vouch.latest_vouch,
+                'is_mil_deleted':each_mil.is_deleted
             })
         except ObjectDoesNotExist:
             pass
@@ -533,6 +696,7 @@ def send_pond_request(pond, user):
     try:
        PondRequest.objects.get(pond=pond, user=tikedge_user, request_responded_to=False)
        data['status'] = False
+       data['error'] = "Chill! Request Already Sent!"
     except ObjectDoesNotExist:
        new_pond_request = PondRequest(pond=pond, user=tikedge_user)
        new_pond_request.save()
@@ -555,6 +719,24 @@ def available_ponds(tikedge_user, owner):
     for each_aval in aval_ponds:
         if tikedge_user not in each_aval.pond_members.all():
             aval_ponds_list.append(each_aval)
+    return aval_ponds_list
+
+
+def available_ponds_json(tikedge_user, owner):
+    """
+        The available ponds of a user that they can add other user to.
+        :param tikedge_user: the user to be added
+        :param owner: the user doing the adding
+        :return:
+        """
+    aval_ponds_list = []
+    aval_ponds = get_pond(owner)
+    for each_aval in aval_ponds:
+        if tikedge_user not in each_aval.pond_members.all():
+            aval_ponds_list.append({
+                'blurb':each_aval.blurb,
+                'id':each_aval.id
+            })
     return aval_ponds_list
 
 

@@ -67,6 +67,11 @@ class SeenPictureSet(models.Model):
 class VoucheMilestone(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="User That Vouche For the milestone")
     tasks = models.ForeignKey(Milestone, blank=True, null=True)
+    latest_vouch = models.DateTimeField(default=now)
+
+    def save(self, *args, **kwargs):
+        self.latest_vouch = now()
+        super(VoucheMilestone, self).save(*args, **kwargs)
 
 
 class BuildCredMilestone(models.Model):
@@ -77,11 +82,21 @@ class BuildCredMilestone(models.Model):
 class Follow(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="users that follow/interested in a project")
     tasks = models.ForeignKey(UserProject, blank=True, null=True)
+    latest_follow = models.DateTimeField(default=now)
+
+    def save(self, *args, **kwargs):
+        self.latest_follow = now()
+        super(Follow, self).save(*args, **kwargs)
 
 
 class LetDownMilestone(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="users that were let down by vouche for your Milestone")
     tasks = models.ForeignKey(Milestone, blank=True, null=True)
+    latest_letDown = models.DateTimeField(default=now)
+
+    def save(self, *args, **kwargs):
+       self.latest_letDown = now()
+       super(LetDownMilestone, self).save(*args, **kwargs)
 
 
 class Notification(models.Model):
@@ -185,6 +200,12 @@ class PondSpecificProject(models.Model):
 
     def __str__(self):
         return self.project.name_of_project
+
+
+class WorkEthicRank(models.Model):
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    rank = models.IntegerField(default=0)
+
             
 
 

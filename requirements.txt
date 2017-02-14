@@ -43,3 +43,4 @@ awsebcli==3.8.3
 pillow==2.9.0
 django-braces==1.10.0
 beautifulsoup4==4.5.1
+python-magic==0.4.12
