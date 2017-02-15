@@ -200,7 +200,7 @@ def decode_password(password):
     return decoded_string
 
 
-def convert_html_to_datetime(date_time):
+def convert_html_to_datetime(date_time, timezone=get_localzone()):
     if date_time:
         datetimearray = date_time.split('T')
         date = datetimearray[0]
@@ -209,15 +209,15 @@ def convert_html_to_datetime(date_time):
         new_date_time = date + ' '+time
         print new_date_time
         end_by_naive = datetime.strptime(new_date_time, '%Y-%m-%d %H:%M')
-        new_aware = end_by_naive.replace(tzinfo=get_localzone())
+        new_aware = end_by_naive.replace(tzinfo=timezone)
         return new_aware
     else:
         return False
 
 
-def time_has_past(time_infos):
+def time_has_past(time_infos, timezone=get_localzone()):
         if time_infos:
-            if time_infos <= get_current_datetime():
+            if time_infos <= utc_to_local(get_current_datetime(), timezone=timezone):
                 print "current date and time %s local date and time %s"% (str(get_current_datetime()),
                                                                         str(utc_to_local(get_current_datetime())))
                 return True
@@ -237,9 +237,8 @@ def time_to_utc(time_to_convert):
     return new_time_utc
 
 
-def utc_to_local(input_time):
-    local_tz = get_localzone()
-    local = input_time.astimezone(local_tz)
+def utc_to_local(input_time, timezone=get_localzone()):
+    local = input_time.astimezone(timezone)
     return local
 
 
