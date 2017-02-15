@@ -24,7 +24,7 @@ from search_module import find_everything, search_result_jsonified
 from braces.views import LoginRequiredMixin
 from ..tasks.global_variables_tasks import TAG_NAMES_LISTS
 from datetime import datetime
-
+import base64
 
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)
@@ -116,9 +116,10 @@ class ApiPictureUploadView(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         tkduser = TikedgeUser.objects.get(user=user)
-        picture_file = request.FILES.get('picture', False)
+        picture_file = request.POST.get('picture', False)
+        dec_picture_file = base64.b64decode(picture_file)
         if not picture_file:
-            response["error"] = "Hey visual must be either jpg, jpeg or png file!"
+            response["error"] = "Hey visual must be either jpg, jpeg or png file! ", dec_picture_file
             return HttpResponse(json.dumps(response), status=201)
         milestone_name = request.POST.get('milestone_name')
         milestone = Milestone.objects.get(id=int(milestone_name))
@@ -557,7 +558,7 @@ class ApiMilestoneView(CSRFExemptView):
             print "seen count ", seen_count
         except ObjectDoesNotExist:
             seen_count = 0
-        project_completed = task_modules.time_has_past(project.length_of_project)
+        project_completed = task_modules.time_has_past(project.length_of_project, timezone=timezone)
         user_first_name = milestone.user.user.first_name
         pic_list = milestone.pictureset_set.all().filter(~Q(after_picture=None))
         percentage = modules.get_milestone_percentage(milestone)
