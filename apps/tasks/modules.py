@@ -238,11 +238,16 @@ def time_to_utc(time_to_convert):
 
 
 def utc_to_local(input_time, local_timezone=""):
+    
     if local_timezone:
-        local = input_time.astimezone(pytz.timezone(local_timezone))
-        return local
-    else:
-        return input_time
+        try:
+            local = input_time.astimezone(pytz.timezone(local_timezone))
+            return local
+        except ValueError:
+            pytz.timezone(local_timezone).localize(input_time)
+            return input_time
+
+    return input_time
 
 
 def get_task_picture_urls(task):
