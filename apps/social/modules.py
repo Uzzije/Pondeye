@@ -468,7 +468,7 @@ def get_let_down_notifications(user):
     return sorted_let_down_list
 
 
-def get_notification_of_user(user):
+def get_notification_of_user(user, timezone='UTC'):
     try:
         tikedge_user = TikedgeUser.objects.get(user=user)
         let_down = let_downs(user)
@@ -488,7 +488,7 @@ def get_notification_of_user(user):
                 'first_name':each_mil['first_name'],
                 'last_name':each_mil['last_name'],
                 'count': each_mil['count'],
-                'created_view':utc_to_local(each_mil['created']).strftime("%B %d %Y %I:%M %p"),
+                'created_view':utc_to_local(each_mil['created'], local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
                 'is_let_down':True,
                 'is_milestone_vouch':False,
                 'is_new_ponder':False,

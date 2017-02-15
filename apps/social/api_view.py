@@ -370,6 +370,7 @@ class ApiEditIndividualPondView(CSRFExemptView):
         pond_members = pond.pond_members.all()
         response["select_tags"] = select_tags
         pond_members_list = []
+
         for each_mem in pond_members:
             pond_members_list.append({
                 'pond_member_first_name':each_mem.user.first_name,
@@ -431,7 +432,8 @@ class ApiTodoFeed(CSRFExemptView):
         except ObjectDoesNotExist:
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        all_feeds = modules.get_users_feed_json(user)
+        timezone = request.GET.get('timezone')
+        all_feeds = modules.get_users_feed_json(user, timezone=timezone)
         response["status"] = True
         response["all_feeds"] = all_feeds
         return HttpResponse(json.dumps(response), status=201)
@@ -538,6 +540,7 @@ class ApiMilestoneView(CSRFExemptView):
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
+        timezone = request.GET.get('timezone')
         mil_id = request.GET.get("mil_id")
         milestone = Milestone.objects.get(id=int(mil_id))
         project = milestone.project
@@ -558,8 +561,8 @@ class ApiMilestoneView(CSRFExemptView):
         user_first_name = milestone.user.user.first_name
         pic_list = milestone.pictureset_set.all().filter(~Q(after_picture=None))
         percentage = modules.get_milestone_percentage(milestone)
-        start_time = task_modules.utc_to_local(milestone.reminder).strftime("%B %d %Y %I:%M %p")
-        end_time = task_modules.utc_to_local(milestone.done_by).strftime("%B %d %Y %I:%M %p")
+        start_time = task_modules.utc_to_local(milestone.reminder, local_timezone=timezone).strftime("%B %d %Y %I:%M %p")
+        end_time = task_modules.utc_to_local(milestone.done_by, local_timezone=timezone).strftime("%B %d %Y %I:%M %p")
         percent_sign = str(percentage) + "%"
         percentage_statement = "Based on %s %s's community, there was a %s  chance of completing " \
                                "this milestone" % (user_first_name, milestone.user.user.last_name, percent_sign)
@@ -622,6 +625,7 @@ class ApiProjectView(CSRFExemptView):
         else:
             pond_specific = None
         user_owns_proj = TikedgeUser.objects.get(user=req_user) == project.user.user
+        timezone = request.GET.get('timezone')
         public_status = "Project is in Pond"
         if project.is_public:
             public_status = "Project is Public"
@@ -636,8 +640,8 @@ class ApiProjectView(CSRFExemptView):
             'project_name':project_name,
             'user_first_name':project.user.user.first_name,
             'user_last_name':project.user.user.last_name,
-            'start_time':task_modules.utc_to_local(project.made_live).strftime("%B %d %Y %I:%M %p"),
-            'end_time':task_modules.utc_to_local(project.length_of_project).strftime("%B %d %Y %I:%M %p"),
+            'start_time':task_modules.utc_to_local(project.made_live, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
+            'end_time':task_modules.utc_to_local(project.length_of_project, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
             'seen_count':seen_count,
             'follow_count':follows,
             'public_status':public_status,
@@ -893,8 +897,8 @@ class ApiNotificationView(CSRFExemptView):
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-
-        notification_list = modules.get_notification_of_user(user)
+        timezone = request.GET.get('timezone')
+        notification_list = modules.get_notification_of_user(user, timezone=timezone)
         response['status'] = True
         response['notification_list'] = notification_list
         modules.mark_new_ponder_notification_as_read(user)
