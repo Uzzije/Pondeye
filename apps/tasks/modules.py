@@ -14,6 +14,8 @@ import global_variables_tasks
 from ..social.models import Notification, LetDownMilestone, VoucheMilestone, ProfilePictures
 from ..social import global_variables
 from django.utils.dateparse import parse_datetime
+from django.utils import timezone
+
 
 CURRENT_URL = global_variables.CURRENT_URL
 
@@ -216,10 +218,13 @@ def convert_html_to_datetime(date_time, timezone='UTC'):
 
 
 def time_has_past(time_infos, timezone=""):
+        if timezone == "":
+            timezone = 'America/Chicago'
         if time_infos:
-            if time_infos < utc_to_local(get_current_datetime(), local_timezone=timezone):
-                print "current date and time %s local date and time %s"% (str(get_current_datetime()),
-                                                                        str(utc_to_local(get_current_datetime())))
+            if time_infos < get_current_datetime():
+                print "current date and time %s local date and time %s"% (str(time_infos),
+                                                                        str(utc_to_local(get_current_datetime(),
+                                                                                         local_timezone=timezone)))
                 return True
             else:
                 return False
