@@ -227,7 +227,7 @@ def get_users_feed(user):
     return sorted_list
 
 
-def get_users_feed_json(user):
+def get_users_feed_json(user, timezone='UTC'):
     list_of_feed = []
     list_of_feed_json = []
     project_public = UserProject.objects.filter(Q(is_live=True),
@@ -254,7 +254,7 @@ def get_users_feed_json(user):
            'is_active': feed.tasks.is_live,
            'follow_count':feed.follow_count,
            'seen_count': feed.seen_count,
-           'created':feed.created.strftime("%B %d %Y %I:%M %p"),
+           'created':feed.created.astimezone(timezone).strftime("%B %d %Y %I:%M %p"),
            'profile_url':feed.profile_url,
            'id': feed.tasks.id,
            'user_id':feed.feed_user.id
@@ -276,7 +276,7 @@ def get_users_feed_json(user):
             'feed_id':feed.feed_id,
             'vouch_count':feed.vouche_count,
             'seen_count':feed.seen_count,
-            'created':feed.created.strftime("%B %d %Y %I:%M %p"),
+            'created':feed.created.astimezone(timezone).strftime("%B %d %Y %I:%M %p"),
             'id': feed.tasks.id,
             'user_id':feed.feed_user.id
             })
@@ -294,7 +294,7 @@ def get_users_feed_json(user):
                     'is_picture_feed': True,
                     'is_milestone_feed': False,
                     'is_project_feed': False,
-                    'created':feed.created.strftime("%B %d %Y %I:%M %p"),
+                    'created':feed.created.astimezone(timezone).strftime("%B %d %Y %I:%M %p"),
                     'profile_url':feed.profile_url,
                     'id': feed.tasks.id,
                     'milestone_id': feed.tasks.milestone.id,
