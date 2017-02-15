@@ -412,7 +412,7 @@ def get_pond_profile(tikedge_users, owner):
             'first_name':tikedge_user.user.first_name,
             'last_name':tikedge_user.user.last_name,
             'is_creator':is_creator,
-            'id':tikedge_user.id
+            'id':tikedge_user.user.id
         })
     sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['last_name'])
     return sorted_pond
