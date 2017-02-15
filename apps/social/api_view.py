@@ -564,7 +564,11 @@ class ApiMilestoneView(CSRFExemptView):
         start_time = task_modules.utc_to_local(milestone.reminder, local_timezone=timezone).strftime("%B %d %Y %I:%M %p")
         end_time = task_modules.utc_to_local(milestone.done_by, local_timezone=timezone).strftime("%B %d %Y %I:%M %p")
         percent_sign = str(percentage) + "%"
-        percentage_statement = "Based on %s %s's community, there was a %s  chance of completing " \
+        if project.is_live:
+            percentage_statement = "Based on %s %s's community, there is a %s  chance of completing " \
+                               "this milestone" % (user_first_name, milestone.user.user.last_name, percent_sign)
+        else:
+            percentage_statement = "Based on %s %s's community, there was a %s  chance of completing " \
                                "this milestone" % (user_first_name, milestone.user.user.last_name, percent_sign)
         if milestone.is_completed:
             is_completed = "Completed!"

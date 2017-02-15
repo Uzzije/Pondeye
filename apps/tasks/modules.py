@@ -320,11 +320,11 @@ def get_pond_status(pond_members):
     if milestone_count <= 9*pond_count:
         return status
     else:
-        if milestone_count >= 10*pond_count and milestone_count < 50*pond_count:
+        if milestone_count >= 3*pond_count and milestone_count < 10*pond_count:
             if ratio_percentage > 75.5:
                 status = global_variables_tasks.POND_SECOND_STAGE
             return status
-        if milestone_count >= 50*pond_count and milestone_count < 150*pond_count:
+        if milestone_count >= 10*pond_count and milestone_count < 15*pond_count:
             if ratio_percentage > 75.5:
                 status = global_variables_tasks.POND_THIRD_STAGE
             elif ratio_percentage > 60.5:
@@ -332,7 +332,7 @@ def get_pond_status(pond_members):
             elif ratio_percentage > 45.5:
                 status = global_variables_tasks.POND_THIRD_STAGE
             return status
-        if milestone_count >= 150*pond_count:
+        if milestone_count >= 15*pond_count:
             if ratio_percentage > 75.5:
                 status = global_variables_tasks.POND_FOURTH_STAGE
             elif ratio_percentage > 65.5:
