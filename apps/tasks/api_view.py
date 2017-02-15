@@ -151,7 +151,7 @@ class ApiNewMilestone(CSRFExemptView):
         timezone = request.POST.get('timezone')
         done_by = convert_html_to_datetime(request.POST.get('milestone_date'), timezone=timezone)
         if done_by:
-            if time_has_past(done_by, timezone=timezone):
+            if time_has_past(done_by):
                 response["status"] = False
                 response["error"] = "The time for milestone completion has past!"
                 return HttpResponse(json.dumps(response), status=201)
@@ -163,13 +163,13 @@ class ApiNewMilestone(CSRFExemptView):
         print "Hey Milestone why don't you work ", length_of_time
         if len(length_of_time) != 0 and length_of_time != '-1':
                 start_time = done_by - timedelta(hours=int(length_of_time))
-                if time_has_past(start_time, timezone=timezone):
+                if time_has_past(start_time):
                     response["status"] = False
                     response["error"] = "The time for milestone completion has past!"
                     return HttpResponse(json.dumps(response), status=201)
         else:
             start_time = done_by - timedelta(minutes=20)
-            if time_has_past(start_time, timezone=timezone):
+            if time_has_past(start_time):
                 start_time = get_current_datetime() + timedelta(minutes=int(3))
                 if start_time >= done_by:
                     response["status"] = False
@@ -232,7 +232,7 @@ class ApiNewProject(CSRFExemptView):
             response["error"] = "It seems like your date input is wrong!"
             return HttpResponse(json.dumps(response), status=201)
         timezone = request.POST.get('timezone')
-        if time_has_past(end_by, timezone=timezone):
+        if time_has_past(end_by):
             response["status"] = False
             response["error"] = "It seems like your date input is in the past!"
             return HttpResponse(json.dumps(response), status=201)

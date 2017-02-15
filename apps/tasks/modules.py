@@ -200,7 +200,7 @@ def decode_password(password):
     return decoded_string
 
 
-def convert_html_to_datetime(date_time, timezone=get_localzone()):
+def convert_html_to_datetime(date_time, timezone='UTC'):
     if date_time:
         datetimearray = date_time.split('T')
         date = datetimearray[0]
@@ -209,15 +209,15 @@ def convert_html_to_datetime(date_time, timezone=get_localzone()):
         new_date_time = date + ' '+time
         print new_date_time
         end_by_naive = datetime.strptime(new_date_time, '%Y-%m-%d %H:%M')
-        new_aware = end_by_naive.replace(tzinfo=timezone)
-        return new_aware
+        pytz.timezone(timezone).localize(end_by_naive)
+        return end_by_naive
     else:
         return False
 
 
-def time_has_past(time_infos, timezone=get_localzone()):
+def time_has_past(time_infos):
         if time_infos:
-            if time_infos <= utc_to_local(get_current_datetime(), timezone=timezone):
+            if time_infos <= get_current_datetime():
                 print "current date and time %s local date and time %s"% (str(get_current_datetime()),
                                                                         str(utc_to_local(get_current_datetime())))
                 return True
@@ -237,9 +237,12 @@ def time_to_utc(time_to_convert):
     return new_time_utc
 
 
-def utc_to_local(input_time, timezone=get_localzone()):
-    local = input_time.astimezone(timezone)
-    return local
+def utc_to_local(input_time, local_timezone=""):
+    if local_timezone:
+        local = input_time.astimezone(local_timezone)
+        return local
+    else:
+        return input_time
 
 
 def get_task_picture_urls(task):
