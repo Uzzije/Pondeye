@@ -117,7 +117,7 @@ class ApiPictureUploadView(CSRFExemptView):
             return HttpResponse(json.dumps(response), status=201)
         tkduser = TikedgeUser.objects.get(user=user)
         picture_file = request.FILES.get('picture', False)
-        if not modules.file_is_picture(picture_file):
+        if not picture_file:
             response["error"] = "Hey visual must be either jpg, jpeg or png file!"
             return HttpResponse(json.dumps(response), status=201)
         milestone_name = request.POST.get('milestone_name')
