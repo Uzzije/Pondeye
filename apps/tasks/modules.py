@@ -238,15 +238,15 @@ def time_to_utc(time_to_convert):
 
 
 def utc_to_local(input_time, local_timezone=""):
-    
+
     if local_timezone:
         try:
             local = input_time.astimezone(pytz.timezone(local_timezone))
             return local
         except ValueError:
-            pytz.timezone(local_timezone).localize(input_time)
-            return input_time
-
+            new_time = input_time.replace(tzinfo=get_localzone())
+            local = pytz.timezone(local_timezone).normalize(new_time.astimezone(pytz.timezone(local_timezone)))
+            return local
     return input_time
 
 
