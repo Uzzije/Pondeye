@@ -485,7 +485,7 @@ class ApiCreateVouch(CSRFExemptView):
                 response["error"] = "Can't vouch for inactive milestone"
             else:
                 response['status'] = True
-            response["count"] = vouch_obj.users.all().count()
+        response["count"] = vouch_obj.users.all().count()
         print "Tried to print vouch!!!!!!\n"
         return HttpResponse(json.dumps(response), status=201)
 
