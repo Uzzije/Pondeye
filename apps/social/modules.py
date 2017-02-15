@@ -257,7 +257,9 @@ def get_users_feed_json(user, local_timezone='UTC'):
            'created':utc_to_local(feed.created, local_timezone=local_timezone).strftime("%B %d %Y %I:%M %p"),
            'profile_url':feed.profile_url,
            'id': feed.tasks.id,
-           'user_id':feed.feed_user.id
+           'user_id':feed.feed_user.id,
+            'is_completed':feed.tasks.is_completed,
+            'is_failed':feed.tasks.is_failed
         })
         milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
         for each_tasks in milestone_feed:
@@ -270,7 +272,6 @@ def get_users_feed_json(user, local_timezone='UTC'):
             'is_project_feed': False,
             'profile_url':feed.profile_url,
             'is_active': feed.tasks.is_active,
-            'is_completed':feed.tasks.is_completed,
             'message':feed.message,
             'milestone_slug': feed.tasks.slug,
             'feed_id':feed.feed_id,
@@ -278,7 +279,9 @@ def get_users_feed_json(user, local_timezone='UTC'):
             'seen_count':feed.seen_count,
             'created':utc_to_local(feed.created, local_timezone=local_timezone).strftime("%B %d %Y %I:%M %p"),
             'id': feed.tasks.id,
-            'user_id':feed.feed_user.id
+            'user_id':feed.feed_user.id,
+            'is_completed':feed.tasks.is_completed,
+           'is_failed':feed.tasks.is_failed
             })
             picture_feed = each_tasks.pictureset_set.filter(
                 ~Q(after_picture=None), Q(is_deleted=False)).order_by('-last_updated').distinct()
