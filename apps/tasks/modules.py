@@ -239,7 +239,7 @@ def time_to_utc(time_to_convert):
 
 def utc_to_local(input_time, local_timezone=""):
     if local_timezone:
-        local = input_time.astimezone(local_timezone)
+        local = input_time.astimezone(pytz.timezone(local_timezone))
         return local
     else:
         return input_time

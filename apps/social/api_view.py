@@ -433,7 +433,7 @@ class ApiTodoFeed(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         timezone = request.GET.get('timezone')
-        all_feeds = modules.get_users_feed_json(user, timezone=timezone)
+        all_feeds = modules.get_users_feed_json(user, local_timezone=timezone)
         response["status"] = True
         response["all_feeds"] = all_feeds
         return HttpResponse(json.dumps(response), status=201)
