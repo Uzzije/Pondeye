@@ -19,6 +19,7 @@ from django.utils import timezone as django_timezone
 
 CURRENT_URL = global_variables.CURRENT_URL
 
+
 def get_user_projects(user):
     try:
         user = TikedgeUser.objects.get(user=user)
@@ -246,7 +247,12 @@ def time_to_utc(time_to_convert):
 
 
 def utc_to_local(input_time, local_timezone=""):
-
+    """
+    All timezone should be converted to to utc timezone
+    :param input_time:
+    :param local_timezone:
+    :return:
+    """
     if local_timezone:
         try:
             local = pytz.timezone(local_timezone).normalize(input_time.astimezone(pytz.timezone(local_timezone)))
@@ -364,17 +370,20 @@ def confirm_expired_milestone_and_project(tikedge_user):
             try:
                 user_mil_vouch = VoucheMilestone.objects.get(tasks=each_mil)
                 if user_mil_vouch.users.all():
-                    let_down = LetDownMilestone(tasks=each_mil)
-                    let_down.save()
-                    for each_user in user_mil_vouch.users.all():
-                        notification = Notification(user=each_user.user,
-                                        type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
-                        let_down.users.add(each_user)
+                    try:
+                        LetDownMilestone.objects.get(tasks=each_mil)
+                    except ObjectDoesNotExist:
+                        let_down = LetDownMilestone(tasks=each_mil)
+                        let_down.save()
+                        for each_user in user_mil_vouch.users.all():
+                            notification = Notification(user=each_user.user,
+                                            type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
+                            let_down.users.add(each_user)
+                            notification.save()
+                        notification = Notification(user=tikedge_user.user,
+                                            type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
                         notification.save()
-                    notification = Notification(user=tikedge_user.user,
-                                        type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
-                    notification.save()
-                    let_down.save()
+                        let_down.save()
             except ObjectDoesNotExist:
                 pass
     all_project = tikedge_user.userproject_set.all().filter(Q(length_of_project__lte=yesterday), Q(is_completed=False),
