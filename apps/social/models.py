@@ -109,7 +109,7 @@ class Notification(models.Model):
     name_of_notification = models.CharField(max_length=700, default="")
 
     def __str__(self):
-        return self.name_of_notification
+        return self.type_of_notification
 
 
 class JournalPost(models.Model):

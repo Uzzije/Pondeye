@@ -460,6 +460,7 @@ class ApiCreateVouch(CSRFExemptView):
                 vouch_obj.users.remove(user)
                 vouch_obj.save()
                 response["status"] = True
+                response["count"] = vouch_obj.users.all().count()
                 return HttpResponse(json.dumps(response), status=201)
         except ObjectDoesNotExist:
             vouch_obj = VoucheMilestone(tasks=milestone)
