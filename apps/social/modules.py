@@ -474,6 +474,7 @@ def get_let_down_notifications(user):
 def get_notification_of_user(user, timezone='UTC'):
     try:
         tikedge_user = TikedgeUser.objects.get(user=user)
+        print "tikdge name ", tikedge_user.user.username
         let_down = let_downs(user)
         mil_vouches = get_milestone_vouch_notifications(user)
         new_ponder = get_new_pond_member_notification(tikedge_user)
