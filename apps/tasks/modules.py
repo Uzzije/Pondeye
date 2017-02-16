@@ -14,7 +14,7 @@ import global_variables_tasks
 from ..social.models import Notification, LetDownMilestone, VoucheMilestone, ProfilePictures
 from ..social import global_variables
 from django.utils.dateparse import parse_datetime
-from django.utils import timezone
+from django.utils import timezone as django_timezone
 
 
 CURRENT_URL = global_variables.CURRENT_URL
@@ -204,27 +204,29 @@ def decode_password(password):
 
 def convert_html_to_datetime(date_time, timezone='UTC'):
     if date_time:
+
         datetimearray = date_time.split('T')
         date = datetimearray[0]
        # print date
         time = datetimearray[1]
         new_date_time = date + ' '+time
         print new_date_time
+        fmt = '%Y-%m-%d %H:%M:%S %Z%z'
         end_by_naive = datetime.strptime(new_date_time, '%Y-%m-%d %H:%M')
         pytz.timezone(timezone).localize(end_by_naive)
-        return end_by_naive
+        print "end_by_naive ", django_timezone.is_aware(end_by_naive)
+        made_aware = django_timezone.make_aware(end_by_naive, timezone=pytz.timezone(timezone))
+        print "made aware ", made_aware.strftime(fmt), django_timezone.is_aware(made_aware)
+        return made_aware
     else:
         return False
 
 
 def time_has_past(time_infos, timezone=""):
-        if timezone == "":
-            timezone = 'America/Chicago'
         if time_infos:
-            if time_infos < get_current_datetime():
-                print "current date and time %s local date and time %s"% (str(time_infos),
-                                                                        str(utc_to_local(get_current_datetime(),
-                                                                                         local_timezone=timezone)))
+            if django_timezone.localtime(time_infos) < get_current_datetime():
+                print "current date and time %s local date and time %s"% (str(get_current_datetime()),
+                                                                        str(time_infos))
                 return True
             else:
                 return False
@@ -242,18 +244,18 @@ def time_to_utc(time_to_convert):
     return new_time_utc
 
 
+
 def utc_to_local(input_time, local_timezone=""):
 
     if local_timezone:
         try:
-            local = input_time.astimezone(pytz.timezone(local_timezone))
+            local = pytz.timezone(local_timezone).normalize(input_time.astimezone(pytz.timezone(local_timezone)))
             return local
         except ValueError:
             new_time = input_time.replace(tzinfo=get_localzone())
             local = pytz.timezone(local_timezone).normalize(new_time.astimezone(pytz.timezone(local_timezone)))
             return local
     return input_time
-
 
 def get_task_picture_urls(task):
     pic_urls = []

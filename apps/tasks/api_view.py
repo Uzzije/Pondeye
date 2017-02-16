@@ -225,8 +225,9 @@ class ApiNewProject(CSRFExemptView):
             return HttpResponse(json.dumps(response), status=201)
         conver_date = request.POST.get('milestone_date')
         print "date_ for api new proj ", conver_date
+        timezone = request.POST.get("timezone")
         if conver_date:
-            end_by = convert_html_to_datetime(conver_date)
+            end_by = convert_html_to_datetime(conver_date, timezone=timezone)
         else:
             response["status"] = False
             response["error"] = "It seems like your date input is wrong!"
