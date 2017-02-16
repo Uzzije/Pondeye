@@ -482,7 +482,7 @@ def get_notification_of_user(user, timezone='UTC'):
                                                            Q(type_of_notification=global_variables.USER_DELETED_MILESTONE)).order_by('-created')
         quited_on_project = Notification.objects.filter(Q(user=user),
                                                           Q(type_of_notification=global_variables.USER_DELETED_PROJECT)).order_by('-created')
-        ponder_request = PondRequest.objects.filter(pond__pond_members__user=user).order_by('-date_requested')
+        ponder_request = PondRequest.objects.filter(Q(pond__pond_members__user=user), ~Q(user=tikedge_user)).order_by('-date_requested')
         notif_list = []
         for each_mil in let_down:
             created = int(each_mil['created'].strftime('%s'))

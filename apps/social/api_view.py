@@ -25,6 +25,7 @@ from braces.views import LoginRequiredMixin
 from ..tasks.global_variables_tasks import TAG_NAMES_LISTS
 from datetime import datetime
 import base64
+from django.utils import timezone
 
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)
@@ -878,7 +879,7 @@ class ApiDenyPondRequest(CSRFExemptView):
             return HttpResponse(json.dumps(data))
         else:
             try:
-                pond_request.date_response = datetime.now()
+                pond_request.date_response = timezone.now()
                 pond_request.request_accepted = False
                 pond_request.request_denied = True
                 pond_request.request_responded_to = True
