@@ -26,6 +26,9 @@ from ..tasks.global_variables_tasks import TAG_NAMES_LISTS
 from datetime import datetime
 import base64
 from django.utils import timezone
+from django.core.files.base import ContentFile
+
+
 
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)
@@ -117,9 +120,10 @@ class ApiPictureUploadView(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         tkduser = TikedgeUser.objects.get(user=user)
-        picture_file = request.POST.get('picture', False)
-        dec_picture_file = base64.b64decode(picture_file)
-        if not picture_file:
+        picture_file = request.POST.get('picture')
+        dec_picture_file = modules.get_picture_from_base64(picture_file)
+        print "dec file and picture file ", dec_picture_file
+        if not dec_picture_file:
             response["error"] = "Hey visual must be either jpg, jpeg or png file! ", dec_picture_file
             return HttpResponse(json.dumps(response), status=201)
         milestone_name = request.POST.get('milestone_name')

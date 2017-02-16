@@ -13,9 +13,12 @@ from journal_feed import JournalFeed
 from tasks_feed import PondFeed
 from itertools import chain
 from datetime import timedelta
-import datetime
 from ..tasks.modules import utc_to_local
-#import magic
+import base64
+
+from django.core.files.base import ContentFile
+
+
 
 CURRENT_URL = global_variables.CURRENT_URL
 
@@ -858,4 +861,19 @@ def mark_milestone_let_down_as_read(user):
         each_notif.read = True
         each_notif.save()
     
-    
+
+def get_picture_from_base64(data):
+        """
+        Convert from base64 to file
+        :param self:
+        :param data:
+        :return:
+        """
+        if isinstance(data, basestring) and data.startswith('data:image'):
+            # base64 encoded image - decode
+            format, imgstr = data.split(';base64,')  # format ~= data:image/X,
+            ext = format.split('/')[-1]  # guess file extension
+
+            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+            return data
+        return False
