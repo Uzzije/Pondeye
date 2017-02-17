@@ -120,10 +120,9 @@ class ApiPictureUploadView(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         tkduser = TikedgeUser.objects.get(user=user)
-        picture_file = request.POST.get('picture')
-        dec_picture_file = modules.get_picture_from_base64(picture_file)
-        print "dec file and picture file ", dec_picture_file
-        if not dec_picture_file:
+        dec_picture_file = request.POST.get('picture')
+        picture_file = modules.get_picture_from_base64(dec_picture_file)
+        if not picture_file:
             response["error"] = "Hey visual must be either jpg, jpeg or png file! ", dec_picture_file
             return HttpResponse(json.dumps(response), status=201)
         milestone_name = request.POST.get('milestone_name')
@@ -157,6 +156,7 @@ class ApiPictureUploadView(CSRFExemptView):
                                                                                     user=tkduser
                                                                                     )
             new_journal_entry.save()
+
         else:
             try:
                 pic_set = PictureSet.objects.get(milestone=milestone, after_picture=None, tikedge_user=tkduser, is_deleted=False)
@@ -245,8 +245,9 @@ class  ApiEditPictureSetView(CSRFExemptView):
         if 'change_picture_after' in request.POST:
             pic_set_id = request.POST.get("change_picture_after")
             picture = Picture.objects.get(id=int(pic_set_id))
-            pic_file = request.FILES.get('picture', False)
-            if modules.file_is_picture(pic_file):
+            pic = request.POST.get('picture')
+            pic_file = modules.get_picture_from_base64(pic)
+            if pic_file:
                 pic_file.file = modules.resize_image(pic_file)
                 picture.milestone_pics = pic_file
                 picture.image_name = pic_file.name
@@ -258,8 +259,9 @@ class  ApiEditPictureSetView(CSRFExemptView):
         if 'change_picture_before' in request.POST:
             pic_set_id = request.POST.get("change_picture_before")
             picture = Picture.objects.get(id=int(pic_set_id))
-            pic_file = request.FILES.get('picture', False)
-            if modules.file_is_picture(pic_file):
+            pic = request.POST.get('picture')
+            pic_file = modules.get_picture_from_base64(pic)
+            if pic_file:
                 pic_file.file = modules.resize_image(pic_file)
                 picture.milestone_pics = pic_file
                 picture.image_name = pic_file.name

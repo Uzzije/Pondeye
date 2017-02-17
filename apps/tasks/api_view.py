@@ -8,7 +8,8 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from ..social.modules import get_journal_message, \
-    get_notifications_alert, get_pond, file_is_picture, resize_image, available_ponds_json, create_failed_notification, create_failed_notification_proj
+    get_notifications_alert, get_pond, file_is_picture, resize_image, available_ponds_json, create_failed_notification, \
+    create_failed_notification_proj, get_picture_from_base64
 from modules import get_user_projects, \
     time_has_past, convert_html_to_datetime,\
     get_todays_milestones_json, \
@@ -519,8 +520,9 @@ class ApiProfilePictureView(CSRFExemptView):
             response["status"] = False
             response["error"] = "Log Back In! Try Again!"
             return HttpResponse(json.dumps(response), status=201)
-        picture_file = request.FILES.get('picture', False)
-        if not file_is_picture(picture_file):
+        picture = request.POST.get('picture')
+        picture_file = get_picture_from_base64(picture)
+        if picture_file:
             response['status'] = False
             response["error"] = "Hey visual must be either jpg, jpeg or png file!"
             return HttpResponse(json.dumps(response), status=201)
