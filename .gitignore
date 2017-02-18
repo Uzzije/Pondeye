@@ -96,3 +96,4 @@ media/
 migrations
 migrations/0002_remove_profilepictures_is_deleted.py
 settings/secret_keys.py
+notification_keys.py

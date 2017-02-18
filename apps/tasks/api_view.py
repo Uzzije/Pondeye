@@ -32,7 +32,7 @@ from forms.form_module import get_current_datetime
 from django.db.models import Q
 import pytz
 from tzlocal import get_localzone
-
+from notification_keys import TOKEN_FOR_NOTIFICATION
 
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)
@@ -603,17 +603,12 @@ class ApiCheckFailedProjectMilestoneView(CSRFExemptView):
 
     def post(self, request):
         response = {}
-        try:
-            username = request.POST.get("username")
-            user = User.objects.get(username=username)
-        except ObjectDoesNotExist:
-            response["status"] = False
-            response["error"] = "Log Back In! Try Again!"
-            return HttpResponse(json.dumps(response), status=201)
-        try:
-            tikedge_user = TikedgeUser.objects.get(user=user)
-            confirm_expired_milestone_and_project(tikedge_user)
+        token = request.POST.get("token")
+        if token and (token == TOKEN_FOR_NOTIFICATION):
             response["status"] = True
-        except ObjectDoesNotExist:
+            confirm_expired_milestone_and_project()
+        else:
             response["status"] = False
+            response["error"] = "Invalid Token"
+            response['token_given'] = token
         return HttpResponse(json.dumps(response), status=201)

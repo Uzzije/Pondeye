@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from models import TikedgeUser
+from models import TikedgeUser, Milestone, UserProject
 
 from django.db.models import Q
 from datetime import timedelta, datetime
@@ -357,9 +357,9 @@ def get_pond_status(pond_members):
             return status
 
 
-def confirm_expired_milestone_and_project(tikedge_user):
+def confirm_expired_milestone_and_project():
     yesterday = form_module.get_current_datetime()
-    all_milestones = tikedge_user.milestone_set.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False),
+    all_milestones = Milestone.objects.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False),
                                                              Q(is_failed=False), Q(is_deleted=False))
     print "all milestone, ", all_milestones
     for each_mil in all_milestones:
@@ -380,13 +380,10 @@ def confirm_expired_milestone_and_project(tikedge_user):
                                             type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
                             let_down.users.add(each_user)
                             notification.save()
-                        notification = Notification(user=tikedge_user.user,
-                                            type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
-                        notification.save()
                         let_down.save()
             except ObjectDoesNotExist:
                 pass
-    all_project = tikedge_user.userproject_set.all().filter(Q(length_of_project__lte=yesterday), Q(is_completed=False),
+    all_project = UserProject.objects.all().filter(Q(length_of_project__lte=yesterday), Q(is_completed=False),
                                                             ~Q(made_live=None), Q(is_failed=False), Q(is_deleted=False))
     for each_proj in all_project:
         if time_has_past(each_proj.length_of_project):
