@@ -341,7 +341,7 @@ class ApiEditPondView(CSRFExemptView):
                     })
             pond_list.append({
                 'id':pond.id,
-                'blurb':pond.blurb,
+                'name':pond.name_of_pond,
                 'slug':pond.slug,
                 'tag_list':tag_list,
                 'pond_members': pond_mem_list,
