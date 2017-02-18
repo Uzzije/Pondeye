@@ -202,10 +202,10 @@ class  ApiEditPictureSetView(CSRFExemptView):
                 hasPic = True
                 picture_set.append({
                    'before_picture':{'id':each_pic.before_picture.id,
-                                     'url':each_pic.before_picture.milestone_pics.url,
+                                     'url':global_variables.CURRENT_URL + each_pic.before_picture.milestone_pics.url,
                                      },
                    'after_picture':{'id':each_pic.after_picture.id,
-                                    'url':each_pic.after_picture.milestone_pics.url
+                                    'url':global_variables.CURRENT_URL + each_pic.after_picture.milestone_pics.url
                                     },
                    'blurb':each_pic.milestone.blurb,
                    'id':each_pic.id,
@@ -217,7 +217,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
                 hasPic = False
             picture_set.append({
                 'before_picture':{'id':each_pic.before_picture.id,
-                                  'url':each_pic.before_picture.milestone_pics.url,
+                                  'url':global_variables.CURRENT_URL + each_pic.before_picture.milestone_pics.url,
                                   },
                 'blurb':each_pic.milestone.blurb,
                 'id':each_pic.id,
@@ -251,7 +251,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
                 pic_file.file = modules.resize_image(pic_file)
                 picture.milestone_pics = pic_file
                 picture.image_name = pic_file.name
-                picture.last_edited = datetime.now()
+                picture.last_edited = timezone.now()
                 picture.save()
             else:
                 response["error"] = 'Hey visual must be either jpg, jpeg or png file!'
@@ -265,7 +265,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
                 pic_file.file = modules.resize_image(pic_file)
                 picture.milestone_pics = pic_file
                 picture.image_name = pic_file.name
-                picture.last_edited = datetime.now()
+                picture.last_edited = timezone.now()
                 picture.save()
             else:
                 response["error"] = 'Hey visual must be either jpg, jpeg or png file!'
@@ -274,7 +274,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
             pic_id = request.POST.get("delete_picture_after")
             picture = Picture.objects.get(id=int(pic_id))
             picture.is_deleted = True
-            picture.last_edited = datetime.now()
+            picture.last_edited = timezone.now()
             picture.save()
             picture_set = PictureSet.objects.get(after_picture=picture)
             picture_set.after_picture = None
