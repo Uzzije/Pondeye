@@ -8,9 +8,10 @@ def run_notification():
 	data = {'token':TOKEN_FOR_NOTIFICATION}
 	data_encoded = urllib.urlencode(data)
 	url = CHECK_NOTIFICATION_URL
-	request = urllib2.Request(url, data_encoded)
-	response = request.read()
-	print response
+	headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+	request = urllib2.Request(url, data_encoded, headers)
+	response = urllib2.urlopen(request)
+	print response.read()
 
 run_notification()
 
