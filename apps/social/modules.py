@@ -326,6 +326,11 @@ def get_notifications_alert(user):
 
 
 def get_tag_list(tags):
+    """
+    Returns list of tags
+    :param tags:
+    :return:
+    """
     list_tag = []
     for t in tags:
         list_tag.append(t.name_of_tag)

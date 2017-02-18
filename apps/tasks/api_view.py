@@ -522,7 +522,7 @@ class ApiProfilePictureView(CSRFExemptView):
             return HttpResponse(json.dumps(response), status=201)
         picture = request.POST.get('picture')
         picture_file = get_picture_from_base64(picture)
-        if picture_file:
+        if not picture_file:
             response['status'] = False
             response["error"] = "Hey visual must be either jpg, jpeg or png file!"
             return HttpResponse(json.dumps(response), status=201)

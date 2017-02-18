@@ -156,7 +156,7 @@ class ApiPictureUploadView(CSRFExemptView):
                                                                                     user=tkduser
                                                                                     )
             new_journal_entry.save()
-
+            response['status'] = True
         else:
             try:
                 pic_set = PictureSet.objects.get(milestone=milestone, after_picture=None, tikedge_user=tkduser, is_deleted=False)
@@ -310,6 +310,11 @@ class ApiDeletePictureSet(CSRFExemptView):
 class ApiEditPondView(CSRFExemptView):
 
     def get(self, request):
+        """
+        Grab data for loading to Pond Edit View in App
+        :param request:
+        :return:
+        """
         response = {}
         response["status"] = False
         try:
@@ -331,7 +336,8 @@ class ApiEditPondView(CSRFExemptView):
                     pond_mem_list.append({
                         'first_name':pond_mem.user.first_name,
                         'last_name':pond_mem.user.last_name,
-                        'username':pond_mem.user.username
+                        'username':pond_mem.user.username,
+                        'id':pond_mem.id
                     })
             pond_list.append({
                 'id':pond.id,
@@ -342,11 +348,19 @@ class ApiEditPondView(CSRFExemptView):
                 'purpose':pond.purpose
             })
         if pond_list:
-            response["status"] = True
+            response['has_pond'] = True
+        else:
+            response['has_pond'] = False
+        response["status"] = True
         response["pond_list"] = pond_list
         return HttpResponse(json.dumps(response), status=201)
 
     def post(self, request):
+        """
+        Post call for delete a pond
+        :param request:
+        :return:
+        """
         response = {}
         response["status"] = False
         try:
@@ -366,30 +380,6 @@ class ApiEditPondView(CSRFExemptView):
 
 
 class ApiEditIndividualPondView(CSRFExemptView):
-
-    def get(self, request, *args, **kwargs):
-        slug = request.GET.get("slug")
-        response = {}
-        response["status"] = False
-        pond = Pond.objects.get(slug=slug)
-        response['name_of_pond'] = pond.name_of_pond,
-        response['purpose'] = pond.purpose,
-        select_tags = modules.get_tag_list(pond.tags.all())
-        pond_members = pond.pond_members.all()
-        response["select_tags"] = select_tags
-        pond_members_list = []
-
-        for each_mem in pond_members:
-            pond_members_list.append({
-                'pond_member_first_name':each_mem.user.first_name,
-                'pond_member_last_name':each_mem.user.last_name,
-                'slug':each_mem.slug,
-                'id':each_mem.id
-            })
-
-        response["pond_members"] = pond_members_list
-        response["status"] = True
-        return HttpResponse(json.dumps(response), status=201)
 
     def post(self, request, *args, **kwargs):
         response = {}
@@ -420,7 +410,7 @@ class ApiEditIndividualPondView(CSRFExemptView):
             pass
         try:
             for pd in ponders:
-                tik = TikedgeUser.objects.get(id=pd)
+                tik = TikedgeUser.objects.get(id=int(pd))
                 pond.pond_members.remove(tik)
             pond.save()
         except ValueError:
@@ -738,6 +728,11 @@ class ApiGetPondList(CSRFExemptView):
 
 class ApiGetPond(CSRFExemptView):
     def get(self, request):
+        """
+        Get individual pond
+        :param request:
+        :return:
+        """
         response = {}
         try:
             username = request.GET.get("username")
