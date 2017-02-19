@@ -257,13 +257,16 @@ class  ApiEditPictureSetView(CSRFExemptView):
             pic_set_id = request.POST.get("change_picture_after")
             picture = Picture.objects.get(id=int(pic_set_id))
             pic = request.POST.get('picture')
+            print "pic before ", pic
             pic_file = modules.get_picture_from_base64(pic)
+            print "pic after ", pic_file
             if pic_file:
                 pic_file.file = modules.resize_image(pic_file)
                 picture.milestone_pics = pic_file
                 picture.image_name = pic_file.name
                 picture.last_edited = timezone.now()
                 picture.save()
+                response['status'] = True
             else:
                 response["error"] = 'Hey after visual must be either jpg, jpeg or png file!'
                 return HttpResponse(json.dumps(response), status=201)
@@ -278,6 +281,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
                 picture.image_name = pic_file.name
                 picture.last_edited = timezone.now()
                 picture.save()
+                response['status'] = True
             else:
                 response["error"] = 'Hey before visual must be either jpg, jpeg or png file!'
                 return HttpResponse(json.dumps(response), status=201)
