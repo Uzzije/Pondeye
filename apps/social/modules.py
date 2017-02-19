@@ -234,8 +234,7 @@ def get_users_feed(user):
 def get_users_feed_json(user, local_timezone='UTC'):
     list_of_feed = []
     list_of_feed_json = []
-    project_public = UserProject.objects.filter(Q(is_live=True),
-                                                Q(is_deleted=False), Q(is_public=True)).order_by('-made_live')
+    project_public = UserProject.objects.filter(Q(is_deleted=False), Q(is_public=True)).order_by('-made_live')
     user_ponds = Pond.objects.filter(Q(pond_members__user=user), Q(is_deleted=False))
     pond_specific_project = PondSpecificProject.objects.filter(Q(pond__in=user_ponds)).\
         exclude(project__in=project_public).order_by('-project__made_live').distinct()
