@@ -257,9 +257,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
             pic_set_id = request.POST.get("change_picture_after")
             picture = Picture.objects.get(id=int(pic_set_id))
             pic = request.POST.get('picture')
-            print "pic before ", pic
             pic_file = modules.get_picture_from_base64(pic)
-            print "pic after ", pic_file
             if pic_file:
                 pic_file.file = modules.resize_image(pic_file)
                 picture.milestone_pics = pic_file
