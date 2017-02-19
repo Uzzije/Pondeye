@@ -215,16 +215,16 @@ class  ApiEditPictureSetView(CSRFExemptView):
                })
             else:
                 hasPic = False
-            picture_set.append({
-                'before_picture':{'id':each_pic.before_picture.id,
-                                  'url':global_variables.CURRENT_URL + each_pic.before_picture.milestone_pics.url,
-                                  },
-                'blurb':each_pic.milestone.blurb,
-                'id':each_pic.id,
-                'slug':each_pic.milestone.slug,
-                'hidden':False,
-                'hasAfterPicture':hasPic
-            })
+                picture_set.append({
+                    'before_picture':{'id':each_pic.before_picture.id,
+                                      'url':global_variables.CURRENT_URL + each_pic.before_picture.milestone_pics.url,
+                                      },
+                    'blurb':each_pic.milestone.blurb,
+                    'id':each_pic.id,
+                    'slug':each_pic.milestone.slug,
+                    'hidden':False,
+                    'hasAfterPicture':hasPic
+                })
         response["user_picture_set"] = picture_set
         if picture_set:
             response["has_set"] = True
