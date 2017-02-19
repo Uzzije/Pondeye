@@ -256,7 +256,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
             else:
                 response["error"] = 'Hey visual must be either jpg, jpeg or png file!'
                 return HttpResponse(json.dumps(response), status=201)
-        if 'change_picture_before' in request.POST:
+        elif 'change_picture_before' in request.POST:
             pic_set_id = request.POST.get("change_picture_before")
             picture = Picture.objects.get(id=int(pic_set_id))
             pic = request.POST.get('picture')
@@ -270,7 +270,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
             else:
                 response["error"] = 'Hey visual must be either jpg, jpeg or png file!'
                 return HttpResponse(json.dumps(response), status=201)
-        if 'delete_picture_after' in request.POST:
+        elif 'delete_picture_after' in request.POST:
             pic_id = request.POST.get("delete_picture_after")
             picture = Picture.objects.get(id=int(pic_id))
             picture.is_deleted = True
@@ -279,7 +279,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
             picture_set = PictureSet.objects.get(after_picture=picture)
             picture_set.after_picture = None
             picture_set.save()
-        if 'delete_picture_before' in request.POST:
+        elif 'delete_picture_before' in request.POST:
             pic_id = request.POST.get("delete_picture_before")
             picture = Picture.objects.get(id=int(pic_id))
             picture.is_deleted = True
