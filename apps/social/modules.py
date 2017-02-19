@@ -26,10 +26,12 @@ CURRENT_URL = global_variables.CURRENT_URL
 def resize_image(image_field, is_profile_pic=False):
     image_file = StringIO.StringIO(image_field.read())
     image = Image.open(image_file)
+    '''
     if is_profile_pic:
-        image = image.resize((161, 161), Image.ANTIALIAS)
+        image = image.resize((image.width, image.height), Image.ANTIALIAS)
     else:
         image = image.resize((1080, 566), Image.ANTIALIAS)
+    '''
     image_file = StringIO.StringIO()
     image.save(image_file, 'JPEG', quality=90)
     return image_file

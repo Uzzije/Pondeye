@@ -186,6 +186,11 @@ class  ApiEditPictureSetView(CSRFExemptView):
     """
 
     def get(self, request):
+        """
+        Edit Pond Data get the neccessary Informations
+        :param request: 
+        :return: 
+        """
         response = {}
         response["status"] = False
         try:
@@ -197,6 +202,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
         tikedge_user = TikedgeUser.objects.get(user=user)
         user_picture_set = PictureSet.objects.filter(tikedge_user=tikedge_user, is_deleted=False)
         picture_set = []
+        
         for each_pic in user_picture_set:
             if each_pic.after_picture:
                 hasPic = True
@@ -234,6 +240,11 @@ class  ApiEditPictureSetView(CSRFExemptView):
         return HttpResponse(json.dumps(response), status=201)
 
     def post(self, request):
+        """
+        Edit Pond Data
+        :param request: 
+        :return: 
+        """
         response = {}
         response["status"] = False
         try:
@@ -254,7 +265,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
                 picture.last_edited = timezone.now()
                 picture.save()
             else:
-                response["error"] = 'Hey visual must be either jpg, jpeg or png file!'
+                response["error"] = 'Hey after visual must be either jpg, jpeg or png file!'
                 return HttpResponse(json.dumps(response), status=201)
         elif 'change_picture_before' in request.POST:
             pic_set_id = request.POST.get("change_picture_before")
@@ -268,7 +279,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
                 picture.last_edited = timezone.now()
                 picture.save()
             else:
-                response["error"] = 'Hey visual must be either jpg, jpeg or png file!'
+                response["error"] = 'Hey before visual must be either jpg, jpeg or png file!'
                 return HttpResponse(json.dumps(response), status=201)
         elif 'delete_picture_after' in request.POST:
             pic_id = request.POST.get("delete_picture_after")
@@ -283,7 +294,7 @@ class  ApiEditPictureSetView(CSRFExemptView):
             pic_id = request.POST.get("delete_picture_before")
             picture = Picture.objects.get(id=int(pic_id))
             picture.is_deleted = True
-            picture.last_edited = datetime.now()
+            picture.last_edited = timezone.now()
             picture.save()
             picture_set = PictureSet.objects.get(before_picture=picture)
             picture_set.before_picture = None
@@ -841,7 +852,7 @@ class ApiAddToPond(CSRFExemptView):
                 pond.save()
                 pond_membership = PondMembership(user=other_user, pond=pond)
                 pond_membership.save()
-                pond_request = PondRequest(user=other_user, pond=pond, date_response=datetime.now(),
+                pond_request = PondRequest(user=other_user, pond=pond, date_response=timezone.now(),
                                            request_accepted=True,
                                            member_that_responded=task_modules.get_tikedge_user(user),
                                            request_responded_to=True)
@@ -935,7 +946,7 @@ class ApiAcceptPondRequest(CSRFExemptView):
         pond_request = PondRequest.objects.get(id=int(pond_request_id))
         if pond_request.request_responded_to or pond_request.pond.is_deleted:
             if pond_request.pond.is_deleted:
-                pond_request.date_response = datetime.now()
+                pond_request.date_response = timezone.now()
                 pond_request.request_accepted = False
                 pond_request.request_denied = True
                 pond_request.request_responded_to = True
@@ -945,7 +956,7 @@ class ApiAcceptPondRequest(CSRFExemptView):
             return HttpResponse(json.dumps(data))
         else:
             try:
-                pond_request.date_response = datetime.now()
+                pond_request.date_response = timezone.now()
                 pond_request.request_accepted = True
                 pond_request.request_responded_to = True
                 pond_request.member_that_responded = task_modules.get_tikedge_user(user)
