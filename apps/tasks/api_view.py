@@ -34,6 +34,7 @@ import pytz
 from tzlocal import get_localzone
 from notification_keys import TOKEN_FOR_NOTIFICATION
 
+
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
@@ -378,6 +379,10 @@ class ApiMilestoneEditView(CSRFExemptView):
             })
         response["status"] = True
         response["milestones_list"] = milestones_list
+        if milestones_list:
+            response['hasMilestone'] = True
+        else:
+            response['hasMilestone'] = False
         return HttpResponse(json.dumps(response), status=201)
 
     def post(self, request, *args, **kwargs):
