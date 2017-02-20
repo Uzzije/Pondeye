@@ -509,6 +509,7 @@ class ApiProfileView(CSRFExemptView):
             'profile_url_storage': prof_storage,
             'aval_pond':aval_pond,
             'is_own_profile': user == other_user,
+            'user_name':tikedge_user.user.username
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)
