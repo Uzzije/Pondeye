@@ -304,7 +304,7 @@ class ApiProjectEditView(CSRFExemptView):
                 'id':each_proj.id,
                 'hidden':False,
                 'tag_list':tag_list,
-                'time':modules.utc_to_local(each_mil.done_by, local_timezone=timezone)
+                'time':modules.utc_to_local(each_proj.done_by, local_timezone=timezone)
             })
         response["status"] = True
         response["project_list"] = project_list
