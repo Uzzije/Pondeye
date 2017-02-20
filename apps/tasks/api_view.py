@@ -304,7 +304,7 @@ class ApiProjectEditView(CSRFExemptView):
                 'id':each_proj.id,
                 'hidden':False,
                 'tag_list':tag_list,
-                'time':modules.utc_to_local(each_proj.length_of_project, local_timezone=timezone)
+                'time':modules.utc_to_local(each_proj.length_of_project, local_timezone=timezone).strftime("%B %d %Y %I:%M %p")
             })
         response["status"] = True
         response["project_list"] = project_list
@@ -377,7 +377,7 @@ class ApiMilestoneEditView(CSRFExemptView):
             milestones_list.append({
                 'mil_name':each_mil.name_of_milestone,
                 'id':each_mil.id,
-                'time':modules.utc_to_local(each_mil.done_by, local_timezone=timezone),
+                'time':modules.utc_to_local(each_mil.done_by, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
                 'hidden': False
             })
         response["status"] = True
