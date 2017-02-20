@@ -295,7 +295,7 @@ class ApiProjectEditView(CSRFExemptView):
         print "projects", projects
         project_list = []
         tag_list = []
-
+        timezone = request.GET.get('timezone')
         for each_proj in projects:
             for item in each_proj.tags.all():
                 tag_list.append(item.name_of_tag)
@@ -303,7 +303,8 @@ class ApiProjectEditView(CSRFExemptView):
                 'proj_name':each_proj.name_of_project,
                 'id':each_proj.id,
                 'hidden':False,
-                'tag_list':tag_list
+                'tag_list':tag_list,
+                'time':modules.utc_to_local(each_mil.done_by, local_timezone=timezone)
             })
         response["status"] = True
         response["project_list"] = project_list
@@ -371,10 +372,12 @@ class ApiMilestoneEditView(CSRFExemptView):
         tikedge_user = TikedgeUser.objects.get(user=user)
         milestones = Milestone.objects.filter(user=tikedge_user, is_deleted=False)
         milestones_list = []
+        timezone = request.GET.get('timezone')
         for each_mil in milestones:
             milestones_list.append({
                 'mil_name':each_mil.name_of_milestone,
                 'id':each_mil.id,
+                'time':modules.utc_to_local(each_mil.done_by, local_timezone=timezone),
                 'hidden': False
             })
         response["status"] = True
