@@ -627,7 +627,7 @@ class ApiProjectView(CSRFExemptView):
         motivations = project.tags.all()
         print "motivations ", motivations
         modules.increment_project_view(req_user, project)
-        milestones = project.milestone_set.all().filter(Q(is_active=True, is_deleted=False))
+        milestones = project.milestone_set.all().filter(Q(is_deleted=False))
         try:
             seen_count = SeenProject.objects.get(tasks=project).users.count()
         except ObjectDoesNotExist:

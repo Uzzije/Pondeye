@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/api_view.py" afterPath="$PROJECT_DIR$/apps/tasks/api_view.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,11 +37,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.4074073">
-              <caret line="261" column="62" selection-start-line="261" selection-start-column="62" selection-end-line="261" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.69984686">
+              <caret line="640" column="13" selection-start-line="640" selection-start-column="13" selection-end-line="640" selection-end-column="13" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -61,10 +61,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9081164">
+            <state vertical-scroll-proportion="-10.981482">
               <caret line="509" column="34" selection-start-line="509" selection-start-column="34" selection-end-line="509" selection-end-column="34" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
@@ -98,8 +98,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.9074075">
-              <caret line="236" column="48" selection-start-line="236" selection-start-column="48" selection-end-line="236" selection-end-column="48" />
+            <state vertical-scroll-proportion="-4.0185184">
+              <caret line="674" column="19" selection-start-line="674" selection-start-column="4" selection-end-line="674" selection-end-column="19" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -214,8 +214,8 @@
         <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
         <option value="$PROJECT_DIR$/check_notification.py" />
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
-        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
+        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
       </list>
     </option>
   </component>
@@ -225,8 +225,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="845" />
-    <option name="y" value="68" />
+    <option name="x" value="681" />
+    <option name="y" value="98" />
     <option name="width" value="1360" />
     <option name="height" value="853" />
   </component>
@@ -742,7 +742,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="845" y="68" width="1360" height="853" extended-state="0" />
+    <frame x="681" y="98" width="1360" height="853" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1798179" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1175,16 +1175,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9074075">
-          <caret line="236" column="48" selection-start-line="236" selection-start-column="48" selection-end-line="236" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/search_module.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-17.962963">
@@ -1193,20 +1183,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
+    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.4074073">
-          <caret line="261" column="62" selection-start-line="261" selection-start-column="62" selection-end-line="261" selection-end-column="62" />
+        <state vertical-scroll-proportion="-4.0185184">
+          <caret line="674" column="19" selection-start-line="674" selection-start-column="4" selection-end-line="674" selection-end-column="19" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9081164">
+        <state vertical-scroll-proportion="-10.981482">
           <caret line="509" column="34" selection-start-line="509" selection-start-column="34" selection-end-line="509" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.69984686">
+          <caret line="640" column="13" selection-start-line="640" selection-start-column="13" selection-end-line="640" selection-end-column="13" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
