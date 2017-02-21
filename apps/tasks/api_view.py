@@ -365,8 +365,13 @@ class ApiSendResetPasswordCode(CSRFExemptView):
         response = {}
         response['status'] = True
         email = request.POST.get("email")
-        user = User.objects.get(email=email)
-        activation_code = modules.generate_reset_code(user)
+        try:
+            user = User.objects.get(email=email)
+            activation_code = modules.generate_reset_code(user)
+        except ObjectDoesNotExist:
+            response['status'] = False
+            response['error'] = "Sorry your email does not match an active user!"
+            return HttpResponse(json.dumps(response))
         try:
             send_templated_mail(
                 template_name='password_reset',
