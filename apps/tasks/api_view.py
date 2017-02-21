@@ -400,7 +400,7 @@ class ApiPasswordResetView(CSRFExemptView):
             user = User.objects.get(username=email)
         except ObjectDoesNotExist:
             response["status"] = False
-            response["error"] = "Email or token not valid!"
+            response["error"] = "Email is not valid!"
             return HttpResponse(json.dumps(response), status=201)
         token = request.POST.get('token')
         reset = modules.reset_forget_password(user, token)

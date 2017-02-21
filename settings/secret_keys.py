@@ -1,2 +1,2 @@
 DATABASE_PASSWORD = "DaKuimcv1"
-EMAIL_PASSWORD = "DaKuimcv1"
+EMAIL_PASSWORD = 'Bmotbjgm1'
