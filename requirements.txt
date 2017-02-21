@@ -44,4 +44,4 @@ pillow==2.9.0
 django-braces==1.10.0
 beautifulsoup4==4.5.1
 python-magic==0.4.12
-django-templated-email==2.1
+django-templated-email==0.4.9
