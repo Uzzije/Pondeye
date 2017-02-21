@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from models import TikedgeUser, Milestone, UserProject
+from models import TikedgeUser, Milestone, UserProject, PasswordReset
 
 from django.db.models import Q
 from datetime import timedelta, datetime
@@ -13,9 +13,9 @@ from django.contrib import messages
 import global_variables_tasks
 from ..social.models import Notification, LetDownMilestone, VoucheMilestone, ProfilePictures
 from ..social import global_variables
-from django.utils.dateparse import parse_datetime
+import random, string
 from django.utils import timezone as django_timezone
-
+from random import randint
 
 CURRENT_URL = global_variables.CURRENT_URL
 
@@ -484,10 +484,29 @@ def get_profile_pic_json(tikedge_user):
     return None
 
 
+def generate_reset_code(user):
+    old_pass_reset = PasswordReset.objects.filter(user=user)
+    for each_set in old_pass_reset:
+        each_set.is_active = False
+        each_set.save()
+    random_str = randomword(6)
+    new_set = PasswordReset(user=user, token=random_str)
+    new_set.save()
+    return new_set.token
 
 
+def reset_forget_password(user, token):
+    try:
+        new_set = PasswordReset.objects.get(user=user, token=token, is_active=True, was_used=False)
+        new_set.is_active = False
+        new_set.was_used = True
+        new_set.save()
+        return True
+    except ObjectDoesNotExist:
+        return False
 
 
-
+def randomword(length):
+   return ''.join(random.choice(string.lowercase) for i in range(length))
 
 

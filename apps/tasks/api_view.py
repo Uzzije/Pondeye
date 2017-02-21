@@ -25,7 +25,7 @@ from friendship.models import Friend
 import json
 from django.contrib import messages
 from braces.views import LoginRequiredMixin
-from global_variables_tasks import TAG_NAMES_LISTS
+from global_variables_tasks import CUSTOMER_SERVICE_EMAIL
 from .forms import launch_form
 import modules
 from forms.form_module import get_current_datetime
@@ -33,6 +33,7 @@ from django.db.models import Q
 import pytz
 from tzlocal import get_localzone
 from notification_keys import TOKEN_FOR_NOTIFICATION
+from templated_email import send_templated_mail
 
 
 class CSRFExemptView(View):
@@ -356,6 +357,57 @@ class ApiProjectEditView(CSRFExemptView):
                 create_failed_notification_proj(project)
             response = {"status":True}
         return HttpResponse(json.dumps(response))
+
+
+class ApiSendResetPasswordCode(CSRFExemptView):
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        response['status'] = True
+        email = request.POST.get("email")
+        user = User.objects.get(email=email)
+        activation_code = modules.generate_reset_code(user)
+        try:
+            send_templated_mail(
+                template_name='password_reset',
+                from_email='pondeye@textdoar.com',
+                recipient_list=['pondeye@textdoar.com', user.email],
+                context={
+                    'reset_code': activation_code,
+                     'username': user.username,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name
+                },
+                bcc=[CUSTOMER_SERVICE_EMAIL],
+                headers={'My-Custom-Header':'Pondeye Team'},
+            )
+        except (ValueError, AttributeError):
+            response['status'] = False
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiPasswordResetView(CSRFExemptView):
+    def post(self, request, *args, **kwargs):
+        response = {}
+        response['status'] = True
+        try:
+            email = request.POST.get("email")
+            user = User.objects.get(username=email)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Email or token not valid!"
+            return HttpResponse(json.dumps(response), status=201)
+        token = request.POST.get('token')
+        reset = modules.reset_forget_password(user, token)
+        if reset:
+            new_password = request.POST.get("password")
+            user.set_password(new_password)
+            user.save()
+            response['username'] = user.username
+        else:
+            response["status"] = False
+            response["error"] = "Token not valid!"
+        return HttpResponse(json.dumps(response), status=201)
 
 
 class ApiMilestoneEditView(CSRFExemptView):

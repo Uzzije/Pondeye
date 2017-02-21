@@ -19,6 +19,13 @@ class TikedgeUser(models.Model):
         super(TikedgeUser, self).save(*args, **kwargs)
 
 
+class PasswordReset(models.Model):
+    user = models.ForeignKey(User)
+    token = models.CharField(default="75876uhudi", max_length=12)
+    was_used = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+
 class TagNames(models.Model):
     name_of_tag = models.CharField(max_length=300)
 

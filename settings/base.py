@@ -5,6 +5,8 @@ import os
 from easy_thumbnails.conf import Settings as thumbnail_settings
 import djcelery
 from tzlocal import get_localzone
+from .secret_keys import EMAIL_PASSWORD
+
 djcelery.setup_loader()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +27,14 @@ LOGIN_URL = '/login'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'email@textdoar.com'
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
+EMAIL_PORT = 587
+
 
 # Application definition
 
