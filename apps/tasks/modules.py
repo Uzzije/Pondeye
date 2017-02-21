@@ -487,8 +487,7 @@ def get_profile_pic_json(tikedge_user):
 def generate_reset_code(user):
     old_pass_reset = PasswordReset.objects.filter(user=user)
     for each_set in old_pass_reset:
-        each_set.is_active = False
-        each_set.save()
+        each_set.delete()
     random_str = randomword(6)
     new_set = PasswordReset(user=user, token=random_str)
     new_set.save()

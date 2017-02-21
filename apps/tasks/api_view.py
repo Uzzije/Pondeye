@@ -397,7 +397,8 @@ class ApiPasswordResetView(CSRFExemptView):
         response['status'] = True
         try:
             email = request.POST.get("email")
-            user = User.objects.get(username=email)
+            print "email of users ", email
+            user = User.objects.get(email=email)
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Email is not valid!"
