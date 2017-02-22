@@ -530,7 +530,7 @@ class ApiCreateFollow(CSRFExemptView):
         except ObjectDoesNotExist:
             follow_obj = Follow(tasks=project)
             follow_obj.save()
-        if tikedge_user != project.user:
+        if tikedge_user != project.user and project.is_live:
             response["status"] = True
             follow_obj.users.add(tikedge_user)
             follow_obj.save()
