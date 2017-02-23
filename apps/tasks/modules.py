@@ -11,7 +11,8 @@ from global_variables_tasks import DECODE_DICTIONARY
 from bs4 import BeautifulSoup
 from django.contrib import messages
 import global_variables_tasks
-from ..social.models import Notification, LetDownMilestone, VoucheMilestone, ProfilePictures
+from ..social.models import Notification, LetDownMilestone, VoucheMilestone, ProfilePictures, \
+    PondSpecificProject, Pond
 from ..social import global_variables
 import random, string
 from django.utils import timezone as django_timezone
@@ -129,13 +130,13 @@ def get_todays_todo_list(user):
     return result
 
 
-def get_todays_milestones(user):
+def get_todays_milestones(user, current_projects):
     user = TikedgeUser.objects.get(user=user)
     tommorrow = form_module.get_current_datetime() + timedelta(hours=24)
     #print "yesterday ", yesterday,
     try:
         result = user.milestone_set.all().filter(Q(reminder__lte=tommorrow),
-                                             Q(is_active=True), Q(is_deleted=False))
+                                             Q(is_active=True), Q(is_deleted=False), Q(project__in=current_projects))
     except ObjectDoesNotExist:
         result = []
     return result
@@ -416,10 +417,16 @@ def get_completed_proj_count(user):
     return proj_count
 
 
-def get_recent_projects(user):
+def get_recent_projects(user,  requesting_user):
     tikedge_user = get_tikedge_user(user)
+    request_user_ponds = Pond.objects.filter(pond_members=requesting_user)
     all_project = tikedge_user.userproject_set.all().filter(Q(is_live=True), Q(is_deleted=False))
-    return all_project
+    pond_specific_project = PondSpecificProject.objects.filter(Q(project__in=all_project), Q(pond=request_user_ponds))
+    public_project = all_project.filter(is_public=True)
+    list_project = list(public_project)
+    for private_proj in pond_specific_project:
+        list_project.append(private_proj)
+    return list_project
 
 
 def display_error(form, request):
@@ -446,14 +453,14 @@ def get_pic_list(pic_list):
 ### Api Profile Calls
 
 
-def get_todays_milestones_json(user):
+def get_todays_milestones_json(user, current_projects):
     """
     Return todays milestone that are due for the given user
     :param user:
     :return:
     """
     milestone_list = []
-    mil_list = get_todays_milestones(user)
+    mil_list = get_todays_milestones(user, current_projects)
     for milestone in mil_list:
         milestone_list.append({
             'blurb':milestone.blurb,
@@ -462,9 +469,8 @@ def get_todays_milestones_json(user):
     return milestone_list
 
 
-def get_recent_projects_json(user):
+def get_recent_projects_json(projects):
     project_list = []
-    projects = get_recent_projects(user)
     for each_proj in projects:
         project_list.append({
             'blurb':each_proj.blurb,

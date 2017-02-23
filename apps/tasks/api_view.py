@@ -14,7 +14,8 @@ from modules import get_user_projects, \
     time_has_past, convert_html_to_datetime,\
     get_todays_milestones_json, \
     confirm_expired_milestone_and_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
-    get_failed_proj_count, get_recent_projects_json, get_status, display_error, api_get_user_projects, get_profile_pic_json
+    get_failed_proj_count, get_recent_projects_json, get_status, display_error, api_get_user_projects, get_profile_pic_json, \
+    get_recent_projects
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
@@ -541,8 +542,10 @@ class ApiProfileView(CSRFExemptView):
         except ValueError:
             other_user = user
         tikedge_user = TikedgeUser.objects.get(user=other_user)
-        current_tasks = get_todays_milestones_json(tikedge_user.user)
-        current_projs = get_recent_projects_json(tikedge_user.user)
+        requesting_user = TikedgeUser.objects.get(user=user)
+        current_proj_dj = get_recent_projects(tikedge_user.user, requesting_user)
+        current_projs = get_recent_projects_json(current_proj_dj)
+        current_tasks = get_todays_milestones_json(tikedge_user.user, current_projs)
         failed_mil_count = get_failed_mil_count(tikedge_user.user)
         completed_mil_count = get_completed_mil_count(tikedge_user.user)
         failed_proj_count = get_failed_proj_count(tikedge_user.user)

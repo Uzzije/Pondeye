@@ -663,7 +663,6 @@ class ApiProjectView(CSRFExemptView):
             'public_status':public_status,
             'mil_list':modules.milestone_project_app_view(milestones),
             'motif':modules.motivation_for_project_app_view(motivations),
-            'pond':modules.pond_for_project_app_view(pond_specific),
             'user_owns_proj':user_owns_proj,
             'is_completed':is_completed,
             'proj_id':project.id
