@@ -420,9 +420,10 @@ def get_completed_proj_count(user):
 def get_recent_projects(user,  requesting_user):
     tikedge_user = get_tikedge_user(user)
     request_user_ponds = Pond.objects.filter(pond_members=requesting_user)
-    all_project = tikedge_user.userproject_set.all().filter(Q(is_live=True), Q(is_deleted=False))
-    pond_specific_project = PondSpecificProject.objects.filter(Q(project__in=all_project), Q(pond=request_user_ponds))
-    public_project = all_project.filter(is_public=True)
+    all_project = tikedge_user.userproject_set.all().filter(Q(is_live=True), Q(is_deleted=False)).distinct()
+    private_project = all_project.filter(is_public=False)
+    pond_specific_project = PondSpecificProject.objects.filter(Q(project__in=private_project), Q(pond=request_user_ponds)).distinct()
+    public_project = all_project.filter(is_public=True).distinct()
     list_project = list(public_project)
     for private_proj in pond_specific_project:
         list_project.append(private_proj.project)
