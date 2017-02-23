@@ -545,7 +545,7 @@ class ApiProfileView(CSRFExemptView):
         requesting_user = TikedgeUser.objects.get(user=user)
         current_proj_dj = get_recent_projects(tikedge_user.user, requesting_user)
         current_projs = get_recent_projects_json(current_proj_dj)
-        current_tasks = get_todays_milestones_json(tikedge_user.user, current_projs)
+        current_tasks = get_todays_milestones_json(tikedge_user.user, current_proj_dj)
         failed_mil_count = get_failed_mil_count(tikedge_user.user)
         completed_mil_count = get_completed_mil_count(tikedge_user.user)
         failed_proj_count = get_failed_proj_count(tikedge_user.user)

@@ -636,10 +636,6 @@ class ApiProjectView(CSRFExemptView):
             follows = Follow.objects.get(tasks=project).users.count()
         except ObjectDoesNotExist:
             follows = 0
-        if not project.is_public:
-            pond_specific = PondSpecificProject.objects.get(project=project).pond.filter(is_deleted=False)
-        else:
-            pond_specific = None
         user_owns_proj = TikedgeUser.objects.get(user=req_user) == project.user.user
         timezone = request.GET.get('timezone')
         public_status = "Project is in Pond"
