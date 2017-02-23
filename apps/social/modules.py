@@ -236,13 +236,13 @@ def get_users_feed_json(user, local_timezone='UTC'):
     list_of_feed_json = []
     project_public = UserProject.objects.filter(Q(is_deleted=False), Q(is_public=True)).order_by('-made_live')
     user_ponds = Pond.objects.filter(Q(pond_members__user=user), Q(is_deleted=False))
-    pond_specific_project = PondSpecificProject.objects.filter(Q(pond__in=user_ponds)).\
+    pond_specific_project = PondSpecificProject.objects.filter(Q(pond__in=user_ponds), Q(project__is_deleted=False)).\
         exclude(project__in=project_public).order_by('-project__made_live').distinct()
     project_feed = list(project_public)
 
     for each_proj in pond_specific_project:
         project_feed.append(each_proj.project)
-
+        print "pond project appended ", each_proj.project.name_of_project
     for each_proj_feed in project_feed:
         print "Project Name %s \n" % each_proj_feed.name_of_project
         feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT, url_domain=CURRENT_URL)
