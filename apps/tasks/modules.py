@@ -425,7 +425,7 @@ def get_recent_projects(user,  requesting_user):
     public_project = all_project.filter(is_public=True)
     list_project = list(public_project)
     for private_proj in pond_specific_project:
-        list_project.append(private_proj)
+        list_project.append(private_proj.project)
     return list_project
 
 
