@@ -478,6 +478,9 @@ class ApiCreateVouch(CSRFExemptView):
         if user not in vouch_obj.users.all() and (user != milestone.user) and milestone.is_active:
             vouch_obj.users.add(user)
             vouch_obj.save()
+            vouch_notif = Notification(user=milestone.user.user,
+                                                    type_of_notification=global_variables.NEW_MILESTONE_VOUCH)
+            vouch_notif.save()
             try:
                 view = SeenMilestone.objects.get(tasks=milestone)
             except ObjectDoesNotExist:
@@ -487,9 +490,6 @@ class ApiCreateVouch(CSRFExemptView):
                 view.users.add(user)
                 view.save()
                 response["status"] = True
-                vouch_notif = Notification(user=milestone.user.user,
-                                        type_of_notification=global_variables.NEW_MILESTONE_VOUCH)
-                vouch_notif.save()
             response["count"] = vouch_obj.users.all().count()
         else:
             if user != milestone.user:
