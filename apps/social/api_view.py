@@ -839,6 +839,12 @@ class ApiAddToPond(CSRFExemptView):
         user_id = request.POST.get("user_id")
         other_user = TikedgeUser.objects.get(id=int(user_id))
         try:
+            PondMembership.objects.get(user=other_user, pond=pond, date_removed=None)
+            response['status'] = True
+            return HttpResponse(json.dumps(data))
+        except ObjectDoesNotExist:
+            pass
+        try:
             pond_members = pond.pond_members.all()
             if other_user not in pond_members:
                 for each_member in pond_members:
@@ -896,9 +902,9 @@ class ApiDenyPondRequest(CSRFExemptView):
                 pond_request.save()
                 data["status"] = True
                 return  HttpResponse(json.dumps(data))
-            except (AttributeError, ValueError, TypeError):
+            except (AttributeError, ValueError, TypeError, Exception):
                 data["status"] = False
-                data["error"] = "An error occurred try again!"
+                data["error"] = "An error occurred try again! Also the user might have already been removed"
                 return HttpResponse(json.dumps(data))
 
 
@@ -969,9 +975,9 @@ class ApiAcceptPondRequest(CSRFExemptView):
                 pond_membership = PondMembership(user=pond_request.user, pond=pond_request.pond)
                 pond_membership.save()
                 return  HttpResponse(json.dumps(data))
-            except (AttributeError, ValueError, TypeError):
+            except (AttributeError, ValueError, TypeError, Exception):
                 data["status"] = False
-                data["error"] = "An error occurred. Please try again!"
+                data["error"] = "An error occurred. Please try again! Also pond request might have already been accepted!"
                 return HttpResponse(json.dumps(data))
 
 
