@@ -52,8 +52,8 @@
       <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8955823">
-              <caret line="431" column="26" selection-start-line="431" selection-start-column="26" selection-end-line="431" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.6787149">
+              <caret line="877" column="47" selection-start-line="877" selection-start-column="47" selection-end-line="877" selection-end-column="47" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -104,8 +104,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.7222223">
-              <caret line="543" column="16" selection-start-line="543" selection-start-column="16" selection-end-line="543" selection-end-column="16" />
+            <state vertical-scroll-proportion="-4.9444447">
+              <caret line="712" column="53" selection-start-line="712" selection-start-column="53" selection-end-line="712" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -1133,7 +1133,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="76" column="67" selection-start-line="76" selection-start-column="67" selection-end-line="76" selection-end-column="67" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#32#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1214,14 +1214,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.7222223">
-          <caret line="543" column="16" selection-start-line="543" selection-start-column="16" selection-end-line="543" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1230,10 +1222,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.9444447">
+          <caret line="712" column="53" selection-start-line="712" selection-start-column="53" selection-end-line="712" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8955823">
-          <caret line="431" column="26" selection-start-line="431" selection-start-column="26" selection-end-line="431" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.6787149">
+          <caret line="877" column="47" selection-start-line="877" selection-start-column="47" selection-end-line="877" selection-end-column="47" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>

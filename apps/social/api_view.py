@@ -858,11 +858,19 @@ class ApiAddToPond(CSRFExemptView):
                 pond.save()
                 pond_membership = PondMembership(user=other_user, pond=pond)
                 pond_membership.save()
-                pond_request = PondRequest(user=other_user, pond=pond, date_response=timezone.now(),
-                                           request_accepted=True,
-                                           member_that_responded=task_modules.get_tikedge_user(user),
-                                           request_responded_to=True)
-                pond_request.save()
+                try:
+                    pond_request_already_exist = PondRequest.objects.get(pond=pond, user=other_user, request_responded_to=False)
+                    pond_request_already_exist.request_responded_to = True
+                    pond_request_already_exist.date_response=timezone.now()
+                    pond_request_already_exist.request_accepted = True
+                    pond_request_already_exist.member_that_responded=task_modules.get_tikedge_user(user)
+                    pond_request_already_exist.save()
+                except ObjectDoesNotExist:
+                    pond_request = PondRequest(user=other_user, pond=pond, date_response=timezone.now(),
+                                               request_accepted=True,
+                                               member_that_responded=task_modules.get_tikedge_user(user),
+                                               request_responded_to=True)
+                    pond_request.save()
                 notification = Notification(user=other_user.user,
                                             type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
                 notification.save()
