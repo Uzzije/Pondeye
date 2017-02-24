@@ -247,6 +247,7 @@ def get_users_feed_json(user, local_timezone='UTC'):
         print "Project Name %s \n" % each_proj_feed.name_of_project
         feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT, url_domain=CURRENT_URL)
         list_of_feed.append(feed)
+        created_sec = int(feed.created.strftime('%s'))
         list_of_feed_json.append({
            'name': feed.task_owner_name,
            'is_picture_feed': False,
@@ -262,10 +263,12 @@ def get_users_feed_json(user, local_timezone='UTC'):
            'id': feed.tasks.id,
            'user_id':feed.feed_user.id,
             'is_completed':feed.tasks.is_completed,
-            'is_failed':feed.tasks.is_failed
+            'is_failed':feed.tasks.is_failed,
+            'created_sec':created_sec
         })
         milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
         for each_tasks in milestone_feed:
+            created_sec = int(feed.created.strftime('%s'))
             feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE, url_domain=CURRENT_URL)
             list_of_feed.append(feed)
             list_of_feed_json.append({
@@ -284,12 +287,14 @@ def get_users_feed_json(user, local_timezone='UTC'):
             'id': feed.tasks.id,
             'user_id':feed.feed_user.id,
             'is_completed':feed.tasks.is_completed,
-           'is_failed':feed.tasks.is_failed
+           'is_failed':feed.tasks.is_failed,
+            'created_sec':created_sec
             })
             picture_feed = each_tasks.pictureset_set.filter(
                 ~Q(after_picture=None), Q(is_deleted=False)).order_by('-last_updated').distinct()
             print "these are pictures ", picture_feed
             for each_pic in picture_feed:
+                created_sec = int(feed.created.strftime('%s'))
                 feed = PondFeed(each_pic, type_of_feed=global_variables.PICTURE_SET, url_domain=CURRENT_URL)
                 list_of_feed.append(feed)
                 list_of_feed_json.append({
@@ -304,10 +309,12 @@ def get_users_feed_json(user, local_timezone='UTC'):
                     'profile_url':feed.profile_url,
                     'id': feed.tasks.id,
                     'milestone_id': feed.tasks.milestone.id,
-                    'user_id':feed.feed_user.id
+                    'user_id':feed.feed_user.id,
+                    'created_sec':created_sec
                 })
-    #sorted_list = sorted(list_of_feed_json, key=lambda x: x['created'], reverse=True)
-    return list_of_feed_json
+    sorted_list = sorted(list_of_feed_json, key=lambda x: x['created_sec'], reverse=True)
+    return sorted_list
+
 
 def get_pic_list(pic_list):
     pic_list_arr = []

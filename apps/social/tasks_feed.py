@@ -29,7 +29,7 @@ class PondFeed:
         self.before_url = self.get_before_url()
         self.after_url = self.get_after_url()
         self.feed_id = self.tasks.id
-        self.created = utc_to_local(self.get_date_created())
+        self.created = self.get_date_created()
         self.profile_url = self.task_owner_profile_pic_url()
         self.feed_user = self.get_user_tikedge().user
 

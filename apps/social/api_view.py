@@ -174,7 +174,7 @@ class ApiPictureUploadView(CSRFExemptView):
                 new_journal_entry.save()
                 messages.success(request, 'Great Job! The after visual entry added to %s milestone' % milestone.blurb)
             except ObjectDoesNotExist:
-                response["error"] = 'Hey we need a before visual entry before an after visual entry. This wow the crowd!'
+                response["error"] = 'Hey we need a before visual entry before an after visual entry!'
                 return HttpResponse(json.dumps(response), status=201)
 	    response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
@@ -466,7 +466,7 @@ class ApiCreateVouch(CSRFExemptView):
         user = TikedgeUser.objects.get(user=user)
         try:
             vouch_obj = VoucheMilestone.objects.get(tasks=milestone)
-            if user in vouch_obj.users.all():
+            if user in vouch_obj.users.all() and milestone.is_active:
                 vouch_obj.users.remove(user)
                 vouch_obj.save()
                 response["status"] = True
@@ -521,7 +521,7 @@ class ApiCreateFollow(CSRFExemptView):
         tikedge_user = TikedgeUser.objects.get(user=user)
         try:
             follow_obj = Follow.objects.get(tasks=project)
-            if tikedge_user in follow_obj.users.all():
+            if tikedge_user in follow_obj.users.all() and project.is_live:
                 follow_obj.users.remove(tikedge_user)
                 follow_obj.save()
                 response["status"] = "unfollow"
