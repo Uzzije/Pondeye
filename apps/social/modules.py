@@ -763,7 +763,7 @@ def get_new_pond_member_notification(tikedge_user):
     pond_request_list = []
     pond = Pond.objects.filter(pond_members__user=tikedge_user.user, is_deleted=False)
     for each_pond in pond:
-        pond_membership = PondMembership.objects.get(user=tikedge_user, pond=each_pond)
+        pond_membership = PondMembership.objects.get(user=tikedge_user, pond=each_pond, date_removed=None)
         pond_requests = each_pond.pondrequest_set.all().filter(request_accepted=True, pond__pond_members=tikedge_user,
                                                                date_response__gte=pond_membership.date_joined)
 
