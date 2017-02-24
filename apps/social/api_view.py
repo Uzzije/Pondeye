@@ -425,6 +425,9 @@ class ApiEditIndividualPondView(CSRFExemptView):
             for pd in ponders:
                 tik = TikedgeUser.objects.get(id=int(pd))
                 pond.pond_members.remove(tik)
+                pond_membership = PondMembership.objects.get(user=tik, pond=pond, date_removed=None)
+                pond_membership.date_removed = timezone.now()
+                pond_membership.save()
             pond.save()
         except ValueError:
             pass
