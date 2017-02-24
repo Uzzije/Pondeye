@@ -296,9 +296,10 @@ class ApiProjectEditView(CSRFExemptView):
         projects = UserProject.objects.filter(user=tikedge_user, is_deleted=False).order_by('-created')
         print "projects", projects
         project_list = []
-        tag_list = []
+
         timezone = request.GET.get('timezone')
         for each_proj in projects:
+            tag_list = []
             for item in each_proj.tags.all():
                 tag_list.append(item.name_of_tag)
             project_list.append({
