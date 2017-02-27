@@ -245,14 +245,15 @@ class ApiNewProject(CSRFExemptView):
         new_project = UserProject(name_of_project=name_of_project, is_live=True,
                                   made_live=datetime.now(), user=tikedge_user, length_of_project=end_by)
         new_project.save()
-        for item in tags:
-            try:
-                item_obj = TagNames.objects.get(name_of_tag=item)
-            except ObjectDoesNotExist:
-                item_obj = TagNames(name_of_tag=item)
-                item_obj.save()
-            new_project.tags.add(item_obj)
-        new_project.save()
+        if len(tags) > 0:
+            for item in tags:
+                try:
+                    item_obj = TagNames.objects.get(name_of_tag=item)
+                except ObjectDoesNotExist:
+                    item_obj = TagNames(name_of_tag=item)
+                    item_obj.save()
+                new_project.tags.add(item_obj)
+            new_project.save()
         day_entry = tikedge_user.journalpost_set.all().count()
         new_journal_entry = JournalPost(
                                         entry_blurb=get_journal_message(NEW_PROJECT, project=new_project.blurb),

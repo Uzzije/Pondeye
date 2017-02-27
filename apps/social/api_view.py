@@ -70,14 +70,15 @@ class ApiNewPondEntryView(CSRFExemptView):
         pond = Pond(name_of_pond=pond_name, purpose=purpose,
                     pond_creator=task_modules.get_tikedge_user(user))
         pond.save()
-        for item in tags:
-            print tags, " tags why"
-            try:
-                item_obj = TagNames.objects.get(name_of_tag=item)
-            except ObjectDoesNotExist:
-                item_obj = TagNames(name_of_tag=item)
-                item_obj.save()
-            pond.tags.add(item_obj)
+        if len(tags) > 0:
+            for item in tags:
+                print tags, " tags why"
+                try:
+                    item_obj = TagNames.objects.get(name_of_tag=item)
+                except ObjectDoesNotExist:
+                    item_obj = TagNames(name_of_tag=item)
+                    item_obj.save()
+                pond.tags.add(item_obj)
         pond.pond_members.add(task_modules.get_tikedge_user(user))
         pond.save()
         pond_membership = PondMembership(user=task_modules.get_tikedge_user(user),
