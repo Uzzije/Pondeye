@@ -413,13 +413,14 @@ class ApiEditIndividualPondView(CSRFExemptView):
             pond.tags.remove(item)
         pond.save()
         try:
-            for item in tags:
-                try:
-                    item_obj = TagNames.objects.get(name_of_tag=item)
-                except ObjectDoesNotExist:
-                    item_obj = TagNames(name_of_tag=item)
-                    item_obj.save()
-                pond.tags.add(item_obj)
+            if tags_obj:
+                for item in tags:
+                    try:
+                        item_obj = TagNames.objects.get(name_of_tag=item)
+                    except ObjectDoesNotExist:
+                        item_obj = TagNames(name_of_tag=item)
+                        item_obj.save()
+                    pond.tags.add(item_obj)
         except ValueError:
             pass
         try:

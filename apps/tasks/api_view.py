@@ -245,15 +245,18 @@ class ApiNewProject(CSRFExemptView):
         new_project = UserProject(name_of_project=name_of_project, is_live=True,
                                   made_live=datetime.now(), user=tikedge_user, length_of_project=end_by)
         new_project.save()
-        if len(tags_obj) > 0:
-            for item in tags:
-                try:
-                    item_obj = TagNames.objects.get(name_of_tag=item)
-                except ObjectDoesNotExist:
-                    item_obj = TagNames(name_of_tag=item)
-                    item_obj.save()
-                new_project.tags.add(item_obj)
-            new_project.save()
+        try:
+            if len(tags_obj) > 0:
+                for item in tags:
+                    try:
+                        item_obj = TagNames.objects.get(name_of_tag=item)
+                    except ObjectDoesNotExist:
+                        item_obj = TagNames(name_of_tag=item)
+                        item_obj.save()
+                    new_project.tags.add(item_obj)
+                new_project.save()
+        except ValueError:
+            pass
         day_entry = tikedge_user.journalpost_set.all().count()
         new_journal_entry = JournalPost(
                                         entry_blurb=get_journal_message(NEW_PROJECT, project=new_project.blurb),
@@ -336,14 +339,18 @@ class ApiProjectEditView(CSRFExemptView):
             for item in project.tags.all():
                 project.tags.remove(item)
                 project.save()
-            for item in tags:
-                try:
-                    item_obj = TagNames.objects.get(name_of_tag=item)
-                except ObjectDoesNotExist:
-                    item_obj = TagNames(name_of_tag=item)
-                    item_obj.save()
-                project.tags.add(item_obj)
-            project.save()
+            try:
+                if tags_obj:
+                    for item in tags:
+                        try:
+                            item_obj = TagNames.objects.get(name_of_tag=item)
+                        except ObjectDoesNotExist:
+                            item_obj = TagNames(name_of_tag=item)
+                            item_obj.save()
+                        project.tags.add(item_obj)
+                    project.save()
+            except ValueError:
+                pass
         if 'proj_id' in request.POST:
             proj_id = request.POST.get("proj_id")
             project = UserProject.objects.get(id=int(proj_id))
