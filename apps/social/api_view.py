@@ -65,12 +65,12 @@ class ApiNewPondEntryView(CSRFExemptView):
             count_exceed = len(purpose) - global_variables.POND_PURPOSE_CHAR_COUNT
             response["error"] = "Exceeds purpose maximum character count by %s." % str(count_exceed)
             return HttpResponse(json.dumps(response), status=201)
-        tag_obj = request.POST.get('tags')
-        tags = tag_obj.split(",")
         pond = Pond(name_of_pond=pond_name, purpose=purpose,
                     pond_creator=task_modules.get_tikedge_user(user))
         pond.save()
-        if len(tags) > 0:
+        tag_obj = request.POST.get('tags')
+        if len(tag_obj) > 0:
+            tags = tag_obj.split(",")
             for item in tags:
                 print tags, " tags why"
                 try:
