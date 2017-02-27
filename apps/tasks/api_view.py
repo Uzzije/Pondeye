@@ -245,7 +245,7 @@ class ApiNewProject(CSRFExemptView):
         new_project = UserProject(name_of_project=name_of_project, is_live=True,
                                   made_live=datetime.now(), user=tikedge_user, length_of_project=end_by)
         new_project.save()
-        if len(tags) > 0:
+        if len(tags_obj) > 0:
             for item in tags:
                 try:
                     item_obj = TagNames.objects.get(name_of_tag=item)
