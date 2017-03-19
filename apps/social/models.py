@@ -52,10 +52,10 @@ class ProgressPicture(models.Model):
     blurb = models.CharField(max_length=150, default=None)
 
     def save(self, *args, **kwargs):
-        if len(self.name_of_milestone) > 150:
-            self.blurb = self.name_of_milestone[0:150]
+        if len(self.name_of_progress) > 150:
+            self.blurb = self.name_of_progress[0:150]
         else:
-            self.blurb = self.name_of_milestone
+            self.blurb = self.name_of_progress
 
     def __str__(self):
         return '%s %s' % (self.name_of_progress, self.image_name)
