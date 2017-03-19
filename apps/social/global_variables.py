@@ -35,4 +35,4 @@ POND_NAME_CHAR_COUNT = 245
 POND_PURPOSE_CHAR_COUNT = 100
 BETA_URL = "http://Uzzije.pythonanywhere.com"
 LOCAL_URL = "http://localhost:8000"
-CURRENT_URL = BETA_URL
+CURRENT_URL = LOCAL_URL

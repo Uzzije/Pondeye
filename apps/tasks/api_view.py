@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
 from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
-from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, Pond
+from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, Pond, ProgressPictureSet
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -281,6 +281,17 @@ class ApiNewProject(CSRFExemptView):
                 pond = Pond.objects.get(id=int(project_public_status))
                 public_status.pond.add(pond)
                 public_status.save()
+        project_picture = request.POST.get("projectpic")
+        if len(project_picture) > 0:
+            picture_file = get_picture_from_base64(project_picture)
+            if not picture_file:
+                response['status'] = False
+                response["error"] = "Hey visual must be either jpg, jpeg or png file!"
+                return HttpResponse(json.dumps(response), status=201)
+            else:
+                modules.add_file_to_project_pic(picture_file, new_project)
+        new_progress_set = ProgressPictureSet(project=new_project)
+        new_progress_set.save()
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 

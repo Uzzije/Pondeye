@@ -34,7 +34,7 @@ class TagNames(models.Model):
 
 
 class UserProject(models.Model):
-    name_of_project = models.CharField(max_length=300)
+    name_of_project = models.TextField(max_length=300)
     user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     tags = models.ManyToManyField(TagNames)
     is_failed = models.BooleanField(default=False)

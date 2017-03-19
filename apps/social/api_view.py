@@ -3,7 +3,7 @@ from django.views.generic import View
 from forms import social_forms, pond_form
 from models import (Notification, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
                     JournalPost, JournalComment, SeenProject, ProfilePictures, Pond, PondRequest,
-                    PondMembership, PondSpecificProject, User)
+                    PondMembership, PondSpecificProject, User, ProgressPicture, ProgressPictureSet)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
@@ -87,7 +87,7 @@ class ApiNewPondEntryView(CSRFExemptView):
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
-
+'''
 class ApiPictureUploadView(CSRFExemptView):
 
     def get(self, request):
@@ -99,15 +99,15 @@ class ApiPictureUploadView(CSRFExemptView):
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        existing_milestones = task_modules.get_user_milestones(user)
-        if existing_milestones:
-	        response["status"] = True
-	        response["has_mil"] = True
-	        response["milestone"] = existing_milestones
+        projects = task_modules.api_get_user_projects(user)
+        if projects:
+            response['has_proj'] = True
+            response["status"] = True
+            response["projects"] = projects
         else:
 	        response["status"] = False
-	        response["error"] = "You need to have a milestone to capture your event!"
-	        response["has_mil"] = False
+	        response["error"] = "Create a goal, then use pictures to capture the progress of that goal!"
+	        response["has_proj"] = False
         return HttpResponse(json.dumps(response), status=201)
 
 
@@ -124,7 +124,7 @@ class ApiPictureUploadView(CSRFExemptView):
         dec_picture_file = request.POST.get('picture')
         picture_file = modules.get_picture_from_base64(dec_picture_file)
         if not picture_file:
-            response["error"] = "Hey visual must be either jpg, jpeg or png file! ", dec_picture_file
+            response["error"] = "Hey picture must be either jpg, jpeg or png file! ", dec_picture_file
             return HttpResponse(json.dumps(response), status=201)
         milestone_name = request.POST.get('milestone_name')
         milestone = Milestone.objects.get(id=int(milestone_name))
@@ -179,6 +179,57 @@ class ApiPictureUploadView(CSRFExemptView):
                 return HttpResponse(json.dumps(response), status=201)
 	    response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
+
+'''
+class ApiPictureUploadView(CSRFExemptView):
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        projects = task_modules.api_get_user_projects(user)
+        if projects:
+            response['has_proj'] = True
+            response["status"] = True
+            response["projects"] = projects
+        else:
+	        response["status"] = False
+	        response["error"] = "Create a goal, then use pictures to capture the progress of that goal!"
+	        response["has_proj"] = False
+        return HttpResponse(json.dumps(response), status=201)
+
+
+    def post(self, request):
+        response = {}
+        response["status"] = False
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        dec_picture_file = request.POST.get('picture')
+        picture_file = modules.get_picture_from_base64(dec_picture_file)
+        if not picture_file:
+            response["error"] = "Hey picture must be either jpg, jpeg or png file! ", dec_picture_file
+            return HttpResponse(json.dumps(response), status=201)
+        progress_name = request.POST.get('milestone_name')
+        picture_file.file = modules.resize_image(picture_file)
+        picture_mod = ProgressPicture(image_name=picture_file.name,
+                               picture=picture_file, name_of_progress=progress_name)
+        picture_mod.save()
+        project = UserProject.objects.get(id=int(request.POST.get("project_id")))
+        progress_set = ProgressPictureSet.objects.get(project=project)
+        progress_set.list_of_progress_pictures.add(picture_mod)
+        progress_set.save()
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
+
 
 
 class  ApiEditPictureSetView(CSRFExemptView):

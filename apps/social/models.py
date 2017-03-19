@@ -32,6 +32,44 @@ class Picture(models.Model):
         return '%s %s' % (self.tikedge_user.user.username, self.image_name)
 
 
+class ProjectPicture(models.Model):
+    image_name = models.CharField(max_length=300)
+    date_uploaded = models.DateTimeField(default=now)
+    last_edited = models.DateTimeField(null=True, blank=True)
+    is_before = models.BooleanField(default=True)
+    picture = models.ImageField(upload_to='image/tasks/%Y/%m/%d', verbose_name="profile image")
+    is_deleted = models.BooleanField(default=False)
+    project = models.ForeignKey(UserProject, blank=True, null=True)
+
+
+class ProgressPicture(models.Model):
+    image_name = models.TextField(max_length=600)
+    picture = models.ImageField(upload_to='image/tasks/%Y/%m/%d', verbose_name="progress image")
+    name_of_progress = models.TextField(max_length=600, default="")
+    is_deleted = models.BooleanField(default=False)
+    last_updated = models.DateTimeField(default=now)
+    created = models.DateTimeField(default=now)
+    blurb = models.CharField(max_length=150, default=None)
+
+    def save(self, *args, **kwargs):
+        if len(self.name_of_milestone) > 150:
+            self.blurb = self.name_of_milestone[0:150]
+        else:
+            self.blurb = self.name_of_milestone
+
+    def __str__(self):
+        return '%s %s' % (self.name_of_progress, self.image_name)
+
+
+class ProgressPictureSet(models.Model):
+    list_of_progress_pictures = models.ManyToManyField(ProgressPicture)
+    project = models.ForeignKey(UserProject, blank=True, null=True)
+    is_deleted = models.BooleanField(default=False)
+    last_updated = models.DateTimeField(default=now)
+    created = models.DateTimeField(default=now)
+    is_empty = models.BooleanField(default=True)
+
+
 class PictureSet(models.Model):
     before_picture = models.ForeignKey(Picture, blank=True, null=True, related_name="before_picture")
     after_picture = models.ForeignKey(Picture, blank=True, null=True, related_name="after_picture")

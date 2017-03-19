@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 from django.contrib import messages
 import global_variables_tasks
 from ..social.models import Notification, LetDownMilestone, VoucheMilestone, ProfilePictures, \
-    PondSpecificProject, Pond
+    PondSpecificProject, Pond, ProjectPicture
 from ..social import global_variables
 import random, string
 from django.utils import timezone as django_timezone
@@ -20,6 +20,10 @@ from random import randint
 
 CURRENT_URL = global_variables.CURRENT_URL
 
+
+def add_file_to_project_pic(picture_file, project):
+    new_pic = ProjectPicture(image_name=picture_file.name, picture=picture_file, project=project)
+    new_pic.save()
 
 def get_user_projects(user):
     try:
