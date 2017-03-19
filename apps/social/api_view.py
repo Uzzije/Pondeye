@@ -218,7 +218,7 @@ class ApiPictureUploadView(CSRFExemptView):
         if not picture_file:
             response["error"] = "Hey picture must be either jpg, jpeg or png file! ", dec_picture_file
             return HttpResponse(json.dumps(response), status=201)
-        progress_name = request.POST.get('milestone_name')
+        progress_name = request.POST.get('progress_name')
         picture_file.file = modules.resize_image(picture_file)
         picture_mod = ProgressPicture(image_name=picture_file.name,
                                picture=picture_file, name_of_progress=progress_name)
