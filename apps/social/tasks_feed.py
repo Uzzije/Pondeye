@@ -202,7 +202,7 @@ class ProgressFeed(PondFeed):
             progress_list.append({
                'name': self.task_owner_name,
                'progress_message': progress.name_of_progress,
-               'seen_count': self.seen_count,
+               'seen_count': self.seen_count(progress),
                'impress_count': self.impress_count(progress),
                'created':utc_to_local(progress.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
                'id': progress.id,
@@ -229,6 +229,10 @@ class ProgressFeed(PondFeed):
     def impress_count(self, progress):
         impress_count = ProgressImpressedCount(tasks=progress).get_count()
         return impress_count
+
+    def seen_count(self, progress):
+        seen_count = SeenProgress.objects.get(tasks=progress).get_count()
+        return seen_count
 
 
 
