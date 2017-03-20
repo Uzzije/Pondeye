@@ -44,7 +44,7 @@ class ProjectPicture(models.Model):
 
 class ProgressPicture(models.Model):
     image_name = models.TextField(max_length=600)
-    picture = models.ImageField(upload_to='image/tasks/%Y/%m/%d', verbose_name="progress image")
+    picture = models.ImageField(upload_to='image/progresspicture/%Y/%m/%d', verbose_name="progress image")
     name_of_progress = models.TextField(max_length=600, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     last_updated = models.DateTimeField(default=now)
@@ -56,7 +56,7 @@ class ProgressPicture(models.Model):
             self.blurb = self.name_of_progress[0:150]
         else:
             self.blurb = self.name_of_progress
-
+        super(ProgressPicture, self).save(*args, **kwargs)
     def __str__(self):
         return '%s %s' % (self.name_of_progress, self.image_name)
 
