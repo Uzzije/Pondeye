@@ -226,8 +226,9 @@ class ApiPictureUploadView(CSRFExemptView):
         project = UserProject.objects.get(id=int(request.POST.get("project_id")))
         progress_set = ProgressPictureSet.objects.get(project=project)
         print(picture_mod)
-        progress_set.list_of_progress_pictures.add(picture_mod)
         progress_set.is_empty = False
+        progress_set.list_of_progress_pictures.add(picture_mod)
+
         progress_set.save()
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
