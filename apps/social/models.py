@@ -45,7 +45,7 @@ class ProjectPicture(models.Model):
 class ProgressPicture(models.Model):
     image_name = models.TextField(max_length=600)
     picture = models.ImageField(upload_to='image/tasks/%Y/%m/%d', verbose_name="progress image")
-    name_of_progress = models.TextField(max_length=600, default="")
+    name_of_progress = models.TextField(max_length=600, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     last_updated = models.DateTimeField(default=now)
     created = models.DateTimeField(default=now)
@@ -62,7 +62,7 @@ class ProgressPicture(models.Model):
 
 
 class ProgressPictureSet(models.Model):
-    list_of_progress_pictures = models.ManyToManyField(ProgressPicture, related_name="list_of_progress")
+    list_of_progress_pictures = models.ManyToManyField(ProgressPicture)
     project = models.ForeignKey(UserProject, blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
     last_updated = models.DateTimeField(default=now)
