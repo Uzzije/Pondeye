@@ -116,8 +116,6 @@ class PondFeed:
                 seensd = SeenPictureSet.objects.get(tasks=self.tasks)
             elif self.type_of_feed is global_variables.NEW_PROJECT:
                 seensd = SeenProject.objects.get(tasks=self.tasks)
-            elif self.type_of_feed is global_variables.PROGRESS:
-                seensd = SeenProgress.objects.get(tasks=self.tasks)
             else:
                 return 0
             count = seensd.users.count()
