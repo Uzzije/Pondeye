@@ -3,7 +3,8 @@
 Feed and Notification Classes for Social News Feed of Application
 """
 from models import ProfilePictures,\
-    BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, VoucheMilestone, Follow
+    BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, VoucheMilestone, \
+    Follow, ProgressImpressedCount,SeenProgress
 from friendship.models import FriendshipRequest
 from django.db.models import Q
 import global_variables
@@ -25,6 +26,7 @@ class PondFeed:
         self.is_milestone_feed = self.is_milestone_feed()
         self.is_picture_feed = self.is_picture_feed()
         self.is_project_feed = self.is_project_feed()
+        self.is_progress_feef = self.is_progress_feed()
         self.message = self.message()
         self.before_url = self.get_before_url()
         self.after_url = self.get_after_url()
@@ -36,8 +38,16 @@ class PondFeed:
     def get_user_tikedge(self):
         if self.type_of_feed is global_variables.PICTURE_SET:
             return self.tasks.tikedge_user
+        elif self.type_of_feed is global_variables.PROGRESS:
+            return self.tasks.project.user
         else:
             return self.tasks.user
+
+    def is_progress_feed(self):
+        if self.type_of_feed is global_variables.PROGRESS:
+            return True
+        else:
+            return False
 
     def is_milestone_feed(self):
         if self.type_of_feed is global_variables.MILESTONE:
@@ -70,6 +80,9 @@ class PondFeed:
         elif self.type_of_feed is global_variables.NEW_PROJECT:
             message = "Project: %s" % self.tasks.blurb
             return message
+        elif self.type_of_feed is global_variables.PROGRESS:
+            message =  "%s progression higlights "% self.tasks.project.name_of_project
+            return message
         else:
             return None
 
@@ -78,6 +91,8 @@ class PondFeed:
             return self.tasks.last_update
         elif self.type_of_feed is global_variables.PICTURE_SET:
             return self.tasks.after_picture.date_uploaded
+        elif self.type_of_feed is global_variables.PROGRESS:
+            return self.tasks.last_updated
         else:
             return self.tasks.last_update #it is a project feed
 
@@ -101,6 +116,8 @@ class PondFeed:
                 seensd = SeenPictureSet.objects.get(tasks=self.tasks)
             elif self.type_of_feed is global_variables.NEW_PROJECT:
                 seensd = SeenProject.objects.get(tasks=self.tasks)
+            elif self.type_of_feed is global_variables.PROGRESS:
+                seensd = SeenProgress.objects.get(tasks=self.tasks)
             else:
                 return 0
             count = seensd.users.count()
@@ -155,7 +172,10 @@ class PondFeed:
             try:
                 name = '%s' % self.tasks.tikedge_user.user.first_name + " " + self.tasks.tikedge_user.user.last_name
             except (AttributeError, ValueError):
-                return None
+                try:
+                    name = '%s' % self.tasks.project.user.user.first_name + " " + self.tasks.project.user.user.last_name
+                except (AttributeError, ValueError):
+                    return None
         return name
 
     def task_owner_profile_pic_url(self):
@@ -164,6 +184,52 @@ class PondFeed:
             return self.url_domain+profile_picture.profile_pics.url
         except (AttributeError, ValueError, ObjectDoesNotExist):
             return None
+
+
+class ProgressFeed(PondFeed):
+
+    def __init__(self, tasks, type_of_feed, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
+        ProgressFeed.__init__(tasks, type_of_feed, url_domain=url_domain)
+        self.local_timezone = local_timezone
+        self.progress = self.list_of_progress()
+
+    def list_of_progress(self):
+        if self.tasks.is_empty:
+            return None
+        progress_list = []
+        created_sec = int(self.created.strftime('%s'))
+        for progress in self.tasks.list_of_progress.all():
+            progress_list.append({
+               'name': self.task_owner_name,
+               'progress_message': progress.name_of_progress,
+               'seen_count': self.seen_count,
+               'impress_count': self.impress_count(progress),
+               'created':utc_to_local(progress.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
+               'id': progress.id,
+               'image_url':self.get_image_url(progress)
+            })
+        progress_dic = {
+            'created_sec':created_sec,
+            'list_of_progress':progress_list,
+            'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
+            'message':self.message,
+            'is_picture_feed': False,
+            'is_milestone_feed': False,
+            'is_project_feed': False,
+            'is_progress_feed': True,
+            'profile_url':self.profile_url,
+            'id': self.tasks.id,
+            'user_id':self.feed_user.id,
+        }
+        return progress_dic
+
+    def get_image_url(self, progress):
+        return self.url_domain+progress.picture.url
+
+    def impress_count(self, progress):
+        impress_count = ProgressImpressedCount(tasks=progress).get_count()
+        return impress_count
+
 
 
 class NotificationFeed:

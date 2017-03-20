@@ -36,3 +36,4 @@ POND_PURPOSE_CHAR_COUNT = 100
 BETA_URL = "http://Uzzije.pythonanywhere.com"
 LOCAL_URL = "http://localhost:8000"
 CURRENT_URL = LOCAL_URL
+PROGRESS = "gnp"

@@ -3,7 +3,8 @@ from django.views.generic import View
 from forms import social_forms, pond_form
 from models import (Notification, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
                     JournalPost, JournalComment, SeenProject, ProfilePictures, Pond, PondRequest,
-                    PondMembership, PondSpecificProject, User, ProgressPicture, ProgressPictureSet)
+                    PondMembership, PondSpecificProject, User, ProgressPicture,
+                    ProgressPictureSet, ProgressImpressedCount, SeenProgress)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.decorators import method_decorator
@@ -27,7 +28,6 @@ from datetime import datetime
 import base64
 from django.utils import timezone
 from django.core.files.base import ContentFile
-
 
 
 class CSRFExemptView(View):
@@ -181,6 +181,7 @@ class ApiPictureUploadView(CSRFExemptView):
         return HttpResponse(json.dumps(response), status=201)
 
 '''
+
 class ApiPictureUploadView(CSRFExemptView):
 
     def get(self, request):
@@ -223,6 +224,10 @@ class ApiPictureUploadView(CSRFExemptView):
         picture_mod = ProgressPicture(image_name=picture_file.name,
                                picture=picture_file, name_of_progress=progress_name)
         picture_mod.save()
+        impress_count = ProgressImpressedCount(tasks=picture_mod)
+        impress_count.save()
+        seen_progress = SeenProgress(tasks=picture_mod)
+        seen_progress.save()
         project = UserProject.objects.get(id=int(request.POST.get("project_id")))
         progress_set = ProgressPictureSet.objects.get(project=project)
         progress_set.is_empty = False

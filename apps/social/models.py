@@ -69,6 +69,9 @@ class ProgressPictureSet(models.Model):
     created = models.DateTimeField(default=now)
     is_empty = models.BooleanField(default=True)
 
+    def __str__(self):
+        return '%s' % self.project.name_of_project
+
 
 class PictureSet(models.Model):
     before_picture = models.ForeignKey(Picture, blank=True, null=True, related_name="before_picture")
@@ -102,6 +105,14 @@ class SeenPictureSet(models.Model):
     tasks = models.ForeignKey(PictureSet, blank=True, null=True)
 
 
+class SeenProgress(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the pictureSet")
+    tasks = models.ForeignKey(ProgressPicture, blank=True, null=True)
+
+    def get_count(self):
+        return self.users.count()
+
+
 class VoucheMilestone(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="User That Vouche For the milestone")
     tasks = models.ForeignKey(Milestone, blank=True, null=True)
@@ -125,6 +136,14 @@ class Follow(models.Model):
     def save(self, *args, **kwargs):
         self.latest_follow = now()
         super(Follow, self).save(*args, **kwargs)
+
+
+class ProgressImpressedCount(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the pictureSet")
+    tasks = models.ForeignKey(ProgressPicture, blank=True, null=True)
+
+    def get_count(self):
+        return self.users.count()
 
 
 class LetDownMilestone(models.Model):

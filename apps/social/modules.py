@@ -2,7 +2,7 @@ from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
 from .models import ProfilePictures, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, PondSpecificProject, \
-     PondRequest, Pond, PondMembership
+     PondRequest, Pond, PondMembership, ProgressPicture, ProgressPictureSet
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from django.core.exceptions import ObjectDoesNotExist
@@ -10,7 +10,7 @@ import global_variables
 import StringIO
 from PIL import Image
 from journal_feed import JournalFeed
-from tasks_feed import PondFeed
+from tasks_feed import PondFeed, ProgressFeed
 from itertools import chain
 from datetime import timedelta
 from ..tasks.modules import utc_to_local
@@ -227,6 +227,9 @@ def get_users_feed(user):
             for each_pic in picture_feed:
                 feed = PondFeed(each_pic, type_of_feed=global_variables.PICTURE_SET, url_domain=CURRENT_URL)
                 list_of_feed.append(feed)
+        progress_set = ProgressPictureSet.objects.get(project=each_proj_feed)
+        feed = PondFeed(progress_set, type_of_feed=global_variables.PROGRESS, url_domain=CURRENT_URL)
+        list_of_feed.append(feed)
     sorted_list = sorted(list_of_feed, key=lambda x: x.created, reverse=True)
     return sorted_list
 
@@ -253,6 +256,7 @@ def get_users_feed_json(user, local_timezone='UTC'):
            'is_picture_feed': False,
            'is_milestone_feed': False,
            'is_project_feed': True,
+            'is_progress_feed': False,
            'message':feed.message,
            'project_slug':feed.tasks.slug,
            'is_active': feed.tasks.is_live,
@@ -266,7 +270,12 @@ def get_users_feed_json(user, local_timezone='UTC'):
             'is_failed':feed.tasks.is_failed,
             'created_sec':created_sec
         })
-        milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
+        #milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
+        progress_set = ProgressPictureSet.objects.get(project=each_proj_feed)
+        feed = ProgressFeed(progress_set, type_of_feed=global_variables.PROGRESS, url_domain=CURRENT_URL, local_timezone=local_timezone)
+        if feed.progress:
+            list_of_feed_json.append(feed.progress)
+        '''
         for each_tasks in milestone_feed:
             created_sec = int(feed.created.strftime('%s'))
             feed = PondFeed(each_tasks, type_of_feed=global_variables.MILESTONE, url_domain=CURRENT_URL)
@@ -312,6 +321,7 @@ def get_users_feed_json(user, local_timezone='UTC'):
                     'user_id':feed.feed_user.id,
                     'created_sec':created_sec
                 })
+                '''
     sorted_list = sorted(list_of_feed_json, key=lambda x: x['created_sec'], reverse=True)
     return sorted_list
 
