@@ -209,7 +209,7 @@ class ApiPictureUploadView(CSRFExemptView):
         response["status"] = False
         try:
             username = request.POST.get("username")
-            user = User.objects.get(username=username)
+            User.objects.get(username=username)
         except ObjectDoesNotExist:
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
@@ -225,6 +225,7 @@ class ApiPictureUploadView(CSRFExemptView):
         picture_mod.save()
         project = UserProject.objects.get(id=int(request.POST.get("project_id")))
         progress_set = ProgressPictureSet.objects.get(project=project)
+        print(progress_set.project.name_of_project)
         progress_set.list_of_progress_pictures.add(picture_mod)
         progress_set.save()
         response["status"] = True

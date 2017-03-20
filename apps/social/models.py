@@ -62,7 +62,7 @@ class ProgressPicture(models.Model):
 
 
 class ProgressPictureSet(models.Model):
-    list_of_progress_pictures = models.ManyToManyField(ProgressPicture)
+    list_of_progress_pictures = models.ManyToManyField(ProgressPicture, related_name="list_of_progress")
     project = models.ForeignKey(UserProject, blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
     last_updated = models.DateTimeField(default=now)
