@@ -189,7 +189,7 @@ class PondFeed:
 class ProgressFeed(PondFeed):
 
     def __init__(self, tasks, type_of_feed, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
-        ProgressFeed.__init__(self, tasks, type_of_feed, url_domain=url_domain)
+        PondFeed.__init__(self, tasks, type_of_feed, url_domain=url_domain)
         self.local_timezone = local_timezone
         self.progress = self.list_of_progress()
 
