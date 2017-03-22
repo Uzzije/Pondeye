@@ -10,7 +10,7 @@ from .views import JournalEntriesView, PictureUploadView, TodoFeed, SendFriendRe
     NewPondRequestNotificationView, GetNotification,  EditPictureSetView, DeletePictureSet, \
     FailedProjectNotificationView, FailedMilestonesNotificationView, EditIndividualPondView, EditPondView
 
-from .api_view import ApiNewPondEntryView, ApiPictureUploadView, ApiDeletePictureSet, \
+from .api_view import ApiNewPondEntryView, ApiPictureUploadView, ApiCreateImpressed, \
     ApiEditIndividualPondView, ApiEditPictureSetView, ApiEditPondView, ApiTodoFeed, ApiCreateFollow, ApiCreateVouch, \
     ApiMilestoneView, ApiProjectView, ApiMilestoneSeenCounter, ApiProjectSeenCounter, ApiGetPondList, ApiGetPond, \
     ApiPondRequestView, ApiGetSearchResult, ApiAddToPond, ApiDenyPondRequest, ApiNotificationView, ApiAcceptPondRequest, \
@@ -62,7 +62,6 @@ urlpatterns = [
     url(r'^api/new-pond-entry/$', ApiNewPondEntryView.as_view(), name="api_new_pond_entry"),
     url(r'^api/new-picture-entry/$', ApiPictureUploadView.as_view(), name="new_picture_entry"),
     url(r'^api/picture-set-edit', ApiEditPictureSetView.as_view(), name="api_picture_set_edit"),
-    url(r'^api/picture-set-delete', ApiDeletePictureSet.as_view(), name="api_delete_edit"),
     url(r'^api/individual-pond', ApiEditIndividualPondView.as_view(), name="api_edit_individual_view"),
     url(r'^api/news-feed', ApiTodoFeed.as_view(), name="api_to_do_view"),
     url(r'^api/create-follow', ApiCreateFollow.as_view(), name="api_create_follow"),
@@ -80,7 +79,8 @@ urlpatterns = [
     url(r'^api/get-notification', ApiNotificationView.as_view(), name="api_add_to_pond_view"),
     url(r'^api/accept-user-pond-request', ApiAcceptPondRequest.as_view(), name="api_accept_pond_request"),
     url(r'^api/pond-edit/', ApiEditPondView.as_view(), name="api_delete_pond"),
-    url(r'^api/notification-status', ApiGetNotification.as_view(), name="api_notification_view")
+    url(r'^api/notification-status', ApiGetNotification.as_view(), name="api_notification_view"),
+    url(r'^api/new-impression', ApiCreateImpressed.as_view(), name="api_new_impression")
 
 ]
 

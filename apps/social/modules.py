@@ -2,7 +2,7 @@ from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
 from .models import ProfilePictures, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, PondSpecificProject, \
-     PondRequest, Pond, PondMembership, ProgressPicture, ProgressPictureSet
+     PondRequest, Pond, PondMembership, ProgressPicture, ProgressPictureSet, VoucheProject
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from django.core.exceptions import ObjectDoesNotExist
@@ -326,6 +326,20 @@ def get_users_feed_json(user, local_timezone='UTC'):
     return sorted_list
 
 
+def get_progress_set(progress_set, timezone):
+    list_progress_entry = []
+    for each_set in progress_set:
+        set_dic = {'name_of_project':each_set.project.name_of_project, 'id':each_set.id, 'list_of_progress_pictures':[]}
+        for each_progress in each_set.list_of_progress_pictures.all():
+            set_dic['list_of_progress_pictures'].append({
+                'progress_message':each_progress.name_of_progress,
+                'date_created': utc_to_local(each_progress.last_updated, local_timezone=timezone),
+                'image_url': CURRENT_URL+each_progress.picture.url,
+                'progress_id': each_progress.id,
+            })
+        list_progress_entry.append(set_dic)
+    return list_progress_entry
+
 def get_pic_list(pic_list):
     pic_list_arr = []
     for each_pic in pic_list:
@@ -339,7 +353,7 @@ def get_pic_list(pic_list):
 def get_notifications_alert(user):
     notifications = user.notification_set.filter(read=False)
     nofication_feed = NotificationFeed(user, notifications)
-    return nofication_feed.highight_new_notification()
+    return nofication_feed.highlight_new_notification()
 
 
 def get_tag_list(tags):
@@ -352,6 +366,13 @@ def get_tag_list(tags):
     for t in tags:
         list_tag.append(t.name_of_tag)
     return list_tag
+
+def mark_progress_as_deleted(project):
+    progress = ProgressPictureSet.objects.get(project=project)
+    progress.is_empty = True
+    for pic in progress.list_of_progress_pictures.all():
+        pic.is_deleted = True
+        pic.save()
 
 
 def create_failed_notification(milestone):
@@ -381,13 +402,20 @@ def create_failed_notification(milestone):
                 new_notif.save()
 
 
-def create_failed_notification_proj(project):
+def create_failed_notification_proj_by_deletion(project):
     yesterday = get_current_datetime() - timedelta(hours=18)
     if project.is_live and project.created < yesterday:
         project.is_failed = True
         ponds = Pond.objects.filter(pond_members__user=project.user.user)
         mes = "%s %s quit on the goal: %s" % (project.user.user.first_name, project.user.user.last_name,
                                                       project.name_of_project)
+        vouches = VoucheProject.objects.get(tasks=project)
+        if vouches.get_count():
+            for each_user in vouches.users.all():
+                new_notif = Notification(user=each_user.user, name_of_notification=mes,
+                                         type_of_notification=global_variables.USER_DELETED_PROJECT)
+                new_notif.save()
+
         for each_pond in ponds:
             for each_user in each_pond.pond_members.all():
                 new_notif = Notification(user=each_user.user, name_of_notification=mes,
@@ -401,11 +429,7 @@ def notification_exist(user):
     :param user:
     :return:
     """
-    notif_dict = get_notifications_alert(user)
-    if True in notif_dict.itervalues():
-        return True
-    else:
-        return False
+    return get_notifications_alert(user).has_notification
 
 
 def file_is_picture(picture):
@@ -450,6 +474,26 @@ def get_pond(user):
     ponds = Pond.objects.filter(pond_members__user=user, is_deleted=False)
     return ponds
 
+
+def new_goal_added_notification_to_pond(project, is_new_project=True):
+    try:
+        pond_specifics = PondSpecificProject.objects.get(project=project)
+        ponds = pond_specifics.pond.all(is_deleted=False)
+    except ObjectDoesNotExist:
+        ponds = get_pond(project.user.user)
+    for each_pond in ponds.all():
+        for each_member in each_pond.pond_members.all():
+            if is_new_project:
+                notif_mess = "%s %s created a new goal: %s" % \
+                (each_member.user.first_name, each_member.user.last_name, project.name_of_project)
+                new_notif = Notification(type_of_notification=global_variables.NEW_PROJECT_ADDED,
+                                         name_of_notification=notif_mess, user=each_member.user)
+            else:
+                notif_mess = "%s %s capture a new progress picture to his goal: %s" % \
+                (each_member.user.first_name, each_member.user.last_name, project.name_of_project)
+                new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,
+                                         name_of_notification=notif_mess, user=each_member.user)
+            new_notif.save()
 
 def pond_to_json(ponds):
     pond_list = []
@@ -729,8 +773,11 @@ def send_pond_request(pond, user):
     except ObjectDoesNotExist:
        new_pond_request = PondRequest(pond=pond, user=tikedge_user)
        new_pond_request.save()
+       pond_mess = "%s %s wants to join this pond: %s" % (tikedge_user.user.first_name,
+                                                         tikedge_user.user.first_name, pond.name_of_pond)
        for member in pond.pond_members.all():
-           notification = Notification(user=member.user, type_of_notification=global_variables.POND_REQUEST)
+           notification = Notification(user=member.user, name_of_notification=pond_mess,
+                                       type_of_notification=global_variables.POND_REQUEST)
            notification.save()
        data['status'] = True
     return data
@@ -857,7 +904,7 @@ def mark_milestone_pond_request_accepted_as_read(user):
         each_notif.save()
 
 
-def mark_milestone_new_project_interested_as_read(user):
+def mark_new_project_interested_as_read(user):
     """
     Notifciation that one has a new interest/follower of their project marked as read
     :param user: 
@@ -882,7 +929,74 @@ def mark_milestone_let_down_as_read(user):
     for each_notif in notifcation:
         each_notif.read = True
         each_notif.save()
-    
+
+
+def mark_project_viewed(user):
+
+    """
+    Notification that people are looking at your goals marked as read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.PROJECT_WAS_VIEWED)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_goal_let_down_as_read(user):
+    """
+    Notification that people are looking at your goals marked as read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_project_vouch_as_read(user):
+    """
+    Notification that people believe you will complete the goal as read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.NEW_PROJECT_VOUCH)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_progress_impressed_as_read(user):
+    """
+    Notification that people liked a progress you made on your goal marked as read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_progress_viewed(user):
+
+    """
+    Notification that people are looking at your goal progress marked as read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.PROGRESS_WAS_VIEWED)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
 
 def get_picture_from_base64(data):
         """

@@ -196,7 +196,7 @@ class ProgressFeed(PondFeed):
             return None
         progress_list = []
         created_sec = int(self.created.strftime('%s'))
-        for progress in self.tasks.list_of_progress.all():
+        for progress in self.tasks.list_of_progress_pictures.all(is_deleted=False):
             progress_list.append({
                'name': self.task_owner_name,
                'progress_message': progress.name_of_progress,
@@ -217,7 +217,7 @@ class ProgressFeed(PondFeed):
             'is_progress_feed': True,
             'profile_url':self.profile_url,
             'id': self.tasks.id,
-            'user_id':self.feed_user.id,
+            'user_id':self.tasks.project.user.id,
         }
         return progress_dic
 
@@ -253,8 +253,9 @@ class NotificationFeed:
             notification_list.append(new_object)
         return notification_list
 
-    def highight_new_notification(self):
+    def highlight_new_notification(self):
         unread_notify = self.notification.filter(Q(read=False)).order_by('created')
+        '''
         pond_request = False
         pond_request_accepted = False
         new_ponder = False
@@ -263,35 +264,45 @@ class NotificationFeed:
         milestone_vouch = False
         milestone_failed = False
         project_failed = False
+        '''
+        has_notification = False
+        list_of_notifications = []
+        if unread_notify:
+            has_notification = True
         for each_notif in unread_notify:
+            list_of_notifications.append(each_notif.name_of_notification)
+
+            '''
             if each_notif.type_of_notification == global_variables.POND_REQUEST:
-                pond_request = True
+
+                list_of_notifications.append(each_notif.name_of_notification)
             if each_notif.type_of_notification == global_variables.POND_REQUEST_ACCEPTED:
-                pond_request_accepted = True
+                has_notification = True
+
             if each_notif.type_of_notification == global_variables.NEW_PONDERS:
+                has_notification = True
                 new_ponder = True
             if each_notif.type_of_notification == global_variables.NEW_PROJECT_INTERESTED:
+                has_notification = True
                 interested = True
             if each_notif.type_of_notification == global_variables.NEW_PROJECT_LETDOWN:
-                let_down = True
-            if each_notif.type_of_notification == global_variables.NEW_MILESTONE_VOUCH:
-                milestone_vouch = True
+                has_notification = True
+                let_down = "One of the goals your were following wasn't completed"
+            if each_notif.type_of_notification == global_variables.NEW_PROJECT_VOUCH:
+                has_notification = True
+                project_vouch = each_notif.name_of_notification
             if each_notif.type_of_notification == global_variables.USER_DELETED_MILESTONE:
-                milestone_failed = True
+                has_notification = True
+                milestone_failed =  each_notif.name_of_notification
             if each_notif.type_of_notification == global_variables.USER_DELETED_PROJECT:
-                project_failed = True
+                has_notification =  each_notif.name_of_notification
+                project_failed =  each_notif.name_of_notification
+            '''
         notification_dic = {
-            "pond_request":pond_request,
-            "pond_request_accepted":pond_request_accepted,
-            "new_ponder":new_ponder,
-            "interested":interested,
-            "let_down":let_down,
-            "milestone_vouch":milestone_vouch,
-            "milestone_failed":milestone_failed,
-            "project_failed":project_failed
+            'has_notification':has_notification,
+            'notifications':list_of_notifications,
         }
         return notification_dic
-
 
 
 class SingleNotification:

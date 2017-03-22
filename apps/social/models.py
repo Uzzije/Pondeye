@@ -41,6 +41,9 @@ class ProjectPicture(models.Model):
     is_deleted = models.BooleanField(default=False)
     project = models.ForeignKey(UserProject, blank=True, null=True)
 
+    def __str__(self):
+        return self.project.name_of_project
+
 
 class ProgressPicture(models.Model):
     image_name = models.TextField(max_length=600)
@@ -72,6 +75,10 @@ class ProgressPictureSet(models.Model):
     def __str__(self):
         return '%s' % self.project.name_of_project
 
+    def picture_set_count(self):
+        count = self.list_of_progress_pictures.all(is_deleted=False)
+        return count
+
 
 class PictureSet(models.Model):
     before_picture = models.ForeignKey(Picture, blank=True, null=True, related_name="before_picture")
@@ -99,6 +106,11 @@ class SeenProject(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the projects")
     tasks = models.ForeignKey(UserProject, blank=True, null=True)
 
+    def get_count(self):
+        return self.users.count()
+
+    def __str__(self):
+        return self.tasks.name_of_project
 
 class SeenPictureSet(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the pictureSet")
@@ -123,6 +135,22 @@ class VoucheMilestone(models.Model):
         super(VoucheMilestone, self).save(*args, **kwargs)
 
 
+class VoucheProject(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="User That Vouche For the milestone")
+    tasks = models.ForeignKey(UserProject, blank=True, null=True)
+    latest_vouch = models.DateTimeField(default=now)
+
+    def save(self, *args, **kwargs):
+        self.latest_vouch = now()
+        super(VoucheProject, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.tasks.name_of_project
+
+    def get_count(self):
+            return self.users.count()
+
+
 class BuildCredMilestone(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="User That Milestone Owner Built Cred For")
     tasks = models.ForeignKey(Milestone, blank=True, null=True)
@@ -136,6 +164,9 @@ class Follow(models.Model):
     def save(self, *args, **kwargs):
         self.latest_follow = now()
         super(Follow, self).save(*args, **kwargs)
+
+    def get_count(self):
+         return self.users.count()
 
 
 class ProgressImpressedCount(models.Model):
@@ -154,6 +185,16 @@ class LetDownMilestone(models.Model):
     def save(self, *args, **kwargs):
        self.latest_letDown = now()
        super(LetDownMilestone, self).save(*args, **kwargs)
+
+
+class LetDownProject(models.Model):
+    users = models.ManyToManyField(TikedgeUser, verbose_name="users that were let down by vouche for your Goal")
+    tasks = models.ForeignKey(UserProject, blank=True, null=True)
+    latest_letDown = models.DateTimeField(default=now)
+
+    def save(self, *args, **kwargs):
+       self.latest_letDown = now()
+       super(LetDownProject, self).save(*args, **kwargs)
 
 
 class Notification(models.Model):

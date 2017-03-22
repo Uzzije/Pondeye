@@ -11,8 +11,8 @@ from global_variables_tasks import DECODE_DICTIONARY
 from bs4 import BeautifulSoup
 from django.contrib import messages
 import global_variables_tasks
-from ..social.models import Notification, LetDownMilestone, VoucheMilestone, ProfilePictures, \
-    PondSpecificProject, Pond, ProjectPicture
+from ..social.models import Notification, ProgressPictureSet, ProfilePictures, \
+    PondSpecificProject, Pond, ProjectPicture, VoucheProject, LetDownProject, ProgressImpressedCount, Follow
 from ..social import global_variables
 import random, string
 from django.utils import timezone as django_timezone
@@ -24,6 +24,27 @@ CURRENT_URL = global_variables.CURRENT_URL
 def add_file_to_project_pic(picture_file, project):
     new_pic = ProjectPicture(image_name=picture_file.name, picture=picture_file, project=project)
     new_pic.save()
+
+
+def get_project_pic_info(each_proj):
+    try:
+       project_picture = ProjectPicture.objects.get(project=each_proj, is_deleted=False)
+       proj_pic_id = project_picture.id
+       project_pic_url = CURRENT_URL + project_picture.picture.url
+       has_pic = True
+    except:
+       proj_pic_id = None
+       project_pic_url = None
+       has_pic = False
+    project_picture = {'pic_id':proj_pic_id, 'url':project_pic_url, 'has_pic':has_pic}
+    return project_picture
+
+
+def delete_project_picture(pic_id):
+    picture = ProjectPicture.objects.get(id=int(pic_id))
+    picture.is_deleted = False
+    picture.save()
+
 
 def get_user_projects(user):
     try:
@@ -289,37 +310,37 @@ def json_all_pending_tasks(tasks):
 
 def get_status(user):
     tikedge_user = get_tikedge_user(user)
-    status = "Learner ( Top 100 Percentile )"
-    mil_all = tikedge_user.milestone_set.all().count()
-    mil_success = get_completed_mil_count(user)
-    milestone_count = mil_success + mil_all
-    if mil_all == 0:
+    status = 0
+    proj_all = tikedge_user.userproject_set.all().count()
+    proj_success = get_completed_proj_count(user)
+    project_count = proj_success + proj_all
+    if proj_all == 0:
         return status
-    ratio_percentage = float(mil_success/mil_all)*100
-    if milestone_count < 5:
+    ratio_percentage = float(proj_success/proj_all)*100
+    if project_count < 5:
         return status
     else:
-        if milestone_count >= 5 and milestone_count < 10:
+        if project_count >= 5 and project_count < 10:
             if ratio_percentage > 75.5:
-                status = "Doer ( Top 75 Percentile )"
+                status = 20
             return status
-        if milestone_count >= 10 and milestone_count < 15:
+        if project_count >= 10 and project_count < 15:
             if ratio_percentage > 75.5:
-                status = "Motivator ( Top 50 Percentile )"
+                status = 30
             elif ratio_percentage > 60.5:
-                status = "Doer ( Top 75 Percentile )"
+                status = 20
             elif ratio_percentage > 45.5:
-                status = "Learner ( Top 95 Percentile )"
+                status = 10
             return status
-        if milestone_count >= 15:
+        if project_count >= 15:
             if ratio_percentage > 75.5:
-                status = "Inspires ( Top 25 Percentile )"
+                status = 35
             elif ratio_percentage > 65.5:
-                status = "Motivator ( Top 50 Percentile )"
+                status = 30
             elif ratio_percentage > 45.5:
-                status = "Doer ( Top 75 Percentile )"
+                status = 20
             elif ratio_percentage > 25.5:
-                status = "Learner ( Top 95 Percentile )"
+                status = 10
             return status
 
 
@@ -364,6 +385,7 @@ def get_pond_status(pond_members):
 
 def confirm_expired_milestone_and_project():
     yesterday = form_module.get_current_datetime()
+    '''
     all_milestones = Milestone.objects.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False),
                                                              Q(is_failed=False), Q(is_deleted=False))
     print "all milestone, ", all_milestones
@@ -388,6 +410,7 @@ def confirm_expired_milestone_and_project():
                         let_down.save()
             except ObjectDoesNotExist:
                 pass
+    '''
     all_project = UserProject.objects.all().filter(Q(length_of_project__lte=yesterday), Q(is_completed=False),
                                                             ~Q(made_live=None), Q(is_failed=False), Q(is_deleted=False))
     for each_proj in all_project:
@@ -395,6 +418,24 @@ def confirm_expired_milestone_and_project():
             each_proj.is_failed = True
             each_proj.is_live = False
             each_proj.save()
+            try:
+                user_proj_vouch = VoucheProject.objects.get(tasks=each_proj)
+                if user_proj_vouch.get_count() > 0:
+                    try:
+                        LetDownProject.objects.get(tasks=each_proj)
+                    except ObjectDoesNotExist:
+                        let_down = LetDownProject(tasks=each_proj)
+                        let_down.save()
+                        let_down_mess = "%s %s let you down by failing to complete this goal: %s"\
+                                        % (each_proj.user.user.first_name, each_proj.user.user.first_name, each_proj.name_of_project )
+                        for each_user in user_proj_vouch.users.all():
+                            notification = Notification(user=each_user.user, name_of_notification=let_down_mess,
+                                            type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
+                            let_down.users.add(each_user)
+                            notification.save()
+                        let_down.save()
+            except ObjectDoesNotExist:
+                pass
 
 
 def get_failed_mil_count(user):
@@ -410,21 +451,155 @@ def get_completed_mil_count(user):
 
 
 def get_failed_proj_count(user):
+    """
+    Grab list of failed milestones by users
+    :param user:
+    :return:
+    """
     tikedge_user = get_tikedge_user(user)
     proj_count = tikedge_user.userproject_set.all().filter(Q(is_failed=True), Q(is_deleted=False)).count()
     return proj_count
 
 
 def get_completed_proj_count(user):
+    """
+    Grab list of completed goal by users
+    :param user:
+    :return:
+    """
     tikedge_user = get_tikedge_user(user)
     proj_count = tikedge_user.userproject_set.all().filter(Q(is_completed=True), Q(is_deleted=False)).count()
     return proj_count
 
 
-def get_recent_projects(user,  requesting_user):
+def user_stats(user):
+    """
+    Grab user stats to show in profile page
+    :param user: user's object
+    :return: a dictionay of such items
+    """
+    tikedge_user = get_tikedge_user(user)
+    goal_success_count = get_completed_proj_count(user)
+    goal_failed_count = get_failed_proj_count(user)
+    total = goal_success_count + goal_failed_count
+    consistency_percentage = float((goal_success_count/total)*100)
+    consistency_grade = get_letter_grade(consistency_percentage)
+    total_times_impressed = user_total_impress_count(tikedge_user)
+    total_goal_followers = user_total_goal_followers(tikedge_user)
+    correct_vouch_percentage = correct_vouching_percentage(tikedge_user)
+    correct_vouch_grade = get_letter_grade(correct_vouch_percentage)
+    rank = get_user_consistency_rank(user, consistency_percentage)
+    stats_dic = {
+        'goal_success_count':goal_success_count,
+        'goal_failed_count':goal_failed_count,
+        'total':total,
+        'consistency_percentage':consistency_percentage,
+        'consistency_grade':consistency_grade,
+        'total_times_impressed': total_times_impressed,
+        'total_goal_followers': total_goal_followers,
+        'correct_vouch_percentage':correct_vouch_percentage,
+        'correct_vouch_grade':correct_vouch_grade,
+        'rank':rank
+    }
+
+    return stats_dic
+
+
+def get_user_consistency_rank(user, consistency_percentage):
+    points = get_status(user)
+    rank = consistency_percentage + points
+    return rank
+
+
+def get_letter_grade(percentage):
+    """
+    Convert rounded percentage into lettter grade
+    :param percentage:
+    :return:
+    """
+    if percentage < 60.0:
+        return 'F'
+    if percentage < 70.0:
+        return 'D'
+    if percentage < 80.0:
+        return 'C'
+    if percentage < 90.0:
+        return 'B'
+    return 'A'
+
+
+def pond_leader_board_rank(pond):
+    """
+    Returns the a leaderboard list of pond members based on rank
+    :param pond:
+    :return:
+    """
+    leader_list = []
+    for each_member in pond.pond_members.all():
+        stats = user_stats(each_member.user)
+        leader_list.append({
+            'first_name': each_member.user.first_name,
+            'last_name': each_member.user.last_name,
+            'profile_pic':get_profile_pic_json(each_member),
+            'percentage': stats['consistency_percentage'],
+            'grade': stats['consistency_grade'],
+            'rank': stats['rank']
+        })
+    sorted_leader_list = sorted(leader_list, key=lambda x: x['rank'], reverse=True)
+    return sorted_leader_list
+
+
+def user_total_impress_count(tikedge_user):
+    """
+    Get user total count of people impressed by their progress
+    :param tikedge_user: tikedge_user Object
+    :return: Count of all impressed user objects
+    """
+
+    impress_count = 0
+    projects = tikedge_user.userproject_set.all().filter(is_deleted=False)
+    for each_proj in projects:
+        progress_set = ProgressPictureSet.objects.get(project=each_proj)
+        for each_progress  in progress_set.list_of_progress_pictures.all(is_deleted=False):
+            impress_count += ProgressImpressedCount(tasks=each_progress).get_count()
+    return impress_count
+
+
+def user_total_goal_followers(tikedge_user):
+    """
+    Get user total count of everybody following user's goals.
+    :param tikedge_user: tikedge_user Object
+    :return: Count of all impressed user objects
+    """
+
+    follow_count = 0
+    followers_list = []
+    projects = tikedge_user.userproject_set.all().filter(is_deleted=False)
+    for each_proj in projects:
+        followers = Follow.objects.get(tasks=each_proj)
+        for each_followers  in followers.users.all():
+            if each_followers not in followers_list:
+                follow_count += 0
+                followers_list.append(each_followers)
+    return follow_count
+
+
+def correct_vouching_percentage(tikedge_user):
+
+    project_vouches = VoucheProject.objects.filter(user=tikedge_user)
+    let_down_vouches = LetDownProject.objects.filter(user=tikedge_user)
+    project_vouches_count = project_vouches.count()
+    let_down_count = let_down_vouches.count()
+    total_count = project_vouches_count + let_down_count
+    correct_vouch = float((project_vouches_count/total_count)*100)
+    return correct_vouch
+
+
+
+def get_recent_projects(user, requesting_user, is_live=True):
     tikedge_user = get_tikedge_user(user)
     request_user_ponds = Pond.objects.filter(pond_members=requesting_user)
-    all_project = tikedge_user.userproject_set.all().filter(Q(is_live=True), Q(is_deleted=False)).distinct()
+    all_project = tikedge_user.userproject_set.all().filter(Q(is_live=is_live), Q(is_deleted=False)).distinct()
     private_project = all_project.filter(is_public=False)
     pond_specific_project = PondSpecificProject.objects.filter(Q(project__in=private_project), Q(pond=request_user_ponds)).distinct()
     public_project = all_project.filter(is_public=True).distinct()
@@ -432,7 +607,6 @@ def get_recent_projects(user,  requesting_user):
     for private_proj in pond_specific_project:
         list_project.append(private_proj.project)
     return list_project
-
 
 def display_error(form, request):
     for field, mes in form.errors.items():

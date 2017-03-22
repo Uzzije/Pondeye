@@ -1,33 +1,23 @@
-from django.shortcuts import render
 from django.views.generic import View
-from forms import social_forms, pond_form
-from models import (Notification, Follow, PictureSet, Picture, VoucheMilestone, SeenMilestone,
-                    JournalPost, JournalComment, SeenProject, ProfilePictures, Pond, PondRequest,
-                    PondMembership, PondSpecificProject, User, ProgressPicture,
-                    ProgressPictureSet, ProgressImpressedCount, SeenProgress)
+from models import (Notification, Follow, VoucheMilestone, SeenMilestone,
+                     SeenProject, Pond, PondRequest,
+                    PondMembership, User, ProgressPicture,
+                    ProgressPictureSet, ProgressImpressedCount, SeenProgress, VoucheProject)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from django.utils.decorators import method_decorator
-from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 import modules
 from ..tasks import modules as task_modules
-from friendship.models import Friend, FriendshipRequest
-from tasks_feed import NotificationFeed
-from friendship.exceptions import AlreadyExistsError, AlreadyFriendsError
-from django.core.exceptions import ValidationError
 import global_variables
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 import json
-from django.contrib import messages
+
 from django.db.models import Q
 from search_module import find_everything, search_result_jsonified
-from braces.views import LoginRequiredMixin
-from ..tasks.global_variables_tasks import TAG_NAMES_LISTS
-from datetime import datetime
-import base64
+
 from django.utils import timezone
-from django.core.files.base import ContentFile
+
 
 
 class CSRFExemptView(View):
@@ -182,6 +172,7 @@ class ApiPictureUploadView(CSRFExemptView):
 
 '''
 
+
 class ApiPictureUploadView(CSRFExemptView):
 
     def get(self, request):
@@ -198,6 +189,7 @@ class ApiPictureUploadView(CSRFExemptView):
             response['has_proj'] = True
             response["status"] = True
             response["projects"] = projects
+            modules.new_goal_added_notification_to_pond(projects, is_new_project=False)
         else:
 	        response["status"] = False
 	        response["error"] = "Create a goal, then use pictures to capture the progress of that goal!"
@@ -236,7 +228,7 @@ class ApiPictureUploadView(CSRFExemptView):
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
-
+'''
 class  ApiEditPictureSetView(CSRFExemptView):
     """
     Remove Complete Pictures. Edit Pictures Without After Shot (i.e Delete Them or Change Them).
@@ -371,6 +363,48 @@ class ApiDeletePictureSet(CSRFExemptView):
             pic_set = PictureSet.objects.get(id=int(pic_set_id))
             pic_set.is_deleted = True
             pic_set.save()
+            response = {'status':True}
+        except ObjectDoesNotExist:
+            response = {'status':False}
+        return HttpResponse(json.dumps(response))
+'''
+
+
+class ApiEditPictureSetView(CSRFExemptView):
+    def get(self, request):
+        """
+        Edit Pond Data get the neccessary Informations
+        :param request:
+        :return:
+        """
+        response = {}
+        response["status"] = False
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        progress_set = ProgressPictureSet.objects.filter(project__user__user=user)
+        curr_timezone = request.GET.get("timezone")
+        list_of_progress_sets = modules.get_progress_set(progress_set, curr_timezone)
+        response['user_picture_set'] = list_of_progress_sets
+        if list_of_progress_sets:
+            response['has_set'] = True
+        else:
+            response['has_set'] = False
+        return HttpResponse(json.dumps(response), status=201)
+
+    def post(self, request):
+        try:
+            pic_id = request.POST.get("pic_id")
+            progress = ProgressPicture.objects.get(id=int(pic_id))
+            progress.is_deleted = True
+            pic_id.save()
+            progress_set = ProgressPictureSet.objects.get(list_of_progress_pictures=progress)
+            if progress_set.picture_set_count() == 0:
+                progress_set.is_empty = False
+            progress_set.save()
             response = {'status':True}
         except ObjectDoesNotExist:
             response = {'status':False}
@@ -515,8 +549,8 @@ class ApiCreateVouch(CSRFExemptView):
 
     def post(self, request, *args, **kwargs):
         response = {}
-        milestone_id = request.POST.get("mil_id")
-        milestone = Milestone.objects.get(id=int(milestone_id))
+        proj_id = request.POST.get("proj_id")
+        proj = UserProject.objects.get(id=int(proj_id))
         try:
             username = request.POST.get("username")
             user = User.objects.get(username=username)
@@ -526,39 +560,41 @@ class ApiCreateVouch(CSRFExemptView):
             return HttpResponse(json.dumps(response), status=201)
         user = TikedgeUser.objects.get(user=user)
         try:
-            vouch_obj = VoucheMilestone.objects.get(tasks=milestone)
-            if user in vouch_obj.users.all() and milestone.is_active:
+            vouch_obj = VoucheProject.objects.get(tasks=proj)
+            if user in vouch_obj.users.all() and proj.is_live:
                 vouch_obj.users.remove(user)
                 vouch_obj.save()
                 response["status"] = True
                 response["count"] = vouch_obj.users.all().count()
                 return HttpResponse(json.dumps(response), status=201)
         except ObjectDoesNotExist:
-            vouch_obj = VoucheMilestone(tasks=milestone)
+            vouch_obj = VoucheProject(tasks=proj)
             vouch_obj.save()
-        if user not in vouch_obj.users.all() and (user != milestone.user) and milestone.is_active:
+        if user not in vouch_obj.users.all() and (user != proj.user) and proj.is_live:
             vouch_obj.users.add(user)
             vouch_obj.save()
-            vouch_notif = Notification(user=milestone.user.user,
-                                                    type_of_notification=global_variables.NEW_MILESTONE_VOUCH)
+            notif_message = "%s %s believes that you will complete this goal: %s" \
+                            % (user.user.first_name, user.user.last_name, proj.name_of_project)
+            vouch_notif = Notification(user=proj.user.user, name_of_notification=notif_message,
+                                                    type_of_notification=global_variables.NEW_PROJECT_VOUCH)
             vouch_notif.save()
             try:
-                view = SeenMilestone.objects.get(tasks=milestone)
+                view = SeenProject.objects.get(tasks=proj)
             except ObjectDoesNotExist:
-                view = SeenMilestone(tasks=milestone)
+                view = SeenProject(tasks=proj)
                 view.save()
             if user not in view.users.all():
                 view.users.add(user)
                 view.save()
                 response["status"] = True
-            response["count"] = vouch_obj.users.all().count()
+            response["count"] = vouch_obj.get_count()
         else:
-            if user != milestone.user:
+            if user != proj.user:
                 response["status"] = False
                 response["error"] = "Can't vouch for inactive milestone"
             else:
                 response['status'] = True
-        response["count"] = vouch_obj.users.all().count()
+        response["count"] = vouch_obj.get_count()
         print "Tried to print vouch!!!!!!\n"
         return HttpResponse(json.dumps(response), status=201)
 
@@ -595,10 +631,51 @@ class ApiCreateFollow(CSRFExemptView):
             response["status"] = True
             follow_obj.users.add(tikedge_user)
             follow_obj.save()
-            follow_notif = Notification(user=project.user.user,
+            notif_mess = "%s %s is following your goal: %s" % (tikedge_user.user.first_name,
+                                                              tikedge_user.user.last_name, project.name_of_project)
+            follow_notif = Notification(user=project.user.user, name_of_notification=notif_mess,
                                         type_of_notification=global_variables.NEW_PROJECT_INTERESTED)
             follow_notif.save()
         response["count"] = follow_obj.users.all().count()
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiCreateImpressed(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('')
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        progress_id = request.POST.get("progress_id")
+        progress_set_id = request.POST.get('progress_set_id')
+        progress_set = ProgressPictureSet.objects.get(id=int(progress_set_id))
+        progress = ProgressPicture.objects.get(id=int(progress_id))
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        impressed_count = ProgressImpressedCount.objects.get(tasks=progress)
+        if tikedge_user in impressed_count.users.all():
+            impressed_count.users.remove(tikedge_user)
+            impressed_count.save()
+            response["status"] = True
+            response["count"] = impressed_count.get_count()
+            return HttpResponse(json.dumps(response), status=201)
+        if tikedge_user != progress.project.user:
+            response["status"] = True
+            impressed_count.users.add(tikedge_user)
+            impressed_count.save()
+            name_of_notif = "%s %s is impressed with your progress on this goal: %s" \
+                            % (tikedge_user.user.first_name, tikedge_user.user.last_name, progress_set.project.name_of_project)
+            impress_notif = Notification(user=impressed_count.project.user.user, name_of_notification=name_of_notif,
+                                        type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED)
+            impress_notif.save()
+        response["count"] = impressed_count.get_count()
         return HttpResponse(json.dumps(response), status=201)
 
 
@@ -690,7 +767,7 @@ class ApiProjectView(CSRFExemptView):
         modules.increment_project_view(req_user, project)
         milestones = project.milestone_set.all().filter(Q(is_deleted=False))
         try:
-            seen_count = SeenProject.objects.get(tasks=project).users.count()
+            seen_count = SeenProject.objects.get(tasks=project).get_count()
         except ObjectDoesNotExist:
             seen_count = 0
         try:
@@ -722,7 +799,8 @@ class ApiProjectView(CSRFExemptView):
             'motif':modules.motivation_for_project_app_view(motivations),
             'user_owns_proj':user_owns_proj,
             'is_completed':is_completed,
-            'proj_id':project.id
+            'proj_id':project.id,
+            'progress_pic': task_modules.get_project_pic_info(project)
         }
         return HttpResponse(json.dumps(response), status=201)
 
@@ -908,8 +986,10 @@ class ApiAddToPond(CSRFExemptView):
         try:
             pond_members = pond.pond_members.all()
             if other_user not in pond_members:
+                pond_mess = "%s %s has been added to your pond: %s" % (other_user.user.first_name,
+                                                                       other_user.user.last_name, pond.name_of_pond)
                 for each_member in pond_members:
-                    notification = Notification(user=each_member.user,
+                    notification = Notification(user=each_member.user, name_of_notification=pond_mess,
                                             type_of_notification=global_variables.NEW_PONDERS)
                     notification.save()
                 pond.pond_members.add(other_user)
@@ -929,7 +1009,8 @@ class ApiAddToPond(CSRFExemptView):
                                                member_that_responded=task_modules.get_tikedge_user(user),
                                                request_responded_to=True)
                     pond_request.save()
-                notification = Notification(user=other_user.user,
+                pond_mess = "Congratulations! You have been added to this pond: %s." % pond.name_of_pond
+                notification = Notification(user=other_user.user, name_of_notification=pond_mess,
                                             type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
                 notification.save()
             else:
@@ -993,12 +1074,12 @@ class ApiNotificationView(CSRFExemptView):
         response['status'] = True
         response['notification_list'] = notification_list
         modules.mark_new_ponder_notification_as_read(user)
-        modules.mark_milestone_new_project_interested_as_read(user)
-        modules.mark_milestone_let_down_as_read(user)
-        modules.mark_milestone_vouch_as_read(user)
+        modules.mark_new_project_interested_as_read(user)
+        modules.mark_project_viewed(user)
+        modules.mark_progress_impressed_as_read(user)
+        modules.mark_goal_let_down_as_read(user)
         modules.mark_pond_request_notification_as_read(user)
         modules.mark_milestone_pond_request_accepted_as_read(user)
-        modules.mark_milestone_failed_as_read(user)
         modules.mark_project_failed_as_read(user)
         return HttpResponse(json.dumps(response))
 
@@ -1034,10 +1115,15 @@ class ApiAcceptPondRequest(CSRFExemptView):
                 pond_request.member_that_responded = task_modules.get_tikedge_user(user)
                 pond_request.save()
                 data["status"] = True
-                new_notif = Notification(user=pond_request.user.user, type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
+                pond_mess = "Request granted to join pond: %s!" %  pond_request.pond.name_of_pond
+                new_notif = Notification(user=pond_request.user.user, name_of_notitification=pond_mess,
+                                         type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
                 new_notif.save()
                 for each_member in pond_request.pond.pond_members.all():
-                    new_notif = Notification(user=each_member.user, type_of_notification=global_variables.NEW_PONDERS)
+                    pond_mess = "Pond: %s has new member: %s %s" % (pond_request.pond.name_of_pond,
+                                                                    each_member.user.first_name, each_member.user.last_name)
+                    new_notif = Notification(user=each_member.user, name_of_notification=pond_mess,
+                                             type_of_notification=global_variables.NEW_PONDERS)
                     new_notif.save()
                 pond_request.pond.pond_members.add(pond_request.user)
                 pond_request.pond.save()

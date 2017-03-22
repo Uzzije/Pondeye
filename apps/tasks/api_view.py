@@ -2,14 +2,16 @@ from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
 from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
-from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, Pond, ProgressPictureSet
+from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
+    Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from datetime import timedelta
 from ..social.modules import get_journal_message, \
-    get_notifications_alert, get_pond, file_is_picture, resize_image, available_ponds_json, create_failed_notification, \
-    create_failed_notification_proj, get_picture_from_base64
+    resize_image, available_ponds_json, create_failed_notification, \
+    create_failed_notification_proj_by_deletion, get_picture_from_base64, mark_progress_as_deleted, \
+    new_goal_added_notification_to_pond
 from modules import get_user_projects, \
     time_has_past, convert_html_to_datetime,\
     get_todays_milestones_json, \
@@ -292,6 +294,13 @@ class ApiNewProject(CSRFExemptView):
                 modules.add_file_to_project_pic(picture_file, new_project)
         new_progress_set = ProgressPictureSet(project=new_project)
         new_progress_set.save()
+        new_vouch = VoucheProject(tasks=new_project)
+        new_vouch.save()
+        new_follow = Follow(tasks=new_project)
+        new_follow.save()
+        new_seen = SeenProject(tasks=new_project)
+        new_seen.save()
+        new_goal_added_notification_to_pond(new_project, is_new_project=True)
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
@@ -317,12 +326,16 @@ class ApiProjectEditView(CSRFExemptView):
             tag_list = []
             for item in each_proj.tags.all():
                 tag_list.append(item.name_of_tag)
+            project_pic = modules.get_project_pic_info(each_proj)
             project_list.append({
                 'proj_name':each_proj.name_of_project,
                 'id':each_proj.id,
                 'hidden':False,
                 'tag_list':tag_list,
-                'time':modules.utc_to_local(each_proj.length_of_project, local_timezone=timezone).strftime("%B %d %Y %I:%M %p")
+                'time':modules.utc_to_local(each_proj.length_of_project, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
+                'proj_pic_id': project_pic.proj_pic_id,
+                'proj_pic_url': project_pic.url,
+                'has_pic':project_pic.has_pic
             })
         response["status"] = True
         response["project_list"] = project_list
@@ -370,12 +383,19 @@ class ApiProjectEditView(CSRFExemptView):
             journal.is_deleted = True
             journal.save()
             if (not project.is_completed) and project.made_live:
+                mark_progress_as_deleted(project)
+                '''
                 for each_proj in project.milestone_set.filter(is_deleted=False, is_active=True):
                     create_failed_notification(each_proj)
                     each_proj.is_live = False
                     each_proj.save()
+                '''
                 project.save()
-                create_failed_notification_proj(project)
+            create_failed_notification_proj_by_deletion(project)
+            response = {"status":True}
+        if 'delete_pic_id' in request.POST:
+            pic_id = request.POST.get("delete_pic_id")
+            modules.delete_project_picture(pic_id)
             response = {"status":True}
         return HttpResponse(json.dumps(response))
 
