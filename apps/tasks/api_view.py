@@ -3,7 +3,7 @@ from django.views.generic import View, FormView
 from forms import tasks_forms
 from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
-    Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject
+    Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject, WorkEthicRank
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -11,11 +11,11 @@ from datetime import timedelta
 from ..social.modules import get_journal_message, \
     resize_image, available_ponds_json, create_failed_notification, \
     create_failed_notification_proj_by_deletion, get_picture_from_base64, mark_progress_as_deleted, \
-    new_goal_added_notification_to_pond
+    new_goal_or_progress_added_notification_to_pond
 from modules import get_user_projects, \
     time_has_past, convert_html_to_datetime,\
     get_todays_milestones_json, \
-    confirm_expired_milestone_and_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
+    confirm_expired_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
     get_failed_proj_count, get_recent_projects_json, get_status, display_error, api_get_user_projects, get_profile_pic_json, \
     get_recent_projects
 
@@ -23,7 +23,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from datetime import datetime
-from ..social.global_variables import MILESTONE, NEW_PROJECT, ALL_POND_STATUS
+from ..social.global_variables import MILESTONE, PROJECT, ALL_POND_STATUS
 from friendship.models import Friend
 import json
 from django.contrib import messages
@@ -100,6 +100,8 @@ class ApiRegistrationView(CSRFExemptView):
                 user.save()
                 tickedge_user = TikedgeUser(user=user)
                 tickedge_user.save()
+                work_ethic_rank = WorkEthicRank(tikedge_user=tickedge_user)
+                work_ethic_rank.save()
          response = HttpResponse(json.dumps(response_data), status=201)
          return response
 
@@ -261,9 +263,9 @@ class ApiNewProject(CSRFExemptView):
             pass
         day_entry = tikedge_user.journalpost_set.all().count()
         new_journal_entry = JournalPost(
-                                        entry_blurb=get_journal_message(NEW_PROJECT, project=new_project.blurb),
+                                        entry_blurb=get_journal_message(PROJECT, project=new_project.blurb),
                                         day_entry=day_entry + 1,
-                                        event_type=NEW_PROJECT,
+                                        event_type=PROJECT,
                                         is_project_entry=True,
                                         new_project_entry=new_project,
                                         user=tikedge_user
@@ -300,7 +302,7 @@ class ApiNewProject(CSRFExemptView):
         new_follow.save()
         new_seen = SeenProject(tasks=new_project)
         new_seen.save()
-        new_goal_added_notification_to_pond(new_project, is_new_project=True)
+        new_goal_or_progress_added_notification_to_pond(new_project, is_new_project=True)
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
@@ -585,6 +587,8 @@ class ApiProfileView(CSRFExemptView):
         requesting_user = TikedgeUser.objects.get(user=user)
         current_proj_dj = get_recent_projects(tikedge_user.user, requesting_user)
         current_projs = get_recent_projects_json(current_proj_dj)
+        all_projects_dj = get_recent_projects(tikedge_user.user, requesting_user, is_live=False)
+        all_projs = get_recent_projects_json(all_projects_dj)
         current_tasks = get_todays_milestones_json(tikedge_user.user, current_proj_dj)
         failed_mil_count = get_failed_mil_count(tikedge_user.user)
         completed_mil_count = get_completed_mil_count(tikedge_user.user)
@@ -613,7 +617,8 @@ class ApiProfileView(CSRFExemptView):
             'profile_url_storage': prof_storage,
             'aval_pond':aval_pond,
             'is_own_profile': user == other_user,
-            'user_name':tikedge_user.user.username
+            'user_name':tikedge_user.user.username,
+            'all_projects':all_projs
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)
@@ -697,12 +702,6 @@ class ApiCheckPojectDone(CSRFExemptView):
             proj_stone.is_live = False
             proj_stone.save()
             response["status"] = True
-            all_milestones = proj_stone.milestone_set.filter(is_deleted=False)
-            for each_mil in all_milestones:
-                each_mil.is_active = False
-                if not each_mil.is_failed:
-                    each_mil.is_completed = True
-                each_mil.save()
         except (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
             response["status"] = False
             response["error"] = "Something Went Wrong Try Again!"
@@ -716,7 +715,22 @@ class ApiCheckFailedProjectMilestoneView(CSRFExemptView):
         token = request.POST.get("token")
         if token and (token == TOKEN_FOR_NOTIFICATION):
             response["status"] = True
-            confirm_expired_milestone_and_project()
+            confirm_expired_project()
+        else:
+            response["status"] = False
+            response["error"] = "Invalid Token"
+            response['token_given'] = token
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiRunRanking(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        token = request.POST.get("token")
+        if token and (token == TOKEN_FOR_NOTIFICATION):
+            response["status"] = True
+            modules.global_ranking_algorithm()
         else:
             response["status"] = False
             response["error"] = "Invalid Token"

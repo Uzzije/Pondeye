@@ -189,13 +189,12 @@ class ApiPictureUploadView(CSRFExemptView):
             response['has_proj'] = True
             response["status"] = True
             response["projects"] = projects
-            modules.new_goal_added_notification_to_pond(projects, is_new_project=False)
+            modules.new_goal_or_progress_added_notification_to_pond(projects, is_new_project=False)
         else:
 	        response["status"] = False
 	        response["error"] = "Create a goal, then use pictures to capture the progress of that goal!"
 	        response["has_proj"] = False
         return HttpResponse(json.dumps(response), status=201)
-
 
     def post(self, request):
         response = {}
@@ -226,6 +225,7 @@ class ApiPictureUploadView(CSRFExemptView):
         progress_set.list_of_progress_pictures.add(picture_mod)
         progress_set.save()
         response["status"] = True
+        modules.new_goal_or_progress_added_notification_to_pond(progress_set.project, is_new_project=False)
         return HttpResponse(json.dumps(response), status=201)
 
 '''
@@ -559,9 +559,11 @@ class ApiCreateVouch(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         user = TikedgeUser.objects.get(user=user)
+        user_response = request.POST.get("user_response")
         try:
             vouch_obj = VoucheProject.objects.get(tasks=proj)
-            if user in vouch_obj.users.all() and proj.is_live:
+            if user in vouch_obj.users.all() and proj.is_live and \
+                            user_response == global_variables.NO_USER_WILL_NOT_COMPLETE_GOAL: #if user changes his mind
                 vouch_obj.users.remove(user)
                 vouch_obj.save()
                 response["status"] = True
@@ -570,23 +572,17 @@ class ApiCreateVouch(CSRFExemptView):
         except ObjectDoesNotExist:
             vouch_obj = VoucheProject(tasks=proj)
             vouch_obj.save()
-        if user not in vouch_obj.users.all() and (user != proj.user) and proj.is_live:
+        if user not in vouch_obj.users.all() and (user != proj.user) and proj.is_live and \
+                        user_response == global_variables.YES_USER_WILL_COMPLETE_GOAL:
             vouch_obj.users.add(user)
             vouch_obj.save()
             notif_message = "%s %s believes that you will complete this goal: %s" \
                             % (user.user.first_name, user.user.last_name, proj.name_of_project)
-            vouch_notif = Notification(user=proj.user.user, name_of_notification=notif_message,
+            vouch_notif = Notification(user=proj.user.user, name_of_notification=notif_message, id_of_object=vouch_obj.id,
                                                     type_of_notification=global_variables.NEW_PROJECT_VOUCH)
             vouch_notif.save()
-            try:
-                view = SeenProject.objects.get(tasks=proj)
-            except ObjectDoesNotExist:
-                view = SeenProject(tasks=proj)
-                view.save()
-            if user not in view.users.all():
-                view.users.add(user)
-                view.save()
-                response["status"] = True
+
+            response["status"] = True
             response["count"] = vouch_obj.get_count()
         else:
             if user != proj.user:
@@ -594,6 +590,14 @@ class ApiCreateVouch(CSRFExemptView):
                 response["error"] = "Can't vouch for inactive milestone"
             else:
                 response['status'] = True
+        try:
+            view = SeenProject.objects.get(tasks=proj)
+        except ObjectDoesNotExist:
+            view = SeenProject(tasks=proj)
+            view.save()
+        if user not in view.users.all():
+            view.users.add(user)
+            view.save()
         response["count"] = vouch_obj.get_count()
         print "Tried to print vouch!!!!!!\n"
         return HttpResponse(json.dumps(response), status=201)
@@ -633,7 +637,7 @@ class ApiCreateFollow(CSRFExemptView):
             follow_obj.save()
             notif_mess = "%s %s is following your goal: %s" % (tikedge_user.user.first_name,
                                                               tikedge_user.user.last_name, project.name_of_project)
-            follow_notif = Notification(user=project.user.user, name_of_notification=notif_mess,
+            follow_notif = Notification(user=project.user.user, name_of_notification=notif_mess, id_of_object=follow_obj.id,
                                         type_of_notification=global_variables.NEW_PROJECT_INTERESTED)
             follow_notif.save()
         response["count"] = follow_obj.users.all().count()
@@ -673,7 +677,8 @@ class ApiCreateImpressed(CSRFExemptView):
             name_of_notif = "%s %s is impressed with your progress on this goal: %s" \
                             % (tikedge_user.user.first_name, tikedge_user.user.last_name, progress_set.project.name_of_project)
             impress_notif = Notification(user=impressed_count.project.user.user, name_of_notification=name_of_notif,
-                                        type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED)
+                                         id_of_object=impressed_count.tasks.id,
+                                         type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED)
             impress_notif.save()
         response["count"] = impressed_count.get_count()
         return HttpResponse(json.dumps(response), status=201)
@@ -989,13 +994,14 @@ class ApiAddToPond(CSRFExemptView):
                 pond_mess = "%s %s has been added to your pond: %s" % (other_user.user.first_name,
                                                                        other_user.user.last_name, pond.name_of_pond)
                 for each_member in pond_members:
-                    notification = Notification(user=each_member.user, name_of_notification=pond_mess,
+                    notification = Notification(user=each_member.user, name_of_notification=pond_mess, id_of_object=pond.id,
                                             type_of_notification=global_variables.NEW_PONDERS)
                     notification.save()
                 pond.pond_members.add(other_user)
                 pond.save()
                 pond_membership = PondMembership(user=other_user, pond=pond)
                 pond_membership.save()
+
                 try:
                     pond_request_already_exist = PondRequest.objects.get(pond=pond, user=other_user, request_responded_to=False)
                     pond_request_already_exist.request_responded_to = True
@@ -1003,14 +1009,16 @@ class ApiAddToPond(CSRFExemptView):
                     pond_request_already_exist.request_accepted = True
                     pond_request_already_exist.member_that_responded=task_modules.get_tikedge_user(user)
                     pond_request_already_exist.save()
+                    req_id = pond_request_already_exist.id
                 except ObjectDoesNotExist:
                     pond_request = PondRequest(user=other_user, pond=pond, date_response=timezone.now(),
                                                request_accepted=True,
                                                member_that_responded=task_modules.get_tikedge_user(user),
                                                request_responded_to=True)
                     pond_request.save()
+                    req_id = pond_request.id
                 pond_mess = "Congratulations! You have been added to this pond: %s." % pond.name_of_pond
-                notification = Notification(user=other_user.user, name_of_notification=pond_mess,
+                notification = Notification(user=other_user.user, name_of_notification=pond_mess, id_of_object=req_id,
                                             type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
                 notification.save()
             else:
@@ -1081,6 +1089,8 @@ class ApiNotificationView(CSRFExemptView):
         modules.mark_pond_request_notification_as_read(user)
         modules.mark_milestone_pond_request_accepted_as_read(user)
         modules.mark_project_failed_as_read(user)
+        modules.mark_new_progress_added_as_read(user)
+        modules.mark_new_project_added_as_read(user)
         return HttpResponse(json.dumps(response))
 
 
@@ -1117,12 +1127,13 @@ class ApiAcceptPondRequest(CSRFExemptView):
                 data["status"] = True
                 pond_mess = "Request granted to join pond: %s!" %  pond_request.pond.name_of_pond
                 new_notif = Notification(user=pond_request.user.user, name_of_notitification=pond_mess,
+                                         id_of_object=pond_request.id,
                                          type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
                 new_notif.save()
                 for each_member in pond_request.pond.pond_members.all():
                     pond_mess = "Pond: %s has new member: %s %s" % (pond_request.pond.name_of_pond,
                                                                     each_member.user.first_name, each_member.user.last_name)
-                    new_notif = Notification(user=each_member.user, name_of_notification=pond_mess,
+                    new_notif = Notification(user=each_member.user, name_of_notification=pond_mess, id_of_object=pond_request.id,
                                              type_of_notification=global_variables.NEW_PONDERS)
                     new_notif.save()
                 pond_request.pond.pond_members.add(pond_request.user)

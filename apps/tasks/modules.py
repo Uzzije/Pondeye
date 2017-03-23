@@ -12,7 +12,8 @@ from bs4 import BeautifulSoup
 from django.contrib import messages
 import global_variables_tasks
 from ..social.models import Notification, ProgressPictureSet, ProfilePictures, \
-    PondSpecificProject, Pond, ProjectPicture, VoucheProject, LetDownProject, ProgressImpressedCount, Follow
+    PondSpecificProject, Pond, ProjectPicture, VoucheProject, LetDownProject, ProgressImpressedCount, Follow, \
+    SeenProject, WorkEthicRank
 from ..social import global_variables
 import random, string
 from django.utils import timezone as django_timezone
@@ -383,7 +384,7 @@ def get_pond_status(pond_members):
             return status
 
 
-def confirm_expired_milestone_and_project():
+def confirm_expired_project():
     yesterday = form_module.get_current_datetime()
     '''
     all_milestones = Milestone.objects.all().filter(Q(done_by__lte=yesterday), Q(is_completed=False),
@@ -429,7 +430,7 @@ def confirm_expired_milestone_and_project():
                         let_down_mess = "%s %s let you down by failing to complete this goal: %s"\
                                         % (each_proj.user.user.first_name, each_proj.user.user.first_name, each_proj.name_of_project )
                         for each_user in user_proj_vouch.users.all():
-                            notification = Notification(user=each_user.user, name_of_notification=let_down_mess,
+                            notification = Notification(user=each_user.user, name_of_notification=let_down_mess, id_of_object=let_down.id,
                                             type_of_notification=global_variables.NEW_PROJECT_LETDOWN)
                             let_down.users.add(each_user)
                             notification.save()
@@ -489,6 +490,11 @@ def user_stats(user):
     correct_vouch_percentage = correct_vouching_percentage(tikedge_user)
     correct_vouch_grade = get_letter_grade(correct_vouch_percentage)
     rank = get_user_consistency_rank(user, consistency_percentage)
+    try:
+        work_ethic = WorkEthicRank.objects.get(tikedge_user=tikedge_user)
+    except ObjectDoesNotExist:
+        work_ethic = WorkEthicRank(tikedge_user=tikedge_user)
+        work_ethic.save()
     stats_dic = {
         'goal_success_count':goal_success_count,
         'goal_failed_count':goal_failed_count,
@@ -499,10 +505,67 @@ def user_stats(user):
         'total_goal_followers': total_goal_followers,
         'correct_vouch_percentage':correct_vouch_percentage,
         'correct_vouch_grade':correct_vouch_grade,
-        'rank':rank
+        'rank':rank,
+        'work_ethic_consis_rank': work_ethic.consistency_rank,
+        'work_ethic_correct_vouch': work_ethic.correct_vouching_rank,
+        'work_ethic_rank': work_ethic.work_ethic_rank
     }
 
     return stats_dic
+
+
+def global_ranking_algorithm():
+    """
+    A global ranking of all users based on how many task completed, consistency, correct vouching
+    :return:
+    """
+    all_active_user = TikedgeUser.objects.all()
+    count_of_users = all_active_user.count()
+    rank_list = []
+    for each_user in all_active_user:
+        user_stat = user_stats(each_user.user)
+        rank_list.append({
+            'user':each_user,
+            'consis_per':user_stat['consistency_percentage'],
+            'correct_vouch_perc':user_stat['correct_vouch_percentage'],
+            'rank':user_stat['rank']
+        })
+    sort_by_correct_vouch = sorted(rank_list, key=lambda x: x['consis_per'], reverse=True)
+    sort_by_consistency = sorted(rank_list, key=lambda x: x['correct_vouch_perc'], reverse=True)
+    sort_by_rank = sorted(rank_list, key=lambda x: x['rank'], reverse=True)
+    temp_rank = 0
+    for each_user in sort_by_consistency:
+        try:
+            work_ethic = WorkEthicRank.objects.get(tikedge_user=each_user)
+        except ObjectDoesNotExist:
+            work_ethic = WorkEthicRank(tikedge_user=each_user)
+            work_ethic.save()
+        user_rank = 100 - (temp_rank/count_of_users*100)
+        work_ethic.consistency_rank = int(user_rank)
+        work_ethic.save()
+        temp_rank += 1
+    temp_rank = 0
+    for each_user in sort_by_correct_vouch:
+        try:
+            work_ethic = WorkEthicRank.objects.get(tikedge_user=each_user)
+        except ObjectDoesNotExist:
+            work_ethic = WorkEthicRank(tikedge_user=each_user)
+            work_ethic.save()
+        user_rank = 100 - (temp_rank/count_of_users*100)
+        work_ethic.correct_vouching_rank = int(user_rank)
+        work_ethic.save()
+        temp_rank += 1
+    temp_rank = 0
+    for each_user in sort_by_rank:
+        try:
+            work_ethic = WorkEthicRank.objects.get(tikedge_user=each_user)
+        except ObjectDoesNotExist:
+            work_ethic = WorkEthicRank(tikedge_user=each_user)
+            work_ethic.save()
+        user_rank = 100 - (temp_rank/count_of_users*100)
+        work_ethic.work_ethic_rank = int(user_rank)
+        work_ethic.save()
+        temp_rank += 1
 
 
 def get_user_consistency_rank(user, consistency_percentage):
@@ -530,7 +593,7 @@ def get_letter_grade(percentage):
 
 def pond_leader_board_rank(pond):
     """
-    Returns the a leaderboard list of pond members based on rank
+    Returns the leader board list of pond members based on rank
     :param pond:
     :return:
     """
@@ -585,15 +648,33 @@ def user_total_goal_followers(tikedge_user):
 
 
 def correct_vouching_percentage(tikedge_user):
-
-    project_vouches = VoucheProject.objects.filter(user=tikedge_user)
-    let_down_vouches = LetDownProject.objects.filter(user=tikedge_user)
-    project_vouches_count = project_vouches.count()
-    let_down_count = let_down_vouches.count()
-    total_count = project_vouches_count + let_down_count
-    correct_vouch = float((project_vouches_count/total_count)*100)
+    """
+    Returns a percentage of vouching user got right.
+    :param tikedge_user:
+    :return:
+    """
+    all_seen_count = SeenProject.objects.filter(user=tikedge_user)\
+        .filter(Q(is_failed=True) | Q(is_completed=True))
+    project_vouches = get_projects_user_vouched_for(tikedge_user)
+    correct_call_count = 0
+    for each_seen in all_seen_count:
+        if (each_seen.tasks in project_vouches and each_seen.tasks.is_completed) or \
+            (each_seen.tasks not in project_vouches and each_seen.tasks.is_failed):
+            correct_call_count += 1
+    correct_vouch = float((correct_call_count/all_seen_count.count())*100)
     return correct_vouch
 
+def get_projects_user_vouched_for(tikedge_user):
+    """
+    Returns all projects user vouched for
+    :param tikedge_user:
+    :return: a list of userproject objects
+    """
+    proj_list = []
+    project_vouches = VoucheProject.objects.filter(user=tikedge_user)
+    for vouch in project_vouches:
+        proj_list.append(vouch.tasks)
+    return proj_list
 
 
 def get_recent_projects(user, requesting_user, is_live=True):
@@ -607,6 +688,7 @@ def get_recent_projects(user, requesting_user, is_live=True):
     for private_proj in pond_specific_project:
         list_project.append(private_proj.project)
     return list_project
+
 
 def display_error(form, request):
     for field, mes in form.errors.items():
@@ -653,7 +735,8 @@ def get_recent_projects_json(projects):
     for each_proj in projects:
         project_list.append({
             'blurb':each_proj.blurb,
-            'id':each_proj.id
+            'id':each_proj.id,
+            'is_live':each_proj.is_live
         })
     return project_list
 

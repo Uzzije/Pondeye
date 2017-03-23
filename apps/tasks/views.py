@@ -12,13 +12,13 @@ from ..social.modules import get_journal_message, \
 from modules import get_user_projects, \
     time_has_past,\
     get_todays_milestones, \
-    confirm_expired_milestone_and_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
+    confirm_expired_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
     get_failed_proj_count, get_recent_projects, get_status, display_error
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from datetime import datetime
-from ..social.global_variables import MILESTONE, NEW_PROJECT, ALL_POND_STATUS
+from ..social.global_variables import MILESTONE, PROJECT, ALL_POND_STATUS
 from friendship.models import Friend
 import json
 from django.contrib import messages
@@ -406,9 +406,9 @@ class AddProject(LoginRequiredMixin, View):
             new_project.save()
             day_entry = user.journalpost_set.all().count()
             new_journal_entry = JournalPost(
-                                            entry_blurb=get_journal_message(NEW_PROJECT, project=new_project.blurb),
+                                            entry_blurb=get_journal_message(PROJECT, project=new_project.blurb),
                                             day_entry=day_entry + 1,
-                                            event_type=NEW_PROJECT,
+                                            event_type=PROJECT,
                                             is_project_entry=True,
                                             new_project_entry=new_project,
                                             user=user
@@ -481,7 +481,7 @@ class CheckFailedProjectMilestoneView(View):
         response = {}
         try:
             tikedge_user = TikedgeUser.objects.get(user=request.user)
-            confirm_expired_milestone_and_project(tikedge_user)
+            confirm_expired_project(tikedge_user)
             response["status"] = True
         except ObjectDoesNotExist:
             response["status"] = False

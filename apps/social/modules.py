@@ -2,7 +2,7 @@ from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
 from .models import ProfilePictures, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, PondSpecificProject, \
-     PondRequest, Pond, PondMembership, ProgressPicture, ProgressPictureSet, VoucheProject
+     PondRequest, Pond, PondMembership, ProgressPicture, ProgressPictureSet, VoucheProject, LetDownProject
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from django.core.exceptions import ObjectDoesNotExist
@@ -215,7 +215,7 @@ def get_users_feed(user):
         project_feed.append(each_proj.project)
     for each_proj_feed in project_feed:
         print "Project Name %s \n" % each_proj_feed.name_of_project
-        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT, url_domain=CURRENT_URL)
+        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.PROJECT, url_domain=CURRENT_URL)
         list_of_feed.append(feed)
         milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
         for each_tasks in milestone_feed:
@@ -248,7 +248,7 @@ def get_users_feed_json(user, local_timezone='UTC'):
         print "pond project appended ", each_proj.project.name_of_project
     for each_proj_feed in project_feed:
         print "Project Name %s \n" % each_proj_feed.name_of_project
-        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.NEW_PROJECT, url_domain=CURRENT_URL)
+        feed = PondFeed(each_proj_feed, type_of_feed=global_variables.PROJECT, url_domain=CURRENT_URL)
         list_of_feed.append(feed)
         created_sec = int(feed.created.strftime('%s'))
         list_of_feed_json.append({
@@ -390,7 +390,7 @@ def create_failed_notification(milestone):
         if vouches:
             for each_user in vouches.users.all():
 
-                new_notif = Notification(user=each_user.user, name_of_notification=mes,
+                new_notif = Notification(user=each_user.user, name_of_notification=mes, id_of_object=vouches.id,
                                          type_of_notification=global_variables.USER_DELETED_MILESTONE)
                 new_notif.save()
         for each_pond in ponds:
@@ -412,13 +412,13 @@ def create_failed_notification_proj_by_deletion(project):
         vouches = VoucheProject.objects.get(tasks=project)
         if vouches.get_count():
             for each_user in vouches.users.all():
-                new_notif = Notification(user=each_user.user, name_of_notification=mes,
+                new_notif = Notification(user=each_user.user, name_of_notification=mes,id_of_object=vouches.id,
                                          type_of_notification=global_variables.USER_DELETED_PROJECT)
                 new_notif.save()
 
         for each_pond in ponds:
             for each_user in each_pond.pond_members.all():
-                new_notif = Notification(user=each_user.user, name_of_notification=mes,
+                new_notif = Notification(user=each_user.user, name_of_notification=mes, id_of_object=vouches.id,
                                          type_of_notification=global_variables.USER_DELETED_PROJECT)
                 new_notif.save()
 
@@ -475,7 +475,7 @@ def get_pond(user):
     return ponds
 
 
-def new_goal_added_notification_to_pond(project, is_new_project=True):
+def new_goal_or_progress_added_notification_to_pond(project, is_new_project=True):
     try:
         pond_specifics = PondSpecificProject.objects.get(project=project)
         ponds = pond_specifics.pond.all(is_deleted=False)
@@ -486,14 +486,22 @@ def new_goal_added_notification_to_pond(project, is_new_project=True):
             if is_new_project:
                 notif_mess = "%s %s created a new goal: %s" % \
                 (each_member.user.first_name, each_member.user.last_name, project.name_of_project)
-                new_notif = Notification(type_of_notification=global_variables.NEW_PROJECT_ADDED,
+                new_notif = Notification(type_of_notification=global_variables.NEW_PROJECT_ADDED,id_of_object=project.id,
                                          name_of_notification=notif_mess, user=each_member.user)
             else:
                 notif_mess = "%s %s capture a new progress picture to his goal: %s" % \
                 (each_member.user.first_name, each_member.user.last_name, project.name_of_project)
-                new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,
+                new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,id_of_object=project.id,
                                          name_of_notification=notif_mess, user=each_member.user)
             new_notif.save()
+    followers = Follow.objects.get(tasks=project).users.all()
+    for each_member in followers:
+        notif_mess = "%s %s capture a new progress picture to his goal: %s" % \
+                        (each_member.user.first_name, each_member.user.last_name, project.name_of_project)
+        new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,id_of_object=project.id,
+                                                 name_of_notification=notif_mess, user=each_member.user)
+        new_notif.save()
+
 
 def pond_to_json(ponds):
     pond_list = []
@@ -518,18 +526,18 @@ def get_let_down_notifications(user):
     :return:
     """
     tikedge_user = TikedgeUser.objects.get(user=user)
-    milestones = tikedge_user.milestone_set.filter(is_deleted=False)
+    user_project = tikedge_user.user_project_set.filter(is_deleted=False)
     let_down_list = []
-    for each_mil in milestones:
+    for each_proj in user_project:
         try:
-            let_down = LetDownMilestone.objects.get(tasks=each_mil)
-            count = let_down.users.count()
+            let_down = LetDownProject.objects.get(tasks=each_proj)
+            count = let_down.get_count()
             let_down_list.append({
-                'name_of_blurb':each_mil.blurb,
-                'mil':each_mil,
+                'name_of_blurb':each_proj.blurb,
+                'proj':each_proj,
                 'count':count,
-                'created':each_mil.created_date,
-                'id':each_mil.id,
+                'created':each_proj.created,
+                'id':each_proj.id,
                 'first_name':None,
                 'last_name':None
 
@@ -545,14 +553,17 @@ def get_notification_of_user(user, timezone='UTC'):
         tikedge_user = TikedgeUser.objects.get(user=user)
         print "tikdge name ", tikedge_user.user.username
         let_down = let_downs(user)
-        mil_vouches = get_milestone_vouch_notifications(user)
+        proj_vouches = get_project_vouch_notifications(user)
         new_ponder = get_new_pond_member_notification(tikedge_user)
         interests = get_interest_notification(tikedge_user.userproject_set.all())
-        quited_on_milestone = Notification.objects.filter(Q(user=user),
-                                                           Q(type_of_notification=global_variables.USER_DELETED_MILESTONE)).order_by('-created')
         quited_on_project = Notification.objects.filter(Q(user=user),
                                                           Q(type_of_notification=global_variables.USER_DELETED_PROJECT)).order_by('-created')
         ponder_request = PondRequest.objects.filter(Q(pond__pond_members__user=user), ~Q(user=tikedge_user)).order_by('-date_requested')
+        project_viewed = project_viewed_notifications(user)
+        new_project = project_added_notifications(user)
+        new_progress = progress_added_notifications(user)
+        progress_viewed = progress_viewed_notifications(user)
+        progress_like = progress_latest_impressed(user)
         notif_list = []
         for each_mil in let_down:
             created = int(each_mil['created'].strftime('%s'))
@@ -563,30 +574,40 @@ def get_notification_of_user(user, timezone='UTC'):
                 'count': each_mil['count'],
                 'created_view':utc_to_local(each_mil['created'], local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
                 'is_let_down':True,
-                'is_milestone_vouch':False,
+                'is_project_vouch':False,
                 'is_new_ponder':False,
                 'is_interests':False,
                 'is_mil_quit': False,
                 'is_proj_quit':False,
                 'is_pond_request':False,
+                'new_project':False,
+                'new_progress':False,
+                'progress_viewed':False,
+                'project_viewed':True,
+                'project_liked': False,
                 'id':each_mil['id'],
-                'mil_is_deleted':each_mil['mil'].is_deleted,
+                'mil_is_deleted':each_mil['proj'].is_deleted,
                 'created':created
             })
-        for each_mil in mil_vouches:
+        for each_mil in proj_vouches:
             created = int(each_mil['created'].strftime('%s'))
             notif_list.append({
                 'blurb':each_mil['blurb'],
                 'is_let_down':False,
-                'is_milestone_vouch':True,
+                'is_project_vouch':True,
                 'is_new_ponder':False,
                 'is_interests':False,
                 'is_mil_quit': False,
                 'is_proj_quit':False,
                 'is_pond_request':False,
+                'new_project':False,
+                'new_progress':False,
+                'progress_viewed':False,
+                'project_viewed':True,
+                'project_liked': False,
                 'id':each_mil['id'],
                 'created':created,
-                'mil_is_deleted':each_mil['is_mil_deleted'],
+                'proj_is_deleted':each_mil['is_proj_deleted'],
                 'count': each_mil['count']
             })
         for each_mil in ponder_request:
@@ -596,12 +617,17 @@ def get_notification_of_user(user, timezone='UTC'):
                 'last_name':each_mil.user.user.last_name,
                 'count': None,
                 'is_let_down':False,
-                'is_milestone_vouch':False,
+                'is_project_vouch':False,
                 'is_new_ponder':False,
                 'is_interests':False,
                 'is_mil_quit': False,
                 'is_proj_quit':False,
                 'is_pond_request':True,
+                'new_project':False,
+                'new_progress':False,
+                'progress_viewed':False,
+                'project_viewed':True,
+                'project_liked': False,
                 'id':each_mil.user.user.id,
                 'pond_id':each_mil.pond.id,
                 'request_id':each_mil.id,
@@ -617,12 +643,17 @@ def get_notification_of_user(user, timezone='UTC'):
             notif_list.append({
                 'blurb':each_mil['blurb'],
                 'is_let_down':False,
-                'is_milestone_vouch':False,
+                'is_project_vouch':False,
                 'is_new_ponder':False,
                 'is_interests':True,
                 'is_mil_quit': False,
                 'is_proj_quit':False,
                 'is_pond_request':False,
+                'new_project':False,
+                'new_progress':False,
+                'progress_viewed':False,
+                'project_viewed':True,
+                'project_liked': False,
                 'user_id':each_mil['user_id'],
                 'proj_id':each_mil['proj_id'],
                 'username':each_mil['username'],
@@ -632,30 +663,22 @@ def get_notification_of_user(user, timezone='UTC'):
                 'created':created
 
             })
-        for each_mil in quited_on_milestone:
-            created = int(each_mil.created.strftime('%s'))
-            notif_list.append({
-                'blurb':each_mil.name_of_notification,
-                'is_let_down':False,
-                'is_milestone_vouch':False,
-                'is_new_ponder':False,
-                'is_interests':False,
-                'is_mil_quit': True,
-                'is_proj_quit':False,
-                'is_pond_request':False,
-                'created':created
-            })
         for each_mil in quited_on_project:
             created = int(each_mil.created.strftime('%s'))
             notif_list.append({
                 'blurb':each_mil.name_of_notification,
                 'is_let_down':False,
-                'is_milestone_vouch':False,
+                'is_project_vouch':False,
                 'is_new_ponder':False,
                 'is_interests':False,
                 'is_mil_quit': False,
                 'is_proj_quit':True,
                 'is_pond_request':False,
+                'new_project':False,
+                'new_progress':False,
+                'progress_viewed':False,
+                'project_viewed':True,
+                'project_liked': False,
                 'created':created
             })
         for each_mil in new_ponder:
@@ -665,22 +688,244 @@ def get_notification_of_user(user, timezone='UTC'):
                 'last_name':each_mil.user.user.last_name,
                 'count': None,
                 'is_let_down':False,
-                'is_milestone_vouch':False,
+                'is_project_vouch':False,
                 'is_new_ponder':True,
                 'is_interests':False,
                 'is_mil_quit': False,
                 'is_proj_quit':False,
                 'is_pond_request':False,
+                'new_project':False,
+                'new_progress':False,
+                'progress_viewed':False,
+                'project_viewed':True,
+                'project_liked': False,
                 'is_deleted':each_mil.pond.is_deleted,
                 'user_id':each_mil.user.user.id,
                 'blurb':each_mil.pond.blurb,
                 'pond_id':each_mil.pond.id,
                 'created':created
             })
+        for each_mil in new_project:
+            notif_mess = Notification.objects.get(id_of_object=each_mil.id, type_of_notification=global_variables.NEW_PROJECT_ADDED)
+            created = int(notif_mess.created.strftime('%s'))
+            notif_list.append({
+                'first_name':each_mil.user.user.first_name,
+                'last_name':each_mil.user.user.last_name,
+                'count': None,
+                'is_let_down':False,
+                'is_project_vouch':False,
+                'is_new_ponder':False,
+                'is_interests':False,
+                'is_mil_quit': False,
+                'is_proj_quit':False,
+                'is_pond_request':False,
+                'new_project':True,
+                'new_progress':False,
+                'progress_viewed':False,
+                'project_viewed':False,
+                'is_deleted':False,
+                'project_liked': False,
+                'user_id':each_mil.user.user.id,
+                'blurb':notif_mess,
+                'id':each_mil.id,
+                'created':created
+            })
+        for each_mil in new_progress:
+            notif_mess = Notification.objects.get(id_of_object=each_mil.id, type_of_notification=global_variables.NEW_PROGRESS_ADDED)
+            created = int(notif_mess.created.strftime('%s'))
+            notif_list.append({
+                'first_name':each_mil.user.user.first_name,
+                'last_name':each_mil.user.user.last_name,
+                'count': None,
+                'is_let_down':False,
+                'is_project_vouch':False,
+                'is_new_ponder':False,
+                'is_interests':False,
+                'is_mil_quit': False,
+                'is_proj_quit':False,
+                'is_pond_request':False,
+                'new_project':False,
+                'new_progress':True,
+                'progress_viewed':False,
+                'project_viewed':False,
+                'is_deleted':False,
+                'project_liked': False,
+                'user_id':each_mil.user.user.id,
+                'blurb':notif_mess,
+                'id':each_mil.id,
+                'created':created
+            })
+            for each_mil in progress_viewed:
+                notif_mess = Notification.objects.get(id_of_object=each_mil.id, type_of_notification=global_variables.PROGRESS_WAS_VIEWED)
+                created = int(notif_mess.created.strftime('%s'))
+                notif_list.append({
+                    'first_name':each_mil.user.user.first_name,
+                    'last_name':each_mil.user.user.last_name,
+                    'count': None,
+                    'is_let_down':False,
+                    'is_project_vouch':False,
+                    'is_new_ponder':False,
+                    'is_interests':False,
+                    'is_mil_quit': False,
+                    'is_proj_quit':False,
+                    'is_pond_request':False,
+                    'new_project':False,
+                    'new_progress':False,
+                    'progress_viewed':True,
+                    'project_viewed':False,
+                    'is_deleted':False,
+                    'project_liked': False,
+                    'user_id':each_mil.user.user.id,
+                    'blurb':notif_mess,
+                    'id':each_mil.id,
+                    'created':created
+                })
+            for each_mil in project_viewed:
+                notif_mess = Notification.objects.get(id_of_object=each_mil.id, type_of_notification=global_variables.PROJECT_WAS_VIEWED)
+                created = int(notif_mess.created.strftime('%s'))
+                notif_list.append({
+                    'first_name':each_mil.user.user.first_name,
+                    'last_name':each_mil.user.user.last_name,
+                    'count': None,
+                    'is_let_down':False,
+                    'is_project_vouch':False,
+                    'is_new_ponder':False,
+                    'is_interests':False,
+                    'is_mil_quit': False,
+                    'is_proj_quit':False,
+                    'is_pond_request':False,
+                    'new_project':False,
+                    'new_progress':False,
+                    'progress_viewed':False,
+                    'project_viewed':True,
+                    'is_deleted':False,
+                    'project_liked': False,
+                    'user_id':each_mil.user.user.id,
+                    'blurb':notif_mess,
+                    'id':each_mil.id,
+                    'created':created
+                })
+            for each_mil in progress_like:
+
+                notif_mess = Notification.objects.get(id_of_object=each_mil.id,
+                                                      type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED)
+                created = int(notif_mess.created.strftime('%s'))
+                notif_list.append({
+                    'first_name':each_mil.user.user.first_name,
+                    'last_name':each_mil.user.user.last_name,
+                    'count': None,
+                    'is_let_down':False,
+                    'is_project_vouch':False,
+                    'is_new_ponder':False,
+                    'is_interests':False,
+                    'is_mil_quit': False,
+                    'is_proj_quit':False,
+                    'is_pond_request':False,
+                    'new_project':False,
+                    'new_progress':False,
+                    'progress_viewed':False,
+                    'project_viewed':False,
+                    'project_liked': True,
+                    'is_deleted':False,
+                    'user_id':each_mil.user.user.id,
+                    'blurb':notif_mess,
+                    'id':each_mil.id,
+                    'created':created
+                })
         sort_notif_list = sorted(notif_list, key=lambda x: x['created'], reverse=True)
         return sort_notif_list
     except ObjectDoesNotExist:
         return []
+
+
+def project_viewed_notifications(user):
+    """
+    Get all new notifications related to new project
+    :param user:
+    :return:
+    """
+    project_view_notifications = user.notification_set.all().filter(Q(user=user,
+                                                               type_of_notification=global_variables.PROJECT_WAS_VIEWED))
+    project_proj_list = []
+    for each_prog in project_view_notifications:
+        try:
+            project = UserProject.objects.get(is_deleted=False, id=each_prog.id_of_object)
+            project_proj_list.append(project)
+        except ObjectDoesNotExist:
+            pass
+    return project_proj_list
+
+
+def progress_viewed_notifications(user):
+    """
+    Get all new notifications related to new progress
+    :param user:
+    :return:
+    """
+    progress_view_notifications = user.notification_set.all().filter(Q(user=user,
+                                                               type_of_notification=global_variables.PROGRESS_WAS_VIEWED))
+    progress_proj_list = []
+    for each_prog in progress_view_notifications:
+        try:
+            project = UserProject.objects.get(is_deleted=False, id=each_prog.id_of_object)
+            progress_proj_list.append(project)
+        except ObjectDoesNotExist:
+            pass
+    return progress_proj_list
+
+
+def project_added_notifications(user):
+    """
+    Get all new notifications related to new project
+    :param user:
+    :return:
+    """
+    project_view_notifications = user.notification_set.all().filter(Q(user=user,
+                                                               type_of_notification=global_variables.NEW_PROJECT_ADDED))
+    project_proj_list = []
+    for each_prog in project_view_notifications:
+        try:
+            project = UserProject.objects.get(is_deleted=False, id=each_prog.id_of_object)
+            project_proj_list.append(project)
+        except ObjectDoesNotExist:
+            pass
+    return project_proj_list
+
+
+def progress_added_notifications(user):
+    """
+    Get all new notifications related to new progress
+    :param user:
+    :return:
+    """
+    progress_view_notifications = user.notification_set.all().filter(Q(user=user,
+                                                               type_of_notification=global_variables.NEW_PROGRESS_ADDED))
+    progress_proj_list = []
+    for each_prog in progress_view_notifications:
+        try:
+            project = UserProject.objects.get(is_deleted=False, id=each_prog.id_of_object)
+            progress_proj_list.append(project)
+        except ObjectDoesNotExist:
+            pass
+    return progress_proj_list
+
+
+def progress_latest_impressed(user):
+    """
+    Get all new notifications related to new progress_like
+    :param user:
+    :return:
+    """
+    progress_liked_notifications = user.notification_set.all().filter(Q(user=user,
+                                                               type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED))
+    progress_impress_list = []
+    for each_prog in progress_liked_notifications:
+        try:
+            project = UserProject.objects.get(is_deleted=False, id=each_prog.id_of_object)
+            progress_impress_list.append(project)
+        except ObjectDoesNotExist:
+            pass
+    return progress_impress_list
 
 
 def notification_of_people_that_let_you_down(user):
@@ -689,17 +934,17 @@ def notification_of_people_that_let_you_down(user):
     :param user:
     :return:
     """
-    let_down = LetDownMilestone.objects.filter(users__user=user)
+    let_down = LetDownProject.objects.filter(users__user=user)
     let_down_list = []
-    for each_mil in let_down:
+    for each_proj in let_down:
         let_down_list.append({
-            'name_of_blurb':each_mil.tasks.blurb,
-            'mil':each_mil.tasks,
+            'name_of_blurb':each_proj.tasks.blurb,
+            'proj':each_proj.tasks,
             'count': -1,
-            'created':each_mil.tasks.created_date,
-            'id':each_mil.tasks.id,
-            'first_name':each_mil.tasks.user.user.first_name,
-            'last_name':each_mil.tasks.user.user.last_name
+            'created':each_proj.tasks.created,
+            'id':each_proj.tasks.id,
+            'first_name':each_proj.tasks.user.user.first_name,
+            'last_name':each_proj.tasks.user.user.last_name
         })
     sorted_let_down_list = sorted(let_down_list, key=lambda x: x['created'], reverse=True)
     return sorted_let_down_list
@@ -731,6 +976,28 @@ def get_milestone_vouch_notifications(user):
         except ObjectDoesNotExist:
             pass
     return mil_vouch_list
+
+
+def get_project_vouch_notifications(user):
+    tikedge_user = TikedgeUser.objects.get(user=user)
+    user_projects = tikedge_user.userproject_set.filter(is_deleted=False)
+    proj_vouch_list = []
+    for each_proj in user_projects:
+        print " each mil", each_proj
+        try:
+            proj_vouch = VoucheProject.objects.get(tasks=each_proj)
+            count = proj_vouch.users.count()
+            proj_vouch_list.append({
+                'blurb':each_proj.blurb,
+                'slug':each_proj.slug,
+                'count':count,
+                'id':each_proj.id,
+                'created':proj_vouch.latest_vouch,
+                'is_proj_deleted':each_proj.is_deleted
+            })
+        except ObjectDoesNotExist:
+            pass
+    return proj_vouch_list
 
 
 def milestone_project_app_view(milestones):
@@ -776,7 +1043,7 @@ def send_pond_request(pond, user):
        pond_mess = "%s %s wants to join this pond: %s" % (tikedge_user.user.first_name,
                                                          tikedge_user.user.first_name, pond.name_of_pond)
        for member in pond.pond_members.all():
-           notification = Notification(user=member.user, name_of_notification=pond_mess,
+           notification = Notification(user=member.user, name_of_notification=pond_mess, id_of_object=new_pond_request.id,
                                        type_of_notification=global_variables.POND_REQUEST)
            notification.save()
        data['status'] = True
@@ -993,6 +1260,34 @@ def mark_progress_viewed(user):
     """
     notifcation = user.notification_set.all().filter(read=False,
                                                      type_of_notification=global_variables.PROGRESS_WAS_VIEWED)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_new_progress_added_as_read(user):
+
+    """
+    Notification that new progress has been created and has been read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.NEW_PROGRESS_ADDED)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_new_project_added_as_read(user):
+
+    """
+    Notification that new project has been created and has been read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.NEW_PROJECT_ADDED)
     for each_notif in notifcation:
         each_notif.read = True
         each_notif.save()

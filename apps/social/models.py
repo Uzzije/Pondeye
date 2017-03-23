@@ -5,7 +5,7 @@ from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from friendship.models import FriendshipRequest
 from django.contrib.auth.models import User
 from django.utils.timezone import now
-from global_variables import NEW_PROJECT
+from global_variables import PROJECT
 from random import randint
 from django.template.defaultfilters import slugify
 
@@ -112,6 +112,7 @@ class SeenProject(models.Model):
     def __str__(self):
         return self.tasks.name_of_project
 
+
 class SeenPictureSet(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the pictureSet")
     tasks = models.ForeignKey(PictureSet, blank=True, null=True)
@@ -172,9 +173,14 @@ class Follow(models.Model):
 class ProgressImpressedCount(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the pictureSet")
     tasks = models.ForeignKey(ProgressPicture, blank=True, null=True)
+    latest_impressed = models.DateTimeField(default=now)
 
     def get_count(self):
         return self.users.count()
+
+    def save(self, *args, **kwargs):
+        self.latest_impressed = now()
+        super(ProgressImpressedCount, self).save(*args, **kwargs)
 
 
 class LetDownMilestone(models.Model):
@@ -205,6 +211,7 @@ class Notification(models.Model):
     read = models.BooleanField(default=False)
     project_update = models.ForeignKey(UserProject, blank=True, null=True)
     name_of_notification = models.CharField(max_length=700, default="")
+    id_of_object = models.IntegerField(default=0)
 
     def __str__(self):
         return self.type_of_notification
@@ -214,7 +221,7 @@ class JournalPost(models.Model):
     entry_blurb = models.CharField(default=None, max_length=240)
     day_entry = models.IntegerField(default=1)
     day_created = models.DateTimeField(default=now)
-    event_type = models.CharField(default=NEW_PROJECT, max_length=20)
+    event_type = models.CharField(default=PROJECT, max_length=20)
     picture_set_entry = models.ForeignKey(PictureSet, null=True)
     milestone_entry = models.ForeignKey(Milestone, null=True)
     new_project_entry = models.ForeignKey(UserProject, null=True)
@@ -302,7 +309,9 @@ class PondSpecificProject(models.Model):
 
 class WorkEthicRank(models.Model):
     tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
-    rank = models.IntegerField(default=0)
+    consistency_rank = models.IntegerField(default=0)
+    correct_vouching_rank = models.IntegerField(default=0)
+    work_ethic_rank = models.IntegerField(default=0)
 
             
 

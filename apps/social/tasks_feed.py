@@ -36,9 +36,7 @@ class PondFeed:
         self.feed_user = self.get_user_tikedge().user
 
     def get_user_tikedge(self):
-        if self.type_of_feed is global_variables.PICTURE_SET:
-            return self.tasks.tikedge_user
-        elif self.type_of_feed is global_variables.PROGRESS:
+        if self.type_of_feed is global_variables.PROGRESS:
             return self.tasks.project.user
         else:
             return self.tasks.user
@@ -63,7 +61,7 @@ class PondFeed:
             return False
 
     def is_project_feed(self):
-        if self.type_of_feed is global_variables.NEW_PROJECT:
+        if self.type_of_feed is global_variables.PROJECT:
             return True
         else:
             return False
@@ -77,7 +75,7 @@ class PondFeed:
         elif self.type_of_feed is global_variables.PICTURE_SET:
             message = "For milestone: %s." % self.tasks.milestone.blurb
             return message
-        elif self.type_of_feed is global_variables.NEW_PROJECT:
+        elif self.type_of_feed is global_variables.PROJECT:
             message = "Project: %s" % self.tasks.blurb
             return message
         elif self.type_of_feed is global_variables.PROGRESS:
@@ -114,7 +112,7 @@ class PondFeed:
                 seensd = SeenMilestone.objects.get(tasks=self.tasks)
             elif self.type_of_feed is global_variables.PICTURE_SET:
                 seensd = SeenPictureSet.objects.get(tasks=self.tasks)
-            elif self.type_of_feed is global_variables.NEW_PROJECT:
+            elif self.type_of_feed is global_variables.PROJECT:
                 seensd = SeenProject.objects.get(tasks=self.tasks)
             else:
                 return 0
