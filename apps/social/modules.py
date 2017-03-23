@@ -402,6 +402,20 @@ def create_failed_notification(milestone):
                 new_notif.save()
 
 
+def create_failed_notification_proj(project):
+    yesterday = get_current_datetime() - timedelta(hours=18)
+    if project.is_live and project.created < yesterday:
+        project.is_failed = True
+        ponds = Pond.objects.filter(pond_members__user=project.user.user)
+        mes = "%s %s quit on the goal: %s" % (project.user.user.first_name, project.user.user.last_name,
+                                                      project.name_of_project)
+        for each_pond in ponds:
+            for each_user in each_pond.pond_members.all():
+                new_notif = Notification(user=each_user.user, name_of_notification=mes,
+                                         type_of_notification=global_variables.USER_DELETED_PROJECT)
+                new_notif.save()
+
+
 def create_failed_notification_proj_by_deletion(project):
     yesterday = get_current_datetime() - timedelta(hours=18)
     if project.is_live and project.created < yesterday:
