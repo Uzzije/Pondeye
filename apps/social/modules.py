@@ -492,7 +492,7 @@ def get_pond(user):
 def new_goal_or_progress_added_notification_to_pond(project, is_new_project=True):
     try:
         pond_specifics = PondSpecificProject.objects.get(project=project)
-        ponds = pond_specifics.pond.all(is_deleted=False)
+        ponds = pond_specifics.pond.filter(is_deleted=False)
     except ObjectDoesNotExist:
         ponds = get_pond(project.user.user)
     for each_pond in ponds.all():

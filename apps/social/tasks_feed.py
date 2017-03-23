@@ -194,7 +194,7 @@ class ProgressFeed(PondFeed):
             return None
         progress_list = []
         created_sec = int(self.created.strftime('%s'))
-        for progress in self.tasks.list_of_progress_pictures.all(is_deleted=False):
+        for progress in self.tasks.list_of_progress_pictures.filter(is_deleted=False):
             progress_list.append({
                'name': self.task_owner_name,
                'progress_message': progress.name_of_progress,
