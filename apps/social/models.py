@@ -76,7 +76,10 @@ class ProgressPictureSet(models.Model):
         return '%s' % self.project.name_of_project
 
     def picture_set_count(self):
-        count = self.list_of_progress_pictures.all(is_deleted=False)
+        try:
+            count = self.list_of_progress_pictures.filter(is_deleted=False).count()
+        except ValueError:
+            count = 0
         return count
 
 
@@ -107,7 +110,10 @@ class SeenProject(models.Model):
     tasks = models.ForeignKey(UserProject, blank=True, null=True)
 
     def get_count(self):
-        return self.users.count()
+        try:
+            return self.users.count()
+        except ValueError:
+            return 0
 
     def __str__(self):
         return self.tasks.name_of_project
@@ -123,7 +129,10 @@ class SeenProgress(models.Model):
     tasks = models.ForeignKey(ProgressPicture, blank=True, null=True)
 
     def get_count(self):
-        return self.users.count()
+        try:
+            return self.users.count()
+        except ValueError:
+            return 0
 
 
 class VoucheMilestone(models.Model):
@@ -167,7 +176,10 @@ class Follow(models.Model):
         super(Follow, self).save(*args, **kwargs)
 
     def get_count(self):
-         return self.users.count()
+        try:
+            return self.users.count()
+        except ValueError:
+            return 0
 
 
 class ProgressImpressedCount(models.Model):
@@ -176,7 +188,10 @@ class ProgressImpressedCount(models.Model):
     latest_impressed = models.DateTimeField(default=now)
 
     def get_count(self):
-        return self.users.count()
+        try:
+            return self.users.count()
+        except ValueError:
+            return 0
 
     def save(self, *args, **kwargs):
         self.latest_impressed = now()
@@ -202,6 +217,11 @@ class LetDownProject(models.Model):
        self.latest_letDown = now()
        super(LetDownProject, self).save(*args, **kwargs)
 
+    def get_count(self):
+       try:
+           return self.users.count()
+       except ValueError:
+           return 0
 
 class Notification(models.Model):
     friend_request = models.ForeignKey(FriendshipRequest, blank=True, null=True)
@@ -305,6 +325,12 @@ class PondSpecificProject(models.Model):
 
     def __str__(self):
         return self.project.name_of_project
+
+    def get_count(self):
+        try:
+            return self.pond.count()
+        except ValueError:
+            return 0
 
 
 class WorkEthicRank(models.Model):
