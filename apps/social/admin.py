@@ -1,7 +1,9 @@
 from django.contrib import admin
 from models import Follow, SeenMilestone, ProfilePictures, Notification, PictureSet, VoucheMilestone, \
 	Picture, JournalPost, JournalComment, Pond, PondRequest, PondMembership, PondSpecificProject, SeenProject, \
-	LetDownMilestone, ProgressPicture, ProgressPictureSet
+	LetDownMilestone, ProgressPicture, ProgressPictureSet, SeenProgress, SeenPictureSet, WorkEthicRank, LetDownProject, \
+	VoucheProject
+
 # Register your models here.
 
 admin.site.register(Follow)
@@ -21,3 +23,8 @@ admin.site.register(SeenProject)
 admin.site.register(LetDownMilestone)
 admin.site.register(ProgressPicture)
 admin.site.register(ProgressPictureSet)
+admin.site.register(SeenPictureSet)
+admin.site.register(SeenProgress)
+admin.site.register(LetDownProject)
+admin.site.register(WorkEthicRank)
+admin.site.register(VoucheProject)
