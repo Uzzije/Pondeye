@@ -660,7 +660,7 @@ def correct_vouching_percentage(tikedge_user):
     :return:
     """
     all_seen_count = SeenProject.objects.filter(users=tikedge_user)\
-        .filter(Q(is_failed=True) | Q(is_completed=True))
+        .filter(Q(tasks__is_failed=True) | Q(tasks__is_completed=True))
     project_vouches = get_projects_user_vouched_for(tikedge_user)
     correct_call_count = 0
     for each_seen in all_seen_count:
