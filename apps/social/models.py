@@ -158,7 +158,10 @@ class VoucheProject(models.Model):
         return self.tasks.name_of_project
 
     def get_count(self):
+        try:
             return self.users.count()
+        except ValueError:
+            return 0
 
 
 class BuildCredMilestone(models.Model):

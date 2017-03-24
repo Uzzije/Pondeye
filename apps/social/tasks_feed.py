@@ -3,7 +3,7 @@
 Feed and Notification Classes for Social News Feed of Application
 """
 from models import ProfilePictures,\
-    BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, VoucheMilestone, \
+    BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, VoucheProject, \
     Follow, ProgressImpressedCount,SeenProgress
 from friendship.models import FriendshipRequest
 from django.db.models import Q
@@ -136,8 +136,8 @@ class PondFeed:
 
     def vouche(self):
         try:
-            vouched = VoucheMilestone.objects.get(tasks=self.tasks)
-            count = vouched.users.count()
+            vouched = VoucheProject.objects.get(tasks=self.tasks)
+            count = vouched.get_count()
         except (ObjectDoesNotExist, AttributeError, ValueError):
             count = 0
         return count

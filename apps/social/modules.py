@@ -261,6 +261,7 @@ def get_users_feed_json(user, local_timezone='UTC'):
            'project_slug':feed.tasks.slug,
            'is_active': feed.tasks.is_live,
            'follow_count':feed.follow_count,
+            'vouch_count':feed.vouche_count,
            'seen_count': feed.seen_count,
            'created':utc_to_local(feed.created, local_timezone=local_timezone).strftime("%B %d %Y %I:%M %p"),
            'profile_url':feed.profile_url,
