@@ -590,11 +590,6 @@ class ApiProfileView(CSRFExemptView):
         all_projects_dj = get_recent_projects(tikedge_user.user, requesting_user, is_live=False)
         all_projs = get_recent_projects_json(all_projects_dj)
         current_tasks = get_todays_milestones_json(tikedge_user.user, current_proj_dj)
-        failed_mil_count = get_failed_mil_count(tikedge_user.user)
-        completed_mil_count = get_completed_mil_count(tikedge_user.user)
-        failed_proj_count = get_failed_proj_count(tikedge_user.user)
-        completed_proj_count = get_completed_proj_count(tikedge_user.user)
-        status_of_user = get_status(tikedge_user.user)
         profile_url = get_profile_pic_json(tikedge_user)
         try:
             prof_storage = ProfilePictures.objects.get(tikedge_user=tikedge_user).profile_pics.url
@@ -608,17 +603,13 @@ class ApiProfileView(CSRFExemptView):
             'user_id':tikedge_user.id,
             'current_tasks':current_tasks,
             'current_projs':current_projs,
-            'failed_mil_count':failed_mil_count,
-            'completed_mil_count':completed_mil_count,
-            'failed_proj_count':failed_proj_count,
-            'completed_proj_count':completed_proj_count,
-            'status_of_user':status_of_user,
             'profile_url': profile_url,
             'profile_url_storage': prof_storage,
             'aval_pond':aval_pond,
             'is_own_profile': user == other_user,
             'user_name':tikedge_user.user.username,
-            'all_projects':all_projs
+            'all_projects':all_projs,
+            'user_stats': modules.user_stats(other_user)
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)
