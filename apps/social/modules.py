@@ -333,12 +333,13 @@ def get_progress_set(progress_set, timezone):
         for each_progress in each_set.list_of_progress_pictures.all():
             set_dic['list_of_progress_pictures'].append({
                 'progress_message':each_progress.name_of_progress,
-                'date_created': utc_to_local(each_progress.last_updated, local_timezone=timezone),
+                'date_created': utc_to_local(each_progress.last_updated, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
                 'image_url': CURRENT_URL+each_progress.picture.url,
                 'progress_id': each_progress.id,
             })
         list_progress_entry.append(set_dic)
     return list_progress_entry
+
 
 def get_pic_list(pic_list):
     pic_list_arr = []
