@@ -335,7 +335,7 @@ class ApiProjectEditView(CSRFExemptView):
                 'hidden':False,
                 'tag_list':tag_list,
                 'time':modules.utc_to_local(each_proj.length_of_project, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
-                'proj_pic_id': project_pic.proj_pic_id,
+                'proj_pic_id': project_pic.pic_id,
                 'proj_pic_url': project_pic.url,
                 'has_pic':project_pic.has_pic
             })
