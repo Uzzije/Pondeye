@@ -540,7 +540,7 @@ def get_let_down_notifications(user):
     :return:
     """
     tikedge_user = TikedgeUser.objects.get(user=user)
-    user_project = tikedge_user.user_project_set.filter(is_deleted=False)
+    user_project = tikedge_user.userproject_set.filter(is_deleted=False)
     let_down_list = []
     for each_proj in user_project:
         try:
