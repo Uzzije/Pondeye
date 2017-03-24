@@ -1159,5 +1159,5 @@ class ApiGetNotification(CSRFExemptView):
             data["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(data), status=201)
         data = {}
-        data["status"] = modules.notification_exist(user)
+        data["data"] = modules.notification_exist(user)
         return HttpResponse(json.dumps((data)))

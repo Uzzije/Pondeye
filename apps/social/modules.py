@@ -443,7 +443,7 @@ def notification_exist(user):
     :param user:
     :return:
     """
-    return get_notifications_alert(user).has_notification
+    return get_notifications_alert(user)
 
 
 def file_is_picture(picture):
