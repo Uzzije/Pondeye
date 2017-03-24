@@ -313,6 +313,8 @@ def get_status(user):
     tikedge_user = get_tikedge_user(user)
     status = 0
     proj_all = tikedge_user.userproject_set.all().count()
+    if proj_all == 0:
+        proj_all = 1
     proj_success = get_completed_proj_count(user)
     project_count = proj_success + proj_all
     if proj_all == 0:
@@ -483,6 +485,8 @@ def user_stats(user):
     goal_success_count = get_completed_proj_count(user)
     goal_failed_count = get_failed_proj_count(user)
     total = goal_success_count + goal_failed_count
+    if total == 0:
+        total = 1
     consistency_percentage = float((goal_success_count/total)*100)
     consistency_grade = get_letter_grade(consistency_percentage)
     total_times_impressed = user_total_impress_count(tikedge_user)
@@ -521,6 +525,8 @@ def global_ranking_algorithm():
     """
     all_active_user = TikedgeUser.objects.all()
     count_of_users = all_active_user.count()
+    if count_of_users == 0:
+        count_of_users = 1
     rank_list = []
     for each_user in all_active_user:
         user_stat = user_stats(each_user.user)
@@ -661,7 +667,10 @@ def correct_vouching_percentage(tikedge_user):
         if (each_seen.tasks in project_vouches and each_seen.tasks.is_completed) or \
             (each_seen.tasks not in project_vouches and each_seen.tasks.is_failed):
             correct_call_count += 1
-    correct_vouch = float((correct_call_count/all_seen_count.count())*100)
+    all_seen_count_num = all_seen_count.count()
+    if all_seen_count_num == 0:
+        all_seen_count_num = 1
+    correct_vouch = float((correct_call_count/all_seen_count_num)*100)
     return correct_vouch
 
 def get_projects_user_vouched_for(tikedge_user):
