@@ -74,8 +74,8 @@
       <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6209573">
-              <caret line="219" column="44" selection-start-line="219" selection-start-column="44" selection-end-line="219" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.5821475">
+              <caret line="217" column="49" selection-start-line="217" selection-start-column="49" selection-end-line="217" selection-end-column="49" />
               <folding>
                 <element signature="e#92#261#0" expanded="true" />
               </folding>
@@ -106,8 +106,8 @@
       <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.9814815">
-              <caret line="646" column="16" selection-start-line="646" selection-start-column="6" selection-end-line="646" selection-end-column="16" />
+            <state vertical-scroll-proportion="-0.14814815">
+              <caret line="662" column="41" selection-start-line="662" selection-start-column="23" selection-end-line="662" selection-end-column="41" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -1212,8 +1212,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.9814815">
-          <caret line="646" column="16" selection-start-line="646" selection-start-column="6" selection-end-line="646" selection-end-column="16" />
+        <state vertical-scroll-proportion="-0.14814815">
+          <caret line="662" column="41" selection-start-line="662" selection-start-column="23" selection-end-line="662" selection-end-column="41" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
@@ -1222,8 +1222,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6209573">
-          <caret line="219" column="44" selection-start-line="219" selection-start-column="44" selection-end-line="219" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.5821475">
+          <caret line="217" column="49" selection-start-line="217" selection-start-column="49" selection-end-line="217" selection-end-column="49" />
           <folding>
             <element signature="e#92#261#0" expanded="true" />
           </folding>

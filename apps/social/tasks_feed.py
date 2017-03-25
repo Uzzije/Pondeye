@@ -216,7 +216,6 @@ class ProgressFeed(PondFeed):
             'profile_url':self.profile_url,
             'id': self.tasks.project.id,
             'user_id':self.tasks.project.user.id,
-            'proj_id':self.tasks,
             'progress_set_id': self.tasks.id
         }
         return progress_dic
