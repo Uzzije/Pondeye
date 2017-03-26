@@ -676,7 +676,7 @@ class ApiCreateImpressed(CSRFExemptView):
             response["status"] = True
             response["count"] = impressed_count.get_count()
             return HttpResponse(json.dumps(response), status=201)
-        if tikedge_user != progress.project.user:
+        if tikedge_user != progress_set.project.user:
             response["status"] = True
             impressed_count.users.add(tikedge_user)
             impressed_count.save()
