@@ -189,7 +189,6 @@ class ApiPictureUploadView(CSRFExemptView):
             response['has_proj'] = True
             response["status"] = True
             response["projects"] = projects
-            modules.new_goal_or_progress_added_notification_to_pond(projects, is_new_project=False)
         else:
 	        response["status"] = False
 	        response["error"] = "Create a goal, then use pictures to capture the progress of that goal!"
