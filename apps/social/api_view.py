@@ -691,9 +691,9 @@ class ApiCreateImpressed(CSRFExemptView):
             name_of_notif = "%s %s is impressed with your progress on this goal: %s" \
                             % (tikedge_user.user.first_name, tikedge_user.user.last_name, progress_set.project.name_of_project)
             try:
-                Notification.objects.get(user=impressed_count.tasks.user.user, id_of_object=impressed_count.tasks.id)
+                Notification.objects.get(user=progress_set.project.user.user, id_of_object=impressed_count.tasks.id)
             except ObjectDoesNotExist:
-                impress_notif = Notification(user=impressed_count.tasks.user.user, name_of_notification=name_of_notif,
+                impress_notif = Notification(user=progress_set.project.user.user, name_of_notification=name_of_notif,
                                          id_of_object=impressed_count.tasks.id,
                                          type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED)
                 impress_notif.save()
