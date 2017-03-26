@@ -76,7 +76,7 @@ class PondFeed:
             message = "For milestone: %s." % self.tasks.milestone.blurb
             return message
         elif self.type_of_feed is global_variables.PROJECT:
-            message = "Project: %s" % self.tasks.blurb
+            message = "Goal Created!: %s" % self.tasks.blurb
             return message
         elif self.type_of_feed is global_variables.PROGRESS:
             message =  "%s progression higlights "% self.tasks.project.name_of_project
