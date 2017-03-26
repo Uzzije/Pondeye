@@ -586,9 +586,16 @@ class ApiCreateVouch(CSRFExemptView):
             response["count"] = vouch_obj.get_count()
         else:
             if user != proj.user:
-                response["status"] = False
-                response["error"] = "Can't vouch for inactive milestone"
+                if not proj.is_live:
+                    response["status"] = False
+                    response["error"] = "Can't vote on inactive goal!"
+                elif user_response == global_variables.NO_USER_WILL_NOT_COMPLETE_GOAL:
+                    response['status'] = True
+                else:
+                    response["error"] = "Vote already noted"
+                    response['status'] = False
             else:
+                response["error"] = "Can't vote on your own goal!"
                 response['status'] = True
         try:
             view = SeenProject.objects.get(tasks=proj)
