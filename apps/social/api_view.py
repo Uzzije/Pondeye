@@ -596,7 +596,7 @@ class ApiCreateVouch(CSRFExemptView):
                     response['status'] = False
             else:
                 response["error"] = "Can't vote on your own goal!"
-                response['status'] = True
+                response['status'] = False
         try:
             view = SeenProject.objects.get(tasks=proj)
         except ObjectDoesNotExist:
