@@ -577,9 +577,13 @@ class ApiCreateVouch(CSRFExemptView):
             vouch_obj.save()
             notif_message = "%s %s believes that you will complete this goal: %s" \
                             % (user.user.first_name, user.user.last_name, proj.name_of_project)
-            vouch_notif = Notification(user=proj.user.user, name_of_notification=notif_message, id_of_object=vouch_obj.id,
+            try:
+                Notification.objects.get(user=proj.user.user, name_of_notification=notif_message, id_of_object=vouch_obj.id,
+                                                                    type_of_notification=global_variables.NEW_PROJECT_VOUCH)
+            except ObjectDoesNotExist:
+                vouch_notif = Notification(user=proj.user.user, name_of_notification=notif_message, id_of_object=vouch_obj.id,
                                                     type_of_notification=global_variables.NEW_PROJECT_VOUCH)
-            vouch_notif.save()
+                vouch_notif.save()
 
             response["status"] = True
             response["count"] = vouch_obj.get_count()
@@ -643,9 +647,13 @@ class ApiCreateFollow(CSRFExemptView):
             follow_obj.save()
             notif_mess = "%s %s is following your goal: %s" % (tikedge_user.user.first_name,
                                                               tikedge_user.user.last_name, project.name_of_project)
-            follow_notif = Notification(user=project.user.user, name_of_notification=notif_mess, id_of_object=follow_obj.id,
+            try:
+                Notification(user=project.user.user, name_of_notification=notif_mess, id_of_object=follow_obj.id,
+                                                        type_of_notification=global_variables.NEW_PROJECT_INTERESTED)
+            except ObjectDoesNotExist:
+                follow_notif = Notification(user=project.user.user, name_of_notification=notif_mess, id_of_object=follow_obj.id,
                                         type_of_notification=global_variables.NEW_PROJECT_INTERESTED)
-            follow_notif.save()
+                follow_notif.save()
         response["count"] = follow_obj.users.all().count()
         return HttpResponse(json.dumps(response), status=201)
 
@@ -682,10 +690,13 @@ class ApiCreateImpressed(CSRFExemptView):
             impressed_count.save()
             name_of_notif = "%s %s is impressed with your progress on this goal: %s" \
                             % (tikedge_user.user.first_name, tikedge_user.user.last_name, progress_set.project.name_of_project)
-            impress_notif = Notification(user=impressed_count.project.user.user, name_of_notification=name_of_notif,
+            try:
+                Notification.objects.get(user=impressed_count.tasks.user.user, id_of_object=impressed_count.tasks.id)
+            except ObjectDoesNotExist:
+                impress_notif = Notification(user=impressed_count.tasks.user.user, name_of_notification=name_of_notif,
                                          id_of_object=impressed_count.tasks.id,
                                          type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED)
-            impress_notif.save()
+                impress_notif.save()
         response["count"] = impressed_count.get_count()
         return HttpResponse(json.dumps(response), status=201)
 
