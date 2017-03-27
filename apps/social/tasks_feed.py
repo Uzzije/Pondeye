@@ -224,7 +224,7 @@ class ProgressFeed(PondFeed):
         return self.url_domain+progress.picture.url
 
     def impress_count(self, progress):
-        impress_count = ProgressImpressedCount(tasks=progress).get_count()
+        impress_count = ProgressImpressedCount.objects.get(tasks=progress).get_count()
         return impress_count
 
     def progress_seen_count(self, progress):
