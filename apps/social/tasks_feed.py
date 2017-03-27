@@ -193,6 +193,7 @@ class ProgressFeed(PondFeed):
         if self.tasks.is_empty:
             return None
         progress_list = []
+        progress_dic = {}
         created_sec = int(self.created.strftime('%s'))
         for progress in self.tasks.list_of_progress_pictures.filter(is_deleted=False):
             progress_list.append({
