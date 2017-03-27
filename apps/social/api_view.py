@@ -210,6 +210,9 @@ class ApiPictureUploadView(CSRFExemptView):
             response["error"] = "Hey picture must be either jpg, jpeg or png file! ", dec_picture_file
             return HttpResponse(json.dumps(response), status=201)
         progress_name = request.POST.get('progress_name')
+        if len(progress_name) > 250:
+            response["error"] = "Hey description of progress must be less that 250 characters!"
+            return HttpResponse(json.dumps(response), status=201)
         picture_file.file = modules.resize_image(picture_file)
         picture_mod = ProgressPicture(image_name=picture_file.name,
                                picture=picture_file, name_of_progress=progress_name)
