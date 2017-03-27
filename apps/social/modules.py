@@ -724,7 +724,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 'created':created
             })
         for each_mil in new_project:
-            notif_mess = Notification.objects.get(id_of_object=each_mil.id, type_of_notification=global_variables.NEW_PROJECT_ADDED)
+            notif_mess = Notification.objects.get(id_of_object=each_mil.id, user=user, type_of_notification=global_variables.NEW_PROJECT_ADDED)
             created = int(notif_mess.created.strftime('%s'))
             notif_list.append({
                 'first_name':each_mil.user.user.first_name,
@@ -749,7 +749,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 'created':created
             })
         for each_mil in new_progress:
-            notif_mess = Notification.objects.get(id_of_object=each_mil.id, type_of_notification=global_variables.NEW_PROGRESS_ADDED)
+            notif_mess = Notification.objects.get(id_of_object=each_mil.id, user=user, type_of_notification=global_variables.NEW_PROGRESS_ADDED)
             created = int(notif_mess.created.strftime('%s'))
             notif_list.append({
                 'first_name':each_mil.user.user.first_name,
@@ -774,7 +774,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 'created':created
             })
             for each_mil in progress_viewed:
-                notif_mess = Notification.objects.get(id_of_object=each_mil.id, type_of_notification=global_variables.PROGRESS_WAS_VIEWED)
+                notif_mess = Notification.objects.get(id_of_object=each_mil.id, user=user, type_of_notification=global_variables.PROGRESS_WAS_VIEWED)
                 created = int(notif_mess.created.strftime('%s'))
                 notif_list.append({
                     'first_name':each_mil.user.user.first_name,
@@ -799,7 +799,7 @@ def get_notification_of_user(user, timezone='UTC'):
                     'created':created
                 })
             for each_mil in project_viewed:
-                notif_mess = Notification.objects.get(id_of_object=each_mil.id, type_of_notification=global_variables.PROJECT_WAS_VIEWED)
+                notif_mess = Notification.objects.get(id_of_object=each_mil.id, user=user, type_of_notification=global_variables.PROJECT_WAS_VIEWED)
                 created = int(notif_mess.created.strftime('%s'))
                 notif_list.append({
                     'first_name':each_mil.user.user.first_name,
@@ -825,7 +825,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 })
             for each_mil in progress_like:
 
-                notif_mess = Notification.objects.get(id_of_object=each_mil.id,
+                notif_mess = Notification.objects.get(id_of_object=each_mil.id, user=user, 
                                                       type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED)
                 created = int(notif_mess.created.strftime('%s'))
                 notif_list.append({
