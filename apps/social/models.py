@@ -226,6 +226,7 @@ class LetDownProject(models.Model):
        except ValueError:
            return 0
 
+
 class Notification(models.Model):
     friend_request = models.ForeignKey(FriendshipRequest, blank=True, null=True)
     user = models.ForeignKey(User, blank=True, null=True)
@@ -233,7 +234,7 @@ class Notification(models.Model):
     created = models.DateTimeField(default=now)
     read = models.BooleanField(default=False)
     project_update = models.ForeignKey(UserProject, blank=True, null=True)
-    name_of_notification = models.CharField(max_length=700, default="")
+    name_of_notification = models.TextField(max_length=700, default="")
     id_of_object = models.IntegerField(default=0)
 
     def __str__(self):

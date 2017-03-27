@@ -369,6 +369,7 @@ def get_tag_list(tags):
         list_tag.append(t.name_of_tag)
     return list_tag
 
+
 def mark_progress_as_deleted(project):
     progress = ProgressPictureSet.objects.get(project=project)
     progress.is_empty = True
@@ -548,11 +549,12 @@ def get_let_down_notifications(user):
         try:
             let_down = LetDownProject.objects.get(tasks=each_proj)
             count = let_down.get_count()
+            mess = "You let down %d people by failing to complete this goal: %s.." % count, each_proj.blurb
             let_down_list.append({
-                'name_of_blurb':each_proj.blurb,
+                'name_of_blurb':mess,
                 'proj':each_proj,
                 'count':count,
-                'created':each_proj.created,
+                'created':let_down.latest_letDown,
                 'id':each_proj.id,
                 'first_name':None,
                 'last_name':None
@@ -953,15 +955,19 @@ def notification_of_people_that_let_you_down(user):
     let_down = LetDownProject.objects.filter(users__user=user)
     let_down_list = []
     for each_proj in let_down:
-        let_down_list.append({
-            'name_of_blurb':each_proj.tasks.blurb,
-            'proj':each_proj.tasks,
-            'count': -1,
-            'created':each_proj.tasks.created,
-            'id':each_proj.tasks.id,
-            'first_name':each_proj.tasks.user.user.first_name,
-            'last_name':each_proj.tasks.user.user.last_name
-        })
+        try:
+            notification = Notification.objects.get(user=user, id_of_object=each_proj.id)
+            let_down_list.append({
+                'name_of_blurb':notification.name_of_notification,
+                'proj':each_proj.tasks,
+                'count': -1,
+                'created':notification.created,
+                'id':each_proj.tasks.id,
+                'first_name':each_proj.tasks.user.user.first_name,
+                'last_name':each_proj.tasks.user.user.last_name
+            })
+        except ObjectDoesNotExist:
+            pass
     sorted_let_down_list = sorted(let_down_list, key=lambda x: x['created'], reverse=True)
     return sorted_let_down_list
 
@@ -1002,13 +1008,14 @@ def get_project_vouch_notifications(user):
         print " each mil", each_proj
         try:
             proj_vouch = VoucheProject.objects.get(tasks=each_proj)
+            notification = Notification.objects.get(user=tikedge_user.user, id_of_object=proj_vouch.id)
             count = proj_vouch.users.count()
             proj_vouch_list.append({
-                'blurb':each_proj.blurb,
+                'blurb':notification.name_of_notification,
                 'slug':each_proj.slug,
                 'count':count,
                 'id':each_proj.id,
-                'created':proj_vouch.latest_vouch,
+                'created':notification.created,
                 'is_proj_deleted':each_proj.is_deleted
             })
         except ObjectDoesNotExist:
