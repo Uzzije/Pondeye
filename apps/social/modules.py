@@ -509,7 +509,7 @@ def new_goal_or_progress_added_notification_to_pond(project, is_new_project=True
                     new_notif = Notification(type_of_notification=global_variables.NEW_PROJECT_ADDED,id_of_object=project.id,
                                              name_of_notification=notif_mess, user=each_member.user)
                 else:
-                    notif_mess = "Pond member %s %s capture a new progress picture to his goal: %s" % \
+                    notif_mess = "Pond member %s %s added a new progress picture to his goal: %s" % \
                     (project.user.user.first_name, project.user.user.last_name, project.name_of_project)
                     new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,id_of_object=project.id,
                                              name_of_notification=notif_mess, user=each_member.user)
@@ -518,7 +518,7 @@ def new_goal_or_progress_added_notification_to_pond(project, is_new_project=True
     followers = Follow.objects.get(tasks=project).users.all()
     for each_member in followers:
         if each_member not in pond_member_list:
-            notif_mess = "%s %s capture a new progress picture to his goal: %s" % \
+            notif_mess = "%s %s added a new progress to his goal: %s" % \
                             (project.user.user.first_name, project.user.user.last_name, project.name_of_project)
             new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,id_of_object=project.id,
                                                  name_of_notification=notif_mess, user=each_member.user)
@@ -748,12 +748,13 @@ def get_notification_of_user(user, timezone='UTC'):
                     'new_progress':False,
                     'progress_viewed':False,
                     'project_viewed':False,
-                    'is_deleted':False,
+                    'is_deleted':each_mil.is_deleted,
                     'project_liked': False,
                     'user_id':each_mil.user.user.id,
                     'blurb':notif_mess.name_of_notification,
                     'id':each_mil.id,
-                    'created':created
+                    'created':created,
+
                 })
         for each_mil in new_progress:
             notifications = Notification.objects.filter(id_of_object=each_mil.id, type_of_notification=global_variables.NEW_PROGRESS_ADDED)
@@ -774,7 +775,7 @@ def get_notification_of_user(user, timezone='UTC'):
                     'new_progress':True,
                     'progress_viewed':False,
                     'project_viewed':False,
-                    'is_deleted':False,
+                    'is_deleted':each_mil.is_deleted,
                     'project_liked': False,
                     'user_id':each_mil.user.user.id,
                     'blurb':notif_mess.name_of_notification,
@@ -800,7 +801,7 @@ def get_notification_of_user(user, timezone='UTC'):
                         'new_progress':False,
                         'progress_viewed':True,
                         'project_viewed':False,
-                        'is_deleted':False,
+                        'is_deleted':each_mil.is_deleted,
                         'project_liked': False,
                         'user_id':each_mil.user.user.id,
                         'blurb':notif_mess.name_of_notification,
@@ -826,7 +827,7 @@ def get_notification_of_user(user, timezone='UTC'):
                         'new_progress':False,
                         'progress_viewed':False,
                         'project_viewed':True,
-                        'is_deleted':False,
+                        'is_deleted':each_mil.is_deleted,
                         'project_liked': False,
                         'user_id':each_mil.user.user.id,
                         'blurb':notif_mess.name_of_notification,
@@ -855,7 +856,7 @@ def get_notification_of_user(user, timezone='UTC'):
                         'progress_viewed':False,
                         'project_viewed':False,
                         'project_liked': True,
-                        'is_deleted':False,
+                        'is_deleted':each_mil.is_deleted,
                         'user_id':each_mil.user.user.id,
                         'blurb':notif_mess.name_of_notification,
                         'id':each_mil.id,
