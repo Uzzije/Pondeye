@@ -414,7 +414,7 @@ def create_failed_notification_proj(project):
                                                       project.name_of_project)
         for each_pond in ponds:
             for each_user in each_pond.pond_members.all():
-                new_notif = Notification(user=each_user.user, name_of_notification=mes,
+                new_notif = Notification(user=each_user.user, id_of_object=project.id, name_of_notification=mes,
                                          type_of_notification=global_variables.USER_DELETED_PROJECT)
                 new_notif.save()
 
@@ -429,7 +429,7 @@ def create_failed_notification_proj_by_deletion(project):
         vouches = VoucheProject.objects.get(tasks=project)
         if vouches.get_count():
             for each_user in vouches.users.all():
-                new_notif = Notification(user=each_user.user, name_of_notification=mes,id_of_object=vouches.id,
+                new_notif = Notification(user=each_user.user, name_of_notification=mes,id_of_object=project.id,
                                          type_of_notification=global_variables.USER_DELETED_PROJECT)
                 new_notif.save()
 
@@ -956,16 +956,17 @@ def notification_of_people_that_let_you_down(user):
     let_down_list = []
     for each_proj in let_down:
         try:
-            notification = Notification.objects.get(user=user, id_of_object=each_proj.id)
-            let_down_list.append({
-                'name_of_blurb':notification.name_of_notification,
-                'proj':each_proj.tasks,
-                'count': -1,
-                'created':notification.created,
-                'id':each_proj.tasks.id,
-                'first_name':each_proj.tasks.user.user.first_name,
-                'last_name':each_proj.tasks.user.user.last_name
-            })
+            notifications = Notification.objects.filter(id_of_object=each_proj.id)
+            for each_notif in notifications:
+                let_down_list.append({
+                    'name_of_blurb':each_notif.name_of_notification,
+                    'proj':each_proj.tasks,
+                    'count': -1,
+                    'created':each_notif.created,
+                    'id':each_proj.tasks.id,
+                    'first_name':each_proj.tasks.user.user.first_name,
+                    'last_name':each_proj.tasks.user.user.last_name
+                })
         except ObjectDoesNotExist:
             pass
     sorted_let_down_list = sorted(let_down_list, key=lambda x: x['created'], reverse=True)
@@ -1006,18 +1007,19 @@ def get_project_vouch_notifications(user):
     proj_vouch_list = []
     for each_proj in user_projects:
         print " each mil", each_proj
+        proj_vouch = VoucheProject.objects.get(tasks=each_proj)
+        count = proj_vouch.users.count()
         try:
-            proj_vouch = VoucheProject.objects.get(tasks=each_proj)
-            notification = Notification.objects.get(user=tikedge_user.user, id_of_object=proj_vouch.id)
-            count = proj_vouch.users.count()
-            proj_vouch_list.append({
-                'blurb':notification.name_of_notification,
-                'slug':each_proj.slug,
-                'count':count,
-                'id':each_proj.id,
-                'created':notification.created,
-                'is_proj_deleted':each_proj.is_deleted
-            })
+            notifications = Notification.objects.filter(id_of_object=proj_vouch.id)
+            for each_notif in notifications:
+                proj_vouch_list.append({
+                    'blurb':each_notif.name_of_notification,
+                    'slug':each_proj.slug,
+                    'count':count,
+                    'id':each_proj.id,
+                    'created':each_notif.created,
+                    'is_proj_deleted':each_proj.is_deleted
+                })
         except ObjectDoesNotExist:
             pass
     return proj_vouch_list
