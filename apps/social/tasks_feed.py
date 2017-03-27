@@ -26,7 +26,7 @@ class PondFeed:
         self.is_milestone_feed = self.is_milestone_feed()
         self.is_picture_feed = self.is_picture_feed()
         self.is_project_feed = self.is_project_feed()
-        self.is_progress_feef = self.is_progress_feed()
+        self.is_progress_feed = self.is_progress_feed()
         self.message = self.message()
         self.before_url = self.get_before_url()
         self.after_url = self.get_after_url()
@@ -204,20 +204,21 @@ class ProgressFeed(PondFeed):
                'id': progress.id,
                'image_url':self.get_image_url(progress)
             })
-        progress_dic = {
-            'created_sec':created_sec,
-            'list_of_progress':progress_list,
-            'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
-            'message':self.message,
-            'is_picture_feed': False,
-            'is_milestone_feed': False,
-            'is_project_feed': False,
-            'is_progress_feed': True,
-            'profile_url':self.profile_url,
-            'id': self.tasks.project.id,
-            'user_id':self.tasks.project.user.id,
-            'progress_set_id': self.tasks.id
-        }
+        if progress_list:
+            progress_dic = {
+                'created_sec':created_sec,
+                'list_of_progress':progress_list,
+                'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
+                'message':self.message,
+                'is_picture_feed': False,
+                'is_milestone_feed': False,
+                'is_project_feed': False,
+                'is_progress_feed': True,
+                'profile_url':self.profile_url,
+                'id': self.tasks.project.id,
+                'user_id':self.tasks.project.user.id,
+                'progress_set_id': self.tasks.id
+            }
         return progress_dic
 
     def get_image_url(self, progress):
