@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
-    </list>
+    <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="" />
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -128,8 +126,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.011009174">
-              <caret line="858" column="56" selection-start-line="858" selection-start-column="56" selection-end-line="858" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.08256881">
+              <caret line="494" column="68" selection-start-line="494" selection-start-column="64" selection-end-line="494" selection-end-column="68" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -1206,8 +1204,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.011009174">
-          <caret line="858" column="56" selection-start-line="858" selection-start-column="56" selection-end-line="858" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.08256881">
+          <caret line="494" column="68" selection-start-line="494" selection-start-column="64" selection-end-line="494" selection-end-column="68" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
