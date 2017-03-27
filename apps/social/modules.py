@@ -745,7 +745,7 @@ def get_notification_of_user(user, timezone='UTC'):
                     'is_deleted':False,
                     'project_liked': False,
                     'user_id':each_mil.user.user.id,
-                    'blurb':notif_mess,
+                    'blurb':notif_mess.name_of_notification,
                     'id':each_mil.id,
                     'created':created
                 })
@@ -771,7 +771,7 @@ def get_notification_of_user(user, timezone='UTC'):
                     'is_deleted':False,
                     'project_liked': False,
                     'user_id':each_mil.user.user.id,
-                    'blurb':notif_mess,
+                    'blurb':notif_mess.name_of_notification,
                     'id':each_mil.id,
                     'created':created
                 })
@@ -797,7 +797,7 @@ def get_notification_of_user(user, timezone='UTC'):
                         'is_deleted':False,
                         'project_liked': False,
                         'user_id':each_mil.user.user.id,
-                        'blurb':notif_mess,
+                        'blurb':notif_mess.name_of_notification,
                         'id':each_mil.id,
                         'created':created
                     })
@@ -823,7 +823,7 @@ def get_notification_of_user(user, timezone='UTC'):
                         'is_deleted':False,
                         'project_liked': False,
                         'user_id':each_mil.user.user.id,
-                        'blurb':notif_mess,
+                        'blurb':notif_mess.name_of_notification,
                         'id':each_mil.id,
                         'created':created
                     })
@@ -851,7 +851,7 @@ def get_notification_of_user(user, timezone='UTC'):
                         'project_liked': True,
                         'is_deleted':False,
                         'user_id':each_mil.user.user.id,
-                        'blurb':notif_mess,
+                        'blurb':notif_mess.name_of_notification,
                         'id':each_mil.id,
                         'created':created
                     })
