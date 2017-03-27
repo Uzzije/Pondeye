@@ -493,31 +493,37 @@ def get_pond(user):
 
 
 def new_goal_or_progress_added_notification_to_pond(project, is_new_project=True):
+    pond_member_list = []
+    pond_member_list.append(project.user)
     try:
         pond_specifics = PondSpecificProject.objects.get(project=project)
         ponds = pond_specifics.pond.filter(is_deleted=False)
     except ObjectDoesNotExist:
         ponds = get_pond(project.user.user)
-    for each_pond in ponds.all():
+    for each_pond in ponds:
         for each_member in each_pond.pond_members.all():
-            if is_new_project:
-                notif_mess = "%s %s created a new goal: %s" % \
-                (each_member.user.first_name, each_member.user.last_name, project.name_of_project)
-                new_notif = Notification(type_of_notification=global_variables.NEW_PROJECT_ADDED,id_of_object=project.id,
-                                         name_of_notification=notif_mess, user=each_member.user)
-            else:
-                notif_mess = "%s %s capture a new progress picture to his goal: %s" % \
-                (each_member.user.first_name, each_member.user.last_name, project.name_of_project)
-                new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,id_of_object=project.id,
-                                         name_of_notification=notif_mess, user=each_member.user)
-            new_notif.save()
+            if each_member not in pond_member_list:
+                if is_new_project:
+                    notif_mess = "Pond member %s %s created a new goal: %s" % \
+                    (project.user.first_name, project.user.last_name, project.name_of_project)
+                    new_notif = Notification(type_of_notification=global_variables.NEW_PROJECT_ADDED,id_of_object=project.id,
+                                             name_of_notification=notif_mess, user=each_member.user)
+                else:
+                    notif_mess = "Pond member %s %s capture a new progress picture to his goal: %s" % \
+                    (project.user.first_name, project.user.last_name, project.name_of_project)
+                    new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,id_of_object=project.id,
+                                             name_of_notification=notif_mess, user=each_member.user)
+                new_notif.save()
+                pond_member_list.append(each_member)
     followers = Follow.objects.get(tasks=project).users.all()
     for each_member in followers:
-        notif_mess = "%s %s capture a new progress picture to his goal: %s" % \
-                        (each_member.user.first_name, each_member.user.last_name, project.name_of_project)
-        new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,id_of_object=project.id,
+        if each_member not in pond_member_list:
+            notif_mess = "%s %s capture a new progress picture to his goal: %s" % \
+                            (project.user.first_name, project.user.last_name, project.name_of_project)
+            new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,id_of_object=project.id,
                                                  name_of_notification=notif_mess, user=each_member.user)
-        new_notif.save()
+            new_notif.save()
+            pond_member_list.append(each_member)
 
 
 def pond_to_json(ponds):
