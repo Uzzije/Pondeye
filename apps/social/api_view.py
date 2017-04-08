@@ -15,7 +15,7 @@ import json
 
 from django.db.models import Q
 from search_module import find_everything, search_result_jsonified
-
+from image_modules import pondeye_image_filter
 from django.utils import timezone
 
 
@@ -217,6 +217,7 @@ class ApiPictureUploadView(CSRFExemptView):
         picture_mod = ProgressPicture(image_name=picture_file.name,
                                picture=picture_file, name_of_progress=progress_name)
         picture_mod.save()
+        pondeye_image_filter(picture_mod.picture.name)
         impress_count = ProgressImpressedCount(tasks=picture_mod)
         impress_count.save()
         seen_progress = SeenProgress(tasks=picture_mod)

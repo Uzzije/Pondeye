@@ -34,7 +34,6 @@ def resize_image(image_field, is_profile_pic=False):
         image.thumbnail(max_size, Image.ANTIALIAS)
     imout = image.filter(ImageFilter.DETAIL)
     imout.save(image_file, 'JPEG', quality=90)
-    pondeye_image_filter(image_field.name)
     return image_file
 
 
