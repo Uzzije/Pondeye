@@ -13,7 +13,7 @@ from journal_feed import JournalFeed
 from tasks_feed import PondFeed, ProgressFeed
 from itertools import chain
 from datetime import timedelta
-from ..tasks.modules import utc_to_local
+from ..tasks.modules import utc_to_local, randomword
 import base64
 from image_modules import pondeye_image_filter
 
@@ -1344,7 +1344,7 @@ def get_picture_from_base64(data):
             # base64 encoded image - decode
             format, imgstr = data.split(';base64,')  # format ~= data:image/X,
             ext = format.split('/')[-1]  # guess file extension
-
-            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+            ran_word = randomword(12)
+            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ran_word + ext)
             return data
         return False
