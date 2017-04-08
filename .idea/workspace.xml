@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/pygram/decorations/border.py" afterPath="$PROJECT_DIR$/apps/social/pygram/decorations/border.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/pygram/decorations/frame.py" afterPath="$PROJECT_DIR$/apps/social/pygram/decorations/frame.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/pygram/decorations/vignette.py" afterPath="$PROJECT_DIR$/apps/social/pygram/decorations/vignette.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/pygram/filters/gotham.py" afterPath="$PROJECT_DIR$/apps/social/pygram/filters/gotham.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/pygram/filters/kelvin.py" afterPath="$PROJECT_DIR$/apps/social/pygram/filters/kelvin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/pygram/filters/lomo.py" afterPath="$PROJECT_DIR$/apps/social/pygram/filters/lomo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/pygram/filters/nashville.py" afterPath="$PROJECT_DIR$/apps/social/pygram/filters/nashville.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/pygram/filters/toaster.py" afterPath="$PROJECT_DIR$/apps/social/pygram/filters/toaster.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/image_modules.py" afterPath="$PROJECT_DIR$/apps/social/image_modules.py" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="image_modules.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="image_modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/image_modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.3505843">
+              <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -108,7 +101,7 @@
             <state vertical-scroll-proportion="-6.111111">
               <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
               <folding>
-                <element signature="e#0#27#0" expanded="true" />
+                <marker date="1491676791000" expanded="true" signature="0:111" placeholder="import ..." />
               </folding>
             </state>
           </provider>
@@ -131,15 +124,17 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-              <folding />
+              <folding>
+                <marker date="1491676791000" expanded="true" signature="0:65" placeholder="import ..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="border.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="border.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/pygram/decorations/border.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16203703">
+            <state vertical-scroll-proportion="0.0">
               <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
               <folding />
             </state>
@@ -216,7 +211,6 @@
         <option value="$PROJECT_DIR$/apps/social/pygram/tests/test.py" />
         <option value="$PROJECT_DIR$/apps/social/pygram/pygram.py" />
         <option value="$PROJECT_DIR$/apps/social/pygram/testfile.py" />
-        <option value="$PROJECT_DIR$/apps/social/image_modules.py" />
         <option value="$PROJECT_DIR$/apps/social/pygram/filters/gotham.py" />
         <option value="$PROJECT_DIR$/apps/social/pygram/decorations/border.py" />
         <option value="$PROJECT_DIR$/apps/social/pygram/decorations/frame.py" />
@@ -225,6 +219,7 @@
         <option value="$PROJECT_DIR$/apps/social/pygram/filters/lomo.py" />
         <option value="$PROJECT_DIR$/apps/social/pygram/filters/nashville.py" />
         <option value="$PROJECT_DIR$/apps/social/pygram/filters/toaster.py" />
+        <option value="$PROJECT_DIR$/apps/social/image_modules.py" />
       </list>
     </option>
   </component>
@@ -234,10 +229,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="322" />
-    <option name="y" value="142" />
+    <option name="x" value="334" />
+    <option name="y" value="177" />
     <option name="width" value="1270" />
-    <option name="height" value="794" />
+    <option name="height" value="745" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -855,7 +850,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="322" y="142" width="1270" height="794" extended-state="0" />
+    <frame x="334" y="177" width="1270" height="745" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20032573" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
@@ -1063,7 +1058,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="329" column="27" selection-start-line="329" selection-start-column="27" selection-end-line="329" selection-end-column="27" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#35#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1115,7 +1110,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="502" column="28" selection-start-line="502" selection-start-column="28" selection-end-line="502" selection-end-column="28" />
           <folding>
-            <element signature="e#0#53#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1125,7 +1120,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="91" column="28" selection-start-line="91" selection-start-column="28" selection-end-line="91" selection-end-column="28" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1143,7 +1138,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#37#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1161,7 +1156,7 @@
         <state vertical-scroll-proportion="-13.111111">
           <caret line="87" column="57" selection-start-line="87" selection-start-column="57" selection-end-line="87" selection-end-column="57" />
           <folding>
-            <element signature="e#92#261#0" expanded="true" />
+            <element signature="e#92#261#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1179,7 +1174,7 @@
         <state vertical-scroll-proportion="-6.6666665">
           <caret line="28" column="34" selection-start-line="28" selection-start-column="34" selection-end-line="28" selection-end-column="34" />
           <folding>
-            <element signature="e#0#51#0" expanded="true" />
+            <element signature="e#0#51#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1230,16 +1225,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/image_modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/pygram/decorations/frame.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1253,7 +1238,7 @@
         <state vertical-scroll-proportion="-6.111111">
           <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
           <folding>
-            <element signature="e#0#27#0" expanded="true" />
+            <marker date="1491676791000" expanded="true" signature="0:111" placeholder="import ..." />
           </folding>
         </state>
       </provider>
@@ -1282,7 +1267,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-          <folding />
+          <folding>
+            <marker date="1491676791000" expanded="true" signature="0:65" placeholder="import ..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1306,9 +1293,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/pygram/decorations/border.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16203703">
+        <state vertical-scroll-proportion="0.0">
           <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/image_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3505843">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
