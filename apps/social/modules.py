@@ -33,8 +33,8 @@ def resize_image(image_field, is_profile_pic=False):
         image = image.resize((598, 598), Image.ANTIALIAS)
     image_file = StringIO.StringIO()
     image.save(image_file, 'JPEG', quality=90)
-    pondeye_image_filter(image_file)
-    return image_file
+    filtered_file = pondeye_image_filter(image_file)
+    return filtered_file
 
 
 def people_result_to_json(user_result):
