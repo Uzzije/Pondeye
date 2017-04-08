@@ -1,6 +1,6 @@
-from PIL import Image,  ImageOps
+from PIL import Image,  ImageOps, ImageFilter
 import StringIO
-
+from pygram.filters import *
 
 def make_linear_ramp(white):
 	ramp = []
@@ -11,8 +11,11 @@ def make_linear_ramp(white):
 
 
 def pondeye_image_filter(image_file):
-	sepia = make_linear_ramp((155, 131, 104))
+	f = Lomo(image_file)
+	f.apply()
 	im = Image.open(image_file)
+	imout = im.filter(ImageFilter.DETAIL)
+	'''
 	im_format = im.format
 	#convert to grayscale
 	if im.mode != "L":
@@ -26,6 +29,7 @@ def pondeye_image_filter(image_file):
 	# convert back to RGB so we can save it as JPEG
 	# (alternatively, save it in PNG or similar)
 	im = im.convert("RGB")
+	'''
 	new_image_file = StringIO.StringIO()
-	im.save(new_image_file, "JPEG", quality=90)
+	imout.save(new_image_file, "JPEG", quality=90)
 	return new_image_file
