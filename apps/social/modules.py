@@ -24,7 +24,7 @@ from django.core.files.base import ContentFile
 CURRENT_URL = global_variables.CURRENT_URL
 
 
-def resize_image(image_field, is_profile_pic=False):
+def resize_image(image_field, is_profile_pic=False, pic_file=None):
     image_file = StringIO.StringIO(image_field.read())
     image = Image.open(image_file)
     max_size = (598, 598)
@@ -34,7 +34,9 @@ def resize_image(image_field, is_profile_pic=False):
         image.thumbnail(max_size, Image.ANTIALIAS)
     imout = image.filter(ImageFilter.DETAIL)
     imout.save(image_file, 'JPEG', quality=90)
-    pondeye_image_filter(image_field.name)
+    if pic_file:
+        f = open(pic_file.file)
+        pondeye_image_filter(f.name)
     return image_file
 
 
