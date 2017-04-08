@@ -76,7 +76,7 @@ class PondFeed:
             message = "For milestone: %s." % self.tasks.milestone.blurb
             return message
         elif self.type_of_feed is global_variables.PROJECT:
-            message = "Goal Created!: %s" % self.tasks.blurb
+            message = "Goal: %s" % self.tasks.blurb
             return message
         elif self.type_of_feed is global_variables.PROGRESS:
             message =  "%s progression higlights "% self.tasks.project.name_of_project
@@ -166,7 +166,7 @@ class PondFeed:
             return name
         except (AttributeError, ValueError):
             try:
-                name = '%s' % self.tasks.tikedge_user.user.first_name + " " + self.tasks.tikedge_user.user.last_name
+                name = '%s' % self.tikedge_user.user.first_name + " " + self.tikedge_user.user.last_name
             except (AttributeError, ValueError):
                 try:
                     name = '%s' % self.tasks.project.user.user.first_name + " " + self.tasks.project.user.user.last_name
@@ -218,7 +218,8 @@ class ProgressFeed(PondFeed):
                 'profile_url':self.profile_url,
                 'id': self.tasks.project.id,
                 'user_id':self.tasks.project.user.id,
-                'progress_set_id': self.tasks.id
+                'progress_set_id': self.tasks.id,
+                'name': self.task_owner_name,
             }
         return progress_dic
 
