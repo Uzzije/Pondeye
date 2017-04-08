@@ -1,6 +1,8 @@
 from PIL import Image,  ImageOps, ImageFilter
 import StringIO
 from pygram.filters import *
+from global_variables import CURRENT_URL
+
 
 def make_linear_ramp(white):
 	ramp = []
@@ -10,10 +12,11 @@ def make_linear_ramp(white):
 	return ramp
 
 
-def pondeye_image_filter(image_file, image_field):
-	f = Lomo(image_field, file_bytes=image_file)
+def pondeye_image_filter(filename):
+	filename_url = CURRENT_URL + filename
+	f = Lomo(filename_url)
 	f.apply()
-	im = Image.open(image_file)
+	im = Image.open(filename_url)
 	imout = im.filter(ImageFilter.DETAIL)
 	'''
 	im_format = im.format
@@ -30,6 +33,6 @@ def pondeye_image_filter(image_file, image_field):
 	# (alternatively, save it in PNG or similar)
 	im = im.convert("RGB")
 	'''
-	new_image_file = StringIO.StringIO()
+	new_image_file = filename_url
 	imout.save(new_image_file, "JPEG", quality=90)
 	return new_image_file

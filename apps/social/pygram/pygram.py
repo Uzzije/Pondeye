@@ -3,26 +3,21 @@ from PIL import Image
 import StringIO
 
 class PyGram():
-    def __init__(self, filename, file_bytes=None):
+    def __init__(self, filename):
 
         self.filename = filename
-        self.file_bytes = file_bytes
         self.im = False
 
     def image(self):
         if not self.im:
-            if self.file_bytes:
-                self.im = Image.open(self.file_bytes)
-            else:
-                self.im = Image.open(self.filename)
+            self.im = Image.open(self.filename)
         return self.im
 
     def execute(self, command, **kwargs):
-        image_file = StringIO.StringIO(self.filename.read())
         default = dict(
             width=self.image().size[0],
             height=self.image().size[1],
-            filename=image_file
+            filename=self.filename
         )
         format = dict(default.items() + kwargs.items())
         command = command.format(**format)
