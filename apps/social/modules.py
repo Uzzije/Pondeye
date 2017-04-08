@@ -15,6 +15,7 @@ from itertools import chain
 from datetime import timedelta
 from ..tasks.modules import utc_to_local
 import base64
+from image_modules import pondeye_image_filter
 
 from django.core.files.base import ContentFile
 
@@ -32,6 +33,7 @@ def resize_image(image_field, is_profile_pic=False):
         image = image.resize((598, 598), Image.ANTIALIAS)
     image_file = StringIO.StringIO()
     image.save(image_file, 'JPEG', quality=90)
+    pondeye_image_filter(image_file)
     return image_file
 
 
