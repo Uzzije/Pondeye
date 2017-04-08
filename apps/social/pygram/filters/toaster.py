@@ -1,6 +1,6 @@
-from pygram import PyGram
-from decorations.border import Border
-from decorations.vignette import Vignette
+from ..pygram import PyGram
+from ..decorations.border import Border
+from ..decorations.vignette import Vignette
 
 
 class Toaster(PyGram, Vignette, Border):

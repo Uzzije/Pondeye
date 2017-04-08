@@ -1,5 +1,5 @@
-from pygram import PyGram
-from decorations.vignette import Vignette
+from ..pygram import PyGram
+from ..decorations.vignette import Vignette
 
 class Lomo(PyGram, Vignette):
 

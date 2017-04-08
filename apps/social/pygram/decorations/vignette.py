@@ -1,7 +1,5 @@
-from pygram import PyGram
+from ..pygram import PyGram
 import math
-
-
 
 class Vignette(PyGram):
     def vignette(self, color_1='none', color_2='black', crop_factor=1.5):

@@ -1,4 +1,4 @@
-from pygram import PyGram
+from ..pygram import PyGram
 
 class Border(PyGram):
     def border(self, color='black', width=20):

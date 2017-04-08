@@ -1,5 +1,5 @@
-from pygram import PyGram
-from decorations.frame import Frame
+from ..pygram import PyGram
+from ..decorations.frame import Frame
 
 class Kelvin(PyGram, Frame):
 

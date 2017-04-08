@@ -1,5 +1,5 @@
-from pygram import PyGram
-from decorations.border import Border
+from ..pygram import PyGram
+from ..decorations.border import Border
 
 
 class Gotham(PyGram, Border):

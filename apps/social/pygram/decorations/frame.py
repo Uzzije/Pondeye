@@ -1,4 +1,4 @@
-from pygram import PyGram
+from ..pygram import PyGram
 import os, inspect
 
 
