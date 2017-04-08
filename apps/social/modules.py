@@ -34,7 +34,7 @@ def resize_image(image_field, is_profile_pic=False):
         image.thumbnail(max_size, Image.ANTIALIAS)
     image_file = StringIO.StringIO()
     image.save(image_file, 'JPEG', quality=90)
-    filtered_file = pondeye_image_filter(image_file)
+    filtered_file = pondeye_image_filter(image_file, image_field)
     return filtered_file
 
 

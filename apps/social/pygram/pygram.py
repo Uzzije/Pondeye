@@ -4,6 +4,7 @@ from PIL import Image
 
 class PyGram():
     def __init__(self, filename, file_bytes=None):
+
         self.filename = filename
         self.file_bytes = file_bytes
         self.im = False

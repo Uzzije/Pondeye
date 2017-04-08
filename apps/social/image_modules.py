@@ -10,10 +10,8 @@ def make_linear_ramp(white):
 	return ramp
 
 
-def pondeye_image_filter(image_file):
-	temp_file = image_file
-	image_file.seek(0)
-	f = Lomo(image_file.read(), file_bytes=temp_file)
+def pondeye_image_filter(image_file, image_field):
+	f = Lomo(image_field, file_bytes=image_file.name)
 	f.apply()
 	im = Image.open(image_file)
 	imout = im.filter(ImageFilter.DETAIL)
