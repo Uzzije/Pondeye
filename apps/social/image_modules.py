@@ -3,6 +3,8 @@ import StringIO
 from pygram.filters import *
 from global_variables import CURRENT_URL
 from django.core.files import temp as tempfile
+from django.conf import settings
+
 
 def make_linear_ramp(white):
 	ramp = []
@@ -13,8 +15,8 @@ def make_linear_ramp(white):
 
 
 def pondeye_image_filter(filename):
-	temp_path = tempfile.gettempdir() + "/"+filename
-	f = Lomo(filename)
+	temp_path = settings+filename
+	f = Lomo(temp_path)
 	f.apply()
 	'''
 	im_format = im.format
