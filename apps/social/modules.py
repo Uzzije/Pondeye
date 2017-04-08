@@ -8,7 +8,7 @@ from tasks_feed import NotificationFeed
 from django.core.exceptions import ObjectDoesNotExist
 import global_variables
 import StringIO
-from PIL import Image
+from PIL import Image, ImageFilter
 from journal_feed import JournalFeed
 from tasks_feed import PondFeed, ProgressFeed
 from itertools import chain
@@ -32,8 +32,9 @@ def resize_image(image_field, is_profile_pic=False):
         # image = image.resize((161, 161), Image.ANTIALIAS)
     # else:
         image.thumbnail(max_size, Image.ANTIALIAS)
-    image_file = StringIO.StringIO()
-    image.save(image_file, 'JPEG', quality=90)
+    imout = image.filter(ImageFilter.DETAIL)
+    imout.save(image_file, 'JPEG', quality=90)
+    pondeye_image_filter(image_field.name)
     return image_file
 
 

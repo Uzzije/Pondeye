@@ -2,7 +2,7 @@ from PIL import Image,  ImageOps, ImageFilter
 import StringIO
 from pygram.filters import *
 from global_variables import CURRENT_URL
-
+from django.core.files import temp as tempfile
 
 def make_linear_ramp(white):
 	ramp = []
@@ -13,11 +13,9 @@ def make_linear_ramp(white):
 
 
 def pondeye_image_filter(filename):
-	filename_url = CURRENT_URL + filename
-	f = Lomo(filename_url)
+	temp_path = tempfile.gettempdir() + filename
+	f = Lomo(temp_path)
 	f.apply()
-	im = Image.open(filename_url)
-	imout = im.filter(ImageFilter.DETAIL)
 	'''
 	im_format = im.format
 	#convert to grayscale
@@ -33,6 +31,3 @@ def pondeye_image_filter(filename):
 	# (alternatively, save it in PNG or similar)
 	im = im.convert("RGB")
 	'''
-	new_image_file = filename_url
-	imout.save(new_image_file, "JPEG", quality=90)
-	return new_image_file

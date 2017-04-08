@@ -156,3 +156,4 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+FILE_UPLOAD_MAX_MEMORY_SIZE = None
