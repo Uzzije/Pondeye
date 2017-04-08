@@ -27,10 +27,11 @@ CURRENT_URL = global_variables.CURRENT_URL
 def resize_image(image_field, is_profile_pic=False):
     image_file = StringIO.StringIO(image_field.read())
     image = Image.open(image_file)
+    max_size = (598, 598)
     if not is_profile_pic:
         # image = image.resize((161, 161), Image.ANTIALIAS)
     # else:
-        image = image.resize((598, 598), Image.ANTIALIAS)
+        image = image.thumbnail(max_size, Image.ANTIALIAS)
     image_file = StringIO.StringIO()
     image.save(image_file, 'JPEG', quality=90)
     filtered_file = pondeye_image_filter(image_file)
