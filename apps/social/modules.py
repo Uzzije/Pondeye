@@ -35,7 +35,7 @@ def resize_image(image_field, is_profile_pic=False, pic_file=None):
     imout = image.filter(ImageFilter.DETAIL)
     imout.save(image_file, 'JPEG', quality=90)
     if pic_file:
-        f = open(pic_file.file)
+        f = open(pic_file)
         pondeye_image_filter(f.name)
     return image_file
 
