@@ -15,7 +15,7 @@ def make_linear_ramp(white):
 
 
 def pondeye_image_filter(filename):
-	temp_path = settings.MEDIA_ROOT + filename
+	temp_path = settings.MEDIA_ROOT + "/" + filename
 	f = Lomo(temp_path)
 	f.apply()
 	'''
