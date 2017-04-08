@@ -1,6 +1,6 @@
 import subprocess
 from PIL import Image
-
+import StringIO
 
 class PyGram():
     def __init__(self, filename, file_bytes=None):
@@ -18,10 +18,11 @@ class PyGram():
         return self.im
 
     def execute(self, command, **kwargs):
+        image_file = StringIO.StringIO(self.filename.read())
         default = dict(
-            filename=self.filename,
             width=self.image().size[0],
-            height=self.image().size[1]
+            height=self.image().size[1],
+            filename=image_file
         )
         format = dict(default.items() + kwargs.items())
         command = command.format(**format)
