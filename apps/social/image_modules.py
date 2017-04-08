@@ -13,7 +13,7 @@ def make_linear_ramp(white):
 def pondeye_image_filter(image_file):
 	sepia = make_linear_ramp((255, 240, 192))
 	im = Image.open(image_file)
-
+	im.format = im.format
 	#convert to grayscale
 	if im.mode != "L":
 		im = im.convert("L")
