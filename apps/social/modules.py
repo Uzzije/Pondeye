@@ -1345,6 +1345,6 @@ def get_picture_from_base64(data):
             format, imgstr = data.split(';base64,')  # format ~= data:image/X,
             ext = format.split('/')[-1]  # guess file extension
             ran_word = randomword(12)
-            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ran_word + ext)
+            data = ContentFile(base64.b64decode(imgstr), name='temp' + ran_word + '.' + ext)
             return data
         return False
