@@ -27,4 +27,5 @@ def pondeye_image_filter(image_file):
 	# (alternatively, save it in PNG or similar)
 	im = im.convert("RGB")
 	new_image_file = StringIO.StringIO()
-	im.save(new_image_file)
+	im.save(new_image_file, "JPEG")
+	return new_image_file
