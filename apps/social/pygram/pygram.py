@@ -3,13 +3,17 @@ from PIL import Image
 
 
 class PyGram():
-    def __init__(self, filename):
+    def __init__(self, filename, file_bytes=None):
         self.filename = filename
+        self.file_bytes = file_bytes
         self.im = False
 
     def image(self):
         if not self.im:
-            self.im = Image.open(self.filename)
+            if self.file_bytes:
+                self.im = Image.open(self.file_bytes)
+            else:
+                self.im = Image.open(self.filename)
         return self.im
 
     def execute(self, command, **kwargs):
