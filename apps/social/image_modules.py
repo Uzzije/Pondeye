@@ -11,7 +11,7 @@ def make_linear_ramp(white):
 
 
 def pondeye_image_filter(image_file):
-	sepia = make_linear_ramp((155, 124, 104))
+	sepia = make_linear_ramp((155, 131, 104))
 	im = Image.open(image_file)
 	im_format = im.format
 	#convert to grayscale
@@ -27,5 +27,5 @@ def pondeye_image_filter(image_file):
 	# (alternatively, save it in PNG or similar)
 	im = im.convert("RGB")
 	new_image_file = StringIO.StringIO()
-	im.save(new_image_file, "JPEG")
+	im.save(new_image_file, "JPEG", quality=90)
 	return new_image_file
