@@ -1,6 +1,6 @@
 import subprocess
 from PIL import Image
-import StringIO
+
 
 class PyGram():
     def __init__(self, filename):
