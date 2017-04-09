@@ -2,7 +2,7 @@ from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
 from .models import ProfilePictures, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, PondSpecificProject, \
-     PondRequest, Pond, PondMembership, ProgressPicture, ProgressPictureSet, VoucheProject, LetDownProject
+     PondRequest, Pond, PondMembership, ProgressPicture, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from django.core.exceptions import ObjectDoesNotExist
@@ -15,7 +15,6 @@ from itertools import chain
 from datetime import timedelta
 from ..tasks.modules import utc_to_local, randomword
 import base64
-from image_modules import pondeye_image_filter
 
 from django.core.files.base import ContentFile
 
@@ -477,15 +476,21 @@ def get_pond_profile(tikedge_users, owner):
            is_creator = True
         else:
             is_creator = False
+        try:
+            work_rank = WorkEthicRank.objects.get(tikedge_user=tikedge_user)
+        except ObjectDoesNotExist:
+            work_rank = WorkEthicRank(tikedge_user=tikedge_user)
+            work_rank.save()
         dict_list_of_pond.append({
             'profile_pics_url':picture_url,
             'username':tikedge_user.user.username,
             'first_name':tikedge_user.user.first_name,
             'last_name':tikedge_user.user.last_name,
             'is_creator':is_creator,
-            'id':tikedge_user.user.id
+            'id':tikedge_user.user.id,
+            'rank': work_rank.work_ethic_rank
         })
-    sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['last_name'])
+    sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['rank'])
     return sorted_pond
 
 
