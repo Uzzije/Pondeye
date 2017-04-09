@@ -494,6 +494,7 @@ def user_stats(user):
     correct_vouch_percentage = correct_vouching_percentage(tikedge_user)
     correct_vouch_grade = get_letter_grade(correct_vouch_percentage)
     rank = get_user_consistency_rank(user, consistency_percentage)
+
     try:
         work_ethic = WorkEthicRank.objects.get(tikedge_user=tikedge_user)
     except ObjectDoesNotExist:
@@ -742,10 +743,15 @@ def get_todays_milestones_json(user, current_projects):
 def get_recent_projects_json(projects):
     project_list = []
     for each_proj in projects:
+        mess = "Created"
+        if each_proj.made_live < each_proj.last_update:
+            mess = "Updated"
         project_list.append({
             'blurb':each_proj.blurb,
             'id':each_proj.id,
-            'is_live':each_proj.is_live
+            'is_live':each_proj.is_live,
+            'message':mess,
+
         })
     return project_list
 

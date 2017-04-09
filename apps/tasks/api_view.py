@@ -609,7 +609,7 @@ class ApiProfileView(CSRFExemptView):
             'is_own_profile': user == other_user,
             'user_name':tikedge_user.user.username,
             'all_projects':all_projs,
-            'user_stats': modules.user_stats(other_user)
+            'user_stats': modules.user_stats(other_user),
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)
