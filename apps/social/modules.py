@@ -738,31 +738,35 @@ def get_notification_of_user(user, timezone='UTC'):
             })
         notifications = Notification.objects.filter(user=user, type_of_notification=global_variables.NEW_PROJECT_ADDED)
         for notif_mess in notifications:
-            each_mil = UserProject.objects.get(id=int(notif_mess.id_of_object))
-            created = int(notif_mess.created.strftime('%s'))
-            notif_list.append({
-                'first_name':each_mil.user.user.first_name,
-                'last_name':each_mil.user.user.last_name,
-                'count': None,
-                'is_let_down':False,
-                'is_project_vouch':False,
-                'is_new_ponder':False,
-                'is_interests':False,
-                'is_mil_quit': False,
-                'is_proj_quit':False,
-                'is_pond_request':False,
-                'new_project':True,
-                'new_progress':False,
-                'progress_viewed':False,
-                'project_viewed':False,
-                'is_deleted':each_mil.is_deleted,
-                'project_liked': False,
-                'user_id':each_mil.user.user.id,
-                'blurb':notif_mess.name_of_notification,
-                'id':each_mil.id,
-                'created':created,
+            user_proj_id = notif_mess.id_of_object
+            try:
+                each_mil = UserProject.objects.get(id=user_proj_id)
+                created = int(notif_mess.created.strftime('%s'))
+                notif_list.append({
+                    'first_name':each_mil.user.user.first_name,
+                    'last_name':each_mil.user.user.last_name,
+                    'count': None,
+                    'is_let_down':False,
+                    'is_project_vouch':False,
+                    'is_new_ponder':False,
+                    'is_interests':False,
+                    'is_mil_quit': False,
+                    'is_proj_quit':False,
+                    'is_pond_request':False,
+                    'new_project':True,
+                    'new_progress':False,
+                    'progress_viewed':False,
+                    'project_viewed':False,
+                    'is_deleted':each_mil.is_deleted,
+                    'project_liked': False,
+                    'user_id':each_mil.user.user.id,
+                    'blurb':notif_mess.name_of_notification,
+                    'id':each_mil.id,
+                    'created':created,
 
-            })
+                })
+            except ObjectDoesNotExist:
+                pass
         notifications = Notification.objects.filter(user=user, type_of_notification=global_variables.PROJECT_WAS_VIEWED)
         for notif_mess in notifications:
             each_mil = UserProject.objects.get(id=int(notif_mess.id_of_object))
