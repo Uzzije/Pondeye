@@ -871,7 +871,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 })
         sort_notif_list = sorted(notif_list, key=lambda x: x['created'], reverse=True)
         return sort_notif_list
-    except ObjectDoesNotExist:
+    except None:
         return []
 
 
