@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div id="logbox">
-                      <form id="signup" method="post" action="{% url 'tasks:login' %}">{% csrf_token %}
+                      <form id="signup" method="post" action="{% url 'tasks:api_run_ranking_algorithm' %}">{% csrf_token %}
                           <div class="text-center">
                               <p class="h2 nav-font">Sign In</p>
                               {% for err in form.non_field_errors %}

@@ -9,6 +9,7 @@
         <div class="container" style="margin-top:50px;">
             <div class="col-md-10 no-paddin-xs">
                 <p class="h4"><span class="h4 status-font link-color">Work Ethic Level: {{ status_of_user }}</span></p>
+                <a href="{% url 'tasks:api_run_ranking_algorithm' %}"></a>
                 <div class="row">
                 <!-- left content-->
                   <div class="profile-nav col-md-4">
@@ -32,6 +33,9 @@
                     <!-- Friends activity -->
                     {% if not has_prof_pic %}
                         <form method="post" action="{% url 'tasks:home' %}" enctype="multipart/form-data">{% csrf_token %}
+                            <button class="btn btn-success">
+                               Completed
+                           </button>
                             <div class="container row">
                                 <div class="col-md-12">
                                     {{ user_picture_form.picture }}

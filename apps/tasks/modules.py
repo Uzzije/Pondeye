@@ -542,10 +542,11 @@ def global_ranking_algorithm():
     sort_by_rank = sorted(rank_list, key=lambda x: x['rank'], reverse=True)
     temp_rank = 0
     for each_user in sort_by_consistency:
+        spec_each_user = each_user['user']
         try:
-            work_ethic = WorkEthicRank.objects.get(tikedge_user=each_user)
+            work_ethic = WorkEthicRank.objects.get(tikedge_user=spec_each_user)
         except ObjectDoesNotExist:
-            work_ethic = WorkEthicRank(tikedge_user=each_user)
+            work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
         user_rank = 100 - ((temp_rank/count_of_users)*100)
         work_ethic.consistency_rank = int(user_rank)
@@ -553,10 +554,11 @@ def global_ranking_algorithm():
         temp_rank += 1
     temp_rank = 0
     for each_user in sort_by_correct_vouch:
+        spec_each_user = each_user['user']
         try:
-            work_ethic = WorkEthicRank.objects.get(tikedge_user=each_user)
+            work_ethic = WorkEthicRank.objects.get(tikedge_user=spec_each_user)
         except ObjectDoesNotExist:
-            work_ethic = WorkEthicRank(tikedge_user=each_user)
+            work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
         user_rank = 100 - ((temp_rank/count_of_users)*100)
         work_ethic.correct_vouching_rank = int(user_rank)
@@ -564,10 +566,11 @@ def global_ranking_algorithm():
         temp_rank += 1
     temp_rank = 0
     for each_user in sort_by_rank:
+        spec_each_user = each_user['user']
         try:
-            work_ethic = WorkEthicRank.objects.get(tikedge_user=each_user)
+            work_ethic = WorkEthicRank.objects.get(tikedge_user=spec_each_user)
         except ObjectDoesNotExist:
-            work_ethic = WorkEthicRank(tikedge_user=each_user)
+            work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
         user_rank = 100 - ((temp_rank/count_of_users)*100)
         work_ethic.work_ethic_rank = int(user_rank)
