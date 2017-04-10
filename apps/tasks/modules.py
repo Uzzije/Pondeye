@@ -748,7 +748,7 @@ def get_recent_projects_json(projects):
     project_list = []
     for each_proj in projects:
         mess = "Created"
-        if each_proj.made_live < each_proj.last_update:
+        if each_proj.created < each_proj.last_update:
             mess = "Updated"
         project_list.append({
             'blurb':each_proj.blurb,
