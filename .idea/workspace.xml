@@ -123,8 +123,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4557377">
-              <caret line="753" column="40" selection-start-line="753" selection-start-column="40" selection-end-line="753" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.97213113">
+              <caret line="889" column="16" selection-start-line="889" selection-start-column="16" selection-end-line="889" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -1051,9 +1051,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1174,7 +1172,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="73" selection-start-line="3" selection-start-column="59" selection-end-line="3" selection-end-column="73" />
           <folding>
-            <element signature="e#0#52#0" expanded="true" />
+            <element signature="e#0#52#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1257,8 +1255,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4557377">
-          <caret line="753" column="40" selection-start-line="753" selection-start-column="40" selection-end-line="753" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.97213113">
+          <caret line="889" column="16" selection-start-line="889" selection-start-column="16" selection-end-line="889" selection-end-column="16" />
           <folding />
         </state>
       </provider>
