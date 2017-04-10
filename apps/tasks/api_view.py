@@ -719,7 +719,7 @@ class ApiRunRanking(CSRFExemptView):
     def post(self, request):
         response = {}
         token = request.POST.get("token")
-        if (TOKEN_FOR_NOTIFICATION == TOKEN_FOR_NOTIFICATION):
+        if token and (token == TOKEN_FOR_NOTIFICATION):
             response["status"] = True
             modules.global_ranking_algorithm()
         else:
