@@ -1181,4 +1181,4 @@ class ApiGetNotification(CSRFExemptView):
             return HttpResponse(json.dumps(data), status=201)
         data = {}
         data["data"] = modules.notification_exist(user)
-        return HttpResponse(json.dumps((data)))
+        return HttpResponse(json.dumps(data))
