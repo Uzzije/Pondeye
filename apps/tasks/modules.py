@@ -547,7 +547,7 @@ def global_ranking_algorithm():
         except ObjectDoesNotExist:
             work_ethic = WorkEthicRank(tikedge_user=each_user)
             work_ethic.save()
-        user_rank = 100 - (temp_rank/count_of_users*100)
+        user_rank = 100 - ((temp_rank/count_of_users)*100)
         work_ethic.consistency_rank = int(user_rank)
         work_ethic.save()
         temp_rank += 1
@@ -558,7 +558,7 @@ def global_ranking_algorithm():
         except ObjectDoesNotExist:
             work_ethic = WorkEthicRank(tikedge_user=each_user)
             work_ethic.save()
-        user_rank = 100 - (temp_rank/count_of_users*100)
+        user_rank = 100 - ((temp_rank/count_of_users)*100)
         work_ethic.correct_vouching_rank = int(user_rank)
         work_ethic.save()
         temp_rank += 1
@@ -569,7 +569,7 @@ def global_ranking_algorithm():
         except ObjectDoesNotExist:
             work_ethic = WorkEthicRank(tikedge_user=each_user)
             work_ethic.save()
-        user_rank = 100 - (temp_rank/count_of_users*100)
+        user_rank = 100 - ((temp_rank/count_of_users)*100)
         work_ethic.work_ethic_rank = int(user_rank)
         work_ethic.save()
         temp_rank += 1
