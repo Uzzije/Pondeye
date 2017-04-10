@@ -791,6 +791,7 @@ def get_notification_of_user(user, timezone='UTC'):
             })
         notifications = Notification.objects.filter(user=user, type_of_notification=global_variables.NEW_PROGRESS_ADDED)
         for notif_mess in notifications:
+            print "Hey new pond added \n"
             each_mil = UserProject.objects.get(id=int(notif_mess.id_of_object))
             created = int(notif_mess.created.strftime('%s'))
             notif_list.append({
