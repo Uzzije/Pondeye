@@ -674,6 +674,7 @@ def correct_vouching_percentage(tikedge_user):
     correct_vouch = float((correct_call_count/all_seen_count_num)*100)
     return correct_vouch
 
+
 def get_projects_user_vouched_for(tikedge_user):
     """
     Returns all projects user vouched for
@@ -690,7 +691,10 @@ def get_projects_user_vouched_for(tikedge_user):
 def get_recent_projects(user, requesting_user, is_live=True):
     tikedge_user = get_tikedge_user(user)
     request_user_ponds = Pond.objects.filter(pond_members=requesting_user)
-    all_project = tikedge_user.userproject_set.all().filter(Q(is_live=is_live), Q(is_deleted=False)).distinct()
+    if is_live:
+        all_project = tikedge_user.userproject_set.all().filter(Q(is_live=is_live), Q(is_deleted=False)).distinct()
+    else:
+        all_project = tikedge_user.userproject_set.all().filter(Q(is_deleted=False)).distinct()
     private_project = all_project.filter(is_public=False)
     pond_specific_project = PondSpecificProject.objects.filter(Q(project__in=private_project), Q(pond=request_user_ponds)).distinct()
     public_project = all_project.filter(is_public=True).distinct()
