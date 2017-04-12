@@ -26,7 +26,7 @@ CURRENT_URL = global_variables.CURRENT_URL
 def resize_image(image_field, is_profile_pic=False):
     image_file = StringIO.StringIO(image_field.read())
     image = Image.open(image_file)
-    max_size = (598, 598)
+    max_size = (480, 320)
     if not is_profile_pic:
         # image = image.resize((161, 161), Image.ANTIALIAS)
     # else:
