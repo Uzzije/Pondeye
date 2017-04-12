@@ -30,7 +30,7 @@ def pondeye_image_filter(filename):
 	f = Lomo(temp_path)
 	f.apply()
 	image = Image.open(temp_path)
-	max_size = (598, 598)
+	max_size = (480, 320)
 	image.thumbnail(max_size, Image.ANTIALIAS)
 	imout = image.filter(ImageFilter.DETAIL)
 	imout.save(temp_path, 'JPEG', quality=90)
