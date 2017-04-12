@@ -410,7 +410,7 @@ class ApiEditPictureSetView(CSRFExemptView):
             else:
                 progress = ProgressPicture.objects.get(id=int(pic_id))
                 progress.is_deleted = True
-                pic_id.save()
+                progress.save()
                 progress_set = ProgressPictureSet.objects.get(list_of_progress_pictures=progress)
                 if progress_set.picture_set_count() == 0:
                     progress_set.is_empty = True
