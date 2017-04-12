@@ -374,6 +374,7 @@ class ApiDeletePictureSet(CSRFExemptView):
 
 
 class ApiEditPictureSetView(CSRFExemptView):
+
     def get(self, request):
         """
         Edit Pond Data get the neccessary Informations
@@ -400,14 +401,20 @@ class ApiEditPictureSetView(CSRFExemptView):
 
     def post(self, request):
         try:
+            change_text = request.POST.get("change_text")
             pic_id = request.POST.get("pic_id")
             progress = ProgressPicture.objects.get(id=int(pic_id))
-            progress.is_deleted = True
-            pic_id.save()
-            progress_set = ProgressPictureSet.objects.get(list_of_progress_pictures=progress)
-            if progress_set.picture_set_count() == 0:
-                progress_set.is_empty = False
-            progress_set.save()
+            if len(change_text) > 0:
+                progress.name_of_progress = change_text
+                progress.save()
+            else:
+                progress = ProgressPicture.objects.get(id=int(pic_id))
+                progress.is_deleted = True
+                pic_id.save()
+                progress_set = ProgressPictureSet.objects.get(list_of_progress_pictures=progress)
+                if progress_set.picture_set_count() == 0:
+                    progress_set.is_empty = False
+                    progress_set.save()
             response = {'status':True}
         except ObjectDoesNotExist:
             response = {'status':False}
