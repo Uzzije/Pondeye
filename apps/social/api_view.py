@@ -807,7 +807,7 @@ class ApiProjectView(CSRFExemptView):
             follows = Follow.objects.get(tasks=project).users.count()
         except ObjectDoesNotExist:
             follows = 0
-        user_owns_proj = TikedgeUser.objects.get(user=req_user) == project.user.user
+        user_owns_proj = TikedgeUser.objects.get(user=req_user) == project.user
         timezone_ = request.GET.get('timezone')
         progress = ProgressPictureSet.objects.get(project=project)
 
