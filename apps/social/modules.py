@@ -32,7 +32,7 @@ def resize_image(image_field, is_profile_pic=False):
     """
     image_file = StringIO.StringIO(image_field.read())
     image = Image.open(image_file)
-    max_size = (320, 320)
+    max_size = (250, 250)
     if not is_profile_pic:
         # image = image.resize((161, 161), Image.ANTIALIAS)
     # else:
