@@ -217,7 +217,7 @@ class ProgressFeed(PondFeed):
                 'is_progress_feed': True,
                 'profile_url':self.profile_url,
                 'id': self.tasks.project.id,
-                'user_id':self.tasks.project.user.id,
+                'user_id':self.tasks.project.user.user.id,
                 'progress_set_id': self.tasks.id,
                 'name': self.task_owner_name,
             }
@@ -233,7 +233,6 @@ class ProgressFeed(PondFeed):
     def progress_seen_count(self, progress):
         seen_count = SeenProgress.objects.get(tasks=progress).get_count()
         return seen_count
-
 
 
 class NotificationFeed:
