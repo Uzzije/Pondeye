@@ -2,7 +2,7 @@ from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
 from .models import ProfilePictures, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, PondSpecificProject, \
-     PondRequest, Pond, PondMembership, ProgressPicture, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
+     PondRequest, Pond, PondMembership, ProgressImpressedCount, ProgressPicture, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from django.core.exceptions import ObjectDoesNotExist
@@ -344,6 +344,25 @@ def get_progress_set(progress_set, timezone):
         if not each_set.is_empty:
             list_progress_entry.append(set_dic)
     return list_progress_entry
+
+
+def get_picture_list_from_set(progress, timezone):
+    prog_list = []
+    for each_progress in progress.list_of_progress_pictures.all().filter(is_deleted=False):
+        impressed = 0
+        try:
+            impressed = ProgressImpressedCount.objects.get(tasks=each_progress).get_count()
+        except ObjectDoesNotExist:
+            pass
+
+        prog_list.append({
+            'progress_message':each_progress.name_of_progress,
+            'date_created': utc_to_local(each_progress.last_updated, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
+            'image_url': CURRENT_URL+each_progress.picture.url,
+            'progress_id': each_progress.id,
+            'impressed_by': impressed,
+            'progress_set_id': ProgressPictureSet.objects.get(list_of_progress_pictures=each_progress).id
+        })
 
 
 def get_pic_list(pic_list):

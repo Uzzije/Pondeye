@@ -389,7 +389,7 @@ class ApiEditPictureSetView(CSRFExemptView):
         except ObjectDoesNotExist:
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        progress_set = ProgressPictureSet.objects.filter(project__user__user=user)
+        progress_set = ProgressPictureSet.objects.filter(project__user__user=user, project__is_deleted=False)
         curr_timezone = request.GET.get("timezone")
         list_of_progress_sets = modules.get_progress_set(progress_set, curr_timezone)
         response['user_picture_set'] = list_of_progress_sets
@@ -808,7 +808,9 @@ class ApiProjectView(CSRFExemptView):
         except ObjectDoesNotExist:
             follows = 0
         user_owns_proj = TikedgeUser.objects.get(user=req_user) == project.user.user
-        timezone = request.GET.get('timezone')
+        timezone_ = request.GET.get('timezone')
+        progress = ProgressPictureSet.objects.get(project=project)
+
         public_status = "Project is in Pond"
         if project.is_public:
             public_status = "Project is Public"
@@ -823,8 +825,8 @@ class ApiProjectView(CSRFExemptView):
             'project_name':project_name,
             'user_first_name':project.user.user.first_name,
             'user_last_name':project.user.user.last_name,
-            'start_time':task_modules.utc_to_local(project.made_live, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
-            'end_time':task_modules.utc_to_local(project.length_of_project, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
+            'start_time':task_modules.utc_to_local(project.made_live, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
+            'end_time':task_modules.utc_to_local(project.length_of_project, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
             'seen_count':seen_count,
             'follow_count':follows,
             'public_status':public_status,
@@ -833,7 +835,8 @@ class ApiProjectView(CSRFExemptView):
             'user_owns_proj':user_owns_proj,
             'is_completed':is_completed,
             'proj_id':project.id,
-            'progress_pic': task_modules.get_project_pic_info(project)
+            'project_pic': task_modules.get_project_pic_info(project),
+            'progresses': modules.get_picture_list_from_set(progress, timezone=timezone_)
         }
         return HttpResponse(json.dumps(response), status=201)
 

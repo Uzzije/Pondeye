@@ -338,6 +338,7 @@ class ApiProjectEditView(CSRFExemptView):
                 'proj_pic_id': project_pic['pic_id'],
                 'proj_pic_url': project_pic['url'],
                 'has_pic':project_pic['has_pic']
+
             })
         response["status"] = True
         response["project_list"] = project_list
