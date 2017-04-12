@@ -1172,7 +1172,7 @@ class ApiAcceptPondRequest(CSRFExemptView):
                 pond_membership = PondMembership(user=pond_request.user, pond=pond_request.pond)
                 pond_membership.save()
                 return  HttpResponse(json.dumps(data))
-            except (None):
+            except (AttributeError, ValueError, TypeError, Exception):
                 data["status"] = False
                 data["error"] = "An error occurred. Please try again! Also pond request might have already been accepted!"
                 return HttpResponse(json.dumps(data))

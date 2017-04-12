@@ -685,7 +685,8 @@ def get_projects_user_vouched_for(tikedge_user):
     :return: a list of userproject objects
     """
     proj_list = []
-    project_vouches = VoucheProject.objects.filter(users=tikedge_user)
+    project_vouches = VoucheProject.objects.filter(Q(users=tikedge_user)).\
+        filter(Q(tasks__is_failed=True) | Q(tasks__is_completed=True))
     for vouch in project_vouches:
         proj_list.append(vouch.tasks)
     return proj_list
