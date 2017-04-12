@@ -829,6 +829,7 @@ class ApiProjectView(CSRFExemptView):
             'end_time':task_modules.utc_to_local(project.length_of_project, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
             'seen_count':seen_count,
             'follow_count':follows,
+            'vouch_count': VoucheProject.objects.get(tasks=project).get_count(),
             'public_status':public_status,
             'mil_list':modules.milestone_project_app_view(milestones),
             'motif':modules.motivation_for_project_app_view(motivations),

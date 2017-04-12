@@ -372,7 +372,7 @@ def get_picture_list_from_set(progress, timezone_):
             'image_url': CURRENT_URL+each_progress.picture.url,
             'progress_id': each_progress.id,
             'impressed_by': impressed,
-            'progress_set_id': ProgressPictureSet.objects.get(list_of_progress_pictures=each_progress).id
+            'progress_set_id': ProgressPictureSet.objects.get(list_of_progress_pictures=each_progress).id,
         })
     return prog_list
 
