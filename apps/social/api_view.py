@@ -1157,7 +1157,7 @@ class ApiAcceptPondRequest(CSRFExemptView):
                 pond_request.save()
                 data["status"] = True
                 pond_mess = "Request granted to join pond: %s!" %  pond_request.pond.name_of_pond
-                new_notif = Notification(user=pond_request.user.user, name_of_notitification=pond_mess,
+                new_notif = Notification(user=pond_request.user.user, name_of_notification=pond_mess,
                                          id_of_object=pond_request.id,
                                          type_of_notification=global_variables.POND_REQUEST_ACCEPTED)
                 new_notif.save()
