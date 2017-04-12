@@ -341,7 +341,8 @@ def get_progress_set(progress_set, timezone):
                 'image_url': CURRENT_URL+each_progress.picture.url,
                 'progress_id': each_progress.id,
             })
-        list_progress_entry.append(set_dic)
+        if not each_set.is_empty:
+            list_progress_entry.append(set_dic)
     return list_progress_entry
 
 
