@@ -29,6 +29,11 @@ def pondeye_image_filter(filename):
 	temp_path = settings.MEDIA_ROOT + "/" + filename
 	f = Lomo(temp_path)
 	f.apply()
+	image = Image.open(temp_path)
+	max_size = (250, 250)
+	image.thumbnail(max_size, Image.ANTIALIAS)
+	imout = image.filter(ImageFilter.DETAIL)
+	imout.save(temp_path, 'JPEG', quality=90)
 	'''
 	im_format = im.format
 	#convert to grayscale
