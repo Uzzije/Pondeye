@@ -836,7 +836,7 @@ class ApiProjectView(CSRFExemptView):
             'is_completed':is_completed,
             'proj_id':project.id,
             'project_pic': task_modules.get_project_pic_info(project),
-            'progresses': modules.get_picture_list_from_set(progress, timezone=timezone_)
+            'progresses': modules.get_picture_list_from_set(progress, timezone_=timezone_)
         }
         return HttpResponse(json.dumps(response), status=201)
 

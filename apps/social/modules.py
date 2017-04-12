@@ -24,6 +24,12 @@ CURRENT_URL = global_variables.CURRENT_URL
 
 
 def resize_image(image_field, is_profile_pic=False):
+    """
+    Backend resizing of images to 480 * 320
+    :param image_field:
+    :param is_profile_pic:
+    :return:
+    """
     image_file = StringIO.StringIO(image_field.read())
     image = Image.open(image_file)
     max_size = (480, 320)
@@ -351,7 +357,7 @@ def get_progress_set(progress_set, timezone):
     return list_progress_entry
 
 
-def get_picture_list_from_set(progress, timezone):
+def get_picture_list_from_set(progress, timezone_):
     prog_list = []
     for each_progress in progress.list_of_progress_pictures.all().filter(is_deleted=False):
         impressed = 0
@@ -362,12 +368,13 @@ def get_picture_list_from_set(progress, timezone):
 
         prog_list.append({
             'progress_message':each_progress.name_of_progress,
-            'date_created': utc_to_local(each_progress.last_updated, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
+            'date_created': utc_to_local(each_progress.last_updated, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
             'image_url': CURRENT_URL+each_progress.picture.url,
             'progress_id': each_progress.id,
             'impressed_by': impressed,
             'progress_set_id': ProgressPictureSet.objects.get(list_of_progress_pictures=each_progress).id
         })
+    return prog_list
 
 
 def get_pic_list(pic_list):
