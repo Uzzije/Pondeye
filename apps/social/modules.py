@@ -332,7 +332,7 @@ def get_progress_set(progress_set, timezone):
     list_progress_entry = []
     for each_set in progress_set:
         set_dic = {'name_of_project':each_set.project.name_of_project, 'id':each_set.id, 'list_of_progress_pictures':[]}
-        for each_progress in each_set.list_of_progress_pictures.all().filter(is_delete=False):
+        for each_progress in each_set.list_of_progress_pictures.all().filter(is_deleted=False):
             print "each prog ", each_progress
             set_dic['list_of_progress_pictures'].append({
                 'progress_message':each_progress.name_of_progress,
