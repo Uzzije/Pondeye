@@ -580,7 +580,7 @@ def global_ranking_algorithm():
 
 def get_user_consistency_rank(user, consistency_percentage):
     points = get_status(user)
-    rank = consistency_percentage + points
+    rank = (consistency_percentage/100) + points
     return rank
 
 
@@ -647,12 +647,12 @@ def user_total_goal_followers(tikedge_user):
 
     follow_count = 0
     followers_list = []
-    projects = tikedge_user.userproject_set.all().filter(is_deleted=False)
+    projects = tikedge_user.userproject_set.all()
     for each_proj in projects:
         followers = Follow.objects.get(tasks=each_proj)
         for each_followers  in followers.users.all():
             if each_followers not in followers_list:
-                follow_count += 0
+                follow_count += 1
                 followers_list.append(each_followers)
     return follow_count
 
