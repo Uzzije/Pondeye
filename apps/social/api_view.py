@@ -834,6 +834,8 @@ class ApiProjectView(CSRFExemptView):
             'motif':modules.motivation_for_project_app_view(motivations),
             'user_owns_proj':user_owns_proj,
             'is_completed':is_completed,
+            'is_failed':project.is_failed,
+            'is_completed_bool':project.is_completed,
             'proj_id':project.id,
             'project_pic': task_modules.get_project_pic_info(project),
             'progresses': modules.get_picture_list_from_set(progress, timezone_=timezone_)
