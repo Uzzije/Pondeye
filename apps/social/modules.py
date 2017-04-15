@@ -357,7 +357,7 @@ def get_progress_set(progress_set, timezone):
     return list_progress_entry
 
 
-def get_picture_list_from_set(progress, timezone_):
+def get_picture_list_from_set(progress, timezone_, indi_proj=False):
     prog_list = []
     for each_progress in progress.list_of_progress_pictures.all().filter(is_deleted=False):
         impressed = 0
@@ -365,7 +365,7 @@ def get_picture_list_from_set(progress, timezone_):
             impressed = ProgressImpressedCount.objects.get(tasks=each_progress).get_count()
         except ObjectDoesNotExist:
             pass
-
+        created_sec = int(each_progress.created.strftime('%s'))
         prog_list.append({
             'progress_message':each_progress.name_of_progress,
             'date_created': utc_to_local(each_progress.last_updated, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
@@ -373,8 +373,13 @@ def get_picture_list_from_set(progress, timezone_):
             'progress_id': each_progress.id,
             'impressed_by': impressed,
             'progress_set_id': ProgressPictureSet.objects.get(list_of_progress_pictures=each_progress).id,
+            'created_sec': created_sec
         })
-    return prog_list
+    if indi_proj:
+        new_prog = sorted(prog_list, key=lambda pond: pond['created_sec'])
+    else:
+        new_prog = sorted(prog_list, key=lambda pond: pond['created_sec'], reverse=True)
+    return new_prog
 
 
 def get_pic_list(pic_list):
