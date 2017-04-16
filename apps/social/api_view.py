@@ -190,7 +190,7 @@ class ApiPictureUploadView(CSRFExemptView):
             response['has_proj'] = True
             response["status"] = True
             response["projects"] = projects
-            response['prog_memebers'] = all_members
+            response['prog_members'] = all_members
         else:
 	        response["status"] = False
 	        response["error"] = "Create a goal, then use pictures to capture the progress of that goal!"
