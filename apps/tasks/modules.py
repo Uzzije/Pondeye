@@ -484,7 +484,7 @@ def user_stats(user):
     tikedge_user = get_tikedge_user(user)
     goal_success_count = get_completed_proj_count(user)
     goal_failed_count = get_failed_proj_count(user)
-    total = goal_success_count + goal_failed_count
+    total = tikedge_user.userproject_set.all().filter(Q(is_live=False), Q(is_deleted=False)).count()
     if total == 0:
         total = 1
     consistency_percentage = float((goal_success_count/total)*100)
