@@ -374,7 +374,7 @@ def get_picture_list_from_set(progress, timezone_, indi_proj=False):
             'impressed_by': impressed,
             'progress_set_id': ProgressPictureSet.objects.get(list_of_progress_pictures=each_progress).id,
             'created_sec': created_sec,
-            'experience_with': get_experience_with(each_progress)
+            'experience_with': get_experience_with(each_progress),
         })
     if indi_proj:
         new_prog = sorted(prog_list, key=lambda pond: pond['created_sec'])
@@ -833,7 +833,7 @@ def get_notification_of_user(user, timezone='UTC'):
         for notif_mess in notifications:
             user_proj_id = notif_mess.id_of_object
             each_mil = UserProject.objects.get(id=user_proj_id)
-            created = int(each_mil.created.strftime('%s'))
+            created = int(notif_mess.created.strftime('%s'))
             notif_list.append({
                 'first_name':each_mil.user.user.first_name,
                 'last_name':each_mil.user.user.last_name,
