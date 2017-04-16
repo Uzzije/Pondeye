@@ -541,11 +541,11 @@ def get_all_pond_members(user):
     """
     pond_profile_list = []
     all_pond = get_pond(user)
-    tikedge_user = TikedgeUser.objects.get(user=user)
     for each_pond in all_pond:
-        pond_profile = get_pond_profile(tikedge_user, each_pond.pond_creator)
-        for each_person in pond_profile:
-            pond_profile_list.append(each_person)
+        pond_profiles = get_pond_profile(each_pond.pond_members.all(), each_pond.pond_creator)
+        for each_person in pond_profiles:
+            if each_person not in pond_profile_list:
+                pond_profile_list.append(each_person)
     return pond_profile_list
 
 

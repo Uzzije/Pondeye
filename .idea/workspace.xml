@@ -103,7 +103,7 @@
       <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.9259257">
+            <state vertical-scroll-proportion="-225.09259">
               <caret line="981" column="24" selection-start-line="981" selection-start-column="24" selection-end-line="981" selection-end-column="24" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
@@ -115,8 +115,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56751466">
-              <caret line="564" column="25" selection-start-line="564" selection-start-column="25" selection-end-line="564" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.5968689">
+              <caret line="546" column="52" selection-start-line="546" selection-start-column="52" selection-end-line="546" selection-end-column="52" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -226,8 +226,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="56" />
-    <option name="y" value="141" />
+    <option name="x" value="659" />
+    <option name="y" value="130" />
     <option name="width" value="1260" />
     <option name="height" value="711" />
   </component>
@@ -807,7 +807,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="56" y="141" width="1260" height="711" extended-state="0" />
+    <frame x="659" y="130" width="1260" height="711" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21100163" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
@@ -1210,7 +1210,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.9259257">
+        <state vertical-scroll-proportion="-225.09259">
           <caret line="981" column="24" selection-start-line="981" selection-start-column="24" selection-end-line="981" selection-end-column="24" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
@@ -1220,8 +1220,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56751466">
-          <caret line="564" column="25" selection-start-line="564" selection-start-column="25" selection-end-line="564" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.5968689">
+          <caret line="546" column="52" selection-start-line="546" selection-start-column="52" selection-end-line="546" selection-end-column="52" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
