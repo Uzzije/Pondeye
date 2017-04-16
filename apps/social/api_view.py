@@ -224,7 +224,8 @@ class ApiPictureUploadView(CSRFExemptView):
         pond_members_id_arr = pond_members_id_str.split(",")
         if pond_members_id_arr:
             for pond_id in pond_members_id_arr:
-                ponder = TikedgeUser.objects.get(id=int(pond_id))
+                pond_user = User.objects.get(id=int(pond_id))
+                ponder = TikedgeUser.objects.get(user=pond_user)
                 picture_mod.experience_with.add(ponder)
                 pond_shared = Pond.objects.filter(Q(pond_members=ponder), Q(pond_members=tikedge_user))
                 for each_shared in pond_shared:
