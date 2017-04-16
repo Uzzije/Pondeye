@@ -562,6 +562,7 @@ def get_pond_feed(the_pond):
             'name_of_feed':each_item.name_of_feed,
             'proj_id':each_item.project.id
         })
+    return pond_feed_list
 
 
 def new_goal_or_progress_added_notification_to_pond(project, is_new_project=True):
