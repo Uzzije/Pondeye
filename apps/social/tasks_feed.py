@@ -198,6 +198,7 @@ class ProgressFeed(PondFeed):
                 'id': each_user.id,
                 'user_name':each_user.user.username
             })
+        return list_of_tikedge_users
 
     def list_of_progress(self):
         if self.tasks.is_empty:
