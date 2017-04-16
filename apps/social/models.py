@@ -66,13 +66,6 @@ class ProgressPicture(models.Model):
         return '%s %s' % (self.name_of_progress, self.image_name)
 
 
-class PondProgressFeed(models.Model):
-    name_of_feed = models.TextField(default=None)
-    project = models.ForeignKey(UserProject, blank=False, null=True)
-    pond = models.ForeignKey(Pond, blank=False, null=True)
-    progress_picture = models.ForeignKey(Pond, blank=False, null=True)
-
-
 class ProgressPictureSet(models.Model):
     list_of_progress_pictures = models.ManyToManyField(ProgressPicture)
     project = models.ForeignKey(UserProject, blank=True, null=True)
@@ -103,7 +96,7 @@ class ShoutOutEmailAndNumber(models.Model):
     sent_date = models.DateTimeField(blank=True, null=True)
     user_responded = models.BooleanField(default=False)
     date_of_response = models.DateTimeField(blank=True, null=True)
-    type_of_response = models.CharField(default="noResponse", verbose_name="user can respond by joining "
+    type_of_response = models.CharField(default="noResponse", max_length=250, verbose_name="user can respond by joining "
                                                                            "or not joining pondeye")
 
 
@@ -322,6 +315,16 @@ class Pond(models.Model):
 
     def __str__(self):
         return self.name_of_pond
+
+
+class PondProgressFeed(models.Model):
+    name_of_feed = models.TextField(default=None)
+    project = models.ForeignKey(UserProject, blank=False, null=True, related_name="project_pond_feed")
+    pond = models.ForeignKey(Pond, blank=False, null=True)
+    progress_picture = models.ForeignKey(Pond, blank=False, null=True, related_name="picture_pond_feed")
+
+    def __str__(self):
+         return '%s' % self.name_of_feed
 
 
 class PondRequest(models.Model):
