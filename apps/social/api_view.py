@@ -229,6 +229,7 @@ class ApiPictureUploadView(CSRFExemptView):
                 picture_mod.experience_with.add(ponder)
                 pond_shared = Pond.objects.filter(Q(pond_members=ponder), Q(pond_members=tikedge_user))
                 for each_shared in pond_shared:
+                    print "shared bleep"
                     try:
                         PondProgressFeed.objects.get(progress_picture=picture_mod, pond=each_shared)
                     except ObjectDoesNotExist:
