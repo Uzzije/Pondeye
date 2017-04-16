@@ -229,7 +229,8 @@ class ApiPictureUploadView(CSRFExemptView):
                 picture_mod.experience_with.add(ponder)
                 pond_shared = Pond.objects.filter(Q(pond_members=ponder), Q(pond_members=tikedge_user))
                 pond_ponder = Pond.objects.filter(Q(pond_members=ponder))
-                print "shared bleep ", pond_shared, pond_ponder
+                pond_ponder_tik = Pond.objects.filter(Q(pond_members=tikedge_user))
+                print "shared bleep ", pond_shared, pond_ponder, pond_ponder_tik
                 for each_shared in pond_shared:
                     print "shared bleep"
                     try:
