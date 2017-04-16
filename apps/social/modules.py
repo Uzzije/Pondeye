@@ -2,7 +2,7 @@ from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
 from .models import ProfilePictures, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, PondSpecificProject, \
-     PondRequest, Pond, PondMembership, ProgressImpressedCount, ProgressPicture, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
+     PondRequest, Pond, PondMembership, ProgressImpressedCount, PondProgressFeed, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
 from django.db.models import Q
 from tasks_feed import NotificationFeed
 from django.core.exceptions import ObjectDoesNotExist
@@ -533,12 +533,44 @@ def get_pond_profile(tikedge_users, owner):
     return sorted_pond
 
 
+def get_all_pond_members(user):
+    """
+    Get the pond profile of all pond members associated with user
+    :param user:
+    :return:
+    """
+    pond_profile_list = []
+    all_pond = get_pond(user)
+    tikedge_user = TikedgeUser.objects.get(user=user)
+    for each_pond in all_pond:
+        pond_profile = get_pond_profile(tikedge_user, each_pond.pond_creator)
+        for each_person in pond_profile:
+            pond_profile_list.append(each_person)
+    return pond_profile_list
+
+
 def get_pond(user):
     ponds = Pond.objects.filter(pond_members__user=user, is_deleted=False)
     return ponds
 
 
+def get_pond_feed(the_pond):
+    pond_feeds = PondProgressFeed.objects.filter(pond=the_pond)
+    pond_feed_list = []
+    for each_item in pond_feeds:
+        pond_feed_list.append({
+            'name_of_feed':each_item.name_of_feed,
+            'proj_id':each_item.project.id
+        })
+
+
 def new_goal_or_progress_added_notification_to_pond(project, is_new_project=True):
+    """
+    Send notification to all pond members about users activities
+    :param project:
+    :param is_new_project: type of notification either a new project(goal) or new progress
+    :return:
+    """
     pond_member_list = []
     pond_member_list.append(project.user)
     try:
@@ -655,6 +687,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 'progress_viewed':False,
                 'project_viewed':False,
                 'project_liked': False,
+                'is_shared_exp':False,
                 'id':each_mil['id'],
                 'mil_is_deleted':each_mil['proj'].is_deleted,
                 'created':created
@@ -675,6 +708,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 'progress_viewed':False,
                 'project_viewed':False,
                 'project_liked': False,
+                'is_shared_exp':False,
                 'id':each_mil['id'],
                 'created':created,
                 'proj_is_deleted':each_mil['is_proj_deleted'],
@@ -698,6 +732,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 'progress_viewed':False,
                 'project_viewed':False,
                 'project_liked': False,
+                'is_shared_exp':False,
                 'id':each_mil.user.user.id,
                 'pond_id':each_mil.pond.id,
                 'request_id':each_mil.id,
@@ -724,6 +759,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 'progress_viewed':False,
                 'project_viewed':False,
                 'project_liked': False,
+                'is_shared_exp':False,
                 'user_id':each_mil['user_id'],
                 'proj_id':each_mil['proj_id'],
                 'username':each_mil['username'],
@@ -749,6 +785,7 @@ def get_notification_of_user(user, timezone='UTC'):
                 'progress_viewed':False,
                 'project_viewed':False,
                 'project_liked': False,
+                'is_shared_exp':False,
                 'created':created
             })
         for each_mil in new_ponder:
@@ -769,12 +806,42 @@ def get_notification_of_user(user, timezone='UTC'):
                 'progress_viewed':False,
                 'project_viewed':False,
                 'project_liked': False,
+                'is_shared_exp':False,
                 'is_deleted':each_mil.pond.is_deleted,
                 'user_id':each_mil.user.user.id,
                 'blurb':each_mil.pond.blurb,
                 'pond_id':each_mil.pond.id,
                 'created':created
             })
+        notifications = Notification.objects.filter(user=user, type_of_notification=global_variables.NEW_SHARED_EXPERIENCE)
+        for notif_mess in notifications:
+            user_proj_id = notif_mess.id_of_object
+            each_mil = UserProject.objects.get(id=user_proj_id)
+            created = int(each_mil.created.strftime('%s'))
+            notif_list.append({
+                'first_name':each_mil.user.user.first_name,
+                'last_name':each_mil.user.user.last_name,
+                'count': None,
+                'is_let_down':False,
+                'is_project_vouch':False,
+                'is_new_ponder':False,
+                'is_interests':False,
+                'is_mil_quit': False,
+                'is_proj_quit':False,
+                'is_pond_request':False,
+                'new_project':False,
+                'new_progress':False,
+                'progress_viewed':False,
+                'project_viewed':False,
+                'is_shared_exp':True,
+                'is_deleted':each_mil.is_deleted,
+                'project_liked': False,
+                'user_id':each_mil.user.user.id,
+                'blurb':notif_mess.name_of_notification,
+                'id':each_mil.id,
+                'created':created,
+            })
+
         notifications = Notification.objects.filter(user=user, type_of_notification=global_variables.NEW_PROJECT_ADDED)
         for notif_mess in notifications:
             user_proj_id = notif_mess.id_of_object
@@ -798,6 +865,7 @@ def get_notification_of_user(user, timezone='UTC'):
                     'project_viewed':False,
                     'is_deleted':each_mil.is_deleted,
                     'project_liked': False,
+                    'is_shared_exp':False,
                     'user_id':each_mil.user.user.id,
                     'blurb':notif_mess.name_of_notification,
                     'id':each_mil.id,
@@ -828,6 +896,7 @@ def get_notification_of_user(user, timezone='UTC'):
                     'project_viewed':True,
                     'is_deleted':each_mil.is_deleted,
                     'project_liked': False,
+                    'is_shared_exp':False,
                     'user_id':each_mil.user.user.id,
                     'blurb':notif_mess.name_of_notification,
                     'id':each_mil.id,
@@ -858,6 +927,7 @@ def get_notification_of_user(user, timezone='UTC'):
                     'project_viewed':False,
                     'is_deleted':each_mil.is_deleted,
                     'project_liked': False,
+                    'is_shared_exp':False,
                     'user_id':each_mil.user.user.id,
                     'blurb':notif_mess.name_of_notification,
                     'id':each_mil.id,
@@ -887,6 +957,7 @@ def get_notification_of_user(user, timezone='UTC'):
                         'project_viewed':False,
                         'is_deleted':each_mil.is_deleted,
                         'project_liked': False,
+                        'is_shared_exp':False,
                         'user_id':each_mil.user.user.id,
                         'blurb':notif_mess.name_of_notification,
                         'id':each_mil.id,
@@ -916,6 +987,7 @@ def get_notification_of_user(user, timezone='UTC'):
                         'progress_viewed':False,
                         'project_viewed':False,
                         'project_liked': True,
+                        'is_shared_exp':False,
                         'is_deleted':each_mil.is_deleted,
                         'user_id':each_mil.user.user.id,
                         'blurb':notif_mess.name_of_notification,
@@ -1387,6 +1459,20 @@ def mark_new_project_added_as_read(user):
     """
     notifcation = user.notification_set.all().filter(read=False,
                                                      type_of_notification=global_variables.NEW_PROJECT_ADDED)
+    for each_notif in notifcation:
+        each_notif.read = True
+        each_notif.save()
+
+
+def mark_shared_experience_as_read(user):
+
+    """
+    Notification that shared experience has been created and has been read
+    :param user:
+    :return:
+    """
+    notifcation = user.notification_set.all().filter(read=False,
+                                                     type_of_notification=global_variables.NEW_SHARED_EXPERIENCE)
     for each_notif in notifcation:
         each_notif.read = True
         each_notif.save()

@@ -79,7 +79,7 @@ class PondFeed:
             message = "Goal: %s" % self.tasks.blurb
             return message
         elif self.type_of_feed is global_variables.PROGRESS:
-            message =  "%s progress highlights "% self.tasks.project.name_of_project
+            message =  "Goal: %s. Progress Highlights "% self.tasks.project.name_of_project
             return message
         else:
             return None
@@ -189,6 +189,16 @@ class ProgressFeed(PondFeed):
         self.local_timezone = local_timezone
         self.progress = self.list_of_progress()
 
+    def get_experience_with(self, progress):
+        list_of_tikedge_users = []
+        for each_user in progress.experience_with.all():
+            list_of_tikedge_users.append({
+                'first_name': each_user.user.first_name,
+                'last_name': each_user.user.last_name,
+                'id': each_user.id,
+                'user_name':each_user.user.username
+            })
+
     def list_of_progress(self):
         if self.tasks.is_empty:
             return None
@@ -203,7 +213,8 @@ class ProgressFeed(PondFeed):
                'impress_count': self.impress_count(progress),
                'created':utc_to_local(progress.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
                'id': progress.id,
-               'image_url':self.get_image_url(progress)
+               'image_url':self.get_image_url(progress),
+               'experience_with':self.get_experience_with(progress)
             })
         if progress_list:
             progress_dic = {

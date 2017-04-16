@@ -57,3 +57,12 @@ ADD_TO_POND = 'atp'  # notify user that they have been added to pond
 #Question prompt answers variable
 YES_USER_WILL_COMPLETE_GOAL = 'yuwcg'
 NO_USER_WILL_NOT_COMPLETE_GOAL = 'nuwncg'
+
+
+#Response to shout out email
+SHOUT_OUT_EMAIL_DEFAULT_RESPONSE = "noResponse"
+JOINED_PONDEYE = "jp"
+NOT_JOINED_PONDEYE = "njp"
+
+#pondfeed
+NEW_SHARED_EXPERIENCE = "nse"

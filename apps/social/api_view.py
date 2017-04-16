@@ -1,7 +1,7 @@
 from django.views.generic import View
 from models import (Notification, Follow, VoucheMilestone, SeenMilestone,
-                     SeenProject, Pond, PondRequest,
-                    PondMembership, User, ProgressPicture,
+                     SeenProject, Pond, PondRequest, PondProgressFeed,
+                    PondMembership, User, ProgressPicture, ShoutOutEmailAndNumber,
                     ProgressPictureSet, ProgressImpressedCount, SeenProgress, VoucheProject)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponse
@@ -185,10 +185,12 @@ class ApiPictureUploadView(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         projects = task_modules.api_get_user_projects(user)
+        all_members = modules.get_all_pond_members(user)
         if projects:
             response['has_proj'] = True
             response["status"] = True
             response["projects"] = projects
+            response['prog_memebers'] = all_members
         else:
 	        response["status"] = False
 	        response["error"] = "Create a goal, then use pictures to capture the progress of that goal!"
@@ -200,28 +202,62 @@ class ApiPictureUploadView(CSRFExemptView):
         response["status"] = False
         try:
             username = request.POST.get("username")
-            User.objects.get(username=username)
+            user = User.objects.get(username=username)
         except ObjectDoesNotExist:
             response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = User.objects.get(user=user)
+        progress_name = request.POST.get('progress_name')
+        if len(progress_name) > 250:
+            response["error"] = "Hey description of progress must be less that 250 characters!"
             return HttpResponse(json.dumps(response), status=201)
         dec_picture_file = request.POST.get('picture')
         picture_file = modules.get_picture_from_base64(dec_picture_file)
         if not picture_file:
             response["error"] = "Hey picture must be either jpg, jpeg or png file! ", dec_picture_file
             return HttpResponse(json.dumps(response), status=201)
-        progress_name = request.POST.get('progress_name')
-        if len(progress_name) > 250:
-            response["error"] = "Hey description of progress must be less that 250 characters!"
-            return HttpResponse(json.dumps(response), status=201)
         picture_mod = ProgressPicture(image_name=picture_file.name,
                                picture=picture_file, name_of_progress=progress_name)
         picture_mod.save()
+        project = UserProject.objects.get(id=int(request.POST.get("project_id")))
+        pond_members_id_str = request.POST.get("members_id")
+        pond_members_id_arr = pond_members_id_str.split(",")
+        if pond_members_id_arr:
+            for pond_id in pond_members_id_arr:
+                ponder = TikedgeUser.objects.get(id=int(pond_id))
+                picture_mod.experience_with.add(ponder)
+                pond_shared = Pond.objects.filter(Q(pond_members=ponder), Q(pond_members=tikedge_user))
+                for each_shared in pond_shared:
+                    try:
+                        PondProgressFeed.objects.get(progress_picture=picture_mod, pond=each_shared)
+                    except ObjectDoesNotExist:
+                        new_message = "%s %s has shared an experience with your fellow pond members when making progress " \
+                                      "on this goal %s" % (user.first_name, user.last_name, project.name_of_project)
+                        new_pond_feed = PondProgressFeed(progress_picture=picture_mod, name_of_feed=new_message,
+                                                         pond=each_shared, project=project)
+                        new_pond_feed.save()
+                        for each_members in each_shared.pond_members.all():
+                            new_notif = Notification(user=each_members.user, name_of_notification=new_message,
+                                                     id_of_object=project.id,
+                                                    type_of_notification=global_variables.NEW_SHARED_EXPERIENCE)
+                            new_notif.save()
+        picture_mod.save()
+        email_shout_out_str = request.POST.get("shout_emails").split(",")
+        if email_shout_out_str:
+            for each_val in email_shout_out_str:
+                if isinstance(each_val, int):
+                    shout_info = ShoutOutEmailAndNumber(tikedge_user=tikedge_user, progress_picture=picture_mod,
+                                                        user_email_or_num=each_val, is_number=True)
+                else:
+                    shout_info = ShoutOutEmailAndNumber(tikedge_user=tikedge_user,progress_picture=picture_mod,
+                                                        user_email_or_num=each_val, is_number=True)
+                shout_info.save()
         pondeye_image_filter(picture_mod.picture.name)
         impress_count = ProgressImpressedCount(tasks=picture_mod)
         impress_count.save()
         seen_progress = SeenProgress(tasks=picture_mod)
         seen_progress.save()
-        project = UserProject.objects.get(id=int(request.POST.get("project_id")))
+
         progress_set = ProgressPictureSet.objects.get(project=project)
         progress_set.is_empty = False
         progress_set.list_of_progress_pictures.add(picture_mod)
@@ -939,6 +975,7 @@ class ApiGetPond(CSRFExemptView):
             else:
                 is_pond_member = False
             pond_status = task_modules.get_pond_status(pond_list_members)
+            pond_feed = modules.get_pond_feed(the_pond)
             response["status"] = True
             response["pond_info"] = {
                 "ponders":ponders,
@@ -947,7 +984,8 @@ class ApiGetPond(CSRFExemptView):
                 "name_of_pond":the_pond.name_of_pond,
                 "is_member":is_pond_member,
                 "tags":pond_tags,
-                'id':int(pond_id)
+                'id':int(pond_id),
+                'pond_feed':pond_feed
             }
         except ObjectDoesNotExist:
             response["status"] = False
@@ -1124,6 +1162,7 @@ class ApiNotificationView(CSRFExemptView):
         modules.mark_project_failed_as_read(user)
         modules.mark_new_progress_added_as_read(user)
         modules.mark_new_project_added_as_read(user)
+        modules.mark_shared_experience_as_read(user)
         return HttpResponse(json.dumps(response))
 
 

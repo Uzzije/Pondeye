@@ -53,6 +53,7 @@ class ProgressPicture(models.Model):
     last_updated = models.DateTimeField(default=now)
     created = models.DateTimeField(default=now)
     blurb = models.CharField(max_length=150, default=None)
+    experience_with = models.ManyToManyField(TikedgeUser, default=None)
 
     def save(self, *args, **kwargs):
         if len(self.name_of_progress) > 150:
@@ -60,8 +61,16 @@ class ProgressPicture(models.Model):
         else:
             self.blurb = self.name_of_progress
         super(ProgressPicture, self).save(*args, **kwargs)
+
     def __str__(self):
         return '%s %s' % (self.name_of_progress, self.image_name)
+
+
+class PondProgressFeed(models.Model):
+    name_of_feed = models.TextField(default=None)
+    project = models.ForeignKey(UserProject, blank=False, null=True)
+    pond = models.ForeignKey(Pond, blank=False, null=True)
+    progress_picture = models.ForeignKey(Pond, blank=False, null=True)
 
 
 class ProgressPictureSet(models.Model):
@@ -81,6 +90,21 @@ class ProgressPictureSet(models.Model):
         except ValueError:
             count = 0
         return count
+
+
+class ShoutOutEmailAndNumber(models.Model):
+    tikedge_user = models.ForeignKey(TikedgeUser, verbose_name="User that requested the shoutout")
+    user_email_or_num = models.TextField(default=None)
+    created = models.DateTimeField(default=now)
+    is_email = models.BooleanField(default=False)
+    is_number = models.BooleanField(default=True)
+    progress_picture = models.ForeignKey(ProgressPicture, blank=True, null=True)
+    email_or_text_sent = models.BooleanField(default=False)
+    sent_date = models.DateTimeField(blank=True, null=True)
+    user_responded = models.BooleanField(default=False)
+    date_of_response = models.DateTimeField(blank=True, null=True)
+    type_of_response = models.CharField(default="noResponse", verbose_name="user can respond by joining "
+                                                                           "or not joining pondeye")
 
 
 class PictureSet(models.Model):
@@ -236,6 +260,7 @@ class Notification(models.Model):
     project_update = models.ForeignKey(UserProject, blank=True, null=True)
     name_of_notification = models.TextField(max_length=700, default="")
     id_of_object = models.IntegerField(default=0)
+    date_read = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.type_of_notification
