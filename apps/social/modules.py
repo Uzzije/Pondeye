@@ -545,7 +545,7 @@ def get_all_pond_members(user):
     for each_pond in all_pond:
         pond_profiles = get_pond_profile(each_pond.pond_members.all(), each_pond.pond_creator)
         for each_person in pond_profiles:
-            if each_person not in pond_profile_list:
+            if each_person not in pond_profile_list and each_person.user != user:
                 pond_profile_list.append(each_person)
     return pond_profile_list
 
