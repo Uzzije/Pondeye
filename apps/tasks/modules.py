@@ -316,7 +316,7 @@ def get_status(user):
     if proj_all == 0:
         proj_all = 1
     proj_success = get_completed_proj_count(user)
-    project_count = proj_success + proj_all
+    project_count = proj_all
     if proj_all == 0:
         return status
     ratio_percentage = float(proj_success/proj_all)*100
