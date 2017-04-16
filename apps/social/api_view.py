@@ -206,7 +206,7 @@ class ApiPictureUploadView(CSRFExemptView):
         except ObjectDoesNotExist:
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        tikedge_user = User.objects.get(user=user)
+        tikedge_user = TikedgeUser.objects.get(user=user)
         progress_name = request.POST.get('progress_name')
         if len(progress_name) > 250:
             response["error"] = "Hey description of progress must be less that 250 characters!"
