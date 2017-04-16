@@ -321,7 +321,7 @@ class PondProgressFeed(models.Model):
     name_of_feed = models.TextField(default=None)
     project = models.ForeignKey(UserProject, blank=False, null=True, related_name="project_pond_feed")
     pond = models.ForeignKey(Pond, blank=False, null=True)
-    progress_picture = models.ForeignKey(Pond, blank=False, null=True, related_name="picture_pond_feed")
+    progress_picture = models.ForeignKey(ProgressPicture, blank=False, null=True, related_name="picture_pond_feed")
 
     def __str__(self):
          return '%s' % self.name_of_feed
