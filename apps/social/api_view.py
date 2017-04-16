@@ -236,9 +236,11 @@ class ApiPictureUploadView(CSRFExemptView):
                     try:
                         PondProgressFeed.objects.get(progress_picture=picture_mod, pond=each_shared)
                     except ObjectDoesNotExist:
+                        feed_message = "%s %s shared an experience with your fellow pond members when making this progress: %s " \
+                                                              "on this goal %s" % (user.first_name, user.last_name, picture_mod.name_of_progress, project.name_of_project)
                         new_message = "%s %s has shared an experience with your fellow pond members when making progress " \
                                       "on this goal %s" % (user.first_name, user.last_name, project.name_of_project)
-                        new_pond_feed = PondProgressFeed(progress_picture=picture_mod, name_of_feed=new_message,
+                        new_pond_feed = PondProgressFeed(progress_picture=picture_mod, name_of_feed=feed_message,
                                                          pond=each_shared, project=project)
                         new_pond_feed.save()
                         for each_members in each_shared.pond_members.all():
