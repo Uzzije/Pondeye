@@ -581,6 +581,7 @@ def global_ranking_algorithm():
 def get_user_consistency_rank(user, consistency_percentage):
     points = get_status(user)
     rank = (consistency_percentage/100) + points
+    print "points system ", points, str(consistency_percentage/100)
     return rank
 
 
