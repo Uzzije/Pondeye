@@ -373,7 +373,8 @@ def get_picture_list_from_set(progress, timezone_, indi_proj=False):
             'progress_id': each_progress.id,
             'impressed_by': impressed,
             'progress_set_id': ProgressPictureSet.objects.get(list_of_progress_pictures=each_progress).id,
-            'created_sec': created_sec
+            'created_sec': created_sec,
+            'experience_with': get_experience_with(each_progress)
         })
     if indi_proj:
         new_prog = sorted(prog_list, key=lambda pond: pond['created_sec'])
@@ -552,6 +553,20 @@ def get_all_pond_members(user):
 def get_pond(user):
     ponds = Pond.objects.filter(pond_members__user=user, is_deleted=False)
     return ponds
+
+
+def get_experience_with(progress):
+    list_of_tikedge_users = []
+    for each_user in progress.experience_with.all():
+        list_of_tikedge_users.append({
+            'first_name': each_user.user.first_name,
+            'last_name': each_user.user.last_name,
+            'id': each_user.id,
+            'user_name':each_user.user.username
+        })
+    if not list_of_tikedge_users:
+        return False
+    return list_of_tikedge_users
 
 
 def get_pond_feed(the_pond):
