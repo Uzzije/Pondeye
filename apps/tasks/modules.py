@@ -551,7 +551,7 @@ def global_ranking_algorithm():
             work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
         user_rank = 100 - ((temp_rank/count_of_users)*100) # better than 100 % of user etch
-        print "user ranks for consitency ", user_rank, temp_rank, count_of_users, spec_each_user.user.username,, spec_each_user.user.first_name, spec_each_user.user.last_name, "\n"
+        print "user ranks for consitency ", user_rank, temp_rank, count_of_users, spec_each_user.user.username, spec_each_user.user.first_name, spec_each_user.user.last_name, "\n"
         work_ethic.consistency_rank = int(user_rank)
         work_ethic.save()
         temp_rank += 1
