@@ -228,17 +228,15 @@ class ApiPictureUploadView(CSRFExemptView):
                 ponder = TikedgeUser.objects.get(user=pond_user)
                 picture_mod.experience_with.add(ponder)
                 pond_shared = Pond.objects.filter(Q(pond_members=ponder)).filter(Q(pond_members=tikedge_user)).filter(is_deleted=False)
-                pond_ponder = Pond.objects.filter(Q(pond_members=ponder))
-                pond_ponder_tik = Pond.objects.filter(Q(pond_members=tikedge_user))
-                print "shared bleep ", pond_shared, pond_ponder, pond_ponder_tik
+                print "shared addviced ", pond_shared
                 for each_shared in pond_shared:
-                    print "shared bleep"
+
                     try:
                         PondProgressFeed.objects.get(progress_picture=picture_mod, pond=each_shared)
                     except ObjectDoesNotExist:
                         feed_message = "%s %s shared an experience with your fellow pond members when making this progress: %s " \
                                                               "on this goal %s" % (user.first_name, user.last_name, picture_mod.name_of_progress, project.name_of_project)
-                        new_message = "%s %s has shared an experience with your fellow pond members when making progress " \
+                        new_message = "%s %s shared an experience with your fellow pond members when making progress " \
                                       "on this goal %s" % (user.first_name, user.last_name, project.name_of_project)
                         new_pond_feed = PondProgressFeed(progress_picture=picture_mod, name_of_feed=feed_message,
                                                          pond=each_shared, project=project)
