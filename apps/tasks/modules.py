@@ -312,18 +312,17 @@ def json_all_pending_tasks(tasks):
 def get_status(user):
     tikedge_user = get_tikedge_user(user)
     status = 0
-    proj_all = tikedge_user.userproject_set.all().count()
-    if proj_all == 0:
-        proj_all = 1
+    project_count = tikedge_user.userproject_set.all().count()
+    if project_count == 0:
+        project_count = 1
     proj_success = get_completed_proj_count(user)
-    project_count = proj_all
-    if proj_all == 0:
+    if project_count == 0:
         return status
-    ratio_percentage = float(proj_success/proj_all)*100
-    if project_count < 5:
+    ratio_percentage = float(proj_success/project_count)*100
+    if project_count < 1:
         return status
     else:
-        if project_count >= 5 and project_count < 10:
+        if project_count >= 1 and project_count < 10:
             if ratio_percentage > 75.5:
                 status = 20
             return status
@@ -539,8 +538,7 @@ def global_ranking_algorithm():
             'correct_vouch_perc':user_stat['correct_vouch_percentage'],
             'rank':user_stat['rank']
         })
-        print "User Ranking of %s %s \n" % (each_user.user.first_name, each_user.user.first_name)
-        print rank_list
+    print rank_list
     sort_by_correct_vouch = sorted(rank_list, key=lambda x: x['consis_per'], reverse=True)
     sort_by_consistency = sorted(rank_list, key=lambda x: x['correct_vouch_perc'], reverse=True)
     sort_by_rank = sorted(rank_list, key=lambda x: x['rank'], reverse=True)
@@ -552,7 +550,8 @@ def global_ranking_algorithm():
         except ObjectDoesNotExist:
             work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
-        user_rank = 100 - ((temp_rank/count_of_users)*100)
+        user_rank = 100 - ((temp_rank/count_of_users)*100) # better than 100 % of user etch
+        print "user ranks for consitency ", user_rank, each_user.user.first_name, each_user.user.last_name, "\n"
         work_ethic.consistency_rank = int(user_rank)
         work_ethic.save()
         temp_rank += 1
@@ -565,6 +564,7 @@ def global_ranking_algorithm():
             work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
         user_rank = 100 - ((temp_rank/count_of_users)*100)
+        print "user ranks for vouching ",  each_user.user.first_name, each_user.user.last_name, user_rank, "\n"
         work_ethic.correct_vouching_rank = int(user_rank)
         work_ethic.save()
         temp_rank += 1
@@ -577,6 +577,7 @@ def global_ranking_algorithm():
             work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
         user_rank = 100 - ((temp_rank/count_of_users)*100)
+        print "user ranks for vouching ", user_rank,  each_user.user.first_name, each_user.user.last_name, "\n"
         work_ethic.work_ethic_rank = int(user_rank)
         work_ethic.save()
         temp_rank += 1
@@ -584,8 +585,8 @@ def global_ranking_algorithm():
 
 def get_user_consistency_rank(user, consistency_percentage):
     points = get_status(user)
-    rank = (consistency_percentage/100) + points
-    print "points system ", points, str(consistency_percentage/100)
+    rank = consistency_percentage + points
+    print "points system ", points, consistency_percentage
     return rank
 
 
