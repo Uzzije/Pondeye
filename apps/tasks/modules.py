@@ -568,7 +568,7 @@ def global_ranking_algorithm():
             work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
         dev = float((float(temp_rank)/float(count_of_users))*100)
-        user_rank = 100 - 100.0 - dev
+        user_rank = 100.0 - dev
         print "user ranks for vouching ",  user_rank, temp_rank, count_of_users, dev, \
                     spec_each_user.user.username, spec_each_user.user.first_name, spec_each_user.user.last_name, "\n"
         work_ethic.correct_vouching_rank = int(user_rank)

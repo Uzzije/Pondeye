@@ -95,8 +95,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.1542857">
-              <caret line="587" column="117" selection-start-line="587" selection-start-column="117" selection-end-line="587" selection-end-column="117" />
+            <state vertical-scroll-proportion="0.39714286">
+              <caret line="579" column="12" selection-start-line="579" selection-start-column="12" selection-end-line="579" selection-end-column="12" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
@@ -1201,8 +1201,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.1542857">
-          <caret line="587" column="117" selection-start-line="587" selection-start-column="117" selection-end-line="587" selection-end-column="117" />
+        <state vertical-scroll-proportion="0.39714286">
+          <caret line="579" column="12" selection-start-line="579" selection-start-column="12" selection-end-line="579" selection-end-column="12" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
           </folding>
