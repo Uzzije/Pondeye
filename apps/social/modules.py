@@ -530,7 +530,7 @@ def get_pond_profile(tikedge_users, owner):
             'id':tikedge_user.user.id,
             'rank': work_rank.work_ethic_rank
         })
-    sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['rank'])
+    sorted_pond = sorted(dict_list_of_pond, key=lambda pond: pond['rank'], reverse=True)
     return sorted_pond
 
 
