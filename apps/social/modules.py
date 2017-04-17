@@ -677,11 +677,6 @@ def get_notification_of_user(user, timezone='UTC'):
         quited_on_project = Notification.objects.filter(Q(user=user),
                                                           Q(type_of_notification=global_variables.USER_DELETED_PROJECT)).order_by('-created')
         ponder_request = PondRequest.objects.filter(Q(pond__pond_members__user=user), ~Q(user=tikedge_user)).order_by('-date_requested')
-        project_viewed = project_viewed_notifications(user)
-        new_project = project_added_notifications(user)
-        new_progress = progress_added_notifications(user)
-        progress_viewed = progress_viewed_notifications(user)
-        progress_like = progress_latest_impressed(user)
         notif_list = []
         for each_mil in let_down:
             created = int(each_mil['created'].strftime('%s'))

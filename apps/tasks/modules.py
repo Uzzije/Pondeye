@@ -526,8 +526,10 @@ def global_ranking_algorithm():
     """
     all_active_user = TikedgeUser.objects.all()
     count_of_users = all_active_user.count()
+    print "Count of Users ", count_of_users, "\n"
     if count_of_users == 0:
         count_of_users = 1
+    print "Count of Users ", count_of_users, "\n"
     rank_list = []
     for each_user in all_active_user:
         user_stat = user_stats(each_user.user)
@@ -537,6 +539,8 @@ def global_ranking_algorithm():
             'correct_vouch_perc':user_stat['correct_vouch_percentage'],
             'rank':user_stat['rank']
         })
+        print "User Ranking of %s %s \n" % (each_user.user.first_name, each_user.user.first_name)
+        print rank_list
     sort_by_correct_vouch = sorted(rank_list, key=lambda x: x['consis_per'], reverse=True)
     sort_by_consistency = sorted(rank_list, key=lambda x: x['correct_vouch_perc'], reverse=True)
     sort_by_rank = sorted(rank_list, key=lambda x: x['rank'], reverse=True)
