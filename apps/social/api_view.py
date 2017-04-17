@@ -228,7 +228,11 @@ class ApiPictureUploadView(CSRFExemptView):
                 ponder = TikedgeUser.objects.get(user=pond_user)
                 picture_mod.experience_with.add(ponder)
                 pond_shared = Pond.objects.filter(Q(pond_members=ponder)).filter(Q(pond_members=tikedge_user)).filter(is_deleted=False)
-                print "shared addviced ", pond_shared
+                pond_tike = Pond.objects.filter(Q(pond_members=ponder))
+                pond_tikc = Pond.objects.filter(Q(pond_members=tikedge_user))
+                print "shared addviced ", pond_shared , "\n"
+                print "shared calvin ", pond_tike, "\n"
+                print "shared tikedge ", pond_tikc, "\n"
                 for each_shared in pond_shared:
 
                     try:
