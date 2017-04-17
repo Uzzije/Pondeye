@@ -536,11 +536,13 @@ def global_ranking_algorithm():
             'correct_vouch_perc':user_stat['correct_vouch_percentage'],
             'rank':user_stat['rank']
         })
-    print rank_list
+
     sort_by_correct_vouch = sorted(rank_list, key=lambda x: x['consis_per'], reverse=True)
     sort_by_consistency = sorted(rank_list, key=lambda x: x['correct_vouch_perc'], reverse=True)
     sort_by_rank = sorted(rank_list, key=lambda x: x['rank'], reverse=True)
     temp_rank = 0
+    print rank_list, "\n"
+    print sort_by_rank, "\n"
     for each_user in sort_by_consistency:
         spec_each_user = each_user['user']
         try:
