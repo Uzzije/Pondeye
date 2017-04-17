@@ -532,9 +532,9 @@ def global_ranking_algorithm():
         user_stat = user_stats(each_user.user)
         rank_list.append({
             'user':each_user,
-            'consis_per':user_stat['consistency_percentage'],
-            'correct_vouch_perc':user_stat['correct_vouch_percentage'],
-            'rank':user_stat['rank']
+            'consis_per':float(user_stat['consistency_percentage']),
+            'correct_vouch_perc':float(user_stat['correct_vouch_percentage']),
+            'rank':float(user_stat['rank'])
         })
 
     sort_by_correct_vouch = sorted(rank_list, key=lambda x: x['consis_per'], reverse=True)
@@ -543,6 +543,8 @@ def global_ranking_algorithm():
     temp_rank = 0
     print rank_list, "\n"
     print sort_by_rank, "\n"
+    print sort_by_correct_vouch, "\n"
+    print sort_by_consistency, "\n"
     for each_user in sort_by_consistency:
         spec_each_user = each_user['user']
         try:
@@ -550,7 +552,7 @@ def global_ranking_algorithm():
         except ObjectDoesNotExist:
             work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
-        user_rank = 100 - ((temp_rank/count_of_users)*100) # better than 100 % of user etch
+        user_rank = 100.0 - float(float(temp_rank/count_of_users)*100) # better than 100 % of user etch
         print "user ranks for consitency ", user_rank, temp_rank, count_of_users, spec_each_user.user.username, spec_each_user.user.first_name, spec_each_user.user.last_name, "\n"
         work_ethic.consistency_rank = int(user_rank)
         work_ethic.save()
@@ -563,7 +565,7 @@ def global_ranking_algorithm():
         except ObjectDoesNotExist:
             work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
-        user_rank = 100 - ((temp_rank/count_of_users)*100)
+        user_rank = 100 - 100.0 - float(float(temp_rank/count_of_users)*100)
         print "user ranks for vouching ",  spec_each_user.user.first_name, spec_each_user.user.last_name, user_rank, "\n"
         work_ethic.correct_vouching_rank = int(user_rank)
         work_ethic.save()
@@ -576,7 +578,7 @@ def global_ranking_algorithm():
         except ObjectDoesNotExist:
             work_ethic = WorkEthicRank(tikedge_user=spec_each_user)
             work_ethic.save()
-        user_rank = 100 - ((temp_rank/count_of_users)*100)
+        user_rank = 100 - 100.0 - float(float(temp_rank/count_of_users)*100)
         print "user ranks for vouching ", user_rank,  spec_each_user.user.first_name, spec_each_user.user.last_name, "\n"
         work_ethic.work_ethic_rank = int(user_rank)
         work_ethic.save()
