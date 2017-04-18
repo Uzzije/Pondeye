@@ -195,7 +195,7 @@ class ProgressFeed(PondFeed):
             list_of_tikedge_users.append({
                 'first_name': each_user.user.first_name,
                 'last_name': each_user.user.last_name,
-                'id': each_user.id,
+                'id': each_user.user.id,
                 'user_name':each_user.user.username
             })
         if not list_of_tikedge_users:
