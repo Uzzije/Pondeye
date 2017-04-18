@@ -32,7 +32,7 @@ ALL_POND_STATUS = 'aps'
 #Urls variable
 BETA_URL = "http://Uzzije.pythonanywhere.com"
 LOCAL_URL = "http://localhost:8000"
-CURRENT_URL = LOCAL_URL #set this according to which live or local url you want to hit.
+CURRENT_URL = BETA_URL #set this according to which live or local url you want to hit.
 
 #Goal Feed variabe
 PROGRESS = "gnp"
