@@ -850,9 +850,9 @@ class ApiProjectView(CSRFExemptView):
         timezone_ = request.GET.get('timezone')
         progress = ProgressPictureSet.objects.get(project=project)
 
-        public_status = "Project is in Pond"
+        public_status = "Goal is in Pond"
         if project.is_public:
-            public_status = "Project is Public"
+            public_status = "Goal is Public"
         if project.is_completed:
             is_completed = "Completed!"
         elif project.is_failed:
