@@ -222,7 +222,7 @@ class ApiPictureUploadView(CSRFExemptView):
         project = UserProject.objects.get(id=int(request.POST.get("project_id")))
         pond_members_id_str = request.POST.get("members_id")
         pond_members_id_arr = pond_members_id_str.split(",")
-        if pond_members_id_arr:
+        if len(pond_members_id_arr) > 0:
             for pond_id in pond_members_id_arr:
                 pond_user = User.objects.get(id=int(pond_id))
                 ponder = TikedgeUser.objects.get(user=pond_user)
