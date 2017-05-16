@@ -603,7 +603,7 @@ def new_goal_or_progress_added_notification_to_pond(project, is_new_project=True
                     new_notif = Notification(type_of_notification=global_variables.NEW_PROJECT_ADDED,id_of_object=project.id,
                                              name_of_notification=notif_mess, user=each_member.user)
                 else:
-                    notif_mess = "Pond member %s %s added a new progress picture to his goal: %s" % \
+                    notif_mess = "Pond member %s %s added a new progress to his goal: %s" % \
                     (project.user.user.first_name, project.user.user.last_name, project.name_of_project)
                     new_notif = Notification(type_of_notification=global_variables.NEW_PROGRESS_ADDED,id_of_object=project.id,
                                              name_of_notification=notif_mess, user=each_member.user)
@@ -1504,3 +1504,20 @@ def get_picture_from_base64(data):
             data = ContentFile(base64.b64decode(imgstr), name='temp' + ran_word + '.' + ext)
             return data
         return False
+
+
+def get_video_from_base64(data):
+    """
+    Convert from base64 to file
+    :param self:
+    :param data:
+    :return:
+    """
+    if isinstance(data, basestring) and data.startswith('data:video'):
+        # base64 encoded image - decode
+        format, imgstr = data.split(';base64,')  # format ~= data:image/X,
+        ext = format.split('/')[-1]  # guess file extension
+        ran_word = randomword(12)
+        data = ContentFile(base64.b64decode(imgstr), name='temp' + ran_word + '.' + ext)
+        return data
+    return False

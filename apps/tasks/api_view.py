@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
-from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
+from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail, ProgressVideoSet
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
     Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject, WorkEthicRank
 from django.http import HttpResponseRedirect, HttpResponse
@@ -296,6 +296,8 @@ class ApiNewProject(CSRFExemptView):
                 modules.add_file_to_project_pic(picture_file, new_project)
         new_progress_set = ProgressPictureSet(project=new_project)
         new_progress_set.save()
+        new_vid_progress_set = ProgressVideoSet(project=new_project)
+        new_vid_progress_set.save()
         new_vouch = VoucheProject(tasks=new_project)
         new_vouch.save()
         new_follow = Follow(tasks=new_project)

@@ -66,6 +66,46 @@ class ProgressPicture(models.Model):
         return '%s %s' % (self.name_of_progress, self.image_name)
 
 
+class ProgressVideo(models.Model):
+    video_name = models.TextField(max_length=600)
+    picture = models.FileField(upload_to='video/progressvideo/%Y/%m/%d', verbose_name="progress video")
+    name_of_progress = models.TextField(max_length=600, null=True, blank=True)
+    is_deleted = models.BooleanField(default=False)
+    last_updated = models.DateTimeField(default=now)
+    created = models.DateTimeField(default=now)
+    blurb = models.CharField(max_length=150, default=None)
+    experience_with = models.ManyToManyField(TikedgeUser, default=None)
+
+    def save(self, *args, **kwargs):
+        if len(self.name_of_progress) > 150:
+            self.blurb = self.name_of_progress[0:150]
+        else:
+            self.blurb = self.name_of_progress
+        super(ProgressVideo, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return '%s %s' % (self.name_of_progress, self.image_name)
+
+
+class ProgressVideoSet(models.Model):
+    list_of_progress_pictures = models.ManyToManyField(ProgressPicture)
+    project = models.ForeignKey(UserProject, blank=True, null=True)
+    is_deleted = models.BooleanField(default=False)
+    last_updated = models.DateTimeField(default=now)
+    created = models.DateTimeField(default=now)
+    is_empty = models.BooleanField(default=True)
+
+    def __str__(self):
+        return '%s' % self.project.name_of_project
+
+    def picture_set_count(self):
+        try:
+            count = self.list_of_progress_pictures.filter(is_deleted=False).count()
+        except ValueError:
+            count = 0
+        return count
+
+
 class ProgressPictureSet(models.Model):
     list_of_progress_pictures = models.ManyToManyField(ProgressPicture)
     project = models.ForeignKey(UserProject, blank=True, null=True)
@@ -92,12 +132,20 @@ class ShoutOutEmailAndNumber(models.Model):
     is_email = models.BooleanField(default=False)
     is_number = models.BooleanField(default=True)
     progress_picture = models.ForeignKey(ProgressPicture, blank=True, null=True)
+    progress_video = models.ForeignKey(ProgressVideo, blank=True, null=True)
+    is_video_shout_outs = models.BooleanField(default=False)
+    is_picture_shout_outs = models.BooleanField(default=True)
     email_or_text_sent = models.BooleanField(default=False)
     sent_date = models.DateTimeField(blank=True, null=True)
     user_responded = models.BooleanField(default=False)
     date_of_response = models.DateTimeField(blank=True, null=True)
-    type_of_response = models.CharField(default="noResponse", max_length=250, verbose_name="user can respond by joining "
-                                                                           "or not joining pondeye")
+    type_of_response = models.CharField(default="noResponse", max_length=250,
+                                        verbose_name="user can respond by joining or not joining pondeye")
+
+    def save(self, *args, **kwargs):
+        if self.is_video_shout_outs:
+            self.is_picture_shout_outs = False
+        super(ShoutOutEmailAndNumber, self).save(*args, **kwargs)
 
 
 class PictureSet(models.Model):
@@ -144,12 +192,21 @@ class SeenPictureSet(models.Model):
 class SeenProgress(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the pictureSet")
     tasks = models.ForeignKey(ProgressPicture, blank=True, null=True)
+    is_video_tasks = models.BooleanField(default=False)
+    is_picture_tasks = models.BooleanField(default=True)
+    video_tasks = models.ForeignKey(ProgressVideo, blank=True, null=True)
 
     def get_count(self):
         try:
             return self.users.count()
         except ValueError:
             return 0
+
+    def save(self, *args, **kwargs):
+        self.latest_vouch = now()
+        if self.is_video_tasks:
+            self.is_picture_tasks = False
+        super(SeenProgress, self).save(*args, **kwargs)
 
 
 class VoucheMilestone(models.Model):
@@ -166,9 +223,14 @@ class VoucheProject(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="User That Vouche For the milestone")
     tasks = models.ForeignKey(UserProject, blank=True, null=True)
     latest_vouch = models.DateTimeField(default=now)
+    is_video_tasks = models.BooleanField(default=False)
+    is_picture_tasks = models.BooleanField(default=True)
+    video_tasks = models.ForeignKey(ProgressVideo, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.latest_vouch = now()
+        if self.is_video_tasks:
+            self.is_picture_tasks = False
         super(VoucheProject, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -190,9 +252,14 @@ class Follow(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="users that follow/interested in a project")
     tasks = models.ForeignKey(UserProject, blank=True, null=True)
     latest_follow = models.DateTimeField(default=now)
+    is_video_tasks = models.BooleanField(default=False)
+    is_picture_tasks = models.BooleanField(default=True)
+    video_tasks = models.ForeignKey(ProgressVideo, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.latest_follow = now()
+        if self.is_video_tasks:
+            self.is_picture_tasks = False
         super(Follow, self).save(*args, **kwargs)
 
     def get_count(self):
@@ -205,7 +272,10 @@ class Follow(models.Model):
 class ProgressImpressedCount(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="Users That saw the pictureSet")
     tasks = models.ForeignKey(ProgressPicture, blank=True, null=True)
+    video_tasks = models.ForeignKey(ProgressVideo, blank=True, null=True)
     latest_impressed = models.DateTimeField(default=now)
+    is_video_tasks = models.BooleanField(default=False)
+    is_picture_tasks = models.BooleanField(default=True)
 
     def get_count(self):
         try:
@@ -214,6 +284,8 @@ class ProgressImpressedCount(models.Model):
             return 0
 
     def save(self, *args, **kwargs):
+        if self.is_video_tasks:
+            self.is_picture_tasks = False
         self.latest_impressed = now()
         super(ProgressImpressedCount, self).save(*args, **kwargs)
 
@@ -321,10 +393,18 @@ class PondProgressFeed(models.Model):
     name_of_feed = models.TextField(default=None)
     project = models.ForeignKey(UserProject, blank=False, null=True, related_name="project_pond_feed")
     pond = models.ForeignKey(Pond, blank=False, null=True)
-    progress_picture = models.ForeignKey(ProgressPicture, blank=False, null=True, related_name="picture_pond_feed")
+    progress_picture = models.ForeignKey(ProgressPicture, blank=True, null=True, related_name="picture_pond_feed")
+    progress_video = models.ForeignKey(ProgressVideo, blank=True, null=True, related_name="video_pond_feed")
+    is_picture_feed = models.BooleanField(default=True)
+    is_video_feed = models.BooleanField(default=False)
 
     def __str__(self):
          return '%s' % self.name_of_feed
+
+    def save(self, *args, **kwargs):
+        if self.is_video_feed:
+            self.is_picture_feed = False
+        super(PondProgressFeed, self).save(*args, **kwargs)
 
 
 class PondRequest(models.Model):

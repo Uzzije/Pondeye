@@ -2,7 +2,8 @@ from django.views.generic import View
 from models import (Notification, Follow, VoucheMilestone, SeenMilestone,
                      SeenProject, Pond, PondRequest, PondProgressFeed,
                     PondMembership, User, ProgressPicture, ShoutOutEmailAndNumber,
-                    ProgressPictureSet, ProgressImpressedCount, SeenProgress, VoucheProject)
+                    ProgressPictureSet, ProgressImpressedCount, SeenProgress, VoucheProject, ProgressVideo,
+                    ProgressVideoSet)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
@@ -173,6 +174,84 @@ class ApiPictureUploadView(CSRFExemptView):
 '''
 
 
+class ApiVideoUploadView(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        response["status"] = False
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        progress_name = request.POST.get('progress_name')
+        if len(progress_name) > 250:
+            response["error"] = "Hey description of progress must be less that 250 characters!"
+            return HttpResponse(json.dumps(response), status=201)
+        dec_video_file = request.POST.get('picture')
+        picture_file = modules.get_video_from_base64(dec_video_file)
+        if not picture_file:
+            response["error"] = "Hey picture must be either video file file! ", dec_video_file
+            return HttpResponse(json.dumps(response), status=201)
+        video_mod = ProgressVideo(video_name=picture_file.name,
+                               picture=picture_file, name_of_progress=progress_name)
+        video_mod.save()
+        project = UserProject.objects.get(id=int(request.POST.get("project_id")))
+        pond_members_id_str = request.POST.get("members_id")
+        pond_members_id_arr = pond_members_id_str.split(",")
+        if len(pond_members_id_arr) > 0 and pond_members_id_str != "":
+            for pond_id in pond_members_id_arr:
+                pond_user = User.objects.get(id=int(pond_id))
+                ponder = TikedgeUser.objects.get(user=pond_user)
+                video_mod.experience_with.add(ponder)
+                pond_shared = Pond.objects.filter(Q(pond_members=ponder)).filter(Q(pond_members=tikedge_user)).filter(is_deleted=False)
+                for each_shared in pond_shared:
+
+                    try:
+                        PondProgressFeed.objects.get(progress_picture=video_mod, pond=each_shared)
+                    except ObjectDoesNotExist:
+                        feed_message = "%s %s shared an experience with your fellow pond members while making this progress: %s " \
+                                                              "on this goal %s" % (user.first_name, user.last_name,
+                                                                                   video_mod.name_of_progress,
+                                                                                   project.name_of_project)
+                        new_message = "%s %s shared an experience with your fellow pond members while making progress " \
+                                      "on this goal %s" % (user.first_name, user.last_name, project.name_of_project)
+                        new_pond_feed = PondProgressFeed(progress_video=video_mod, name_of_feed=feed_message,
+                                                         pond=each_shared, project=project, is_video_feed=True)
+                        new_pond_feed.save()
+                        for each_members in each_shared.pond_members.all():
+                            new_notif = Notification(user=each_members.user, name_of_notification=new_message,
+                                                     id_of_object=project.id,
+                                                    type_of_notification=global_variables.NEW_SHARED_EXPERIENCE)
+                            new_notif.save()
+        video_mod.save()
+        email_shout_out_str = request.POST.get("shout_emails").split(",")
+        if email_shout_out_str:
+            for each_val in email_shout_out_str:
+                if isinstance(each_val, int):
+                    shout_info = ShoutOutEmailAndNumber(tikedge_user=tikedge_user, progress_video=video_mod,
+                                                        user_email_or_num=each_val, is_number=True,
+                                                        is_video_shout_outs=True)
+                else:
+                    shout_info = ShoutOutEmailAndNumber(tikedge_user=tikedge_user,progress_video=video_mod,
+                                                        user_email_or_num=each_val, is_video_shout_outs=True,
+                                                        is_number=False)
+                shout_info.save()
+        impress_count = ProgressImpressedCount(video_tasks=video_mod, is_video_tasks=True)
+        impress_count.save()
+        seen_progress = SeenProgress(video_tasks=video_mod, is_video_tasks=True)
+        seen_progress.save()
+        progress_set = ProgressVideoSet.objects.get(project=project)
+        progress_set.is_empty = False
+        progress_set.list_of_progress_pictures.add(video_mod)
+        progress_set.save()
+        response["status"] = True
+        modules.new_goal_or_progress_added_notification_to_pond(progress_set.project, is_new_project=False)
+        return HttpResponse(json.dumps(response), status=201)
+
+
 class ApiPictureUploadView(CSRFExemptView):
 
     def get(self, request):
@@ -254,7 +333,7 @@ class ApiPictureUploadView(CSRFExemptView):
                                                         user_email_or_num=each_val, is_number=True)
                 else:
                     shout_info = ShoutOutEmailAndNumber(tikedge_user=tikedge_user,progress_picture=picture_mod,
-                                                        user_email_or_num=each_val, is_number=True)
+                                                        user_email_or_num=each_val, is_number=False)
                 shout_info.save()
         pondeye_image_filter(picture_mod.picture.name)
         impress_count = ProgressImpressedCount(tasks=picture_mod)
