@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
-from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail, ProgressVideoSet
+from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
-    Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject, WorkEthicRank
+    Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
