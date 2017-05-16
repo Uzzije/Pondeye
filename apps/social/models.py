@@ -68,7 +68,7 @@ class ProgressPicture(models.Model):
 
 class ProgressVideo(models.Model):
     video_name = models.TextField(max_length=600)
-    picture = models.FileField(upload_to='video/progressvideo/%Y/%m/%d', verbose_name="progress video")
+    video = models.FileField(upload_to='video/progressvideo/%Y/%m/%d', verbose_name="progress video")
     name_of_progress = models.TextField(max_length=600, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     last_updated = models.DateTimeField(default=now)
@@ -88,7 +88,7 @@ class ProgressVideo(models.Model):
 
 
 class ProgressVideoSet(models.Model):
-    list_of_progress_pictures = models.ManyToManyField(ProgressPicture)
+    list_of_progress_videos = models.ManyToManyField(ProgressPicture)
     project = models.ForeignKey(UserProject, blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
     last_updated = models.DateTimeField(default=now)
