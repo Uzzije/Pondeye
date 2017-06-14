@@ -803,8 +803,8 @@ class ApiCreateImpressed(CSRFExemptView):
             return HttpResponse(json.dumps(response), status=201)
         progress_id = request.POST.get("progress_id")
         progress_set_id = request.POST.get('progress_set_id')
-        progress_set = ProgressPictureSet.objects.get(id=int(progress_set_id))
-        progress = ProgressPicture.objects.get(id=int(progress_id))
+        progress_set = ProgressVideoSet.objects.get(id=int(progress_set_id))
+        progress = ProgressVideo.objects.get(id=int(progress_id))
         tikedge_user = TikedgeUser.objects.get(user=user)
         impressed_count = ProgressImpressedCount.objects.get(tasks=progress)
         if tikedge_user in impressed_count.users.all():
@@ -818,7 +818,8 @@ class ApiCreateImpressed(CSRFExemptView):
             impressed_count.users.add(tikedge_user)
             impressed_count.save()
             name_of_notif = "%s %s is impressed with your progress on this goal: %s" \
-                            % (tikedge_user.user.first_name, tikedge_user.user.last_name, progress_set.project.name_of_project)
+                            % (tikedge_user.user.first_name, tikedge_user.user.last_name,
+                               progress_set.project.name_of_project)
             try:
                 Notification.objects.get(user=progress_set.project.user.user, id_of_object=impressed_count.tasks.id)
             except ObjectDoesNotExist:

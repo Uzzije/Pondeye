@@ -4,7 +4,7 @@ Feed and Notification Classes for Social News Feed of Application
 """
 from models import ProfilePictures,\
     BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, VoucheProject, \
-    Follow, ProgressImpressedCount,SeenProgress
+    Follow, ProgressImpressedCount,SeenProgress, ProjectVideo
 from friendship.models import FriendshipRequest
 from django.db.models import Q
 import global_variables
@@ -174,6 +174,13 @@ class PondFeed:
         except (AttributeError, ValueError, ObjectDoesNotExist):
             return None
 
+    def project_video_url(self):
+        try:
+            video_url = ProjectVideo.objects.get(project=self.tasks)
+        except ObjectDoesNotExist:
+            return None
+        return self.url_domain+video_url.url
+
 
 class ProgressFeed(PondFeed):
 
@@ -277,7 +284,8 @@ class VideoProgressFeed(PondFeed):
         progress_list = []
         progress_dic = {}
         created_sec = int(self.created.strftime('%s'))
-        for progress in self.tasks.list_of_progress_videos.filter(is_deleted=False):
+        progress_query_set = self.tasks.list_of_progress_videos.filter(is_deleted=False).ordey_by('-created')[0]
+        for progress in progress_query_set:
             progress_list.append({
                'name': self.task_owner_name,
                'progress_message': progress.name_of_progress,

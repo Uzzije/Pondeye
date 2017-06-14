@@ -3,7 +3,7 @@ from django.views.generic import View, FormView
 from forms import tasks_forms
 from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
-    Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet
+    Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, ProjectVideo
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
@@ -11,7 +11,7 @@ from datetime import timedelta
 from ..social.modules import get_journal_message, \
     resize_image, available_ponds_json, create_failed_notification, \
     create_failed_notification_proj_by_deletion, get_picture_from_base64, mark_progress_as_deleted, \
-    new_goal_or_progress_added_notification_to_pond
+    new_goal_or_progress_added_notification_to_pond, get_video_from_base64
 from modules import get_user_projects, \
     time_has_past, convert_html_to_datetime,\
     get_todays_milestones_json, \
@@ -210,6 +210,7 @@ class ApiNewMilestone(CSRFExemptView):
 
 
 class ApiNewProject(CSRFExemptView):
+
     def post(self, request, *args, **kwargs):
         response = {}
         try:
@@ -285,6 +286,7 @@ class ApiNewProject(CSRFExemptView):
                 pond = Pond.objects.get(id=int(project_public_status))
                 public_status.pond.add(pond)
                 public_status.save()
+        """
         project_picture = request.POST.get("projectpic")
         if len(project_picture) > 0:
             picture_file = get_picture_from_base64(project_picture)
@@ -296,6 +298,7 @@ class ApiNewProject(CSRFExemptView):
                 modules.add_file_to_project_pic(picture_file, new_project)
         new_progress_set = ProgressPictureSet(project=new_project)
         new_progress_set.save()
+        """
         new_vid_progress_set = ProgressVideoSet(project=new_project)
         new_vid_progress_set.save()
         new_vouch = VoucheProject(tasks=new_project)
@@ -306,6 +309,16 @@ class ApiNewProject(CSRFExemptView):
         new_seen.save()
         new_goal_or_progress_added_notification_to_pond(new_project, is_new_project=True)
         response["status"] = True
+
+        project_vid = request.POST.get('projectvid')
+        if len(project_vid) > 0:
+            dec_video_file = get_video_from_base64(project_vid)
+            if not dec_video_file:
+                response["error"] = "Hey picture must be either video file file! ", dec_video_file
+                return HttpResponse(json.dumps(response), status=201)
+            video_mod = ProjectVideo(video_name=dec_video_file.name, last_edited=timezone.now,
+                                   video=dec_video_file, project=new_project)
+            video_mod.save()
         return HttpResponse(json.dumps(response), status=201)
 
 

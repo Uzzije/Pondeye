@@ -1,6 +1,6 @@
 from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
-from .models import ProfilePictures, \
+from .models import ProfilePictures, ProgressVideoSet,\
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, PondSpecificProject, \
      PondRequest, Pond, PondMembership, ProgressImpressedCount, PondProgressFeed, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
 from django.db.models import Q
@@ -10,7 +10,7 @@ import global_variables
 import StringIO
 from PIL import Image, ImageFilter
 from journal_feed import JournalFeed
-from tasks_feed import PondFeed, ProgressFeed
+from tasks_feed import PondFeed, ProgressFeed, VideoProgressFeed
 from itertools import chain
 from datetime import timedelta
 from ..tasks.modules import utc_to_local, randomword
@@ -276,11 +276,16 @@ def get_users_feed_json(user, local_timezone='UTC'):
            'user_id':feed.feed_user.id,
             'is_completed':feed.tasks.is_completed,
             'is_failed':feed.tasks.is_failed,
-            'created_sec':created_sec
+            'created_sec':created_sec,
+            'intro_video_url': feed.project_video_url()
         })
-        #milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
+        """
         progress_set = ProgressPictureSet.objects.get(project=each_proj_feed)
         feed = ProgressFeed(progress_set, type_of_feed=global_variables.PROGRESS, url_domain=CURRENT_URL, local_timezone=local_timezone)
+        """
+        video_set = ProgressVideoSet.objects.get(project=each_proj_feed)
+        feed = VideoProgressFeed(video_set, type_of_feed=global_variables.PROGRESS, url_domain=CURRENT_URL,
+                                 local_timezone=local_timezone)
         if feed.progress:
             list_of_feed_json.append(feed.progress)
     sorted_list = sorted(list_of_feed_json, key=lambda x: x['created_sec'], reverse=True)

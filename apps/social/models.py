@@ -45,6 +45,18 @@ class ProjectPicture(models.Model):
         return self.project.name_of_project
 
 
+class ProjectVideo(models.Model):
+    video_name = models.CharField(max_length=300)
+    date_uploaded = models.DateTimeField(default=now)
+    last_edited = models.DateTimeField(null=True, blank=True)
+    video = models.FileField(upload_to='image/tasks/%Y/%m/%d', verbose_name="profile image")
+    is_deleted = models.BooleanField(default=False)
+    project = models.ForeignKey(UserProject, blank=True, null=True)
+
+    def __str__(self):
+        return self.project.name_of_project
+
+
 class ProgressPicture(models.Model):
     image_name = models.TextField(max_length=600)
     picture = models.ImageField(upload_to='image/progresspicture/%Y/%m/%d', verbose_name="progress image")
@@ -450,6 +462,29 @@ class WorkEthicRank(models.Model):
     consistency_rank = models.IntegerField(default=0)
     correct_vouching_rank = models.IntegerField(default=0)
     work_ethic_rank = models.IntegerField(default=0)
+
+"""
+class NewsFeed(models.Model):
+    name = models.TextField(default=None)
+    is_goal_created_feed = models.BooleanField(default=False)
+    is_progress_made_feed = models.BooleanField(default=False)
+    message = models.TextField(default=None)
+    project_slug = models.TextField(default=None)
+    is_active = models.BooleanField(default=True, verbose_name="User didn't delete goal or progress")
+    follow_count = models.IntegerField(default=0)
+    vouch_count = models.IntegerField(default=0)
+    seen_count = models.IntegerField(default=0)
+    created_string_format = models.CharField(max_length=250, default=None)
+    profile_pic_url = models.TextField(default=None)
+
+
+    def get_full_url(self, domain):
+        return domain + self.profile_pic_url
+
+"""
+
+
+
 
             
 
