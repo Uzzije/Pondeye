@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/api_view.py" afterPath="$PROJECT_DIR$/apps/tasks/api_view.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,11 +38,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6395349">
-              <caret line="314" column="45" selection-start-line="314" selection-start-column="45" selection-end-line="314" selection-end-column="45" />
+            <state vertical-scroll-proportion="-7.0">
+              <caret line="315" column="64" selection-start-line="315" selection-start-column="64" selection-end-line="320" selection-end-column="28" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -71,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="202" column="60" selection-start-line="202" selection-start-column="60" selection-end-line="202" selection-end-column="60" />
+            <state vertical-scroll-proportion="0.44578314">
+              <caret line="199" column="45" selection-start-line="199" selection-start-column="45" selection-end-line="199" selection-end-column="45" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -212,12 +211,12 @@
         <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
         <option value="$PROJECT_DIR$/apps/social/global_variables.py" />
         <option value="$PROJECT_DIR$/apps/social/urls.py" />
-        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
         <option value="$PROJECT_DIR$/apps/tasks/models.py" />
         <option value="$PROJECT_DIR$/apps/social/models.py" />
         <option value="$PROJECT_DIR$/apps/social/tasks_feed.py" />
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
+        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
       </list>
     </option>
   </component>
@@ -1146,16 +1145,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="202" column="60" selection-start-line="202" selection-start-column="60" selection-end-line="202" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1186,10 +1175,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6395349">
-          <caret line="314" column="45" selection-start-line="314" selection-start-column="45" selection-end-line="314" selection-end-column="45" />
+        <state vertical-scroll-proportion="-7.0">
+          <caret line="315" column="64" selection-start-line="315" selection-start-column="64" selection-end-line="320" selection-end-column="28" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44578314">
+          <caret line="199" column="45" selection-start-line="199" selection-start-column="45" selection-end-line="199" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
