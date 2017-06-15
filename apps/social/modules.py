@@ -1479,3 +1479,10 @@ def get_video_from_base64(data):
         data = ContentFile(base64.b64decode(imgstr), name='temp' + ran_word + '.' + ext)
         return data
     return False
+
+
+def upload_video_file(filepath, video_model):
+    data = open(filepath)
+    random_name = randomword(15) + str(filepath)
+    video_model.video.save(random_name, data, save=False)
+    return random_name
