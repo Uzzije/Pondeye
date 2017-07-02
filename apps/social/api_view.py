@@ -193,10 +193,10 @@ class ApiVideoUploadView(CSRFExemptView):
         dec_video_file = request.POST.get('picture')
         picture_file = modules.get_video_from_base64(dec_video_file)
         if not picture_file:
-            response["error"] = "Hey picture must be either video file file! ", dec_video_file
+            response["error"] = "Hey picture must be either video file! ", dec_video_file
             return HttpResponse(json.dumps(response), status=201)
         video_mod = ProgressVideo(video_name=picture_file.name,
-                               picture=picture_file, name_of_progress=progress_name)
+                               video=picture_file, name_of_progress=progress_name)
         video_mod.save()
         project = UserProject.objects.get(id=int(request.POST.get("project_id")))
         pond_members_id_str = request.POST.get("members_id")
