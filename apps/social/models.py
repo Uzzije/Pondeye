@@ -96,7 +96,7 @@ class ProgressVideo(models.Model):
         super(ProgressVideo, self).save(*args, **kwargs)
 
     def __str__(self):
-        return '%s %s' % (self.name_of_progress, self.image_name)
+        return '%s %s' % (self.name_of_progress, self.video_name)
 
 
 class ProgressVideoSet(models.Model):
