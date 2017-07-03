@@ -191,12 +191,12 @@ class ApiVideoUploadView(CSRFExemptView):
             response["error"] = "Hey description of progress must be less that 250 characters!"
             return HttpResponse(json.dumps(response), status=201)
         dec_video_file = request.POST.get('picture')
-        picture_file = modules.get_video_from_base64(dec_video_file)
-        if not picture_file:
+        vid_file = modules.get_video_from_base64(dec_video_file)
+        if not vid_file:
             response["error"] = "Hey picture must be either video file! ", dec_video_file
             return HttpResponse(json.dumps(response), status=201)
-        video_mod = ProgressVideo(video_name=picture_file.name,
-                               video=picture_file, name_of_progress=progress_name)
+        video_mod = ProgressVideo(video_name=vid_file.name,
+                               video=vid_file, name_of_progress=progress_name)
         video_mod.save()
         project = UserProject.objects.get(id=int(request.POST.get("project_id")))
         pond_members_id_str = request.POST.get("members_id")
@@ -210,7 +210,7 @@ class ApiVideoUploadView(CSRFExemptView):
                 for each_shared in pond_shared:
 
                     try:
-                        PondProgressFeed.objects.get(progress_picture=video_mod, pond=each_shared)
+                        PondProgressFeed.objects.get(progress_video=video_mod, pond=each_shared)
                     except ObjectDoesNotExist:
                         feed_message = "%s %s shared an experience with your fellow pond members while making this progress: %s " \
                                                               "on this goal %s" % (user.first_name, user.last_name,
@@ -245,7 +245,7 @@ class ApiVideoUploadView(CSRFExemptView):
         seen_progress.save()
         progress_set = ProgressVideoSet.objects.get(project=project)
         progress_set.is_empty = False
-        progress_set.list_of_progress_pictures.add(video_mod)
+        progress_set.list_of_progress_videos.add(video_mod)
         progress_set.save()
         response["status"] = True
         modules.new_goal_or_progress_added_notification_to_pond(progress_set.project, is_new_project=False)

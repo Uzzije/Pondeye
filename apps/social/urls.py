@@ -60,8 +60,8 @@ urlpatterns = [
     ######################### App Api Calls
 
     url(r'^api/new-pond-entry/$', ApiNewPondEntryView.as_view(), name="api_new_pond_entry"),
-    url(r'^api/new-picture-entry/$', ApiPictureUploadView.as_view(), name="new_video_entry"),
-    url(r'^api/new-video-entry/$', ApiVideoUploadView.as_view(), name="new_picture_entry"),
+    url(r'^api/new-picture-entry/$', ApiPictureUploadView.as_view(), name="new_picture_entry"),
+    url(r'^api/new-video-entry/$', ApiVideoUploadView.as_view(), name="new_video_entry"),
     url(r'^api/picture-set-edit', ApiEditPictureSetView.as_view(), name="api_picture_set_edit"),
     url(r'^api/individual-pond', ApiEditIndividualPondView.as_view(), name="api_edit_individual_view"),
     url(r'^api/news-feed', ApiTodoFeed.as_view(), name="api_to_do_view"),
