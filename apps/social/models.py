@@ -112,7 +112,7 @@ class ProgressVideoSet(models.Model):
 
     def video_set_count(self):
         try:
-            count = self.list_of_progress_pictures.filter(is_deleted=False).count()
+            count = self.list_of_progress_videos.filter(is_deleted=False).count()
         except ValueError:
             count = 0
         return count
