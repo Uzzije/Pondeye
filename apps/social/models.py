@@ -100,7 +100,7 @@ class ProgressVideo(models.Model):
 
 
 class ProgressVideoSet(models.Model):
-    list_of_progress_videos = models.ManyToManyField(ProgressPicture)
+    list_of_progress_videos = models.ManyToManyField(ProgressVideo)
     project = models.ForeignKey(UserProject, blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
     last_updated = models.DateTimeField(default=now)
