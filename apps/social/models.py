@@ -106,6 +106,9 @@ class ProgressVideoSet(models.Model):
     last_updated = models.DateTimeField(default=now)
     created = models.DateTimeField(default=now)
     is_empty = models.BooleanField(default=True)
+    video_timeline = models.FileField(upload_to='video/progress-timeline-video/%Y/%m/%d',
+                                          verbose_name="progress video", default=None)
+
 
     def __str__(self):
         return '%s' % self.project.name_of_project

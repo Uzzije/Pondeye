@@ -206,7 +206,8 @@ class ApiVideoUploadView(CSRFExemptView):
                 pond_user = User.objects.get(id=int(pond_id))
                 ponder = TikedgeUser.objects.get(user=pond_user)
                 video_mod.experience_with.add(ponder)
-                pond_shared = Pond.objects.filter(Q(pond_members=ponder)).filter(Q(pond_members=tikedge_user)).filter(is_deleted=False)
+                pond_shared = Pond.objects.filter(Q(pond_members=ponder)).\
+                    filter(Q(pond_members=tikedge_user)).filter(is_deleted=False)
                 for each_shared in pond_shared:
 
                     try:
