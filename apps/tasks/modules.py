@@ -644,11 +644,13 @@ def user_total_impress_count(tikedge_user):
     """
 
     impress_count = 0
+    """
     projects = tikedge_user.userproject_set.all().filter(is_deleted=False)
     for each_proj in projects:
         progress_set = ProgressPictureSet.objects.get(project=each_proj)
         for each_progress  in progress_set.list_of_progress_pictures.filter(is_deleted=False):
             impress_count += ProgressImpressedCount(tasks=each_progress).get_count()
+    """
     return impress_count
 
 

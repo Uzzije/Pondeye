@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/models.py" afterPath="$PROJECT_DIR$/apps/social/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/api_view.py" afterPath="$PROJECT_DIR$/apps/tasks/api_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/urls.py" afterPath="$PROJECT_DIR$/apps/tasks/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/modules.py" afterPath="$PROJECT_DIR$/apps/tasks/modules.py" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -101,11 +95,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.69527894">
-              <caret line="711" column="45" selection-start-line="711" selection-start-column="45" selection-end-line="711" selection-end-column="45" />
+            <state vertical-scroll-proportion="-2.1111112">
+              <caret line="619" column="42" selection-start-line="619" selection-start-column="42" selection-end-line="619" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -123,11 +117,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.888889">
-              <caret line="795" column="10" selection-start-line="795" selection-start-column="4" selection-end-line="795" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.110119045">
+              <caret line="490" column="58" selection-start-line="490" selection-start-column="31" selection-end-line="490" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -211,7 +205,6 @@
         <option value="$PROJECT_DIR$/templates/tasks/home.html" />
         <option value="$PROJECT_DIR$/templates/tasks/login.html" />
         <option value="$PROJECT_DIR$/apps/social/image_modules.py" />
-        <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
         <option value="$PROJECT_DIR$/apps/social/global_variables.py" />
         <option value="$PROJECT_DIR$/apps/tasks/models.py" />
         <option value="$PROJECT_DIR$/apps/social/tasks_feed.py" />
@@ -222,6 +215,7 @@
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
         <option value="$PROJECT_DIR$/apps/tasks/urls.py" />
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
+        <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
       </list>
     </option>
   </component>
@@ -231,8 +225,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="523" />
-    <option name="y" value="176" />
+    <option name="x" value="218" />
+    <option name="y" value="675" />
     <option name="width" value="1372" />
     <option name="height" value="899" />
   </component>
@@ -780,7 +774,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="523" y="176" width="1372" height="899" extended-state="0" />
+    <frame x="218" y="675" width="1372" height="899" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2037594" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
@@ -1157,14 +1151,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.888889">
-          <caret line="795" column="10" selection-start-line="795" selection-start-column="4" selection-end-line="795" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-15.666667">
@@ -1198,8 +1184,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69527894">
-          <caret line="711" column="45" selection-start-line="711" selection-start-column="45" selection-end-line="711" selection-end-column="45" />
+        <state vertical-scroll-proportion="-2.1111112">
+          <caret line="619" column="42" selection-start-line="619" selection-start-column="42" selection-end-line="619" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.110119045">
+          <caret line="490" column="58" selection-start-line="490" selection-start-column="31" selection-end-line="490" selection-end-column="58" />
           <folding />
         </state>
       </provider>
