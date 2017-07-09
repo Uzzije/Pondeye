@@ -705,9 +705,11 @@ class ApiCheckProjectDone(CSRFExemptView):
             return HttpResponse(json.dumps(response), status=201)
         try:
             proj_stone = UserProject.objects.get(id=int(request.POST.get("proj_id")))
+            """
             proj_stone.is_completed = True
             proj_stone.is_live = False
             proj_stone.save()
+            """
             progress_set = ProgressVideoSet.objects.get(project=proj_stone)
             make_timeline_video(progress_set)
             response["status"] = True
