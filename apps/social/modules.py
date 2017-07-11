@@ -1492,7 +1492,7 @@ def make_timeline_video(progress_set):
     video_clips = []
     for each_prog in progress_set.list_of_progress_videos.all():
         url = CURRENT_URL + each_prog.video.url
-        file_ = VideoFileClip("http://img.wennermedia.com/social/rs-becky-g-ff479bcd-2818-44f0-8ca9-0cbfc79bb11c.jpg")
+        file_ = VideoFileClip(url)
         txt_clip = TextClip(each_prog.name_of_progress, fontsize=20, color='white')
         txt_clip = txt_clip.set_pos(('right','bottom')).set_duration(10)
         video = CompositeVideoClip([file_, txt_clip])
