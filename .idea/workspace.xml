@@ -86,8 +86,8 @@
       <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43828017">
-              <caret line="715" column="20" selection-start-line="715" selection-start-column="20" selection-end-line="715" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.1886269">
+              <caret line="703" column="67" selection-start-line="703" selection-start-column="67" selection-end-line="703" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -223,8 +223,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="304" />
-    <option name="y" value="43" />
+    <option name="x" value="78" />
+    <option name="y" value="38" />
     <option name="width" value="1372" />
     <option name="height" value="921" />
   </component>
@@ -772,7 +772,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="304" y="43" width="1372" height="921" extended-state="0" />
+    <frame x="78" y="38" width="1372" height="921" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2037594" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
@@ -1192,8 +1192,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43828017">
-          <caret line="715" column="20" selection-start-line="715" selection-start-column="20" selection-end-line="715" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.1886269">
+          <caret line="703" column="67" selection-start-line="703" selection-start-column="67" selection-end-line="703" selection-end-column="67" />
           <folding />
         </state>
       </provider>

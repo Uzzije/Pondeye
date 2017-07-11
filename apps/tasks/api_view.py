@@ -701,7 +701,7 @@ class ApiCheckProjectDone(CSRFExemptView):
             User.objects.get(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
-            response["error"] = "Log Back In! Try Again!"
+            response["error"] = "Log Back In! Try Again!", username
             return HttpResponse(json.dumps(response), status=201)
         try:
             proj_stone = UserProject.objects.get(id=int(request.POST.get("proj_id")))
