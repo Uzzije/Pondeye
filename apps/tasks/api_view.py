@@ -713,7 +713,8 @@ class ApiCheckProjectDone(CSRFExemptView):
             progress_set = ProgressVideoSet.objects.get(project=proj_stone)
             make_timeline_video(progress_set)
             response["status"] = True
-        except (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
+        except None:
+            # (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
             response["status"] = False
             response["error"] = "Something Went Wrong Try Again!"
         return HttpResponse(json.dumps(response), status=201)
