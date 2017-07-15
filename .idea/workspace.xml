@@ -73,8 +73,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5631068">
-              <caret line="1493" column="47" selection-start-line="1493" selection-start-column="47" selection-end-line="1493" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.58391124">
+              <caret line="1494" column="121" selection-start-line="1494" selection-start-column="121" selection-end-line="1494" selection-end-column="121" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
                 <element signature="e#26060#41685#0" expanded="false" />
@@ -1180,8 +1180,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5631068">
-          <caret line="1493" column="47" selection-start-line="1493" selection-start-column="47" selection-end-line="1493" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.58391124">
+          <caret line="1494" column="121" selection-start-line="1494" selection-start-column="121" selection-end-line="1494" selection-end-column="121" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
             <element signature="e#26060#41685#0" expanded="false" />
