@@ -1492,7 +1492,7 @@ def make_timeline_video(progress_set):
     video_clips = []
     for each_prog in progress_set.list_of_progress_videos.all():
         url = CURRENT_URL + each_prog.video.url
-        file_ = VideoFileClip("http://Uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempvfhajlbyrdcy.mp4")
+        file_ = VideoFileClip(url)
         """
         txt_clip = TextClip(each_prog.name_of_progress, fontsize=20, color='white')
         txt_clip = txt_clip.set_pos(('right','bottom')).set_duration(10)
