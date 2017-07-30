@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ebextensions/django.config" afterPath="$PROJECT_DIR$/.ebextensions/django.config" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,20 +58,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="20" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.4057377">
+              <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="django.config" pinned="false" current-in-tab="true">
+      <file leaf-file-name="django.config" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.ebextensions/django.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37428024">
+            <state vertical-scroll-proportion="-7.2222223">
               <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding />
             </state>
@@ -191,12 +191,12 @@
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
         <option value="$PROJECT_DIR$/apps/tasks/models.py" />
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/settings/mobile-mvp.py" />
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/wsgi.py" />
         <option value="$PROJECT_DIR$/.ebextensions/python.config" />
         <option value="$PROJECT_DIR$/.ebextensions/django.config" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
       </list>
     </option>
   </component>
@@ -207,9 +207,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="792" />
-    <option name="y" value="275" />
+    <option name="y" value="91" />
     <option name="width" value="1182" />
-    <option name="height" value="694" />
+    <option name="height" value="878" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -733,7 +733,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="792" y="275" width="1182" height="694" extended-state="0" />
+    <frame x="792" y="91" width="1182" height="878" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18333334" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
@@ -1129,18 +1129,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
+    <entry file="file://$PROJECT_DIR$/.ebextensions/django.config">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="20" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
+        <state vertical-scroll-proportion="-7.2222223">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.ebextensions/django.config">
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37428024">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4057377">
+          <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
           <folding />
         </state>
       </provider>
