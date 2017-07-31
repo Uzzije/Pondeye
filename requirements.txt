@@ -44,4 +44,3 @@ tqdm==4.11.2
 tzlocal==1.4
 wcwidth==0.1.7
 websocket-client==0.44.0
-yasm==0.0
