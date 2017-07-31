@@ -51,8 +51,6 @@ INSTALLED_APPS = (
     'apps.social',
     'datetimewidget',
     'django_bootstrap_calendar',
-    'easy_thumbnails',
-    'image_cropping',
     'friendship',
     'rest_framework',
     'corsheaders',
