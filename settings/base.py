@@ -54,7 +54,6 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'image_cropping',
     'friendship',
-    'tastypie',
     'rest_framework',
     'corsheaders',
     'djcelery',
