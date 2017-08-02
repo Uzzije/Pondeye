@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tilkedge.settings.mobile-mvp")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tikedge.settings.mobile-mvp")
 
 application = get_wsgi_application()
