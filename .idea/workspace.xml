@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/base.py" afterPath="$PROJECT_DIR$/settings/base.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings/mobile-mvp.py" afterPath="$PROJECT_DIR$/settings/mobile-mvp.py" />
     </list>
     <ignored path="tikedge.iws" />
@@ -78,12 +79,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mobile-mvp.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mobile-mvp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings/mobile-mvp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.022624435">
-              <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/settings/base.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.21226415">
+              <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
+              <folding>
+                <element signature="e#74#83#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -93,16 +106,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="start_all_servers.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/start_all_servers.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -198,7 +201,6 @@
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
         <option value="$PROJECT_DIR$/apps/tasks/models.py" />
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
-        <option value="$PROJECT_DIR$/settings/base.py" />
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/.elasticbeanstalk/config.yml" />
         <option value="$PROJECT_DIR$/.ebextensions/django.config" />
@@ -207,6 +209,7 @@
         <option value="$PROJECT_DIR$/.ebextensions/python.configs" />
         <option value="$PROJECT_DIR$/.ebextensions/python.config" />
         <option value="$PROJECT_DIR$/settings/mobile-mvp.py" />
+        <option value="$PROJECT_DIR$/settings/base.py" />
       </list>
     </option>
   </component>
@@ -1089,14 +1092,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="15" selection-start-line="56" selection-start-column="15" selection-end-line="56" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ranking_algorithm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1119,22 +1114,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manage.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wsgi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1187,11 +1166,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wsgi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/settings/mobile-mvp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.022624435">
-          <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21226415">
+          <caret line="10" column="43" selection-start-line="10" selection-start-column="43" selection-end-line="10" selection-end-column="43" />
+          <folding>
+            <element signature="e#74#83#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

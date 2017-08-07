@@ -5,7 +5,7 @@ DATABASES = {
 		'ENGINE': 'django.db.backends.mysql',
 		'NAME': 'Uzzije$mobile-data-base',
 		'USER': 'Uzzije',
-		'PASSWORD': DATABASE_PASSWORD,
+		'PASSWORD': "",
 		'HOST': 'Uzzije.mysql.pythonanywhere-services.com',
 	}
 }
