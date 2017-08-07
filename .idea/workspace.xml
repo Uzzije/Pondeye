@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ebextensions/python.config" afterPath="$PROJECT_DIR$/.ebextensions/python.config" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,21 +50,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.20491803">
+            <state vertical-scroll-proportion="0.0">
               <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="python.config" pinned="false" current-in-tab="false">
+      <file leaf-file-name="python.config" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.6666665">
-              <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -208,8 +207,8 @@
         <option value="$PROJECT_DIR$/.elasticbeanstalk/config.yml" />
         <option value="$PROJECT_DIR$/.ebextensions/django.config" />
         <option value="$PROJECT_DIR$/wsgi.py" />
-        <option value="$PROJECT_DIR$/.ebextensions/python.config" />
         <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/.ebextensions/python.config" />
       </list>
     </option>
   </component>
@@ -219,8 +218,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="452" />
-    <option name="y" value="91" />
+    <option name="x" value="361" />
+    <option name="y" value="54" />
     <option name="width" value="1235" />
     <option name="height" value="878" />
   </component>
@@ -760,7 +759,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="452" y="91" width="1235" height="878" extended-state="0" />
+    <frame x="361" y="54" width="1235" height="878" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16177703" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
@@ -1155,18 +1154,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.6666665">
-          <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
+    <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20491803">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
