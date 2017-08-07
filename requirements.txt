@@ -9,3 +9,7 @@ djangorestframework==3.6.3
 MySQL-python==1.2.5
 tzlocal==1.4
 beautifulsoup4==4.6.0
+django-celery==3.1.17
+django-braces==1.9.0
+pytz==2016.4
+redis==2.10.5
