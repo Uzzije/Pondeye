@@ -11,7 +11,7 @@ from datetime import timedelta
 from ..social.modules import get_journal_message, \
     resize_image, available_ponds_json, create_failed_notification, \
     create_failed_notification_proj_by_deletion, get_picture_from_base64, mark_progress_as_deleted, \
-    new_goal_or_progress_added_notification_to_pond, get_video_from_base64, upload_video_file, make_timeline_video
+    new_goal_or_progress_added_notification_to_pond, get_video_from_base64, upload_video_file
 from modules import get_user_projects, \
     time_has_past, convert_html_to_datetime,\
     get_todays_milestones_json, \
@@ -711,7 +711,7 @@ class ApiCheckProjectDone(CSRFExemptView):
             proj_stone.save()
             """
             progress_set = ProgressVideoSet.objects.get(project=proj_stone)
-            make_timeline_video(progress_set)
+            #make_timeline_video(progress_set)
             response["status"] = True
         except None:
             # (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
