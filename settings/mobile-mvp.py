@@ -1,5 +1,5 @@
 from .base import *
-from secret_keys import *
+#from secret_keys import *
 DATABASES = {
 	'default':{
 		'ENGINE': 'django.db.backends.mysql',
@@ -29,7 +29,7 @@ else:
 			'ENGINE': 'django.db.backends.mysql',
 			'NAME': 'Uzzije$mobile-data-base',
 			'USER': 'Uzzije',
-			'PASSWORD': DATABASE_PASSWORD,
+			'PASSWORD': "",
 			'HOST': 'Uzzije.mysql.pythonanywhere-services.com',
 		}
 	}
