@@ -17,14 +17,13 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
-import notifications.urls
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('apps.tasks.urls', namespace='tasks')),
     url(r'^social/', include('apps.social.urls', namespace='social')),
     url(r'^calendar/', include('django_bootstrap_calendar.urls', namespace="django_bootstrap_calendar")),
-    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     url(r'^friendship/', include('friendship.urls'))
 ]
 
