@@ -13,6 +13,3 @@ django-braces==1.9.0
 pytz==2016.4
 redis==2.10.5
 django-templated-email
-easy-thumbnails==2.4.1
-django-image-cropping==1.0.4
-moviepy==0.2.3.2
