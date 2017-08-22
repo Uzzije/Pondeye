@@ -15,7 +15,7 @@ from itertools import chain
 from datetime import timedelta
 from ..tasks.modules import utc_to_local, randomword
 import base64
-#from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, CompositeVideoClip
+from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, CompositeVideoClip
 from django.core.files.base import ContentFile
 from django.core.files import File
 
@@ -1487,22 +1487,20 @@ def upload_video_file(filepath, video_model):
     video_model.video.save(random_name, data, save=False)
     return random_name
 
-'''
+
 def make_timeline_video(progress_set):
     video_clips = []
     for each_prog in progress_set.list_of_progress_videos.all():
         url = CURRENT_URL + each_prog.video.url
         file_ = VideoFileClip(url)
-        """
         txt_clip = TextClip(each_prog.name_of_progress, fontsize=20, color='white')
-        txt_clip = txt_clip.set_pos(('right','bottom')).set_duration(10)
+        txt_clip = txt_clip.set_pos(('center','top')).set_duration(file_.duration)
         video = CompositeVideoClip([file_, txt_clip])
-        """
-        video_clips.append(file_)
+        video_clips.append(video)
     final_clips = concatenate_videoclips(video_clips)
     final_clips_name = progress_set.project.name_of_project + randomword(12) + ".mp4"
     final_clips.write_videofile(final_clips_name, codec='mpeg4', audio=False)
     f = open(final_clips_name)
     progress_set.video_timeline.save(final_clips_name, File(f))
-'''
+
 
