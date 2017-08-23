@@ -32,7 +32,8 @@ ALL_POND_STATUS = 'aps'
 #Urls variable
 BETA_URL = "http://Uzzije.pythonanywhere.com"
 LOCAL_URL = "http://localhost:8000"
-CURRENT_URL = BETA_URL #set this according to which live or local url you want to hit.
+AWS_BETA_URL = 'http://pondeye-env-1.y4besq8x8g.us-west-1.elasticbeanstalk.com'
+CURRENT_URL = AWS_BETA_URL #set this according to which live or local url you want to hit.
 
 #Goal Feed variabe
 PROGRESS = "gnp"
