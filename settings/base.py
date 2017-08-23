@@ -5,7 +5,7 @@ import os
 from easy_thumbnails.conf import Settings as thumbnail_settings
 import djcelery
 from tzlocal import get_localzone
-if os.environ['RDS_DB_NAME']:
+if os.environ.get('RDS_DB_NAME', False):
     EMAIL_PASSWORD = os.environ['EMAIL_PASSWORD']
 else:
     from .secret_keys import EMAIL_PASSWORD
@@ -58,6 +58,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'corsheaders',
     'djcelery',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (

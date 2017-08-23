@@ -14,3 +14,4 @@ export FFMPEG_BINARY=/usr/local/bin/ffmpeg/ffmpeg
 pip install easy-thumbnails==2.4.1 django-image-cropping==1.0.4 moviepy==0.2.3.2
 source /opt/python/current/env
 sh install_image_magick.sh
+mkdir
