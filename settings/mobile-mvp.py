@@ -1,5 +1,4 @@
 from .base import *
-from .secret_keys import *
 DATABASES = {
 	'default':{
 		'ENGINE': 'django.db.backends.mysql',
@@ -24,6 +23,7 @@ if os.environ.get('RDS_DB_NAME', False):
         }
     }
 else:
+	from secret_keys import *
 	DATABASES = {
 		'default':{
 			'ENGINE': 'django.db.backends.mysql',
@@ -33,15 +33,15 @@ else:
 			'HOST': 'Uzzije.mysql.pythonanywhere-services.com',
 		}
 	}
+	DEFAULT_FILE_STORAGE = 's3utils.MediaS3BotoStorage'
+	STATICFILES_STORAGE = 's3utils.StaticS3BotoStorage'
+	AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID_PASS
+	AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY_PASS
+	AWS_STORAGE_BUCKET_NAME = 'pondeye'
+	S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+	STATIC_DIRECTORY = '/static/'
+	MEDIA_DIRECTORY = '/media/'
+	STATIC_URL = S3_URL + STATIC_DIRECTORY
+	MEDIA_URL = S3_URL + MEDIA_DIRECTORY
+	
 STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
-
-DEFAULT_FILE_STORAGE = 's3utils.MediaS3BotoStorage'
-STATICFILES_STORAGE = 's3utils.StaticS3BotoStorage'
-AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID_PASS
-AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY_PASS
-AWS_STORAGE_BUCKET_NAME = 'pondeye'
-S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-STATIC_DIRECTORY = '/static/'
-MEDIA_DIRECTORY = '/media/'
-STATIC_URL = S3_URL + STATIC_DIRECTORY
-MEDIA_URL = S3_URL + MEDIA_DIRECTORY
