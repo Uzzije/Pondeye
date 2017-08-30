@@ -1493,8 +1493,7 @@ def upload_video_file(filepath, video_model):
 def make_timeline_video(progress_set):
     video_clips = []
     for each_prog in progress_set.list_of_progress_videos.all():
-        url = CURRENT_URL + each_prog.video.url
-        file_ = VideoFileClip(url)
+        file_ = VideoFileClip(each_prog.video.url)
         txt_clip = TextClip(each_prog.name_of_progress, fontsize=20, color='white')
         txt_clip = txt_clip.set_pos(('center','top')).set_duration(file_.duration)
         video = CompositeVideoClip([file_, txt_clip])
