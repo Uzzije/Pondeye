@@ -51,8 +51,8 @@
       <file leaf-file-name="secret_keys.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings/secret_keys.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.2222223">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state vertical-scroll-proportion="-1.6666666">
+              <caret line="3" column="71" selection-start-line="3" selection-start-column="71" selection-end-line="3" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -61,8 +61,8 @@
       <file leaf-file-name="mobile-mvp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/settings/mobile-mvp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7075472">
-              <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.4245283">
+              <caret line="25" column="58" selection-start-line="25" selection-start-column="44" selection-end-line="25" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -203,10 +203,10 @@
         <option value="$PROJECT_DIR$/settings/base.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/install_requirements.sh" />
-        <option value="$PROJECT_DIR$/settings/secret_keys.py" />
         <option value="$PROJECT_DIR$/apps/social/global_variables.py" />
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
         <option value="$PROJECT_DIR$/settings/mobile-mvp.py" />
+        <option value="$PROJECT_DIR$/settings/secret_keys.py" />
       </list>
     </option>
   </component>
@@ -1228,14 +1228,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/settings/secret_keys.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.2222223">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-17.777779">
@@ -1244,10 +1236,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/settings/secret_keys.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.6666666">
+          <caret line="3" column="71" selection-start-line="3" selection-start-column="71" selection-end-line="3" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/settings/mobile-mvp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7075472">
-          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.4245283">
+          <caret line="25" column="58" selection-start-line="25" selection-start-column="44" selection-end-line="25" selection-end-column="58" />
           <folding />
         </state>
       </provider>

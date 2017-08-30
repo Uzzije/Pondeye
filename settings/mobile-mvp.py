@@ -22,6 +22,8 @@ if os.environ.get('RDS_DB_NAME', False):
             'PORT': os.environ['RDS_PORT'],
         }
     }
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_KEY_ID", None)
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_KEY", None)
 else:
 	from secret_keys import *
 	DATABASES = {
