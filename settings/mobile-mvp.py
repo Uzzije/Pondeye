@@ -35,11 +35,12 @@ else:
 	}
 	AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID_PASS
 	AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY_PASS
+AWS_AUTO_CREATE_BUCKET = True
 DEFAULT_FILE_STORAGE = 's3utils.MediaS3BotoStorage'
 STATICFILES_STORAGE = 's3utils.StaticS3BotoStorage'
 AWS_STORAGE_BUCKET_NAME = 'pondeye'
 AWS_S3_HOST = 's3-us-west-1.amazonaws.com'
-S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+S3_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 STATIC_DIRECTORY = '/static/'
 MEDIA_DIRECTORY = '/media/'
 STATIC_URL = S3_URL + STATIC_DIRECTORY
