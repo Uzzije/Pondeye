@@ -1,12 +1,12 @@
 from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, CompositeVideoClip
 #clip_ = VideoFileClip("http://img.wennermedia.com/social/rs-becky-g-ff479bcd-2818-44f0-8ca9-0cbfc79bb11c.jpg")
-clip = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
 #clip = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
+clip = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov?Signature=%2FNNx1JGKhYQT8ESvCBqTITUMa9c%3D&Expires=1504203540&AWSAccessKeyId=AKIAJO5ATILYUIDYMYVQ")
 print clip.start, " ", clip.end
 #clip2 = VideoFileClip("Hashtag - 8343.mp4")
-clip2 = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
+clip2 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov?Signature=%2FNNx1JGKhYQT8ESvCBqTITUMa9c%3D&Expires=1504203540&AWSAccessKeyId=AKIAJO5ATILYUIDYMYVQ")
 print clip2.duration
-clip3 = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
+clip3 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov?Signature=%2FNNx1JGKhYQT8ESvCBqTITUMa9c%3D&Expires=1504203540&AWSAccessKeyId=AKIAJO5ATILYUIDYMYVQ")
 #clip3 = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
 print clip3.duration
 txt_clip = TextClip("Hello how are you doing", fontsize=20, color='white')
