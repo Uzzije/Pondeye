@@ -1493,7 +1493,7 @@ def upload_video_file(filepath, video_model):
 def make_timeline_video(progress_set):
     video_clips = []
     for each_prog in progress_set.list_of_progress_videos.all():
-        file_ = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov?Signature=%2FNNx1JGKhYQT8ESvCBqTITUMa9c%3D&Expires=1504203540&AWSAccessKeyId=AKIAJO5ATILYUIDYMYVQ")
+        file_ = VideoFileClip(each_prog.video.url)
         txt_clip = TextClip(each_prog.name_of_progress, fontsize=20, color='white')
         txt_clip = txt_clip.set_pos(('center','top')).set_duration(file_.duration)
         video = CompositeVideoClip([file_, txt_clip])
