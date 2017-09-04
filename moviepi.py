@@ -4,7 +4,7 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, Comp
 clip = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov")
 print clip.start, " ", clip.end
 #clip2 = VideoFileClip("Hashtag - 8343.mp4")
-clip2 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov")
+clip2 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/tempotyjuhjsspgs.mov?Signature=n%2FqnGvVEf0z9XaGfzbiamL8KsjA%3D&Expires=1504471316&AWSAccessKeyId=AKIAJO5ATILYUIDYMYVQ")
 print clip2.duration
 clip3 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov")
 #clip3 = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
