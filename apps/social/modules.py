@@ -18,7 +18,7 @@ import base64
 from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, CompositeVideoClip
 from django.core.files.base import ContentFile
 from django.core.files import File
-
+import subprocess
 
 CURRENT_URL = global_variables.CURRENT_URL
 
@@ -1479,8 +1479,31 @@ def get_video_from_base64(data):
             ext = 'mov'
         ran_word = randomword(12)
         data = ContentFile(base64.b64decode(imgstr), name='temp' + ran_word + '.' + ext)
-        return data
+        return convert_to_mp4_file_for_file_object(data)
     return False
+
+
+def convert_video_to_mp4(non_mp4_file, output_filename):
+    process = subprocess.Popen(['ffmpeg', '-i', non_mp4_file, output_filename], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process.stdin.write('Y')
+    has_error = process.communicate()[0]
+    if has_error:
+        return False
+    return True
+
+
+def convert_to_mp4_file_for_file_object(data):
+    filepath = data.name
+    if not filepath.endswith(".mp4"):
+        direc = filepath.rsplit("/", 1)
+        new_mp4_path = direc+randomword(15)+".mp4"
+        did_convert = convert_video_to_mp4(filepath, new_mp4_path)
+        if did_convert:
+            path_object = open(new_mp4_path)
+            data = File(path_object)
+        else:
+            return False
+    return data
 
 
 def upload_video_file(filepath, video_model):

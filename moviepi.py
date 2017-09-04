@@ -1,10 +1,22 @@
+import os
+import subprocess
 from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, CompositeVideoClip
+
+def convert_video_to_mp4(non_mp4_file, output_filename):
+    process = subprocess.Popen(['ffmpeg', '-i', non_mp4_file, output_filename], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process.stdin.write('Y')
+    has_error = process.communicate()[0]
+    if has_error:
+        return False
+    return True
+
+'''
 #clip_ = VideoFileClip("http://img.wennermedia.com/social/rs-becky-g-ff479bcd-2818-44f0-8ca9-0cbfc79bb11c.jpg")
 #clip = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
 clip = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov")
 print clip.start, " ", clip.end
 #clip2 = VideoFileClip("Hashtag - 8343.mp4")
-clip2 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/tempotyjuhjsspgs.mov?Signature=n%2FqnGvVEf0z9XaGfzbiamL8KsjA%3D&Expires=1504471316&AWSAccessKeyId=AKIAJO5ATILYUIDYMYVQ")
+clip2 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/tempotyjuhjsspgs.mov")
 print clip2.duration
 clip3 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov")
 #clip3 = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
@@ -21,6 +33,10 @@ video3 = CompositeVideoClip([clip3, txt_clip])
 final_clip = concatenate_videoclips([video, video2, video3], method="compose")
 final_clip.write_videofile('test_concatanates.mp4', codec='mpeg4', audio=False)
 #video.write_videofile('text-test-file.mp4', codec='mpeg4', audio=False)
+did_convert = convert_video_to_mp4('test_concatanates.mp4', 'new_fileb.mp4')
+'''
+convert_video_to_mp4('test_concatanates.mp4', 'new_fileb.mp4')
+
 
 """
 def make_timeline_video(progress_set):
