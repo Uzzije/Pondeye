@@ -7,5 +7,11 @@
       <schema-pattern>tikedge_db.*</schema-pattern>
       <default-schemas>tikedge_db.*</default-schemas>
     </data-source>
+    <data-source name="Django default" uuid="0a776c06-5998-40d5-bac8-eca96e57efd2">
+      <user-name>tikedge_user</user-name>
+      <user-password>dfdedfc3dfc1dfcfdfcedfcddfcfdff5dfdfdfd9dfcfdfd8</user-password>
+      <schema-pattern>tikedge_db.*</schema-pattern>
+      <default-schemas>tikedge_db.*</default-schemas>
+    </data-source>
   </component>
 </project>

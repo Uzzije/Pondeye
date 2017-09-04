@@ -3,9 +3,18 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from easy_thumbnails.conf import Settings as thumbnail_settings
+import djcelery
+from tzlocal import get_localzone
+if os.environ.get('RDS_DB_NAME', False):
+    EMAIL_PASSWORD = os.environ['EMAIL_PASSWORD']
+else:
+    from .secret_keys import EMAIL_PASSWORD
+
+djcelery.setup_loader()
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+login_url = '/login/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -14,9 +23,23 @@ SECRET_KEY = '0!meczzg54v6bydr$!k118wxz4@nltfgzar#d#-s@9h12#nb+x'
 SITE_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+XS_SHARING_ALLOWED_ORIGINS = '*'
 ALLOWED_HOSTS = []
-LOGIN_URL = '/tasks/login'
+LOGIN_URL = '/login'
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+## email stuff
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'email@textdoar.com'
+EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
+EMAIL_PORT = 587
+MY_TEMPLATE_DIRECTORY = os.path.join(BASE_DIR, '../templates/')
+TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 
 # Application definition
 
@@ -31,14 +54,16 @@ INSTALLED_APPS = (
     'apps.social',
     'datetimewidget',
     'django_bootstrap_calendar',
-    'easy_thumbnails',
-    'image_cropping',
     'friendship',
-    'tastypie',
     'rest_framework',
+    'corsheaders',
+    'djcelery',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -50,6 +75,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.staticfiles.storage.StaticFilesStorage',
 
+    #custom middleware
+    'apps.tasks.middleware.django_crossdomainxhr_middleware.XsSharing',
 )
 
 THUMBNAIL_PROCESSORS = (
@@ -57,6 +84,11 @@ THUMBNAIL_PROCESSORS = (
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
 ROOT_URLCONF = 'urls'
+
+CORS_URLS_REGEX = r'^/api/.*$'
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIAL = True
+CORS_REPLACE_HTTPS_REFERER = True
 
 TEMPLATES = [
     {
@@ -125,3 +157,4 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+FILE_UPLOAD_MAX_MEMORY_SIZE = 0

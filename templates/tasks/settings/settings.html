@@ -1,0 +1,47 @@
+{% extends 'social/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="tab-pane settings" id="settings-tab">
+                    <form class="form-horizontal" role="form">
+                      <fieldset>
+                        <h3><i class="fa fa-square"></i> Change Password</h3>
+                        <div class="form-group">
+                          <label for="old-password" class="col-sm-3 control-label">{{ form.old_password.label }}</label>
+                          <div class="col-sm-4">
+                              {{ form.old_password }}
+                            <input type="password" id="old-password" name="old-password" class="form-control">
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                          <label for="password" class="col-sm-3 control-label">{{ form.new_password.label }}</label>
+                          <div class="col-sm-4">
+                              {{ form.new_password }}
+                            <input type="password" id="password" name="password" class="form-control">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="password2" class="col-sm-3 control-label">{{ form.repeat_password.label }}</label>
+                          <div class="col-sm-4">
+                              {{ form.repeat_password }}
+                            <input type="password" id="password2" name="password2" class="form-control">
+                          </div>
+                        </div>
+                      </fieldset>
+                    </form>
+                    <p class="text-center"><a href="#" class="btn btn-custom-primary">
+                      <i class="fa fa-floppy-o"></i> Save Changes</a>
+                    </p>
+                  </div>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

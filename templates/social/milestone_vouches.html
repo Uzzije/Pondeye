@@ -1,0 +1,60 @@
+{% extends 'social/notification_view.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="page-header">
+                            <span class="h1 display-font">Milestone Vouches</span>
+                        </div>
+                        {% if mil_down_results %}
+                            <div class="list-group">
+                                {% for mil_down in mil_down_results %}
+                                    {% if not mil_down.is_mil_deleted %}
+                                    <a class="list-group-item" href="{% url 'social:milestone_view' mil_down.slug %}">
+                                        <span class="para-font">
+                                            {{ mil_down.count }} person believes that you will get this milestone: {{ mil_down.blurb }} completed!
+                                        </span>
+                                    </a>
+                                    {% else %}
+                                         <span class="para-font">
+                                            {{ mil_down.count }} person believes that you will get this milestone: {{ mil_down.blurb }} completed!
+                                        </span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="para-font">No recent vouches so far!</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:vouch_notifications' %}',
+                    type: "POST",
+                    success: function(){
+                        console.log("Successful sent request to remove new feature");
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                    }
+                })
+            });
+        </script>
+
+    {% endblock %}
+</body>
+</html>

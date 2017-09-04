@@ -1,0 +1,120 @@
+{% extends 'social/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+       <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="page-header">
+                    <span class="h1 display-font">Milestone</span>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <a href="{% url 'social:milestone_view' milestone.slug %}"><span style="font-size: 24px;" class="para-font">{{ milestone.name_of_milestone }}</span></a>
+                                </div>
+                                <div class="col-md-4">
+                                    {% if project_completed %}
+                                    <span class="header-color display-font">Completed!</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <span class="para-font">Start By: {{ start_time }}</span></a>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="para-font">End By: {{ end_time }}</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="panel panel-dafault">
+                            <div class="panel-body cards">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <a href="{% url 'social:project_view' project_slug %}"><p style="font-size: 24px" class="para-font">
+                                            <span style="font-weight: bold">Project:</span>  {{ project_name }}</p></a>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button id="vouch" onclick="createVouch({{ feed_id }})" name="{{ feed_id }}"
+                                                class="btn btn-link">
+                                                <i class="material-icons">verified_user</i>
+                                                (<span id="vouch_{{ feed_id }}"> {{ vouch_count }}</span>)
+                                        </button>
+                                        <i class="material-icons">visibility</i>(<span id="seen">{{ seen_count }}</span>)
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel-footer">
+                                            {% if project_completed %}
+                                                <span class="para-font">Based on {{ user_first_name }} {{ milestone.user.user.last_name }}'s community, there was a {{ percentage }}% chance of completing this milestone</span>
+                                            {% else %}
+                                                <span class="para-font">Based on {{ user_first_name }} {{ milestone.user.user.last_name }}'s community, there is a {{ percentage }}% chance of completing this milestone</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                {% include "social/milestone_pictures.html" %}
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-5">
+                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#picRowsModal">
+                                            <span class="para-font">view experience</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <script>
+            function createVouch(pk){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:create_vouch' %}',
+                    type: "POST",
+                    data: { mil_id: pk  },
+                    success: function(response){
+                        var statusParse = JSON.parse(response);
+                        var status = statusParse["status"];
+                        var count = 0;
+                        if (status == true){
+                            count = $("#vouch_"+pk).text();
+                            $("#vouch_"+pk).empty();
+                            count++;
+                            $("#vouch_"+pk).text(count);
+                            toastr.success("Vouch Noted!")
+
+                        }
+                        else{
+                            console.log("already vouched");
+                        }
+                        console.log("Successful sent request" + count);
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                    }
+                })
+            }
+        </script>
+    {% endblock %}
+  </body>
+</html>

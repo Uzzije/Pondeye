@@ -1,0 +1,24 @@
+<ons-page id="new_photo_view">
+    <ons-toolbar>
+        <div class="center">Pondeye</div>
+    </ons-toolbar>
+    <div class="container">
+        <hr>
+        <div id="pic_in_need_of_tag" class="col-md-12">
+            <input hidden type=text value="stay woke" id="picture_in_need_of_tag">
+            <img class="" style="width:80px;height:80px" src="test-media/fb_profile.jpg">
+        </div>
+        <div class="row">
+                <div class="input-field col s6">
+                    <select id="pictures_tasks_list" class="browser-default">
+                        <option id="new_pic_tasks_sel" value="" selected>
+                            What tasks is this for?
+                        </option>      
+                    </select>
+            </div>
+        </div>
+        <div class="row">
+            <ons-button onclick="TagPicturetoTasks()">Publish</ons-button>
+        </div>
+    </div>
+</ons-page>

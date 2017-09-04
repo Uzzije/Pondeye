@@ -1,0 +1,18 @@
+{% extends 'social/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 col-md-offset-5">
+                    <img src="{{ picture.url }}">
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

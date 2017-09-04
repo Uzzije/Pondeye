@@ -1,0 +1,95 @@
+{% extends 'social/../base/nav_bar.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+        <div class="container" style="margin-top:50px;">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="text-left">
+                            <span class="para-font"> Pond's Stage: </span><span class="feed-font">{{ pond_stage }}</span>
+                        </div>
+                    </div>
+                    {% if not pond_member %}
+                        <div class="col-xs-6">
+                            <div class="text-right">
+                                <button onclick="requestJoin('{{ pond.id }}')" class="btn btn-primary" type="button">Join Pond</button>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <br>
+                <div class="widget">
+                  <div class="widget-header">
+                    <div class="widget-header">
+                        <h3 class="widget-caption"><span class="display-font">{{ pond.name_of_pond }}</span></h3>
+                    </div>
+                  </div>
+                  <div class="widget-body bordered-top bordered-red">
+                    <div class="card">
+                        <div class="content">
+                             <ul class="list-unstyled team-members">
+                                {% if ponders %}
+                                 {% for ponder in ponders %}
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <div class="avatar">
+                                                 <img src="{{ ponder.profile_pics_url }}" alt="img" class="img-circle img-no-padding img-responsive">
+                                                </div>
+                                            </div>
+                                             <div class="col-md-9">
+                                                <a href="{% url 'tasks:profile_view' ponder.username %}">
+                                                    <span class="para-font">{{ ponder.first_name }} {{ ponder.last_name }}</span>
+                                                    <span class="feed-font">{% if ponder.is_creator %} ( Creator ){% endif %}</span>
+                                                </a>
+                                             </div>
+                                        </div>
+                                     </li>
+                                 {% endfor %}
+                                {% else %}
+                                    <span class="para-font">Empty Pond</span>
+                                {% endif %}
+                             </ul>
+                        </div>
+                    </div>
+                  </div>
+                </div><!-- End Friends activity -->
+            </div>
+        </div>
+        <script>
+            function requestJoin(pond_id){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:pond_join_request' %}',
+                    type: "POST",
+                    data: { pond_id:  pond_id},
+                    success: function(response){
+                        var statusParse = JSON.parse(response);
+                        var status = statusParse["status"];
+                        if(status == true){
+                            console.log("Successful Added to Pond!");
+                            toastr.success("Successfully Sent Request!");
+                        }
+                        else{
+                            console.log("Successful not Added to Pond!");
+                            toastr.info("Request Already Sent!");
+                        }
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                        toastr.warning("Sorry, Something Went Wrong. Please Try Again!");
+                        console.log("Successful Added to Pond!");
+                    }
+                })
+            }
+        </script>
+    {% endblock %}
+</body>
+</html>

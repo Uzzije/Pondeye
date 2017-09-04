@@ -1,0 +1,57 @@
+{% extends 'social/notification_view.html' %}
+{% block staticfiles %}{% load static from staticfiles %}{% endblock %}
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% block body %}
+         <div class="container">
+            <div class="col-md-10 no-paddin-xs">
+                <div class="col-md-8">
+                    <div class="page-header">
+                        <span class="h1 display-font">People interested in your goals</span>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {% if interest_feed %}
+                                {% for feed in interest_feed %}
+                                    <p class="para-font">
+                                        <a href="{% url 'tasks:profile_view' feed.username %}">{{ feed.first_name }} {{ feed.last_name }}</a>
+                                        is interested in
+                                        {% if not feed.is_deleted %}
+                                            <a href="{% url 'social:project_view' feed.slug %}">{{ feed.blurb }}</a>
+                                        {% else %}
+                                            {{ feed.blurb }}
+                                        {% endif %}
+                                    </p>
+                                    <hr>
+                                {% endfor %}
+                            {% else %}
+                                <p class="para-font">No one is currently interested in any of your projects or goals</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
+                });
+                $.ajax({
+                    url: '{% url 'social:project_interest_notifications' %}',
+                    type: "POST",
+                    success: function(){
+                        console.log("Successful sent request to remove new feature");
+                    },
+                    error: function(xhr){
+                        $("#error-message").text(xhr.responseText).show();
+                    }
+                })
+            });
+        </script>
+    {% endblock %}
+</body>
+</html>

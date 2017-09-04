@@ -23,7 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-
+.idea/workspace.xml
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
@@ -87,3 +87,12 @@ ENV/
 
 # Rope project settings
 .ropeproject
+media/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+migrations
+migrations/0002_remove_profilepictures_is_deleted.py
+settings/secret_keys.py

@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/favicon.png">
+    <title>BookPost</title>
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/animate.min.css" rel="stylesheet">
+    <link href="font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/timeline.css" rel="stylesheet">
+    <script src="assets/js/jquery.1.11.1.min.js"></script>
+    <script src="bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="animated fadeIn">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-principal">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">
+            <b>BookPost</b>
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+      <div class="col-md-5 col-sm-4">         
+       <form class="navbar-form">
+          <div class="form-group" style="display:inline;">
+            <div class="input-group" style="display:table;">
+              <input class="form-control" name="search" placeholder="Search..." autocomplete="off" type="text">
+              <span class="input-group-addon" style="width:1%;">
+                <span class="glyphicon glyphicon-search"></span>
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>        
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="profile.html">
+            Jonathan Smith
+            <img src="img/Friends/guy-3.jpg" class="img-nav">
+          </a> 
+        </li>
+        <li><a href="home.html"><i class="fa fa-bars"></i>&nbsp;Home</a></li>
+        <li><a href="messages.html"><i class="fa fa-comments"></i></a></li>
+        <li class="dropdown active">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  
+               Pages 
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="cover_profile.html">Cover profile</a></li>
+                <li><a href="profile_wall.html">Profile wall</a></li>
+                <li><a href="user_detail.html">User detail</a></li>
+                <li><a href="list_users.html">List users</a></li>
+                <li><a href="file_manager.html">File manager</a></li>
+                <li><a href="profile_settings.html">Profile settings</a></li>
+                <li><a href="photos.html">Photos</a></li>
+                <li><a href="friends.html">Friends</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="edit_profile.html">Edit profile</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="blank-cover.html">Blank cover</a></li>
+                <li><a href="registration_email.html">Registration email</a></li>
+                <li><a href="error404.html">Error 404</a></li>
+                <li><a href="error500.html">Error 500</a></li>
+                <li><a href="recover_password.html">Recover password</a></li>
+            </ul>
+        </li>
+        <li><a href="#" class="nav-controller"><i class="fa fa-user"></i></a></li>        
+      </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Timeline content -->
+    <div class="row" style="margin-top:55px;">
+        <!-- right  content-->
+          <table width="100%" height="100%" bgcolor="#ff766c" cellspacing="0" cellpadding="0" border="0">
+              <tbody>
+                  <tr>
+                      <td width="100%" align="center" valign="top" bgcolor="#ff766c" style="background-color:#ff766c; min-height: 200px;">
+                          <table>
+                              <tbody>
+                                  <tr>
+                                      <td class="table-td-wrap" align="center" width="600">
+                                          <table class="table-row" style="table-layout: auto; padding-right: 24px; padding-left: 24px; width: 580px; background-color: transparent;" bgcolor="transparent" width="580" cellspacing="0" cellpadding="0" border="0">
+                                              <tbody>
+                                                  <tr height="50px" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; height: 50px; background-color: transparent;">
+                                                      <td class="table-row-td" style="height: 50px; padding-right: 16px; font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; vertical-align: middle;" valign="middle" align="left">
+                                                          <a href="#" style="color: #ffffff; text-decoration: none; padding: 0px; font-size: 18px; line-height: 20px; height: 50px; background-color: transparent;">
+                Welcome to our website
+               </a>
+                                                      </td>
+
+                                                      <td class="table-row-td" style="height: 50px; font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; text-align: right; vertical-align: middle;" align="right" valign="middle">
+                                                          <a href="#" style="color: #fff; text-decoration: none; background-color: transparent;">
+               View inside browser
+             </a>
+                                                      </td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+
+
+                                          <table class="table-space" height="16" style="height: 16px; font-size: 0px; line-height: 0; width: 580px; background-color: #ffffff;" width="580" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0">
+                                              <tbody>
+                                                  <tr>
+                                                      <td class="table-space-td" valign="middle" height="16" style="height: 16px; width: 580px; background-color: #ffffff;" width="580" bgcolor="#FFFFFF" align="left">&nbsp;</td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+
+                                          <table class="table-row" width="580" bgcolor="#FFFFFF" style="table-layout: fixed; background-color: #ffffff;" cellspacing="0" cellpadding="0" border="0">
+                                              <tbody>
+                                                  <tr>
+                                                      <td class="table-row-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding-left: 24px; padding-right: 24px;" valign="top" align="left">
+                                                          <table class="table-col" align="left" width="532" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;">
+                                                              <tbody>
+                                                                  <tr>
+                                                                      <td class="table-col-td" width="532" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal;" valign="top" align="left">
+                                                                          <div style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; text-align: center;">
+                                                                              <img src="img/email_text.png" style="border: 0px none #444444; vertical-align: middle; display: block; padding-bottom: 9px;" hspace="0" vspace="0" border="0">
+                                                                          </div>
+                                                                      </td>
+                                                                  </tr>
+                                                              </tbody>
+                                                          </table>
+                                                      </td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+
+                                          <table class="table-row" width="580" bgcolor="#FFFFFF" style="table-layout: fixed; background-color: #ffffff;" cellspacing="0" cellpadding="0" border="0">
+                                              <tbody>
+                                                  <tr>
+                                                      <td class="table-row-td" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; padding-left: 36px; padding-right: 36px;" valign="top" align="left">
+                                                          <table class="table-col" align="left" width="508" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;">
+                                                              <tbody>
+                                                                  <tr>
+                                                                      <td class="table-col-td" width="508" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal;" valign="top" align="left">
+                                                                          <table class="header-row" width="508" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;">
+                                                                              <tbody>
+                                                                                  <tr>
+                                                                                      <td class="header-row-td" width="508" style="font-size: 28px; margin: 0px; font-family: Arial, sans-serif; font-weight: normal; line-height: 19px; color: #478fca; padding-bottom: 10px; padding-top: 15px;" valign="top" align="left">Hi, Susan Calvin</td>
+                                                                                  </tr>
+                                                                              </tbody>
+                                                                          </table>
+                                                                          <div style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px;">Thank your for registering with us, now you are part o a great comunity</div>
+                                                                      </td>
+                                                                  </tr>
+                                                              </tbody>
+                                                          </table>
+                                                      </td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                          <table class="table-space" height="12" style="height: 12px; font-size: 0px; line-height: 0; width: 580px; background-color: #ffffff;" width="580" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0">
+                                              <tbody>
+                                                  <tr>
+                                                      <td class="table-space-td" valign="middle" height="12" style="height: 12px; width: 580px; background-color: #ffffff;" width="580" bgcolor="#FFFFFF" align="left">&nbsp;</td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+
+
+                                          <table class="table-space" height="12" style="height: 12px; font-size: 0px; line-height: 0; width: 580px; background-color: #113d68;" width="580" bgcolor="#113D68" cellspacing="0" cellpadding="0" border="0">
+                                              <tbody>
+                                                  <tr>
+                                                      <td class="table-space-td" valign="middle" height="12" style="height: 12px; width: 580px; background-color: #113d68;" width="580" bgcolor="#113D68" align="left">&nbsp;</td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                          <table class="table-row" width="580" bgcolor="transparent" style="table-layout: fixed; background-color: transparent;" cellspacing="0" cellpadding="0" border="0">
+                                              <tbody>
+                                                  <tr>
+                                                      <td class="table-row-td" height="45px" bgcolor="transparent" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; height: 45px; padding-left: 24px; padding-right: 24px; background-color: transparent;" valign="top" align="left">
+                                                          <table class="table-col" align="left" width="532" cellspacing="0" cellpadding="0" border="0" style="table-layout: fixed;">
+                                                              <tbody>
+                                                                  <tr>
+                                                                      <td class="table-col-td" width="532" align="center" style="font-family: Arial, sans-serif; line-height: 19px; color: #444444; font-size: 13px; font-weight: normal; text-align: center;" valign="top">
+                                                                      </td>
+                                                                  </tr>
+                                                              </tbody>
+                                                          </table>
+                                                      </td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+    </div><!-- end timeline content-->
+
+
+    
+    <footer class="welcome-footer">
+      <div class="container">
+        <p>
+          <div class="footer-links">
+            <a href="#">Terms of Use</a> | 
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Developers</a> | 
+            <a href="#">Contact</a> | 
+            <a href="#">About</a>
+          </div>   
+          Copyright &copy; Company - All rights reserved       
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

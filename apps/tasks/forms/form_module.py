@@ -1,7 +1,6 @@
-from tzlocal import get_localzone
-from django.utils import timezone
-
+import pytz
+from datetime import datetime
 
 def get_current_datetime():
-    local = timezone.localtime(timezone.now(), timezone=get_localzone())
+    local = datetime.now(pytz.utc)
     return local

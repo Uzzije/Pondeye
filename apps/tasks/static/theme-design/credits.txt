@@ -1,0 +1,11 @@
+**Credits:**
+
+- Bootstrap  - http://getbootstrap.com
+- jQuery     - http://jquery.com
+- HTML5Shiv  - @afarkas @jdalton @jon_neal @rem
+- Respond    - Authors & copyright (c) 2012: Scott Jehl, Paul Irish, Nicholas Zakas.
+- Font awesome icon - http://fortawesome.github.io/Font-Awesome/
+- Animate       - http://daneden.github.io/animate.css/
+- Photos        - http://pixabay.com
+- Code Snippets - bootdey.com
+- Register form - creative-tim.com
