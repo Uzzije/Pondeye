@@ -19,6 +19,7 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, Comp
 from django.core.files.base import ContentFile
 from django.core.files import File
 import subprocess
+import tempfile
 
 CURRENT_URL = global_variables.CURRENT_URL
 
@@ -1495,7 +1496,7 @@ def convert_video_to_mp4(non_mp4_file, output_filename):
 def convert_to_mp4_file_for_file_object(data):
     filepath = data.name
     if not filepath.endswith(".mp4"):
-        new_mp4_path = randomword(25)+".mp4"
+        new_mp4_path = tempfile.gettempdir() + "/" + randomword(25)+".mp4"
         did_convert = convert_video_to_mp4(filepath, new_mp4_path)
         if did_convert:
             path_object = open(new_mp4_path)
