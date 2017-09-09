@@ -1494,12 +1494,12 @@ def convert_video_to_mp4(non_mp4_file, output_filename):
 
 
 def convert_to_mp4_file_for_file_object(data):
-    filepath = data.name
+    filepath = "https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov?Signature=OPvAffGceROW8Q5RB3J%2F4MLUYyY%3D&Expires=1504992999&AWSAccessKeyId=AKIAJO5ATILYUIDYMYVQ"
     if not filepath.endswith(".mp4"):
         new_mp4_path = randomword(25)+".mp4"
         did_convert = convert_video_to_mp4(filepath, new_mp4_path)
         if did_convert:
-            path_object = open(new_mp4_path, 'w+b')
+            path_object = open(new_mp4_path)
             data = File(path_object)
         else:
             return False
