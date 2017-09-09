@@ -25,7 +25,6 @@ if os.environ.get('RDS_DB_NAME', False):
     AWS_ACCESS_KEY_ID = os.environ.get("AWS_KEY_ID", None)
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_KEY", None)
 else:
-	from secret_keys import *
 	DATABASES = {
 		'default':{
 			'ENGINE': 'django.db.backends.mysql',
@@ -35,8 +34,8 @@ else:
 			'HOST': 'Uzzije.mysql.pythonanywhere-services.com',
 		}
 	}
-	AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID_PASS
-	AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY_PASS
+	AWS_ACCESS_KEY_ID = os.environ.get("AWS_KEY_ID", '')
+	AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_KEY_ID", '')
 AWS_AUTO_CREATE_BUCKET = True
 DEFAULT_FILE_STORAGE = 's3utils.MediaS3BotoStorage'
 STATICFILES_STORAGE = 's3utils.StaticS3BotoStorage'
