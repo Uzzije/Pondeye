@@ -198,6 +198,7 @@ class ApiVideoUploadView(CSRFExemptView):
         video_mod = ProgressVideo(video_name=vid_file.name,
                                video=vid_file, name_of_progress=progress_name)
         video_mod.save()
+        modules.convert_to_mp4_file_for_file_object(video_mod)
         project = UserProject.objects.get(id=int(request.POST.get("project_id")))
         pond_members_id_str = request.POST.get("members_id")
         pond_members_id_arr = pond_members_id_str.split(",")

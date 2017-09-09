@@ -1480,7 +1480,7 @@ def get_video_from_base64(data):
             ext = 'mov'
         ran_word = randomword(12)
         data = ContentFile(base64.b64decode(imgstr), name='temp' + ran_word + '.' + ext)
-        return convert_to_mp4_file_for_file_object(data)
+        return data
     return False
 
 
@@ -1493,17 +1493,15 @@ def convert_video_to_mp4(non_mp4_file, output_filename):
     return True
 
 
-def convert_to_mp4_file_for_file_object(data):
-    filepath = "https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov?Signature=OPvAffGceROW8Q5RB3J%2F4MLUYyY%3D&Expires=1504992999&AWSAccessKeyId=AKIAJO5ATILYUIDYMYVQ"
+def convert_to_mp4_file_for_file_object(video):
+    filepath = video.name
     if not filepath.endswith(".mp4"):
         new_mp4_path = randomword(25)+".mp4"
         did_convert = convert_video_to_mp4(filepath, new_mp4_path)
         if did_convert:
             path_object = open(new_mp4_path)
             data = File(path_object)
-        else:
-            return False
-    return data
+            video.video.save(new_mp4_path, data)
 
 
 def upload_video_file(filepath, video_model):
