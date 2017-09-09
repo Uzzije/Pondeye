@@ -35,8 +35,9 @@ final_clip.write_videofile('test_concatanates.mp4', codec='mpeg4', audio=False)
 #video.write_videofile('text-test-file.mp4', codec='mpeg4', audio=False)
 did_convert = convert_video_to_mp4('test_concatanates.mp4', 'new_fileb.mp4')
 '''
-convert_video_to_mp4('test_concatanates.mp4', 'new_fileb.mp4')
-
+convert_video_to_mp4('test_concatanates.mp4', 'new_filebfa.mp4')
+path_obj = open('new_filebfa.mp4')
+print path_obj
 
 """
 def make_timeline_video(progress_set):
