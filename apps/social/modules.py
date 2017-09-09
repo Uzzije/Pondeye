@@ -1498,7 +1498,6 @@ def convert_to_mp4_file_for_file_object(data):
     if not filepath.endswith(".mp4"):
         new_mp4_path = randomword(25)+".mp4"
         did_convert = convert_video_to_mp4(filepath, new_mp4_path)
-        old_path = open(filepath)
         if did_convert:
             path_object = open(new_mp4_path, 'w+b')
             data = File(path_object)
