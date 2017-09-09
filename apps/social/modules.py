@@ -1494,7 +1494,7 @@ def convert_video_to_mp4(non_mp4_file, output_filename):
 
 
 def convert_to_mp4_file_for_file_object(video):
-    filepath = video.name
+    filepath = video.video.name
     if not filepath.endswith(".mp4"):
         new_mp4_path = randomword(25)+".mp4"
         did_convert = convert_video_to_mp4(filepath, new_mp4_path)

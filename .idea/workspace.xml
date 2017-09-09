@@ -53,7 +53,7 @@
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.2413793">
-              <caret line="1497" column="37" selection-start-line="1497" selection-start-column="37" selection-end-line="1497" selection-end-column="37" />
+              <caret line="1497" column="31" selection-start-line="1497" selection-start-column="31" selection-end-line="1497" selection-end-column="31" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -208,8 +208,8 @@
         <option value="$PROJECT_DIR$/install_image_magick.sh" />
         <option value="$PROJECT_DIR$/settings/mobile-mvp.py" />
         <option value="$PROJECT_DIR$/.ebextensions/python.config" />
-        <option value="$PROJECT_DIR$/apps/social/modules.py" />
         <option value="$PROJECT_DIR$/apps/social/api_view.py" />
+        <option value="$PROJECT_DIR$/apps/social/modules.py" />
       </list>
     </option>
   </component>
@@ -1202,7 +1202,7 @@
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2413793">
-          <caret line="1497" column="37" selection-start-line="1497" selection-start-column="37" selection-end-line="1497" selection-end-column="37" />
+          <caret line="1497" column="31" selection-start-line="1497" selection-start-column="31" selection-end-line="1497" selection-end-column="31" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
