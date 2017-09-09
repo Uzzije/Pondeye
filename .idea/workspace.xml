@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tempotyjuhjsspgs (7).mov" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
     </list>
     <ignored path="tikedge.iws" />
@@ -50,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44520548">
-              <caret line="1492" column="15" selection-start-line="1492" selection-start-column="15" selection-end-line="1492" selection-end-column="15" />
+            <state vertical-scroll-proportion="-12.222222">
+              <caret line="1501" column="44" selection-start-line="1501" selection-start-column="44" selection-end-line="1501" selection-end-column="44" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -122,11 +122,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.111111">
-              <caret line="199" column="24" selection-start-line="199" selection-start-column="24" selection-end-line="199" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.58219177">
+              <caret line="196" column="37" selection-start-line="196" selection-start-column="37" selection-end-line="196" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -1192,21 +1192,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.111111">
-          <caret line="199" column="24" selection-start-line="199" selection-start-column="24" selection-end-line="199" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44520548">
-          <caret line="1492" column="15" selection-start-line="1492" selection-start-column="15" selection-end-line="1492" selection-end-column="15" />
+        <state vertical-scroll-proportion="-12.222222">
+          <caret line="1501" column="44" selection-start-line="1501" selection-start-column="44" selection-end-line="1501" selection-end-column="44" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.58219177">
+          <caret line="196" column="37" selection-start-line="196" selection-start-column="37" selection-end-line="196" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -1502,7 +1502,8 @@ def convert_to_mp4_file_for_file_object(video):
             path_object = open(new_mp4_path)
             data = File(path_object)
             video.video.save(new_mp4_path, data)
-            video.video_name = str(new_mp4_path)
+            vid_name = "%s_%s" % (video.name_of_progress, str(new_mp4_path))
+            video.video_name = vid_name
             video.save()
 
 

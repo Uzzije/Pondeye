@@ -195,7 +195,8 @@ class ApiVideoUploadView(CSRFExemptView):
         if not vid_file:
             response["error"] = "Hey picture must be either video file! ", dec_video_file
             return HttpResponse(json.dumps(response), status=201)
-        video_mod = ProgressVideo(video_name=vid_file.name,
+        vid_name = "%s_%s" % (progress_name, vid_file.name)
+        video_mod = ProgressVideo(video_name=vid_name,
                                video=vid_file, name_of_progress=progress_name)
         video_mod.save()
         modules.convert_to_mp4_file_for_file_object(video_mod)
