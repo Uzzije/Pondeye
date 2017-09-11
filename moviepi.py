@@ -10,15 +10,15 @@ def convert_video_to_mp4(non_mp4_file, output_filename):
         return False
     return True
 
-'''
+
 #clip_ = VideoFileClip("http://img.wennermedia.com/social/rs-becky-g-ff479bcd-2818-44f0-8ca9-0cbfc79bb11c.jpg")
 #clip = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
-clip = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov")
+clip = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/09/09/sehshrfstjzgddmwcjuadawmx.mp4")
 print clip.start, " ", clip.end
 #clip2 = VideoFileClip("Hashtag - 8343.mp4")
-clip2 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/tempotyjuhjsspgs.mov")
+clip2 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/09/09/eskmthzdltxlupgedpqasalpj.mp4")
 print clip2.duration
-clip3 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/08/30/temperwwayblhlza.mov")
+clip3 = VideoFileClip("https://pondeye.s3-us-west-1.amazonaws.com/media/video/progressvideo/2017/09/09/haevkrmaipqqyxwqyymzmgzmh.mp4")
 #clip3 = VideoFileClip("http://uzzije.pythonanywhere.com/media/video/progressvideo/2017/07/03/tempgkztsuskqrrj.mp4")
 print clip3.duration
 txt_clip = TextClip("Hello how are you doing", fontsize=20, color='white')
@@ -31,14 +31,14 @@ txt_clip = TextClip("go ahead", fontsize=20, color='white')
 txt_clip = txt_clip.set_pos(('right','top')).set_duration(clip3.duration)
 video3 = CompositeVideoClip([clip3, txt_clip])
 final_clip = concatenate_videoclips([video, video2, video3], method="compose")
-final_clip.write_videofile('test_concatanates.mp4', codec='mpeg4', audio=False)
+final_clip.write_videofile('test_concatanate.mp4', audio=False)
 #video.write_videofile('text-test-file.mp4', codec='mpeg4', audio=False)
-did_convert = convert_video_to_mp4('test_concatanates.mp4', 'new_fileb.mp4')
 '''
+did_convert = convert_video_to_mp4('test_concatanates.mp4', 'new_fileb.mp4')
 convert_video_to_mp4('test_concatanates.mp4', 'new_filebfa.mp4')
 path_obj = open('new_filebfa.mp4')
 print path_obj
-
+'''
 """
 def make_timeline_video(progress_set):
 	video_clips = []
