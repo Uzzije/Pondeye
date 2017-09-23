@@ -91,4 +91,5 @@ PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --prefix="$HOME/f
   --enable-nonfree
 make
 make install
+cp $HOME/bin/ffmpeg /usr/bin/
 hash -r
