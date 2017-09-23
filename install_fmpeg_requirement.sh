@@ -1,7 +1,3 @@
-#!/bin/sh
-
-# Based on instructions found here: http://wiki.razuna.com/display/ecp/FFMpeg+Installation+on+CentOS+and+RedHat#FFMpegInstallationonCentOSandRedHat-InstallX264
-
 if [ "`/usr/bin/whoami`" != "root" ]; then
     echo "You need to execute this script as root."
     exit 1
