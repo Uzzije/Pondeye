@@ -9,7 +9,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'scheduler.celery_setting')
 
 from django.conf import settings  # noqa
 
-app = Celery('scheduler', broker='amqp://guest@localhost//')
+app = Celery('scheduler')
 
 # instantiate Celery object
 

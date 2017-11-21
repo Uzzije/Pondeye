@@ -48,3 +48,6 @@ STATIC_URL = S3_URL + STATIC_DIRECTORY
 MEDIA_URL = S3_URL + MEDIA_DIRECTORY
 
 STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
+
+# Asycronous stuff for aws
+BROKER_URL = os.environ['BROKER_URL']

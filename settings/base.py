@@ -27,11 +27,15 @@ XS_SHARING_ALLOWED_ORIGINS = '*'
 ALLOWED_HOSTS = []
 LOGIN_URL = '/login'
 
+# Celery Backend Stuff
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_SEND_EVENTS = False
 
-## email stuff
+# email stuff
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

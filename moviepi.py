@@ -140,5 +140,7 @@ while(cap.isOpened()):
 cap.release()
 out.release()
 """
+Create models
+The items in said model corresponds to html output
 
 

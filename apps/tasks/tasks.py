@@ -1,10 +1,9 @@
 from __future__ import absolute_import
-from .models import Tasks, PendingTasks, TikedgeUser
 from scheduler.celery import app
 from django.core.exceptions import ObjectDoesNotExist
 
 
-
+'''
 @app.task
 def set_reminder(pk):
     try:
@@ -32,3 +31,20 @@ def set_reminder_for_non_committed_tasks(pk):
     else:
         pending_task.remind_user = False
     pending_task.save()
+'''
+
+# coding=utf-8
+from celery.task import periodic_task
+from datetime import timedelta, datetime
+import logging
+logger = logging.getLogger(__name__)
+# A periodic task that will run every minute (the symbol "*" means every)
+# A periodic task that will run every minute (the symbol "*" means every)
+
+
+@periodic_task(run_every=timedelta(minutes=1))
+def sample_periodic_task():
+    logger.info("Start task")
+    now = datetime.now()
+    result = now.day + now.minute
+    logger.info("Task finished: result = %i" % result)
