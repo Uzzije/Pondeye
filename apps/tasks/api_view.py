@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
 from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
+from tasks.tasks import begin_timeline_video
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
     Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, ProjectVideo
 from django.http import HttpResponseRedirect, HttpResponse
@@ -701,7 +702,7 @@ class ApiCheckProjectDone(CSRFExemptView):
             User.objects.get(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
-            response["error"] = "Log Back In! Try Again!", username
+            response["error"] = "Log Back In! Try Again!"
             return HttpResponse(json.dumps(response), status=201)
         try:
             proj_stone = UserProject.objects.get(id=int(request.POST.get("proj_id")))
@@ -711,7 +712,7 @@ class ApiCheckProjectDone(CSRFExemptView):
             proj_stone.save()
             """
             progress_set = ProgressVideoSet.objects.get(project=proj_stone)
-            make_timeline_video(progress_set)
+            begin_timeline_video(progress_set)
             response["status"] = True
         except None:
             # (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
