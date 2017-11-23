@@ -33,6 +33,7 @@ yum -y install libtheora theora-tools
 yum -y install ncurses-devel
 yum -y install libdc1394 libdc1394-devel
 yum -y install amrnb-devel amrwb-devel opencore-amr-devel
+yum install -y openssl-devel
 
 cd /opt
 wget http://downloads.xvid.org/downloads/xvidcore-1.3.2.tar.gz
@@ -104,7 +105,7 @@ PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig"
 export PKG_CONFIG_PATH
 ./configure --prefix="$HOME/ffmpeg_build" --extra-cflags="-I$HOME/ffmpeg_build/include" --extra-ldflags="-L$HOME/ffmpeg_build/lib" --bindir="$HOME/bin" \
 --extra-libs=-ldl --enable-version3 --enable-libvpx \
---enable-libx264 --enable-libmp3lame --enable-libtheora --enable-libvorbis  --enable-libxvid --disable-ffplay \
+--enable-libx264 --enable-libmp3lame --enable-libtheora --enable-libvorbis --enable-openssl --enable-libxvid --disable-ffplay \
 --enable-gpl --enable-postproc --enable-nonfree --enable-avfilter --enable-pthreads --arch=x86_64 && make && make install
 
 # Test the resulting ffmpeg binary

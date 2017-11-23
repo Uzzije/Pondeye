@@ -25,3 +25,4 @@ make install
 ln -s /usr/local/bin/ffmpeg/ffmpeg /usr/bin/ffmpeg
 export FFMPEG_BINARY=/usr/bin/ffmpeg
 
+yum install ImageMagick
