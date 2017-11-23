@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import View, FormView
 from forms import tasks_forms
 from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
-from tasks.tasks import begin_timeline_video
+from tasks import begin_timeline_video
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
     Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, ProjectVideo
 from django.http import HttpResponseRedirect, HttpResponse
