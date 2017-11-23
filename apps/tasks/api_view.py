@@ -712,7 +712,7 @@ class ApiCheckProjectDone(CSRFExemptView):
             proj_stone.save()
             """
             progress_set = ProgressVideoSet.objects.get(project=proj_stone)
-            begin_timeline_video(progress_set)
+            begin_timeline_video.delay(progress_set)
             response["status"] = True
         except None:
             # (AttributeError, ValueError, TypeError, ObjectDoesNotExist):

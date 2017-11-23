@@ -41,8 +41,9 @@ def set_reminder_for_non_committed_tasks(pk):
 
 @app.task
 def begin_timeline_video(progress_set):
-    make_timeline_video(progress_set)
     logger.info("Create New Highlight Video for this goal: %s" % progress_set.project.name_of_project)
+    make_timeline_video(progress_set)
+
 
 
 # coding=utf-8
