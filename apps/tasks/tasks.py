@@ -5,7 +5,7 @@ from celery.task import periodic_task
 from datetime import timedelta, datetime
 import logging
 logger = logging.getLogger(__name__)
-from social.modules import make_timeline_video
+from ..social.modules import make_timeline_video
 
 '''
 @app.task
