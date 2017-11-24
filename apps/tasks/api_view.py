@@ -705,14 +705,15 @@ class ApiCheckProjectDone(CSRFExemptView):
             response["error"] = "Log Back In! Try Again!"
             return HttpResponse(json.dumps(response), status=201)
         try:
-            proj_stone = UserProject.objects.get(id=int(request.POST.get("proj_id")))
+            #proj_stone = UserProject.objects.get(id=int(request.POST.get("proj_id")))
+            proj_id = int(request.POST.get("proj_id"))
             """
             proj_stone.is_completed = True
             proj_stone.is_live = False
             proj_stone.save()
             """
-            progress_set = ProgressVideoSet.objects.get(project=proj_stone)
-            begin_timeline_video.delay(progress_set)
+            # progress_set = ProgressVideoSet.objects.get(project=proj_stone)
+            begin_timeline_video.delay(proj_id)
             response["status"] = True
         except None:
             # (AttributeError, ValueError, TypeError, ObjectDoesNotExist):
