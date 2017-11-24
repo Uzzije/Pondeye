@@ -1526,7 +1526,7 @@ def make_timeline_video(progress_set):
     final_clips = concatenate_videoclips(video_clips)
     final_clips_name = progress_set.project.name_of_project + randomword(12) + ".mp4"
     abs_path = os.path.join(os.path.abspath('/tmp/'), final_clips_name)
-    final_clips.write_videofile(abs_path, audio=True)
+    final_clips.write_videofile(abs_path, audio=False)
     f = open(final_clips_name)
     progress_set.video_timeline.save(final_clips_name, File(f))
 
