@@ -59,12 +59,3 @@ def begin_timeline_video(proj_id):
 
 # A periodic task that will run every minute (the symbol "*" means every)
 # A periodic task that will run every minute (the symbol "*" means every)
-
-'''
-@periodic_task(run_every=timedelta(minutes=1))
-def sample_periodic_task():
-    logger.info("Start task")
-    now = datetime.now()
-    result = now.day + now.minute
-    logger.info("Task finished: result = %i" % result)
-'''
