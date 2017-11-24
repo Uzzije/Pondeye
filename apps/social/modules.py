@@ -19,6 +19,7 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, Comp
 from django.core.files.base import ContentFile
 from django.core.files import File
 import subprocess
+import os
 import tempfile
 
 CURRENT_URL = global_variables.CURRENT_URL
@@ -1523,9 +1524,9 @@ def make_timeline_video(progress_set):
         video = CompositeVideoClip([file_, txt_clip])
         video_clips.append(video)
     final_clips = concatenate_videoclips(video_clips)
-    fname = tempfile.NamedTemporaryFile(delete=False)
-    final_clips_name = fname.name+progress_set.project.name_of_project + randomword(12) + ".mp4"
-    final_clips.write_videofile(final_clips_name, audio=True)
+    final_clips_name = progress_set.project.name_of_project + randomword(12) + ".mp4"
+    abs_path = os.path.join(os.path.abspath('/tmp/'), final_clips_name)
+    final_clips.write_videofile(abs_path, audio=True)
     f = open(final_clips_name)
     progress_set.video_timeline.save(final_clips_name, File(f))
 
