@@ -1,23 +1,20 @@
-from django.shortcuts import render
-from django.views.generic import View, FormView
-from forms import tasks_forms
-from models import User, TikedgeUser, UserProject,Milestone, TagNames, LaunchEmail
+from django.views.generic import View
+from models import User, TikedgeUser, UserProject,Milestone, TagNames
 from tasks import begin_timeline_video
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
-    Pond, ProgressPictureSet, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, ProjectVideo
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login, logout
+    Pond, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, ProjectVideo
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
 from datetime import timedelta
 from ..social.modules import get_journal_message, \
     resize_image, available_ponds_json, create_failed_notification, \
     create_failed_notification_proj_by_deletion, get_picture_from_base64, mark_progress_as_deleted, \
-    new_goal_or_progress_added_notification_to_pond, get_video_from_base64, upload_video_file, make_timeline_video
-from modules import get_user_projects, \
+    new_goal_or_progress_added_notification_to_pond, upload_video_file
+from modules import \
     time_has_past, convert_html_to_datetime,\
     get_todays_milestones_json, \
-    confirm_expired_project, get_completed_mil_count, get_completed_proj_count, get_failed_mil_count, \
-    get_failed_proj_count, get_recent_projects_json, get_status, display_error, api_get_user_projects, get_profile_pic_json, \
+    confirm_expired_project, \
+     get_recent_projects_json, api_get_user_projects, get_profile_pic_json, \
     get_recent_projects
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -25,17 +22,11 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from datetime import datetime
 from ..social.global_variables import MILESTONE, PROJECT, ALL_POND_STATUS
-from friendship.models import Friend
 import json
-from django.contrib import messages
-from braces.views import LoginRequiredMixin
 from global_variables_tasks import CUSTOMER_SERVICE_EMAIL
-from .forms import launch_form
 import modules
 from forms.form_module import get_current_datetime
 from django.db.models import Q
-import pytz
-from tzlocal import get_localzone
 from notification_keys import TOKEN_FOR_NOTIFICATION
 from templated_email import send_templated_mail
 

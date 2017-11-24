@@ -4,11 +4,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from celery.task import periodic_task
 from datetime import timedelta, datetime
 import logging
-logger = logging.getLogger(__name__)
 from ..social.modules import make_timeline_video
 from ..social.models import ProgressVideoSet
-from models import UserProject
+from .models import UserProject
 
+logger = logging.getLogger(__name__)
 '''
 @app.task
 def set_reminder(pk):
