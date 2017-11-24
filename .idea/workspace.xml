@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
     </list>
     <ignored path="tikedge.iws" />
@@ -42,9 +41,11 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.675507">
-              <caret line="1519" column="50" selection-start-line="1519" selection-start-column="50" selection-end-line="1519" selection-end-column="50" />
-              <folding />
+            <state vertical-scroll-proportion="0.7893916">
+              <caret line="1526" column="54" selection-start-line="1526" selection-start-column="54" selection-end-line="1526" selection-end-column="54" />
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1258,9 +1259,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.675507">
-          <caret line="1519" column="50" selection-start-line="1519" selection-start-column="50" selection-end-line="1519" selection-end-column="50" />
-          <folding />
+        <state vertical-scroll-proportion="0.7893916">
+          <caret line="1526" column="54" selection-start-line="1526" selection-start-column="54" selection-end-line="1526" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
