@@ -1523,7 +1523,7 @@ def make_timeline_video(progress_set):
         video = CompositeVideoClip([file_, txt_clip])
         video_clips.append(video)
     final_clips = concatenate_videoclips(video_clips)
-    final_clips_name = '/temp/'+progress_set.project.name_of_project + randomword(12) + ".mp4"
+    final_clips_name = '/tmp/'+progress_set.project.name_of_project + randomword(12) + ".mp4"
     final_clips.write_videofile(final_clips_name, audio=True)
     f = open(final_clips_name)
     progress_set.video_timeline.save(final_clips_name, File(f))
