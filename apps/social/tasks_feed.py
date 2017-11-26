@@ -284,7 +284,7 @@ class VideoProgressFeed(PondFeed):
         progress_list = []
         progress_dic = {}
         created_sec = int(self.created.strftime('%s'))
-        progress_query_set = self.tasks.list_of_progress_videos.filter(is_deleted=False).order_by('-created')[0]
+        progress_query_set = self.tasks.list_of_progress_videos.filter(is_deleted=False).order_by('-created')
         for progress in progress_query_set:
             progress_list.append({
                'name': self.task_owner_name,
