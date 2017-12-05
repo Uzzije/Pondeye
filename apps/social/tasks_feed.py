@@ -293,7 +293,7 @@ class VideoProgressFeed(PondFeed):
                #'impress_count': self.impress_count(progress),
                'created':utc_to_local(progress.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
                'id': progress.id,
-               #'video_url':self.get_video_url(progress),
+               'video_url':self.get_video_url(progress),
                #'experience_with':self.get_experience_with(progress)
             })
         if progress_list:
