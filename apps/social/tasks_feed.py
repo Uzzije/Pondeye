@@ -289,12 +289,12 @@ class VideoProgressFeed(PondFeed):
             progress_list.append({
                'name': self.task_owner_name,
                'progress_message': progress.name_of_progress,
-               'seen_count': self.progress_seen_count(progress),
-               'impress_count': self.impress_count(progress),
+               #'seen_count': self.progress_seen_count(progress),
+               #'impress_count': self.impress_count(progress),
                'created':utc_to_local(progress.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
                'id': progress.id,
-               'video_url':self.get_video_url(progress),
-               'experience_with':self.get_experience_with(progress)
+               #'video_url':self.get_video_url(progress),
+               #'experience_with':self.get_experience_with(progress)
             })
         if progress_list:
             progress_dic = {
@@ -318,12 +318,12 @@ class VideoProgressFeed(PondFeed):
         return self.url_domain+progress.video.url
 
     def impress_count(self, progress):
-        impress_count = ProgressImpressedCount.objects.get(tasks=progress).get_count()
-        return impress_count
+        # impress_count = ProgressImpressedCount.objects.get(tasks=progress).get_count()
+        return 0
 
     def progress_seen_count(self, progress):
-        seen_count = SeenProgress.objects.get(tasks=progress).get_count()
-        return seen_count
+        # seen_count = SeenProgress.objects.get(tasks=progress).get_count()
+        return 0
 
 
 class NotificationFeed:
