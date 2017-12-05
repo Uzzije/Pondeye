@@ -315,7 +315,7 @@ class VideoProgressFeed(PondFeed):
         return progress_dic
 
     def get_video_url(self, progress):
-        return self.url_domain+progress.video.url
+        return progress.video.url
 
     def impress_count(self, progress):
         # impress_count = ProgressImpressedCount.objects.get(tasks=progress).get_count()
