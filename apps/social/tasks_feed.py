@@ -311,11 +311,15 @@ class VideoProgressFeed(PondFeed):
                 'user_id':self.tasks.project.user.user.id,
                 'progress_set_id': self.tasks.id,
                 'name': self.task_owner_name,
+                'video_url':self.get_video_set_url(self.tasks)
             }
         return progress_dic
 
     def get_video_url(self, progress):
         return progress.video.url
+
+    def get_video_set_url(self, progress_set):
+        return progress_set.video_timeline.url
 
     def impress_count(self, progress):
         # impress_count = ProgressImpressedCount.objects.get(tasks=progress).get_count()
