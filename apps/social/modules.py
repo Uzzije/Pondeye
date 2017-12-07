@@ -281,14 +281,10 @@ def get_users_feed_json(user, local_timezone='UTC'):
            'created_sec':created_sec,
            'intro_video_url': feed.project_video_url()
         })
-        """
-        progress_set = ProgressPictureSet.objects.get(project=each_proj_feed)
-        feed = ProgressFeed(progress_set, type_of_feed=global_variables.PROGRESS, url_domain=CURRENT_URL, local_timezone=local_timezone)
-        """
         video_set = ProgressVideoSet.objects.get(project=each_proj_feed)
         type_of_feed = global_variables.VIDEO_SET
-        if video_set.is_empty:
-            video_set = ProgressVideo.objects.filter(project=each_proj_feed).order_by('created').first()
+        if not each_proj_feed.is_completed:
+            video_set = video_set.list_of_progress_videos.order_by('created').first()
             type_of_feed = global_variables.RECENT_VIDEO_UPLOAD
         feed = VideoProgressFeed(video_set, type_of_feed=type_of_feed, url_domain=CURRENT_URL,
                                  local_timezone=local_timezone)
