@@ -254,7 +254,7 @@ class VideoProgressFeed(PondFeed):
     def __init__(self, tasks, type_of_feed, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
         PondFeed.__init__(self, tasks, type_of_feed, url_domain=url_domain)
         self.local_timezone = local_timezone
-        self.progress = self.list_of_progress()
+        self.progress = self.videos_highlight()
 
     def get_experience_with(self, progress):
         """
@@ -274,38 +274,49 @@ class VideoProgressFeed(PondFeed):
             return False
         return list_of_tikedge_users
 
-    def list_of_progress(self):
+    def progress_feed(self):
+        if self.type_of_feed is global_variables.VIDEO_SET:
+            return self.videos_highlight()
+        else:
+            return self.recent_upload()
+
+    def recent_upload(self):
+        created_sec = int(self.created.strftime('%s'))
+        progress_dic = {
+            'created_sec':created_sec,
+            'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
+            'message':self.message,
+            'is_picture_feed': False,
+            'is_milestone_feed': False,
+            'is_recent_progress': True,
+            'is_progress_set_feed': False,
+            'profile_url':self.profile_url,
+            'id': self.tasks.project.id,
+            'user_id':self.tasks.project.user.user.id,
+            'name': self.task_owner_name,
+            'video_url':self.get_video_url(self.tasks)
+        }
+        return progress_dic
+
+    def videos_highlight(self):
         """
         Return a list of progress videos from VideoProgressSet
         :return:
         """
         if self.tasks.is_empty:
             return None
-        progress_list = []
         progress_dic = {}
         created_sec = int(self.created.strftime('%s'))
         progress_query_set = self.tasks.list_of_progress_videos.filter(is_deleted=False).order_by('-created')
-        for progress in progress_query_set:
-            progress_list.append({
-               'name': self.task_owner_name,
-               'progress_message': progress.name_of_progress,
-               #'seen_count': self.progress_seen_count(progress),
-               #'impress_count': self.impress_count(progress),
-               'created':utc_to_local(progress.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
-               'id': progress.id,
-               'video_url':self.get_video_url(progress),
-               #'experience_with':self.get_experience_with(progress)
-            })
-        if progress_list:
+        if progress_query_set:
             progress_dic = {
                 'created_sec':created_sec,
-                'list_of_progress':progress_list,
                 'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
                 'message':self.message,
                 'is_picture_feed': False,
                 'is_milestone_feed': False,
                 'is_project_feed': False,
-                'is_progress_feed': True,
+                'is_progress_set_feed': True,
                 'profile_url':self.profile_url,
                 'id': self.tasks.project.id,
                 'user_id':self.tasks.project.user.user.id,

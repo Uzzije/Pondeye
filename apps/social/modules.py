@@ -1,7 +1,7 @@
 from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
-from .models import ProfilePictures, ProgressVideoSet,\
-    Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, LetDownMilestone, PondSpecificProject, \
+from .models import ProfilePictures, ProgressVideoSet, ProgressVideo, \
+    Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, PondSpecificProject, \
      PondRequest, Pond, PondMembership, ProgressImpressedCount, PondProgressFeed, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
 from django.db.models import Q
 from tasks_feed import NotificationFeed
@@ -10,7 +10,7 @@ import global_variables
 import StringIO
 from PIL import Image, ImageFilter
 from journal_feed import JournalFeed
-from tasks_feed import PondFeed, ProgressFeed, VideoProgressFeed
+from tasks_feed import PondFeed, VideoProgressFeed
 from itertools import chain
 from datetime import timedelta
 from ..tasks.modules import utc_to_local, randomword
@@ -20,7 +20,7 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 import subprocess
 import os
-import tempfile
+
 
 CURRENT_URL = global_variables.CURRENT_URL
 
@@ -265,7 +265,7 @@ def get_users_feed_json(user, local_timezone='UTC'):
            'is_picture_feed': False,
            'is_milestone_feed': False,
            'is_project_feed': True,
-            'is_progress_feed': False,
+           'is_progress_feed': False,
            'message':feed.message,
            'project_slug':feed.tasks.slug,
            'is_active': feed.tasks.is_live,
@@ -276,17 +276,21 @@ def get_users_feed_json(user, local_timezone='UTC'):
            'profile_url':feed.profile_url,
            'id': feed.tasks.id,
            'user_id':feed.feed_user.id,
-            'is_completed':feed.tasks.is_completed,
-            'is_failed':feed.tasks.is_failed,
-            'created_sec':created_sec,
-            'intro_video_url': feed.project_video_url()
+           'is_completed':feed.tasks.is_completed,
+           'is_failed':feed.tasks.is_failed,
+           'created_sec':created_sec,
+           'intro_video_url': feed.project_video_url()
         })
         """
         progress_set = ProgressPictureSet.objects.get(project=each_proj_feed)
         feed = ProgressFeed(progress_set, type_of_feed=global_variables.PROGRESS, url_domain=CURRENT_URL, local_timezone=local_timezone)
         """
         video_set = ProgressVideoSet.objects.get(project=each_proj_feed)
-        feed = VideoProgressFeed(video_set, type_of_feed=global_variables.PROGRESS, url_domain=CURRENT_URL,
+        type_of_feed = global_variables.VIDEO_SET
+        if video_set.is_empty:
+            video_set = ProgressVideo.objects.filter(project=each_proj_feed).order_by('created').first()
+            type_of_feed = global_variables.RECENT_VIDEO_UPLOAD
+        feed = VideoProgressFeed(video_set, type_of_feed=type_of_feed, url_domain=CURRENT_URL,
                                  local_timezone=local_timezone)
         if feed.progress:
             list_of_feed_json.append(feed.progress)

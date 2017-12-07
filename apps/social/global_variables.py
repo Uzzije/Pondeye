@@ -67,3 +67,8 @@ NOT_JOINED_PONDEYE = "njp"
 
 #pondfeed
 NEW_SHARED_EXPERIENCE = "nse"
+
+#video fee
+
+VIDEO_SET = 'vsf'
+RECENT_VIDEO_UPLOAD = 'rvuf'
