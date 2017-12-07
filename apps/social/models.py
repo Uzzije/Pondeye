@@ -87,6 +87,7 @@ class ProgressVideo(models.Model):
     created = models.DateTimeField(default=now)
     blurb = models.CharField(max_length=150, default=None)
     experience_with = models.ManyToManyField(TikedgeUser, default=None)
+    project = models.ForeignKey(UserProject, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if len(self.name_of_progress) > 150:
