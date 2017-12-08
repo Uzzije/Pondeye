@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/installOpenCv.sh" afterPath="$PROJECT_DIR$/scripts/installOpenCv.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/install_ffmpeg.sh" afterPath="$PROJECT_DIR$/scripts/install_ffmpeg.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/install_image_magick.sh" afterPath="$PROJECT_DIR$/scripts/install_image_magick.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/install_requirements.sh" afterPath="$PROJECT_DIR$/scripts/install_requirements.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/start_all_servers.sh" afterPath="$PROJECT_DIR$/scripts/start_all_servers.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/start_celery.sh" afterPath="$PROJECT_DIR$/scripts/start_celery.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/start_monaca.sh" afterPath="$PROJECT_DIR$/scripts/start_monaca.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test_work_ethic_bash.sh" afterPath="$PROJECT_DIR$/scripts/test_work_ethic_bash.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ebextensions/python.config" afterPath="$PROJECT_DIR$/.ebextensions/python.config" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="tikedge.iws" />
@@ -46,30 +39,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="secret_keys.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings/secret_keys.py">
+      <file leaf-file-name="modules.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="28" selection-start-line="0" selection-start-column="28" selection-end-line="0" selection-end-column="28" />
+              <caret line="289" column="63" selection-start-line="289" selection-start-column="63" selection-end-line="289" selection-end-column="63" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="manage.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/manage.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="redo_db.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="redo_db.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/redo_db.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.1193634">
+            <state vertical-scroll-proportion="0.0">
               <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
@@ -81,6 +64,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="129" column="33" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -106,21 +99,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="install_ffmpeg.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/install_ffmpeg.sh">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/social/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="120" selection-end-column="15" />
+              <caret line="94" column="13" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="install_image_magick.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/scripts/install_image_magick.sh">
+      <file leaf-file-name="python.config" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.06346968">
+              <caret line="3" column="83" selection-start-line="3" selection-start-column="83" selection-end-line="3" selection-end-column="83" />
               <folding />
             </state>
           </provider>
@@ -200,7 +193,6 @@
         <option value="$PROJECT_DIR$/.ebextensions/99_celery.config" />
         <option value="$PROJECT_DIR$/.ebextensions/files/celery_configuration.txt" />
         <option value="$PROJECT_DIR$/.ebextensions/ffmpeg.config" />
-        <option value="$PROJECT_DIR$/.ebextensions/python.config" />
         <option value="$PROJECT_DIR$/install_ffmpeg.sh" />
         <option value="$PROJECT_DIR$/install_image_magick.sh" />
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
@@ -215,6 +207,7 @@
         <option value="$PROJECT_DIR$/scripts/createdb.sh.py" />
         <option value="$PROJECT_DIR$/scripts/createdb.sh" />
         <option value="$PROJECT_DIR$/scripts/redo_db.sh" />
+        <option value="$PROJECT_DIR$/.ebextensions/python.config" />
       </list>
     </option>
   </component>
@@ -224,10 +217,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1529" />
-    <option name="y" value="58" />
-    <option name="width" value="1518" />
-    <option name="height" value="965" />
+    <option name="x" value="610" />
+    <option name="y" value="128" />
+    <option name="width" value="1291" />
+    <option name="height" value="947" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -282,21 +275,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="settings" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tikedge" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
+              <option name="myItemId" value="apps" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -311,6 +290,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="social" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ebextensions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -762,12 +759,12 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1529" y="58" width="1518" height="965" extended-state="0" />
+    <frame x="610" y="128" width="1291" height="947" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1300813" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1897518" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07674144" sideWeight="0.51235807" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07840772" sideWeight="0.51235807" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282636" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.053892214" sideWeight="0.41330892" order="8" side_tool="false" content_ui="tabs" />
@@ -1011,13 +1008,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.333334">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scheduler/celery.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1088,14 +1078,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-138.88889">
-          <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wsgi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1112,28 +1094,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.796296">
-          <caret line="289" column="63" selection-start-line="289" selection-start-column="63" selection-end-line="289" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.888889">
-          <caret line="93" column="6" selection-start-line="93" selection-start-column="6" selection-end-line="93" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -1212,8 +1176,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/redo_db.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1193634">
+        <state vertical-scroll-proportion="0.0">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="289" column="63" selection-start-line="289" selection-start-column="63" selection-end-line="289" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="94" column="13" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06346968">
+          <caret line="3" column="83" selection-start-line="3" selection-start-column="83" selection-end-line="3" selection-end-column="83" />
           <folding />
         </state>
       </provider>
