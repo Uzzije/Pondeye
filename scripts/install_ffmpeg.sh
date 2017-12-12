@@ -119,3 +119,5 @@ cp $HOME/bin/ytasm /usr/bin/
 
 
 ffmpeg -version
+
+yum install ImageMagick
