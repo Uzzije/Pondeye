@@ -82,7 +82,7 @@ class PondFeed:
             return self.tasks.last_update
         elif self.type_of_feed is global_variables.PICTURE_SET:
             return self.tasks.after_picture.date_uploaded
-        elif self.type_of_feed is global_variables.PROGRESS:
+        elif self.type_of_feed is global_variables.PROGRESS or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
             return self.tasks.last_updated
         else:
             return self.tasks.last_update #it is a project feed
