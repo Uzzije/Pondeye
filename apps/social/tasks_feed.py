@@ -254,7 +254,7 @@ class VideoProgressFeed(PondFeed):
     def __init__(self, tasks, type_of_feed, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
         PondFeed.__init__(self, tasks, type_of_feed, url_domain=url_domain)
         self.local_timezone = local_timezone
-        self.progress = self.videos_highlight()
+        self.progress = self.progress_feed()
 
     def get_experience_with(self, progress):
         """
