@@ -35,7 +35,7 @@ class PondFeed:
         self.feed_user = self.get_user_tikedge().user
 
     def get_user_tikedge(self):
-        if self.type_of_feed is global_variables.PROGRESS or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+        if self.type_of_feed is global_variables.VIDEO_SET or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
             return self.tasks.project.user
         else:
             return self.tasks.user
@@ -82,7 +82,7 @@ class PondFeed:
             return self.tasks.last_update
         elif self.type_of_feed is global_variables.PICTURE_SET:
             return self.tasks.after_picture.date_uploaded
-        elif self.type_of_feed is global_variables.PROGRESS or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+        elif self.type_of_feed is global_variables.VIDEO_SET or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
             return self.tasks.last_updated
         else:
             return self.tasks.last_update #it is a project feed
@@ -275,7 +275,7 @@ class VideoProgressFeed(PondFeed):
         return list_of_tikedge_users
 
     def progress_feed(self):
-        if self.type_of_feed is global_variables.VIDEO_SET:
+        if self.type_of_feed == global_variables.VIDEO_SET:
             return self.videos_highlight()
         else:
             return self.recent_upload()
