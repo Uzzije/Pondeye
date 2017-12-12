@@ -35,7 +35,7 @@ class PondFeed:
         self.feed_user = self.get_user_tikedge().user
 
     def get_user_tikedge(self):
-        if self.type_of_feed is global_variables.PROGRESS:
+        if self.type_of_feed is global_variables.PROGRESS or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
             return self.tasks.project.user
         else:
             return self.tasks.user
