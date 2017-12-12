@@ -5,7 +5,7 @@ import os
 from easy_thumbnails.conf import Settings as thumbnail_settings
 import djcelery
 from tzlocal import get_localzone
-if os.environ.get('RDS_DB_NAME', False):
+if os.environ.get('PONDEYE_ENV', False):
     EMAIL_PASSWORD = os.environ['EMAIL_PASSWORD']
 else:
     from .secret_keys import EMAIL_PASSWORD
