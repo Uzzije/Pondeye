@@ -2,7 +2,7 @@ from django.views.generic import View
 from models import User, TikedgeUser, UserProject,Milestone, TagNames
 from tasks import begin_timeline_video
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
-    Pond, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, ProjectVideo
+    Pond, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from datetime import timedelta
