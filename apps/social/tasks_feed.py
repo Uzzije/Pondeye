@@ -4,7 +4,9 @@ Feed and Notification Classes for Social News Feed of Application
 """
 from models import ProfilePictures,\
     BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, VoucheProject, \
-    Follow, ProgressImpressedCount,SeenProgress, ProjectVideo
+    Follow, ProgressImpressedCount,SeenProgress, ProjectVideo, FollowChallenge, SeenChallenge, ChallengeVideo, \
+    CommentChallengeAcceptance, CommentRecentUploads, CommentRequestFeed, SeenVideoSet, SeenRecentUpload, \
+    ChallengeRating
 from friendship.models import FriendshipRequest
 from django.db.models import Q
 import global_variables
@@ -60,19 +62,17 @@ class PondFeed:
             return False
 
     def message(self):
-        if self.type_of_feed is global_variables.MILESTONE:
-            print self.task_owner_name, " slammer"
-            message = "Milestone: %s." % \
-                      self.tasks.blurb
+        if self.type_of_feed is global_variables.VIDEO_SET:
+            message = self.tasks.project.blurb
             return message
-        elif self.type_of_feed is global_variables.PICTURE_SET:
-            message = "For milestone: %s." % self.tasks.milestone.blurb
+        elif self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+            message = self.tasks.project.blurb
             return message
-        elif self.type_of_feed is global_variables.PROJECT:
-            message = "Goal: %s" % self.tasks.blurb
+        elif self.type_of_feed is global_variables.CHALLENGED_ACCEPTED:
+            message = self.tasks.project.blurb
             return message
-        elif self.type_of_feed is global_variables.PROGRESS:
-            message =  "Goal: %s. Progress Highlights "% self.tasks.project.name_of_project
+        elif self.type_of_feed is global_variables.CHALLENGED_BY_SOMEONE:
+            message =  self.tasks.project.blurb
             return message
         else:
             return None
@@ -84,6 +84,10 @@ class PondFeed:
             return self.tasks.after_picture.date_uploaded
         elif self.type_of_feed is global_variables.VIDEO_SET or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
             return self.tasks.last_updated
+        elif self.type_of_feed is global_variables.CHALLENGED_ACCEPTED:
+            return self.tasks.date_responded
+        elif self.type_of_feed is global_variables.CHALLENGED_BY_SOMEONE:
+            return self.tasks.created
         else:
             return self.tasks.last_update #it is a project feed
 
@@ -100,19 +104,34 @@ class PondFeed:
             return None
 
     def seens(self):
-        try:
-            if self.type_of_feed is global_variables.MILESTONE:
-                seensd = SeenMilestone.objects.get(tasks=self.tasks)
-            elif self.type_of_feed is global_variables.PICTURE_SET:
-                seensd = SeenPictureSet.objects.get(tasks=self.tasks)
-            elif self.type_of_feed is global_variables.PROJECT:
-                seensd = SeenProject.objects.get(tasks=self.tasks)
-            else:
-                return 0
-            count = seensd.users.count()
-        except ObjectDoesNotExist:
-            count = 0
-        return count
+        if self.type_of_feed is global_variables.VIDEO_SET:
+            seensd = SeenVideoSet.objects.filter(tasks=self.tasks)
+            return seensd.count()
+        elif self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+            seensd = SeenRecentUpload.objects.filter(tasks=self.tasks)
+            return seensd.count()
+        elif self.type_of_feed is global_variables.CHALLENGED_ACCEPTED or \
+                        self.type_of_feed is global_variables.CHALLENGED_BY_SOMEONE:
+            seensd = SeenChallenge.objects.filter(tasks=self.tasks)
+            return seensd.count()
+        return 0
+
+    def challenge_rating(self):
+        """
+        Users grade how hard this challenge is.
+        :return:
+        """
+        if self.type_of_feed is global_variables.VIDEO_SET:
+            ch_rating = ChallengeRating.objects.filter(challenge=self.tasks.challenge).values_list('number', flat=True)
+        elif self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+            ch_rating = ChallengeRating.objects.filter(challenge=self.tasks.challenge).values_list('number', flat=True)
+        elif self.type_of_feed is global_variables.CHALLENGED_ACCEPTED or \
+                        self.type_of_feed is global_variables.CHALLENGED_BY_SOMEONE:
+            ch_rating = ChallengeRating.objects.filter(challenge=self.tasks).values_list('number', flat=True)
+        else:
+            ch_rating = []
+        average = float(sum(ch_rating)) / max(len(ch_rating), 1)
+        return average
 
     def get_start_time(self):
         return self.tasks.start
@@ -144,13 +163,29 @@ class PondFeed:
         return count
 
     def follow(self):
-        count = 0
-        try:
-            follows = Follow.objects.get(tasks=self.tasks)
-            count = follows.users.count()
-        except (ValueError, ObjectDoesNotExist):
-            pass
-        return count
+        if self.type_of_feed is global_variables.VIDEO_SET:
+            follows = FollowChallenge.objects.filter(challenge=self.tasks.challenge)
+        else:
+            follows = FollowChallenge.objects.filter(challenge=self.tasks)
+        return follows.count()
+
+    def comments(self, timezone):
+        comments_list = []
+        if self.type_of_feed is global_variables.VIDEO_SET or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+            comments = CommentChallengeAcceptance.objects.filter(challenge=self.tasks.challenge).order_by('-created')
+        elif self.type_of_feed is global_variables.CHALLENGED_ACCEPTED:
+            comments = CommentRecentUploads.objects.filter(challenge=self.tasks).order_by('-created')
+        else:
+            comments = CommentRequestFeed.objects.filter(challenge=self.tasks).order_by('-created')
+        for comm in comments:
+            com_dic = {
+                'first_name':comm.tikedge_user.user.first_name,
+                'last_name':comm.tikedge_user.user.last_name,
+                'comment':comm.comment,
+                'date': utc_to_local(comm.created, local_timezone=timezone).strftime("%B %d %Y %I:%M %p")
+            }
+            comments_list.append(com_dic)
+        return comments_list
 
     def get_name(self):
         try:
@@ -180,6 +215,60 @@ class PondFeed:
         except ObjectDoesNotExist:
             return None
         return self.url_domain+video_url.url
+
+
+class ChallengeFeed(PondFeed):
+
+    def __init__(self, tasks, type_of_feed, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
+        PondFeed.__init__(self, tasks, type_of_feed, url_domain=url_domain)
+        self.local_timezone = local_timezone
+        self.progress = self.get_challenge_video_url(self.tasks)
+        self.has_video = False
+        self.challenger_fn = self.tasks.challenger.user.first_name
+        self.challenger_ln = self.tasks.challenger.user.last_name
+        self.challenged_fn = self.tasks.challenged.user.first_name
+        self.challenged_ln = self.tasks.challenged.user.last_name
+
+    def progress(self):
+        created_sec = int(self.created.strftime('%s'))
+        progress_dic = {
+            'ch_rating': self.challenge_rating(),
+            'challenge_burb':self.message,
+            'challenge':self.tasks.project.name_of_project,
+            'challenger_fn':self.challenger_fn,
+            'challenger_ln':self.challenger_ln,
+            'challenged_fn':self.challenged_fn,
+            'challenged_ln':self.challenged_ln,
+            'comments': self.comments(self.local_timezone),
+            'seen': self.seens(),
+            'follow': self.follow(),
+            'has_video': self.has_video,
+            'video_url': self.get_challenge_video_url(self.tasks),
+            'created_sec':created_sec
+        }
+        return progress_dic
+
+    def get_challenge_video_url(self, tasks):
+        try:
+            cv_cd = ChallengeVideo.objects.get(challenge=self.tasks)
+            self.has_video = True
+        except ObjectDoesNotExist:
+            cv_cd = ""
+        return cv_cd
+
+
+class RequestFeed(ChallengeFeed):
+
+    def __init__(self, tasks, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
+        PondFeed.__init__(self, tasks, global_variables.CHALLENGED_BY_SOMEONE, url_domain=url_domain)
+
+
+class AcceptanceFeed(ChallengeFeed):
+
+    def __init__(self, tasks, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
+        PondFeed.__init__(self, tasks, global_variables.CHALLENGED_ACCEPTED, url_domain=url_domain)
+        self.local_timezone = local_timezone
+
 
 # https://www.evernote.com/shard/s444/nl/2147483647/d9a542ad-437a-400d-aeb3-fbb7ed760dd9/
 class ProgressFeed(PondFeed):

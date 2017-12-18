@@ -45,16 +45,16 @@ class ProjectPicture(models.Model):
         return self.project.name_of_project
 
 
-class ProjectVideo(models.Model):
+class ChallengeVideo(models.Model):
     video_name = models.CharField(max_length=300)
     date_uploaded = models.DateTimeField(default=now)
     last_edited = models.DateTimeField(null=True, blank=True)
     video = models.FileField(upload_to='image/tasks/%Y/%m/%d', verbose_name="profile image")
     is_deleted = models.BooleanField(default=False)
-    project = models.ForeignKey(UserProject, blank=True, null=True)
+    challenge = models.ForeignKey('Challenge', blank=True, null=True)
 
     def __str__(self):
-        return self.project.name_of_project
+        return self.challenge.project.name_of_project
 
 
 class ProgressPicture(models.Model):
@@ -87,7 +87,7 @@ class ProgressVideo(models.Model):
     created = models.DateTimeField(default=now)
     blurb = models.CharField(max_length=150, default=None)
     experience_with = models.ManyToManyField(TikedgeUser, default=None)
-    project = models.ForeignKey(UserProject, blank=True, null=True)
+    challenge = models.ForeignKey('Challenge', blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if len(self.name_of_progress) > 150:
@@ -102,7 +102,7 @@ class ProgressVideo(models.Model):
 
 class ProgressVideoSet(models.Model):
     list_of_progress_videos = models.ManyToManyField(ProgressVideo)
-    project = models.ForeignKey(UserProject, blank=True, null=True)
+    challenge = models.ForeignKey('Challenge', blank=True, null=True)
     is_deleted = models.BooleanField(default=False)
     last_updated = models.DateTimeField(default=now)
     created = models.DateTimeField(default=now)
@@ -111,7 +111,7 @@ class ProgressVideoSet(models.Model):
                                           verbose_name="progress video", default=None)
 
     def __str__(self):
-        return '%s' % self.project.name_of_project
+        return '%s' % self.challenge.project.name_of_project
 
     def video_set_count(self):
         try:
@@ -119,6 +119,101 @@ class ProgressVideoSet(models.Model):
         except ValueError:
             count = 0
         return count
+
+    def save(self, *args, **kwargs):
+        vid_count = self.video_set_count()
+        if vid_count > 0:
+            self.challenge.project.made_progress = True
+        else:
+            self.challenge.project.made_progress = False
+        super(ProgressVideoSet, self).save(*args, **kwargs)
+
+
+class SeenVideoSet(models.Model):
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    video_set = models.ForeignKey('ProgressVideoSet', blank=True, null=True)
+
+    class Meta:
+        unique_together = ('tikedge_user', 'video_set')
+
+
+class SeenRecentUpload(models.Model):
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    video = models.ForeignKey('ProgressVideo', blank=True, null=True)
+
+    class Meta:
+        unique_together = ('tikedge_user', 'video')
+
+
+class SeenChallenge(models.Model):
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    challenge = models.ForeignKey('Challenge', blank=True, null=True)
+
+    class Meta:
+        unique_together = ('tikedge_user', 'challenge')
+
+
+class CommentChallengeAcceptance(models.Model):
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    comment = models.TextField(default="", max_length=500)
+    challenge = models.ForeignKey('Challenge', blank=True, null=True)
+    created = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return '%s' % self.challenge.project.name_of_project
+
+
+class CommentRequestFeed(models.Model):
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    comment = models.TextField(default="", max_length=500)
+    challenge = models.ForeignKey('Challenge', blank=True, null=True)
+    created = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return '%s' % self.challenge.project.name_of_project
+
+
+class CommentRecentUploads(models.Model):
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    comment = models.TextField(default="", max_length=500)
+    challenge = models.ForeignKey('Challenge', blank=True, null=True)
+    created = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return '%s' % self.challenge.project.name_of_project
+
+
+class CommentVideoCelebrations(models.Model):
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    comment = models.TextField(default="", max_length=500)
+    challenge = models.ForeignKey('Challenge', blank=True, null=True)
+    created = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return '%s' % self.challenge.project.name_of_project
+
+
+class Challenge(models.Model):
+    project = models.ForeignKey(UserProject, blank=True, null=True)
+    challenger = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    challenged = models.ForeignKey(TikedgeUser, blank=True, null=True,
+                                   related_name='the_challenged')
+    challenge_responded = models.BooleanField(default=False)
+    date_responded = models.DateTimeField(default=now)
+    challenge_accepted = models.BooleanField(default=False)
+    challenge_rejected = models.BooleanField(default=False)
+    is_deleted = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=True)
+    created = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return '%s' % self.challenge.project.name_of_project
+
+    def save(self, *args, **kwargs):
+        self.project.is_live = self.is_public
+        self.project.is_deleted = self.is_deleted
+        self.project.save()
+        super(Challenge, self).save(*args, **kwargs)
 
 
 class ProgressPictureSet(models.Model):
@@ -149,7 +244,6 @@ class ShoutOutEmailAndNumber(models.Model):
     progress_picture = models.ForeignKey(ProgressPicture, blank=True, null=True)
     progress_video = models.ForeignKey(ProgressVideo, blank=True, null=True)
     is_video_shout_outs = models.BooleanField(default=False)
-    is_picture_shout_outs = models.BooleanField(default=True)
     email_or_text_sent = models.BooleanField(default=False)
     sent_date = models.DateTimeField(blank=True, null=True)
     user_responded = models.BooleanField(default=False)
@@ -224,6 +318,13 @@ class SeenProgress(models.Model):
         super(SeenProgress, self).save(*args, **kwargs)
 
 
+class ChallengeRating(models.Model):
+    number = models.IntegerField(default=0)
+    tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
+    created = models.DateTimeField(default=now)
+    challenge = models.ForeignKey('Challenge', blank=True, null=True)
+
+
 class VoucheMilestone(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="User That Vouche For the milestone")
     tasks = models.ForeignKey(Milestone, blank=True, null=True)
@@ -282,6 +383,27 @@ class Follow(models.Model):
             return self.users.count()
         except ValueError:
             return 0
+
+
+class FollowChallenge(models.Model):
+    users = models.ForeignKey(TikedgeUser, verbose_name="users that follow/interested in a project")
+    challenge = models.ForeignKey(Challenge, blank=True, null=True)
+    date_followed = models.DateTimeField(default=now)
+
+    def save(self, *args, **kwargs):
+        self.latest_follow = now()
+        if self.is_video_tasks:
+            self.is_picture_tasks = False
+        super(FollowChallenge, self).save(*args, **kwargs)
+
+    def get_count(self):
+        try:
+            return self.users.count()
+        except ValueError:
+            return 0
+
+    class Meta:
+        unique_together = ('users', 'challenge')
 
 
 class ProgressImpressedCount(models.Model):

@@ -1,10 +1,10 @@
 from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
-from .models import ProfilePictures, ProgressVideoSet, ProgressVideo, \
+from .models import ProfilePictures, ProgressVideoSet, ProgressVideo, Challenge, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, PondSpecificProject, \
      PondRequest, Pond, PondMembership, ProgressImpressedCount, PondProgressFeed, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
 from django.db.models import Q
-from tasks_feed import NotificationFeed
+from tasks_feed import NotificationFeed, AcceptanceFeed, RequestFeed
 from django.core.exceptions import ObjectDoesNotExist
 import global_variables
 import StringIO
@@ -243,6 +243,58 @@ def get_users_feed(user):
     return sorted_list
 
 
+def get_users_feed_json(user, local_timezone='UTC', start_range=0, end_range=12):
+    challenges = Challenge.objects.filter(Q(is_deleted=False),
+                                          Q(is_public=True)).order_by('-created')[start_range:4*end_range]
+    challenge_request = challenges.filter(Q(project__is_completed=False), Q(project__made_progress=False))[start_range:end_range]
+    challenge_videos = challenges.filter(Q(project__made_progress=True))[start_range:end_range]
+    video_feed_list = get_video_feed(challenge_videos, local_timezone=local_timezone)
+    challenge_request_list = get_request_challenges(challenge_request, local_timezone=local_timezone)
+    video_feed_list.extend(challenge_request_list)
+    sorted_list = sorted(video_feed_list, key=lambda x: x['created_sec'], reverse=True)
+    return sorted_list
+
+
+def get_video_feed(challenges, local_timezone='UTC'):
+    """
+    Each challenge can be either a link to a celebration, a recent upload, a new challenge request, or an accepted
+    challenge request.
+    Terms to determine types of each request.
+    Two categories are request and videos set feed
+
+    :param challenges:
+    :param local_timezone:
+    :return:
+    """
+    feed_list = []
+    for challenge in challenges:
+        video_set = ProgressVideoSet.objects.get(challenge=challenge)
+        type_of_feed = global_variables.VIDEO_SET
+        if not challenge.project.is_completed:
+            video_set = video_set.list_of_progress_videos.order_by('-created').first()
+            type_of_feed = global_variables.RECENT_VIDEO_UPLOAD
+        feed = VideoProgressFeed(video_set, type_of_feed=type_of_feed, url_domain=CURRENT_URL,
+                                 local_timezone=local_timezone)
+        feed_list.append(feed)
+    return feed_list
+
+
+def get_request_challenges(challenges, local_timezone='UTC'):
+    """
+    :param challenges:
+    :param local_timezone:
+    :return:
+    """
+    feed_list = []
+    for challenge in challenges:
+        if challenge.challenge_responded:
+            challenge_feed = AcceptanceFeed(challenge, local_timezone=local_timezone)
+        else:
+            challenge_feed = RequestFeed(challenge, local_timezone=local_timezone)
+        feed_list.append(challenge_feed.progress)
+    return feed_list
+
+'''
 def get_users_feed_json(user, local_timezone='UTC'):
     list_of_feed = []
     list_of_feed_json = []
@@ -292,7 +344,7 @@ def get_users_feed_json(user, local_timezone='UTC'):
             list_of_feed_json.append(feed.progress)
     sorted_list = sorted(list_of_feed_json, key=lambda x: x['created_sec'], reverse=True)
     return sorted_list
-
+'''
 
 def get_progress_set(progress_set, timezone):
     list_progress_entry = []
