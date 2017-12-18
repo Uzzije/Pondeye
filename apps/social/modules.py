@@ -245,10 +245,10 @@ def get_users_feed(user):
 
 def get_users_feed_json(user, local_timezone='UTC', start_range=0, end_range=12):
     challenges = Challenge.objects.filter(Q(is_deleted=False),
-                                          Q(is_public=True)).order_by('-created')[start_range:4*end_range]
+                                          Q(is_public=True)).order_by('-created')
     challenge_request = challenges.filter(Q(project__is_completed=False), Q(project__made_progress=False))
-    challenge_videos = challenges.filter(Q(project__made_progress=True))
-    video_feed_list = get_video_feed(challenge_videos, local_timezone=local_timezone)
+    challenge_videos = challenges.filter(Q(project__made_progress=True))[start_range:end_range]
+    video_feed_list = get_video_feed(challenge_videos, local_timezone=local_timezone)[start_range:end_range]
     challenge_request_list = get_request_challenges(challenge_request, local_timezone=local_timezone)
     video_feed_list.extend(challenge_request_list)
     sorted_list = sorted(video_feed_list, key=lambda x: x['created_sec'], reverse=True)
