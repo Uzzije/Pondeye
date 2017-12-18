@@ -209,13 +209,6 @@ class PondFeed:
         except (AttributeError, ValueError, ObjectDoesNotExist):
             return None
 
-    def project_video_url(self):
-        try:
-            video_url = ProjectVideo.objects.get(project=self.tasks)
-        except ObjectDoesNotExist:
-            return None
-        return self.url_domain+video_url.url
-
 
 class ChallengeFeed(PondFeed):
 
@@ -250,7 +243,8 @@ class ChallengeFeed(PondFeed):
             'is_challenge_req': False,
             'is_recent_progress': False,
             'is_video_highlight': False,
-            'name': self.task_owner_name
+            'name': self.task_owner_name,
+            'profile_url':self.profile_url,
         }
         return progress_dic
 
