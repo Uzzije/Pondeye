@@ -3,8 +3,8 @@
 Feed and Notification Classes for Social News Feed of Application
 """
 from models import ProfilePictures,\
-    BuildCredMilestone, SeenMilestone, SeenPictureSet, SeenProject, VoucheProject, \
-    Follow, ProgressImpressedCount,SeenProgress, ProjectVideo, FollowChallenge, SeenChallenge, ChallengeVideo, \
+    BuildCredMilestone, VoucheProject, \
+    FollowChallenge, SeenChallenge, ChallengeVideo, \
     CommentChallengeAcceptance, CommentRecentUploads, CommentRequestFeed, SeenVideoSet, SeenRecentUpload, \
     ChallengeRating
 from friendship.models import FriendshipRequest
@@ -240,6 +240,7 @@ class ChallengeFeed(PondFeed):
             'challenged_fn':self.challenged_fn,
             'challenged_ln':self.challenged_ln,
             'comments': self.comments(self.local_timezone),
+            'comments_count': len(self.comments(self.local_timezone)),
             'seen': self.seens(),
             'follow': self.follow(),
             'has_video': self.has_video,
@@ -249,6 +250,7 @@ class ChallengeFeed(PondFeed):
             'is_challenge_req': False,
             'is_recent_progress': False,
             'is_video_highlight': False,
+            'name': self.task_owner_name
         }
         return progress_dic
 

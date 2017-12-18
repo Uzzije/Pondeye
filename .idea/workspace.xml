@@ -84,11 +84,9 @@
       <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.34136546">
-              <caret line="239" column="18" selection-start-line="239" selection-start-column="18" selection-end-line="239" selection-end-column="18" />
-              <folding>
-                <element signature="e#92#454#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-1.4658635">
+              <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1240,11 +1238,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34136546">
-          <caret line="239" column="18" selection-start-line="239" selection-start-column="18" selection-end-line="239" selection-end-column="18" />
-          <folding>
-            <element signature="e#92#454#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-1.4658635">
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
