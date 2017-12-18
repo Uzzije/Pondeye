@@ -40,7 +40,7 @@ class PondFeed:
         if self.type_of_feed is global_variables.VIDEO_SET or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
             return self.tasks.project.user
         else:
-            return self.tasks.user
+            return self.tasks.project.user
 
     def is_progress_feed(self):
         if self.type_of_feed is global_variables.PROGRESS:
@@ -224,10 +224,10 @@ class ChallengeFeed(PondFeed):
         self.local_timezone = local_timezone
         self.progress = self.get_challenge_video_url(self.tasks)
         self.has_video = False
-        self.challenger_fn = self.tasks.challenger.user.first_name
-        self.challenger_ln = self.tasks.challenger.user.last_name
-        self.challenged_fn = self.tasks.challenged.user.first_name
-        self.challenged_ln = self.tasks.challenged.user.last_name
+        self.challenger_fn = self.get_user_tikedge().user.first_name
+        self.challenger_ln = self.get_user_tikedge().user.last_name
+        self.challenged_fn = self.get_user_tikedge().user.first_name
+        self.challenged_ln = self.get_user_tikedge().user.last_name
 
     def progress(self):
         created_sec = int(self.created.strftime('%s'))
@@ -244,7 +244,11 @@ class ChallengeFeed(PondFeed):
             'follow': self.follow(),
             'has_video': self.has_video,
             'video_url': self.get_challenge_video_url(self.tasks),
-            'created_sec':created_sec
+            'created_sec':created_sec,
+            'is_challenge_accept': False,
+            'is_challenge_req': False,
+            'is_recent_progress': False,
+            'is_video_highlight': False,
         }
         return progress_dic
 
@@ -262,6 +266,11 @@ class RequestFeed(ChallengeFeed):
     def __init__(self, tasks, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
         PondFeed.__init__(self, tasks, global_variables.CHALLENGED_BY_SOMEONE, url_domain=url_domain)
 
+    def progress(self):
+        progress_dic = super(RequestFeed, self).progress()
+        progress_dic['is_challenge_req'] = True
+        return progress_dic
+
 
 class AcceptanceFeed(ChallengeFeed):
 
@@ -269,73 +278,12 @@ class AcceptanceFeed(ChallengeFeed):
         PondFeed.__init__(self, tasks, global_variables.CHALLENGED_ACCEPTED, url_domain=url_domain)
         self.local_timezone = local_timezone
 
-
-# https://www.evernote.com/shard/s444/nl/2147483647/d9a542ad-437a-400d-aeb3-fbb7ed760dd9/
-class ProgressFeed(PondFeed):
-
-    def __init__(self, tasks, type_of_feed, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
-        PondFeed.__init__(self, tasks, type_of_feed, url_domain=url_domain)
-        self.local_timezone = local_timezone
-        self.progress = self.list_of_progress()
-
-    def get_experience_with(self, progress):
-        list_of_tikedge_users = []
-        for each_user in progress.experience_with.all():
-            list_of_tikedge_users.append({
-                'first_name': each_user.user.first_name,
-                'last_name': each_user.user.last_name,
-                'id': each_user.user.id,
-                'user_name':each_user.user.username
-            })
-        if not list_of_tikedge_users:
-            return False
-        return list_of_tikedge_users
-
-    def list_of_progress(self):
-        if self.tasks.is_empty:
-            return None
-        progress_list = []
-        progress_dic = {}
-        created_sec = int(self.created.strftime('%s'))
-        for progress in self.tasks.list_of_progress_pictures.filter(is_deleted=False):
-            progress_list.append({
-               'name': self.task_owner_name,
-               'progress_message': progress.name_of_progress,
-               'seen_count': self.progress_seen_count(progress),
-               'impress_count': self.impress_count(progress),
-               'created':utc_to_local(progress.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
-               'id': progress.id,
-               'image_url':self.get_image_url(progress),
-               'experience_with':self.get_experience_with(progress)
-            })
-        if progress_list:
-            progress_dic = {
-                'created_sec':created_sec,
-                'list_of_progress':progress_list,
-                'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
-                'message':self.message,
-                'is_picture_feed': False,
-                'is_milestone_feed': False,
-                'is_project_feed': False,
-                'is_progress_feed': True,
-                'profile_url':self.profile_url,
-                'id': self.tasks.project.id,
-                'user_id':self.tasks.project.user.user.id,
-                'progress_set_id': self.tasks.id,
-                'name': self.task_owner_name,
-            }
+    def progress(self):
+        progress_dic = super(AcceptanceFeed, self).progress()
+        progress_dic['is_challenge_accept'] = True
         return progress_dic
 
-    def get_image_url(self, progress):
-        return self.url_domain+progress.picture.url
-
-    def impress_count(self, progress):
-        impress_count = ProgressImpressedCount.objects.get(tasks=progress).get_count()
-        return impress_count
-
-    def progress_seen_count(self, progress):
-        seen_count = SeenProgress.objects.get(tasks=progress).get_count()
-        return seen_count
+# https://www.evernote.com/shard/s444/nl/2147483647/d9a542ad-437a-400d-aeb3-fbb7ed760dd9/
 
 
 class VideoProgressFeed(PondFeed):
@@ -375,15 +323,18 @@ class VideoProgressFeed(PondFeed):
             'created_sec':created_sec,
             'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
             'message':self.message,
-            'is_picture_feed': False,
-            'is_milestone_feed': False,
+            'is_challenge_accept': False,
+            'is_challenge_req': False,
             'is_recent_progress': True,
-            'is_progress_set_feed': False,
+            'is_video_highlight': False,
             'profile_url':self.profile_url,
             'id': self.tasks.project.id,
             'user_id':self.tasks.project.user.user.id,
             'name': self.task_owner_name,
-            'video_url':self.get_video_url(self.tasks)
+            'video_url':self.get_video_url(self.tasks),
+            'comments': self.comments(self.local_timezone),
+            'seen': self.seens(),
+            'follow': self.follow(),
         }
         return progress_dic
 
@@ -402,16 +353,19 @@ class VideoProgressFeed(PondFeed):
                 'created_sec':created_sec,
                 'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
                 'message':self.message,
-                'is_picture_feed': False,
-                'is_milestone_feed': False,
-                'is_project_feed': False,
-                'is_progress_set_feed': True,
+                'is_challenge_accept': False,
+                'is_challenge_req': False,
+                'is_recent_progress': False,
+                'is_video_highlight': True,
                 'profile_url':self.profile_url,
                 'id': self.tasks.project.id,
                 'user_id':self.tasks.project.user.user.id,
                 'progress_set_id': self.tasks.id,
                 'name': self.task_owner_name,
-                'video_url':self.get_video_set_url(self.tasks)
+                'video_url':self.get_video_set_url(self.tasks),
+                'comments': self.comments(self.local_timezone),
+                'seen': self.seens(),
+                'follow': self.follow(),
             }
         return progress_dic
 
