@@ -746,6 +746,19 @@ def get_recent_challenge(user, requesting_user, is_live=True):
     return get_recent_challenge_json(all_challenge)
 
 
+def days_left(each_proj):
+    diff = datetime.now() - each_proj.project.made_live
+    diff_days = diff.days
+    type_of = "Days"
+    if diff_days <= 1:
+        type_of = "Hours"
+        diff_days = diff_days.seconds/3600
+        if diff_days <= 1:
+            type_of = "Minutes"
+            diff_days = diff_days.seconds/60
+    return {'is_days':type_of, 'diff':diff}
+
+
 def get_recent_challenge_json(challenge):
     project_list = []
     for each_proj in challenge:
@@ -757,7 +770,7 @@ def get_recent_challenge_json(challenge):
             'id':each_proj.id,
             'is_live':each_proj.project.blurb,
             'message':mess,
-
+            'days_remaining':days_left(each_proj)
         })
     return project_list
 

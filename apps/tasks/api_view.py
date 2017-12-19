@@ -677,7 +677,9 @@ class ApiProfileView(CSRFExemptView):
         try:
             other_user = User.objects.get(id=int(other_user_id))
         except ValueError:
-            other_user = user
+            response["status"] = False
+            response["error"] = "Sorry, ponder no longer exist!"
+            return HttpResponse(json.dumps(response), status=201)
         tikedge_user = TikedgeUser.objects.get(user=other_user)
         requesting_user = TikedgeUser.objects.get(user=user)
 
