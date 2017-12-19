@@ -700,7 +700,7 @@ class ApiProfileView(CSRFExemptView):
         profile_info = {
             'first_name':tikedge_user.user.first_name,
             'last_name':tikedge_user.user.last_name,
-            'user_id':tikedge_user.id,
+            'user_id':other_user.id,
             'current_projs':current_challenges,
             'profile_url': profile_url,
             'profile_url_storage': prof_storage,
