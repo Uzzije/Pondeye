@@ -82,7 +82,7 @@ urlpatterns = [
     url(r'^api/pond-edit/', ApiEditPondView.as_view(), name="api_delete_pond"),
     url(r'^api/notification-status', ApiGetNotification.as_view(), name="api_notification_view"),
     url(r'^api/new-impression', ApiCreateImpressed.as_view(), name="api_new_impression"),
-    url(r'api/api/add-user-to-friends',  ApiFriendRequestView.as_view(), name='api_friend_request'),
+    url(r'api/add-user-to-friends',  ApiFriendRequestView.as_view(), name='api_friend_request'),
     url(r'api/accept-friend-request',  ApiFriendAcceptRequestView.as_view(), name='api_friend_accept_request'),
     url(r'api/deny-friend-request',  ApiFriendRejectRequestView.as_view(), name='api_friend_accept_request')
 
