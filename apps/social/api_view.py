@@ -1125,9 +1125,12 @@ class ApiFriendRequestView(CSRFExemptView):
                 to_user=to_user,
                 message='Hi, I would like to be your friend',
             )
+            response['status'] = True
         except ObjectDoesNotExist, exceptions.AlreadyExistsError:
+            response['status'] = True
+            response["error"] = "Request Already Sent!"
             pass
-        response['status'] = True
+
         return HttpResponse(json.dumps(response))
 
 
