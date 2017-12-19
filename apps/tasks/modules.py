@@ -17,8 +17,7 @@ from ..social.models import Notification, ProgressPictureSet, ProfilePictures, \
 from ..social import global_variables
 import random, string
 from django.utils import timezone as django_timezone
-from friendship.models import Friend
-from friendship import exceptions
+
 
 CURRENT_URL = global_variables.CURRENT_URL
 
