@@ -688,7 +688,7 @@ class ApiProfileView(CSRFExemptView):
         current_challenges = modules.get_recent_challenge(tikedge_user.user, requesting_user)
         all_challenges = modules.get_recent_challenge(tikedge_user.user, requesting_user, is_live=False)
         challenge_count = len(all_challenges)
-        challenges_completed = Challenge.objects.filter(project__completed=True, is_deleted=False).count()
+        challenges_completed = Challenge.objects.filter(project__is_completed=True, is_deleted=False).count()
         friend_count = Friend.objects.friends(user).count()
         profile_url = get_profile_pic_json(tikedge_user)
         try:
