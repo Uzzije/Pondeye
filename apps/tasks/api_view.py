@@ -1,4 +1,6 @@
 from django.views.generic import View
+from friendship.models import Friend
+
 from models import User, TikedgeUser, UserProject,Milestone, TagNames
 from tasks import begin_timeline_video
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
@@ -685,6 +687,9 @@ class ApiProfileView(CSRFExemptView):
 
         current_challenges = modules.get_recent_challenge(tikedge_user.user, requesting_user)
         all_challenges = modules.get_recent_challenge(tikedge_user.user, requesting_user, is_live=False)
+        challenge_count = len(all_challenges)
+        challenges_completed = Challenge.objects.filter(project__completed=True, is_deleted=False).count()
+        friend_count = Friend.objects.friends(user).count()
         profile_url = get_profile_pic_json(tikedge_user)
         try:
             prof_storage = ProfilePictures.objects.get(tikedge_user=tikedge_user).profile_pics.url
@@ -704,6 +709,9 @@ class ApiProfileView(CSRFExemptView):
             'user_name':tikedge_user.user.username,
             'all_projects':all_challenges,
             'user_stats': modules.user_stats(other_user),
+            'challenges_count':challenge_count,
+            'challenges_completed': challenges_completed,
+            'friend_count':friend_count
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)
