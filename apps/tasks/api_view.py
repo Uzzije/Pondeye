@@ -689,7 +689,7 @@ class ApiProfileView(CSRFExemptView):
         all_challenges = modules.get_recent_challenge(tikedge_user.user, requesting_user, is_live=False)
         challenge_count = len(all_challenges)
         challenges_completed = Challenge.objects.filter(project__is_completed=True, is_deleted=False).count()
-        friend_count = len(Friend.objects.friends(user))
+        friend_count = len(Friend.objects.friends(other_user))
         profile_url = get_profile_pic_json(tikedge_user)
         try:
             prof_storage = ProfilePictures.objects.get(tikedge_user=tikedge_user).profile_pics.url
@@ -711,7 +711,8 @@ class ApiProfileView(CSRFExemptView):
             'user_stats': modules.user_stats(other_user),
             'challenges_count':challenge_count,
             'challenges_completed': challenges_completed,
-            'friend_count':friend_count
+            'friend_count':friend_count,
+            'is_friend':Friend.objects.are_friends(user, other_user)
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)
