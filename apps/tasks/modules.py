@@ -13,11 +13,12 @@ from django.contrib import messages
 import global_variables_tasks
 from ..social.models import Notification, ProgressPictureSet, ProfilePictures, \
     PondSpecificProject, Pond, ProjectPicture, VoucheProject, LetDownProject, ProgressImpressedCount, Follow, \
-    SeenProject, WorkEthicRank
+    SeenProject, WorkEthicRank, Challenge
 from ..social import global_variables
 import random, string
 from django.utils import timezone as django_timezone
-from random import randint
+from friendship.models import Friend
+from friendship import exceptions
 
 CURRENT_URL = global_variables.CURRENT_URL
 
@@ -250,6 +251,22 @@ def convert_html_to_datetime(date_time, timezone='UTC'):
         return False
 
 
+def convert_html_day_to_datetime(day, timezone='UTC'):
+
+    if day:
+        new_date_time = datetime.now() + timedelta(days=int(day))
+        print new_date_time
+        fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+        new_date_time.strftime('%Y-%m-%d %H:%M')
+        pytz.timezone(timezone).localize(new_date_time)
+        print "end_by_naive ", django_timezone.is_aware(new_date_time)
+        made_aware = django_timezone.make_aware(new_date_time, timezone=pytz.timezone(timezone))
+        print "made aware ", made_aware.strftime(fmt), django_timezone.is_aware(made_aware)
+        return made_aware
+    else:
+        return False
+
+
 def time_has_past(time_infos, timezone=""):
         if time_infos:
             if django_timezone.localtime(time_infos) < get_current_datetime():
@@ -272,7 +289,6 @@ def time_to_utc(time_to_convert):
     return new_time_utc
 
 
-
 def utc_to_local(input_time, local_timezone=""):
     """
     All timezone should be converted to to utc timezone
@@ -289,6 +305,7 @@ def utc_to_local(input_time, local_timezone=""):
             local = pytz.timezone(local_timezone).normalize(new_time.astimezone(pytz.timezone(local_timezone)))
             return local
     return input_time
+
 
 def get_task_picture_urls(task):
     pic_urls = []
@@ -722,6 +739,28 @@ def get_recent_projects(user, requesting_user, is_live=True):
     for private_proj in pond_specific_project:
         list_project.append(private_proj.project)
     return list_project
+
+
+def get_recent_challenge(user, requesting_user, is_live=True):
+    tikedge_user = get_tikedge_user(user)
+    all_challenge = Challenge.objects.filter(Q(project__is_deleted=False), Q(project__is_live=is_live), Q(challenged=tikedge_user)).order_by('-created')
+    return get_recent_challenge_json(all_challenge)
+
+
+def get_recent_challenge_json(challenge):
+    project_list = []
+    for each_proj in challenge:
+        mess = "Created"
+        if each_proj.project.created < each_proj.project.last_update:
+            mess = "Updated"
+        project_list.append({
+            'blurb':each_proj.project.blurb,
+            'id':each_proj.id,
+            'is_live':each_proj.project.blurb,
+            'message':mess,
+
+        })
+    return project_list
 
 
 def display_error(form, request):

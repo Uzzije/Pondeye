@@ -2,20 +2,21 @@ from django.views.generic import View
 from models import User, TikedgeUser, UserProject,Milestone, TagNames
 from tasks import begin_timeline_video
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
-    Pond, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet
+    Pond, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, Challenge, ChallengeVideo
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from datetime import timedelta
 from ..social.modules import get_journal_message, \
     resize_image, available_ponds_json, create_failed_notification, \
     create_failed_notification_proj_by_deletion, get_picture_from_base64, mark_progress_as_deleted, \
-    new_goal_or_progress_added_notification_to_pond, upload_video_file
+    new_goal_or_progress_added_notification_to_pond, upload_video_file, get_challengable_users, \
+    convert_to_mp4_file_for_file_object, get_video_from_base64
 from modules import \
     time_has_past, convert_html_to_datetime,\
     get_todays_milestones_json, \
     confirm_expired_project, \
      get_recent_projects_json, api_get_user_projects, get_profile_pic_json, \
-    get_recent_projects
+    get_recent_projects, convert_html_day_to_datetime
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.decorators import method_decorator
@@ -77,7 +78,6 @@ class ApiRegistrationView(CSRFExemptView):
          last_name = request.POST.get('last_name')
          response_data = {}
          response_data['success'] = "Name is not valid!"
-         print "username %s password %s email %s first_name %s last_name %s" % (user_name, password, email, first_name, last_name)
          try:
              User.objects.get(username=user_name)
              response_data['success'] = "User name already exist"
@@ -116,6 +116,8 @@ class ApiGetPostInfo(CSRFExemptView):
             response["pond"]["status"] = True
             response["pond"]["ponds"] = pond_list
         user_project = api_get_user_projects(user)
+        challengable_users = get_challengable_users(user)
+        response['challengable_users'] = challengable_users
         response["user_project"] = {'status':False}
         if user_project:
             response["user_project"]["status"] = True
@@ -200,7 +202,7 @@ class ApiNewMilestone(CSRFExemptView):
             response["error"] = "Hey, can't fit this milestone into the project scope!"
             return HttpResponse(json.dumps(response), status=201)
 
-
+'''
 class ApiNewProject(CSRFExemptView):
 
     def post(self, request, *args, **kwargs):
@@ -311,6 +313,91 @@ class ApiNewProject(CSRFExemptView):
             dec_video_name = upload_video_file(project_vid, video_mod)
             video_mod.video_name = dec_video_name
             video_mod.save()
+        return HttpResponse(json.dumps(response), status=201)
+'''
+
+
+class ApiNewChallenge(CSRFExemptView):
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log Back In! Try Again!"
+            return HttpResponse(json.dumps(response), status=201)
+        name_of_project = request.POST.get('name_of_project')
+        valid_project_name_entry = modules.check_milestone_word_is_valid(name_of_project)
+        tags_obj = request.POST.get('tags')
+        tags = tags_obj.split(",")
+        
+        if not valid_project_name_entry:
+            response["status"] = False
+            response["error"] = "Words must be between 0 and 600!"
+            return HttpResponse(json.dumps(response), status=201)
+        conver_date = request.POST.get('days')
+        print "date_ for api new proj ", conver_date
+        timezone = request.POST.get("timezone")
+        if conver_date:
+            end_by = convert_html_day_to_datetime(conver_date, timezone=timezone)
+        else:
+            response["status"] = False
+            response["error"] = "It seems like you didn't input a date!"
+            return HttpResponse(json.dumps(response), status=201)
+        timezone = request.POST.get('timezone')
+        if time_has_past(end_by, timezone=timezone):
+            response["status"] = False
+            response["error"] = "It seems like your date input is in the past!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        challenged_user = TikedgeUser.objects.get(id=int(request.POST.get('challenged_user')))
+        new_project = UserProject(name_of_project=name_of_project, is_live=True,
+                                  made_live=datetime.now(), user=tikedge_user, length_of_project=end_by)
+        new_project.save()
+        new_challenge = Challenge(project=new_project, challenged=challenged_user,
+                                       challenger=tikedge_user)
+        new_challenge.save()
+        has_video = request.POST.get('cha_vid')
+        vid_file = get_video_from_base64(has_video)
+        if vid_file:
+            vid_name = "%s_%s" % (new_project.name_of_project, vid_file.name)
+            new_challenge_video = ChallengeVideo(video_name=vid_name, video=vid_file, challenge=new_challenge)
+            new_challenge_video.save()
+            convert_to_mp4_file_for_file_object(new_challenge_video)
+        try:
+            if len(tags_obj) > 0:
+                for item in tags:
+                    try:
+                        item_obj = TagNames.objects.get(name_of_tag=item)
+                    except ObjectDoesNotExist:
+                        item_obj = TagNames(name_of_tag=item)
+                        item_obj.save()
+                    new_project.tags.add(item_obj)
+                new_project.save()
+        except ValueError:
+            pass
+        day_entry = tikedge_user.journalpost_set.all().count()
+        new_journal_entry = JournalPost(
+                                        entry_blurb=get_journal_message(PROJECT, project=new_project.blurb),
+                                        day_entry=day_entry + 1,
+                                        event_type=PROJECT,
+                                        is_project_entry=True,
+                                        new_project_entry=new_project,
+                                        user=tikedge_user
+                                        )
+        new_journal_entry.save()
+        new_vid_progress_set = ProgressVideoSet(project=new_project)
+        new_vid_progress_set.save()
+        new_vouch = VoucheProject(tasks=new_project)
+        new_vouch.save()
+        new_follow = Follow(tasks=new_project)
+        new_follow.save()
+        new_seen = SeenProject(tasks=new_project)
+        new_seen.save()
+        new_goal_or_progress_added_notification_to_pond(new_project, is_new_project=True)
+        response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
 
@@ -593,11 +680,9 @@ class ApiProfileView(CSRFExemptView):
             other_user = user
         tikedge_user = TikedgeUser.objects.get(user=other_user)
         requesting_user = TikedgeUser.objects.get(user=user)
-        current_proj_dj = get_recent_projects(tikedge_user.user, requesting_user)
-        current_projs = get_recent_projects_json(current_proj_dj)
-        all_projects_dj = get_recent_projects(tikedge_user.user, requesting_user, is_live=False)
-        all_projs = get_recent_projects_json(all_projects_dj)
-        current_tasks = get_todays_milestones_json(tikedge_user.user, current_proj_dj)
+
+        current_challenges = modules.get_recent_challenge(tikedge_user.user, requesting_user)
+        all_challenges = modules.get_recent_challenge(tikedge_user.user, requesting_user, is_live=False)
         profile_url = get_profile_pic_json(tikedge_user)
         try:
             prof_storage = ProfilePictures.objects.get(tikedge_user=tikedge_user).profile_pics.url
@@ -609,14 +694,13 @@ class ApiProfileView(CSRFExemptView):
             'first_name':tikedge_user.user.first_name,
             'last_name':tikedge_user.user.last_name,
             'user_id':tikedge_user.id,
-            'current_tasks':current_tasks,
-            'current_projs':current_projs,
+            'current_projs':current_challenges,
             'profile_url': profile_url,
             'profile_url_storage': prof_storage,
             'aval_pond':aval_pond,
             'is_own_profile': user == other_user,
             'user_name':tikedge_user.user.username,
-            'all_projects':all_projs,
+            'all_projects':all_challenges,
             'user_stats': modules.user_stats(other_user),
         }
         response['user_details'] = profile_info

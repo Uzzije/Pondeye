@@ -20,6 +20,7 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 import subprocess
 import os
+from friendship.models import Friend
 
 
 CURRENT_URL = global_variables.CURRENT_URL
@@ -67,6 +68,18 @@ def friend_request_to_json(friend_request, user):
         rq_dic["pk"] = each_request.pk
         friend_request_list.append(rq_dic)
     return friend_request_list
+
+
+def get_challengable_users(user):
+    all_friends = Friend.objects.friends(user)
+    all_friends_list = []
+    for each_friend in all_friends:
+        all_friends_dic = {
+            'name': '%s %s' % (each_friend.first_name, each_friend.last_name),
+            'id': each_friend.id,
+        }
+        all_friends_list.append(all_friends_dic)
+    return all_friends_list
 
 
 def get_consistency_notification(user_obj):
@@ -345,6 +358,7 @@ def get_users_feed_json(user, local_timezone='UTC'):
     sorted_list = sorted(list_of_feed_json, key=lambda x: x['created_sec'], reverse=True)
     return sorted_list
 '''
+
 
 def get_progress_set(progress_set, timezone):
     list_progress_entry = []

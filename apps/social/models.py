@@ -199,7 +199,7 @@ class Challenge(models.Model):
     challenged = models.ForeignKey(TikedgeUser, blank=True, null=True,
                                    related_name='the_challenged')
     challenge_responded = models.BooleanField(default=False)
-    date_responded = models.DateTimeField(default=now)
+    date_responded = models.DateTimeField(null=True, blank=True)
     challenge_accepted = models.BooleanField(default=False)
     challenge_rejected = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)

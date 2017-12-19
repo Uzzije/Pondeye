@@ -18,7 +18,8 @@ from django.db.models import Q
 from search_module import find_everything, search_result_jsonified
 from image_modules import pondeye_image_filter
 from django.utils import timezone
-
+from friendship.models import Friend, FriendshipRequest
+from friendship import exceptions
 
 
 class CSRFExemptView(View):
@@ -1098,6 +1099,82 @@ class ApiPondRequestView(CSRFExemptView):
             pond = Pond.objects.get(id=int(pond_id))
             response = modules.send_pond_request(pond, user)
         except ObjectDoesNotExist:
+            pass
+
+        return HttpResponse(json.dumps(response))
+
+
+class ApiFriendRequestView(CSRFExemptView):
+    """
+        Send Friend Request to pond members
+    """
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        try:
+            user_id = request.POST.get("user_id")
+            to_user = User.objects.get(id=int(user_id))
+            Friend.objects.add_friend(
+                from_user=user,
+                to_user=to_user,
+                message='Hi, I would like to be your friend',
+            )
+        except ObjectDoesNotExist, exceptions.AlreadyExistsError:
+            pass
+        response['status'] = True
+        return HttpResponse(json.dumps(response))
+
+
+class ApiFriendAcceptRequestView(CSRFExemptView):
+    """
+        Send Friend Request to pond members
+    """
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        try:
+            user_id = request.POST.get("user_id")
+            friend_request = FriendshipRequest.objects.get(id=int(user_id))
+            friend_request.accept()
+            response['status'] = True
+        except ObjectDoesNotExist, exceptions.AlreadyExistsError:
+            response['status'] = False
+            pass
+        return HttpResponse(json.dumps(response))
+
+
+class ApiFriendRejectRequestView(CSRFExemptView):
+    """
+        Send Friend Request to pond members
+    """
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        try:
+            user_id = request.POST.get("user_id")
+            friend_request = FriendshipRequest.objects.get(id=int(user_id))
+            friend_request.reject()
+            response['status'] = True
+        except ObjectDoesNotExist, exceptions.AlreadyExistsError:
+            response['status'] = False
             pass
         return HttpResponse(json.dumps(response))
 

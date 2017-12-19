@@ -21,9 +21,9 @@ POND_NAME_CHAR_COUNT = 245
 POND_PURPOSE_CHAR_COUNT = 100
 
 #Search Variable
-PROJECT_NAME_SEARCH = 'pisr'
+CHALLENGE_NAME_SEARCH = 'pisr'
 PERSON_SEARCH = 'psr'
-PROJECT_TAG_SEARCH = 'pisr'
+CHALLENGE_TAG_SEARCH = 'pisr'
 POND_SEARCH_NAME = 'psn'
 
 #Creating new project variable
