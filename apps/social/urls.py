@@ -84,7 +84,8 @@ urlpatterns = [
     url(r'^api/new-impression', ApiCreateImpressed.as_view(), name="api_new_impression"),
     url(r'api/add-user-to-friends',  ApiFriendRequestView.as_view(), name='api_friend_request'),
     url(r'api/accept-friend-request',  ApiFriendAcceptRequestView.as_view(), name='api_friend_accept_request'),
-    url(r'api/deny-friend-request',  ApiFriendRejectRequestView.as_view(), name='api_friend_accept_request')
+    url(r'api/deny-friend-request',  ApiFriendRejectRequestView.as_view(), name='api_friend_accept_request'),
+    url(r'api/get-friend-request',  ApiFriendRequestView.as_view(), name='api_get_accept_request'),
 
 ]
 
