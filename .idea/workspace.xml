@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/tasks/api_view.py" afterPath="$PROJECT_DIR$/apps/tasks/api_view.py" />
     </list>
     <ignored path="tikedge.iws" />
@@ -62,8 +63,8 @@
       <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6320093">
-              <caret line="701" column="52" selection-start-line="701" selection-start-column="52" selection-end-line="701" selection-end-column="52" />
+            <state vertical-scroll-proportion="0.9302326">
+              <caret line="89" column="64" selection-start-line="89" selection-start-column="64" selection-end-line="89" selection-end-column="64" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -98,8 +99,8 @@
       <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.555555">
-              <caret line="1112" column="12" selection-start-line="1112" selection-start-column="12" selection-end-line="1112" selection-end-column="12" />
+            <state vertical-scroll-proportion="-4.4444447">
+              <caret line="1092" column="34" selection-start-line="1092" selection-start-column="34" selection-end-line="1092" selection-end-column="34" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -217,8 +218,8 @@
         <option value="$PROJECT_DIR$/apps/social/search_module.py" />
         <option value="$PROJECT_DIR$/apps/tasks/urls.py" />
         <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
-        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
         <option value="$PROJECT_DIR$/apps/social/urls.py" />
+        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
       </list>
     </option>
@@ -229,10 +230,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1939" />
-    <option name="y" value="35" />
-    <option name="width" value="1609" />
-    <option name="height" value="1029" />
+    <option name="x" value="-40" />
+    <option name="y" value="23" />
+    <option name="width" value="1132" />
+    <option name="height" value="947" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -792,10 +793,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1939" y="35" width="1609" height="1029" extended-state="0" />
+    <frame x="-40" y="23" width="1132" height="947" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14422463" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20733945" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21475771" sideWeight="0.50271004" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1176,7 +1177,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="83" selection-start-line="32" selection-start-column="83" selection-end-line="32" selection-end-column="83" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#32#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1255,8 +1256,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.555555">
-          <caret line="1112" column="12" selection-start-line="1112" selection-start-column="12" selection-end-line="1112" selection-end-column="12" />
+        <state vertical-scroll-proportion="-4.4444447">
+          <caret line="1092" column="34" selection-start-line="1092" selection-start-column="34" selection-end-line="1092" selection-end-column="34" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
@@ -1265,8 +1266,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6320093">
-          <caret line="701" column="52" selection-start-line="701" selection-start-column="52" selection-end-line="701" selection-end-column="52" />
+        <state vertical-scroll-proportion="0.9302326">
+          <caret line="89" column="64" selection-start-line="89" selection-start-column="64" selection-end-line="89" selection-end-column="64" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
