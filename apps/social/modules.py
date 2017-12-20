@@ -58,6 +58,30 @@ def people_result_to_json(user_result):
     return json_list
 
 
+def get_profile_pic_json(user):
+    try:
+        has_prof_pic = ProfilePictures.objects.get(tikedge_user__user=user)
+    except ObjectDoesNotExist:
+        has_prof_pic = None
+    if has_prof_pic:
+        pic_url = has_prof_pic.profile_pics.url
+        return pic_url
+    return None
+
+
+def jsonify_friend_request(unread_requests):
+    req_list = []
+    for reqs in unread_requests:
+        req_dic = {}
+        req_dic['first_name'] = reqs.from_user.first_name
+        req_dic['last_name'] = reqs.from_user.last_name
+        req_dic['user_id'] = reqs.from_user.id
+        req_dic['profile_picture'] = get_profile_pic_json(reqs.from_user)
+        req_dic['message'] = reqs.from_user.message
+        req_list.append(req_dic)
+    return req_list
+
+
 def friend_request_to_json(friend_request, user):
     friend_request_list = []
     for each_request in friend_request:

@@ -1108,6 +1108,21 @@ class ApiFriendRequestView(CSRFExemptView):
     """
         Send Friend Request to pond members
     """
+    def get(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        unread_requests = Friend.objects.unread_requests(user=user)
+        requests = modules.jsonify_friend_request(unread_requests)
+        response['status'] = True
+        response['requests'] = requests
+        return HttpResponse(json.dumps(response), status=201)
+
     def post(self, request):
         response = {}
         try:
