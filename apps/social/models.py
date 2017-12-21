@@ -427,6 +427,18 @@ class ProgressImpressedCount(models.Model):
         super(ProgressImpressedCount, self).save(*args, **kwargs)
 
 
+class RecentUploadImpressedCount(models.Model):
+    users = models.ForeignKey(TikedgeUser, verbose_name="Users impressed by recent progress")
+    progress = models.ForeignKey('ProgressVideo', blank=True, null=True)
+    created = models.DateTimeField(default=now)
+
+
+class HighlightImpressedCount(models.Model):
+    users = models.ForeignKey(TikedgeUser, verbose_name="Users impressed by recent highlight")
+    progress_set = models.ForeignKey('ProgressVideoSet', blank=True, null=True)
+    created = models.DateTimeField(default=now)
+
+
 class LetDownMilestone(models.Model):
     users = models.ManyToManyField(TikedgeUser, verbose_name="users that were let down by vouche for your Milestone")
     tasks = models.ForeignKey(Milestone, blank=True, null=True)

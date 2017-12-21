@@ -1161,8 +1161,8 @@ class ApiFriendAcceptRequestView(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         try:
-            user_id = request.POST.get("user_id")
-            friend_request = FriendshipRequest.objects.get(id=int(user_id))
+            req_id = request.POST.get("req_id")
+            friend_request = FriendshipRequest.objects.get(id=int(req_id))
 
             friend_request.accept()
             tikedge_user = TikedgeUser.objects.get(user=user)

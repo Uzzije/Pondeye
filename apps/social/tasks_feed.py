@@ -6,7 +6,7 @@ from models import ProfilePictures,\
     BuildCredMilestone, VoucheProject, \
     FollowChallenge, SeenChallenge, ChallengeVideo, \
     CommentChallengeAcceptance, CommentRecentUploads, CommentRequestFeed, SeenVideoSet, SeenRecentUpload, \
-    ChallengeRating
+    ChallengeRating, HighlightImpressedCount, RecentUploadImpressedCount
 from friendship.models import FriendshipRequest
 from django.db.models import Q
 import global_variables
@@ -168,6 +168,15 @@ class PondFeed:
         else:
             follows = FollowChallenge.objects.filter(challenge=self.tasks)
         return follows.count()
+
+    def impress_count(self):
+        if self.type_of_feed is global_variables.VIDEO_SET:
+            seens = RecentUploadImpressedCount(progresss_set=self.tasks).count()
+            return seens
+        if self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+            seens = HighlightImpressedCount.objects.filter(progress=self.tasks).count()
+            return seens
+        return 0
 
     def comments(self, timezone):
         comments_list = []
@@ -331,6 +340,7 @@ class VideoProgressFeed(PondFeed):
             'comments': self.comments(self.local_timezone),
             'seen': self.seens(),
             'follow': self.follow(),
+            'impressed': self.impress_count()
         }
         return progress_dic
 
@@ -362,6 +372,7 @@ class VideoProgressFeed(PondFeed):
                 'comments': self.comments(self.local_timezone),
                 'seen': self.seens(),
                 'follow': self.follow(),
+                'impressed': self.impress_count()
             }
         return progress_dic
 
@@ -370,14 +381,6 @@ class VideoProgressFeed(PondFeed):
 
     def get_video_set_url(self, progress_set):
         return progress_set.video_timeline.url
-
-    def impress_count(self, progress):
-        # impress_count = ProgressImpressedCount.objects.get(tasks=progress).get_count()
-        return 0
-
-    def progress_seen_count(self, progress):
-        # seen_count = SeenProgress.objects.get(tasks=progress).get_count()
-        return 0
 
 
 class NotificationFeed:
