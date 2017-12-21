@@ -1111,7 +1111,7 @@ class ApiFriendRequestView(CSRFExemptView):
     def get(self, request):
         response = {}
         try:
-            username = request.POST.get("username")
+            username = request.GET.get("username")
             user = User.objects.get(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
