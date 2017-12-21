@@ -1177,8 +1177,9 @@ class ApiFriendAcceptRequestView(CSRFExemptView):
             new_notif = FriendshipNotification(from_user=tikedge_user, to_user=other_user,message=message)
             new_notif.save()
             response['status'] = True
-        except ObjectDoesNotExist, exceptions.AlreadyExistsError:
+        except (ObjectDoesNotExist, exceptions.AlreadyExistsError) as e:
             response['status'] = False
+            response['error'] = str(e)
             pass
         return HttpResponse(json.dumps(response))
 
