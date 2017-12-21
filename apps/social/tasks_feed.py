@@ -171,7 +171,7 @@ class PondFeed:
 
     def impress_count(self):
         if self.type_of_feed is global_variables.VIDEO_SET:
-            seens = RecentUploadImpressedCount(progresss_set=self.tasks).count()
+            seens = RecentUploadImpressedCount.objects.filter(progresss_set=self.tasks).count()
             return seens
         if self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
             seens = HighlightImpressedCount.objects.filter(progress=self.tasks).count()
