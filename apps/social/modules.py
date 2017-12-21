@@ -1,6 +1,6 @@
 from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
-from .models import ProfilePictures, ProgressVideoSet, ProgressVideo, Challenge, \
+from .models import ProfilePictures, ProgressVideoSet, ChallengeNotification, FriendshipNotification, Challenge, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, PondSpecificProject, \
      PondRequest, Pond, PondMembership, ProgressImpressedCount, PondProgressFeed, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
 from django.db.models import Q
@@ -104,6 +104,37 @@ def get_challengable_users(user):
         }
         all_friends_list.append(all_friends_dic)
     return all_friends_list
+
+
+def get_notification(user, local_timezone='UTC', unread=True):
+    acn_dic_list = []
+    all_challenge_notification = ChallengeNotification.objects.filter(read=unread, to_user=user)
+    all_friendship_notification = FriendshipNotification.objects.filter(read=unread, to_user=user)
+    for each_ch in all_challenge_notification:
+        acn_dic = {}
+        acn_dic['name'] = "%s %s" % (each_ch.from_user.user.first_name, each_ch.from_user.user.last_name)
+        acn_dic['message'] = each_ch.message
+        acn_dic['challenge_blurb'] = each_ch.challenge.project.blurb
+        acn_dic['challenge_id'] = each_ch.challenge.id
+        acn_dic['user_id'] = each_ch.from_user.id
+        acn_dic['is_challenge_notif'] = True
+        acn_dic['is_friend_notif'] = False
+        acn_dic['created'] = utc_to_local(each_ch.created, local_timezone=local_timezone).strftime("%B %d %Y %I:%M %p")
+        acn_dic['created_sec'] = int(each_ch.created.strftime('%s'))
+        acn_dic_list.append(acn_dic)
+
+    for each_ch in all_friendship_notification:
+        acn_dic = {}
+        acn_dic['name'] = "%s %s" % (each_ch.from_user.user.first_name, each_ch.from_user.user.last_name)
+        acn_dic['message'] = each_ch.message
+        acn_dic['user_id'] = each_ch.from_user.id
+        acn_dic['is_challenge_notif'] = False
+        acn_dic['is_friend_notif'] = True
+        acn_dic['created'] = utc_to_local(each_ch.created, local_timezone=local_timezone).strftime("%B %d %Y %I:%M %p")
+        acn_dic['created_sec'] = int(each_ch.created.strftime('%s'))
+        acn_dic_list.append(acn_dic)
+    sorted_list = sorted(acn_dic_list, key=lambda x: x.created_sec, reverse=True)
+    return sorted_list
 
 
 def get_consistency_notification(user_obj):
