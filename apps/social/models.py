@@ -470,7 +470,7 @@ class Notification(models.Model):
 
 class ChallengeNotification(models.Model):
     to_user = models.ForeignKey(TikedgeUser, related_name="challenged_owner_notification", blank=True, null=True)
-    from_user = models.ForeignKey(TikedgeUser, related_name="friendship_initiated_by_user", blank=True, null=True)
+    from_user = models.ForeignKey(TikedgeUser, related_name="challenged_initiated_by_user", blank=True, null=True)
     message = models.TextField(max_length=700, default="")
     challenge = models.ForeignKey('Challenge', blank=True, null=True)
     read = models.BooleanField(default=False)

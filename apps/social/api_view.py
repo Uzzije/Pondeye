@@ -1,9 +1,9 @@
 from django.views.generic import View
 from models import (Notification, Follow, VoucheMilestone, SeenMilestone,
-                     SeenProject, Pond, PondRequest, PondProgressFeed,
+                    SeenProject, Pond, PondRequest, PondProgressFeed,
                     PondMembership, User, ProgressPicture, ShoutOutEmailAndNumber,
                     ProgressPictureSet, ProgressImpressedCount, SeenProgress, VoucheProject, ProgressVideo,
-                    ProgressVideoSet)
+                    ProgressVideoSet, FriendshipNotification)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
@@ -1163,7 +1163,19 @@ class ApiFriendAcceptRequestView(CSRFExemptView):
         try:
             user_id = request.POST.get("user_id")
             friend_request = FriendshipRequest.objects.get(id=int(user_id))
+
             friend_request.accept()
+            tikedge_user = TikedgeUser.objects.get(user=user)
+            other_user = TikedgeUser.objects.get(user=friend_request.from_user)
+            message= "You are now friends with %s %s" % (friend_request.from_user.first_name,
+                                                      friend_request.from_user.last_name)
+            new_notif = FriendshipNotification(to_user=tikedge_user, from_user=other_user,message=message)
+            new_notif.save()
+            other_user = TikedgeUser.objects.get(user=friend_request.from_user)
+            message= "You are now friends with %s %s" % (friend_request.to_user.first_name,
+                                                      friend_request.to_user.last_name)
+            new_notif = FriendshipNotification(from_user=tikedge_user, to_user=other_user,message=message)
+            new_notif.save()
             response['status'] = True
         except ObjectDoesNotExist, exceptions.AlreadyExistsError:
             response['status'] = False
@@ -1179,7 +1191,7 @@ class ApiFriendRejectRequestView(CSRFExemptView):
         response = {}
         try:
             username = request.POST.get("username")
-            user = User.objects.get(username=username)
+            User.objects.get(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Log back in and try again!"
