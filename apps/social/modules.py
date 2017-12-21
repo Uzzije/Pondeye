@@ -77,7 +77,7 @@ def jsonify_friend_request(unread_requests):
         req_dic['last_name'] = reqs.from_user.last_name
         req_dic['id'] = reqs.from_user.id
         req_dic['profile_url'] = get_profile_pic_json(reqs.from_user)
-        req_dic['message'] = reqs.from_user.message
+        req_dic['message'] = reqs.message
         req_list.append(req_dic)
     return req_list
 
