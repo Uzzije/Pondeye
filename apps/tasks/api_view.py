@@ -4,7 +4,8 @@ from friendship.models import Friend
 from models import User, TikedgeUser, UserProject,Milestone, TagNames
 from tasks import begin_timeline_video
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
-    Pond, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, Challenge, ChallengeVideo
+    Pond, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, Challenge, \
+    ChallengeVideo, ChallengeNotification
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from datetime import timedelta
@@ -392,13 +393,13 @@ class ApiNewChallenge(CSRFExemptView):
         new_journal_entry.save()
         new_vid_progress_set = ProgressVideoSet(project=new_project)
         new_vid_progress_set.save()
-        new_vouch = VoucheProject(tasks=new_project)
-        new_vouch.save()
-        new_follow = Follow(tasks=new_project)
-        new_follow.save()
-        new_seen = SeenProject(tasks=new_project)
-        new_seen.save()
-        new_goal_or_progress_added_notification_to_pond(new_project, is_new_project=True)
+        mess = "%s %s created a new challenge for you!" % (tikedge_user.user.first_name, tikedge_user.user.last_name)
+        challenge_notification = ChallengeNotification(to_user=challenged_user,
+                                                       from_user=tikedge_user,
+                                                       message=mess,
+                                                       challenge=new_challenge
+                                                       )
+        challenge_notification.save()
         response["status"] = True
         return HttpResponse(json.dumps(response), status=201)
 
