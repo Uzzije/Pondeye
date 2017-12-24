@@ -388,10 +388,10 @@ class ApiNewChallenge(CSRFExemptView):
                                         event_type=PROJECT,
                                         is_project_entry=True,
                                         new_project_entry=new_project,
-                                        user=tikedge_user
+                                        user=challenged_user
                                         )
         new_journal_entry.save()
-        new_vid_progress_set = ProgressVideoSet(project=new_project)
+        new_vid_progress_set = ProgressVideoSet(challenge=new_challenge)
         new_vid_progress_set.save()
         mess = "%s %s created a new challenge for you!" % (tikedge_user.user.first_name, tikedge_user.user.last_name)
         challenge_notification = ChallengeNotification(to_user=challenged_user,
