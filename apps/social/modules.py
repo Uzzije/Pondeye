@@ -344,7 +344,7 @@ def get_video_feed(challenges, local_timezone='UTC'):
             type_of_feed = global_variables.RECENT_VIDEO_UPLOAD
         feed = VideoProgressFeed(video_set, type_of_feed=type_of_feed, url_domain=CURRENT_URL,
                                  local_timezone=local_timezone)
-        feed_list.append(feed)
+        feed_list.append(feed.progress)
     return feed_list
 
 
