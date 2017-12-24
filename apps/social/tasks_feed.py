@@ -105,14 +105,14 @@ class PondFeed:
 
     def seens(self):
         if self.type_of_feed is global_variables.VIDEO_SET:
-            seensd = SeenVideoSet.objects.filter(tasks=self.tasks)
+            seensd = SeenVideoSet.objects.filter(video_set=self.tasks)
             return seensd.count()
         elif self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
-            seensd = SeenRecentUpload.objects.filter(tasks=self.tasks)
+            seensd = SeenRecentUpload.objects.filter(video=self.tasks)
             return seensd.count()
         elif self.type_of_feed is global_variables.CHALLENGED_ACCEPTED or \
                         self.type_of_feed is global_variables.CHALLENGED_BY_SOMEONE:
-            seensd = SeenChallenge.objects.filter(tasks=self.tasks)
+            seensd = SeenChallenge.objects.filter(challenge=self.tasks)
             return seensd.count()
         return 0
 
