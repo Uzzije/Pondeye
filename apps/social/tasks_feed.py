@@ -272,7 +272,7 @@ class RequestFeed(ChallengeFeed):
         PondFeed.__init__(self, tasks, global_variables.CHALLENGED_BY_SOMEONE, url_domain=url_domain)
 
     def progress(self):
-        progress_dic = self.progress()
+        progress_dic = ChallengeFeed.progress(self)
         progress_dic['is_challenge_req'] = True
         return progress_dic
 
@@ -284,7 +284,7 @@ class AcceptanceFeed(ChallengeFeed):
         self.local_timezone = local_timezone
 
     def progress(self):
-        progress_dic = self.progress()
+        progress_dic = ChallengeFeed.progress(self)
         progress_dic['is_challenge_accept'] = True
         return progress_dic
 
