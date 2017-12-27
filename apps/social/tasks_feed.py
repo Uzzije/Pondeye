@@ -224,7 +224,6 @@ class ChallengeFeed(PondFeed):
     def __init__(self, tasks, type_of_feed, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
         PondFeed.__init__(self, tasks, type_of_feed, url_domain=url_domain)
         self.local_timezone = local_timezone
-        self.progress = self.get_challenge_video_url(self.tasks)
         self.has_video = False
         self.challenger_fn = self.get_user_tikedge().user.first_name
         self.challenger_ln = self.get_user_tikedge().user.last_name
