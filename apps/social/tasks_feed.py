@@ -229,6 +229,8 @@ class ChallengeFeed(PondFeed):
         self.challenger_ln = self.tasks.challenger.user.last_name
         self.challenged_fn = self.tasks.challenged.user.first_name
         self.challenged_ln = self.tasks.challenged.user.last_name
+        self.challenged_id = self.tasks.challenged.user.id
+        self.challenger_id = self.tasks.challenger.user.id
 
     def progress(self):
         created_sec = int(self.created.strftime('%s'))
