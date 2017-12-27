@@ -235,7 +235,7 @@ class ChallengeFeed(PondFeed):
         created_sec = int(self.created.strftime('%s'))
         progress_dic = {
             'ch_rating': self.challenge_rating(),
-            'challenge_burb':self.message,
+            'challenge_blurb':self.message,
             'challenge':self.tasks.project.name_of_project,
             'challenger_fn':self.challenger_fn,
             'challenger_ln':self.challenger_ln,
@@ -269,7 +269,7 @@ class ChallengeFeed(PondFeed):
 class RequestFeed(ChallengeFeed):
 
     def __init__(self, tasks, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
-        PondFeed.__init__(self, tasks, global_variables.CHALLENGED_BY_SOMEONE, url_domain=url_domain)
+        ChallengeFeed.__init__(self, tasks, global_variables.CHALLENGED_BY_SOMEONE, url_domain=url_domain)
 
     def progress(self):
         progress_dic = ChallengeFeed.progress(self)
@@ -280,7 +280,7 @@ class RequestFeed(ChallengeFeed):
 class AcceptanceFeed(ChallengeFeed):
 
     def __init__(self, tasks, url_domain=global_variables.CURRENT_URL, local_timezone='UTC'):
-        PondFeed.__init__(self, tasks, global_variables.CHALLENGED_ACCEPTED, url_domain=url_domain)
+        ChallengeFeed.__init__(self, tasks, global_variables.CHALLENGED_ACCEPTED, url_domain=url_domain)
         self.local_timezone = local_timezone
 
     def progress(self):
