@@ -251,6 +251,7 @@ class ChallengeFeed(PondFeed):
             'is_challenge_req': False,
             'is_recent_progress': False,
             'is_video_highlight': False,
+            'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
             'name': self.task_owner_name,
             'profile_url':self.profile_url,
         }
