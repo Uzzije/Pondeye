@@ -225,10 +225,10 @@ class ChallengeFeed(PondFeed):
         PondFeed.__init__(self, tasks, type_of_feed, url_domain=url_domain)
         self.local_timezone = local_timezone
         self.has_video = False
-        self.challenger_fn = self.get_user_tikedge().user.first_name
-        self.challenger_ln = self.get_user_tikedge().user.last_name
-        self.challenged_fn = self.get_user_tikedge().user.first_name
-        self.challenged_ln = self.get_user_tikedge().user.last_name
+        self.challenger_fn = self.tasks.challenger.user.first_name
+        self.challenger_ln = self.tasks.challenger.user.last_name
+        self.challenged_fn = self.tasks.challenged.user.first_name
+        self.challenged_ln = self.tasks.challenged.user.last_name
 
     def progress(self):
         created_sec = int(self.created.strftime('%s'))

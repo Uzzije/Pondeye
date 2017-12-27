@@ -360,7 +360,9 @@ def get_request_challenges(challenges, local_timezone='UTC'):
             challenge_feed = AcceptanceFeed(challenge, local_timezone=local_timezone)
         else:
             challenge_feed = RequestFeed(challenge, local_timezone=local_timezone)
-        feed_list.append(challenge_feed.progress())
+        progress = challenge_feed.progress()
+        print(progress)
+        feed_list.append(progress)
     return feed_list
 
 '''
