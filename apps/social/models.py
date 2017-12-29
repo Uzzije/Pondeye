@@ -207,7 +207,7 @@ class Challenge(models.Model):
     created = models.DateTimeField(default=now)
 
     def __str__(self):
-        return '%s' % self.challenge.project.name_of_project
+        return '%s' % self.project.name_of_project
 
     def save(self, *args, **kwargs):
         self.project.is_live = self.is_public
