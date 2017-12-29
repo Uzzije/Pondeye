@@ -100,7 +100,7 @@ ldconfig
 cd /opt
 git clone git://source.ffmpeg.org/ffmpeg.git
 cd ffmpeg
-git checkout release/3.0
+git checkout release/3.4
 PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig"
 export PKG_CONFIG_PATH
 ./configure --prefix="$HOME/ffmpeg_build" --extra-cflags="-I$HOME/ffmpeg_build/include" --extra-ldflags="-L$HOME/ffmpeg_build/lib" --bindir="$HOME/bin" \
