@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.ebextensions/99_ffmpeg.config" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.ebextensions/files/install_ffmpeg.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ebextensions/python.config" afterPath="$PROJECT_DIR$/.ebextensions/python.config" />
     </list>
     <ignored path="tikedge.iws" />
@@ -64,8 +66,8 @@
       <file leaf-file-name="python.config" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3875969">
-              <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.42635658">
+              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -84,33 +86,29 @@
       <file leaf-file-name="99_celery.config" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.ebextensions/99_celery.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.3333333">
-              <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search_module.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/search_module.py">
+      <file leaf-file-name="99_ffmpeg.config" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.ebextensions/99_ffmpeg.config">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="98" column="6" selection-start-line="98" selection-start-column="6" selection-end-line="98" selection-end-column="6" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-1.1111112">
+              <caret line="2" column="74" selection-start-line="2" selection-start-column="74" selection-end-line="2" selection-end-column="74" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
+      <file leaf-file-name="install_ffmpeg.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.ebextensions/files/install_ffmpeg.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-24.88889">
-              <caret line="397" column="50" selection-start-line="397" selection-start-column="50" selection-end-line="397" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#37#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -167,7 +165,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/apps/social/pygram/testfile.py" />
         <option value="$PROJECT_DIR$/apps/social/pygram/pygram.py" />
         <option value="$PROJECT_DIR$/check_notification.py" />
         <option value="$PROJECT_DIR$/ranking_algorithm.py" />
@@ -217,6 +214,7 @@
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
         <option value="$PROJECT_DIR$/apps/social/tasks_feed.py" />
+        <option value="$PROJECT_DIR$/.ebextensions/99_ffmpeg.config" />
         <option value="$PROJECT_DIR$/.ebextensions/python.config" />
       </list>
     </option>
@@ -317,6 +315,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".ebextensions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="files" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -342,19 +358,19 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/apps/social/pygram/tests" />
-      <recent name="$PROJECT_DIR$/templates" />
-      <recent name="$PROJECT_DIR$/templates/social" />
-      <recent name="$PROJECT_DIR$/apps/tasks/static/images" />
-      <recent name="$PROJECT_DIR$/apps/tasks/static" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/scripts" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/settings" />
       <recent name="$PROJECT_DIR$/apps/api" />
       <recent name="$PROJECT_DIR$/templates/social" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.ebextensions/files" />
+      <recent name="$PROJECT_DIR$/apps/social/pygram/tests" />
+      <recent name="$PROJECT_DIR$/templates" />
+      <recent name="$PROJECT_DIR$/templates/social" />
+      <recent name="$PROJECT_DIR$/apps/tasks/static/images" />
     </key>
   </component>
   <component name="RunManager" selected="Django tests.Test: .python">
@@ -837,20 +853,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="32" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/apps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/apps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1108,7 +1110,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="78" column="88" selection-start-line="78" selection-start-column="88" selection-end-line="78" selection-end-column="88" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#32#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1118,7 +1120,7 @@
         <state vertical-scroll-proportion="-15.222222">
           <caret line="31" column="78" selection-start-line="31" selection-start-column="78" selection-end-line="31" selection-end-column="78" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#32#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1209,14 +1211,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.ebextensions/99_celery.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.3333333">
-          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/install_ffmpeg.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1225,10 +1219,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.ebextensions/99_celery.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.ebextensions/files/install_ffmpeg.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.ebextensions/99_ffmpeg.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1111112">
+          <caret line="2" column="74" selection-start-line="2" selection-start-column="74" selection-end-line="2" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3875969">
-          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.42635658">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
       </provider>
