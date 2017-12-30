@@ -811,7 +811,7 @@ class ApiCreateFollow(CSRFExemptView):
         tikedge_user = TikedgeUser.objects.get(user=user)
         try:
             follow_obj = FollowChallenge.objects.get(challenge__project=project, users=tikedge_user)
-            del follow_obj
+            follow_obj.delete()
             response["count"] = FollowChallenge.objects.filter(challenge__project=project).count()
             return HttpResponse(json.dumps(response), status=201)
         except ObjectDoesNotExist:
