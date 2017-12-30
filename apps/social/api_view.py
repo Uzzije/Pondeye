@@ -3,7 +3,7 @@ from models import (Notification, Follow, VoucheMilestone, SeenMilestone,
                     SeenProject, Pond, PondRequest, PondProgressFeed,
                     PondMembership, User, ProgressPicture, ShoutOutEmailAndNumber,
                     ProgressPictureSet, ProgressImpressedCount, SeenProgress, VoucheProject, ProgressVideo,
-                    ProgressVideoSet, FriendshipNotification)
+                    ProgressVideoSet, FriendshipNotification, FollowChallenge, Challenge, ChallengeNotification)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
@@ -745,7 +745,7 @@ class ApiCreateVouch(CSRFExemptView):
         print "Tried to print vouch!!!!!!\n"
         return HttpResponse(json.dumps(response), status=201)
 
-
+'''
 class ApiCreateFollow(CSRFExemptView):
 
     def get(self, request, *args, **kwargs):
@@ -788,6 +788,44 @@ class ApiCreateFollow(CSRFExemptView):
                                         type_of_notification=global_variables.NEW_PROJECT_INTERESTED)
                 follow_notif.save()
         response["count"] = follow_obj.users.all().count()
+        return HttpResponse(json.dumps(response), status=201)
+'''
+
+
+class ApiCreateFollow(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('')
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        ch_id = request.POST.get("nextId")
+        project = UserProject.objects.get(id=int(ch_id))
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        try:
+            follow_obj = FollowChallenge.objects.get(challenge__project=project, users=tikedge_user)
+            del follow_obj
+            return HttpResponse(json.dumps(response), status=201)
+        except ObjectDoesNotExist:
+            challenge = Challenge.objects.get(project=project)
+            if tikedge_user != project.user:
+                follow_obj = Follow(challenge=challenge, users=tikedge_user)
+                follow_obj.save()
+                response["status"] = True
+                mess = '%s %s is following %s.' % (tikedge_user.user.first_name,
+                                                   tikedge_user.user.last_name, project.blurb)
+                challenge_notification = ChallengeNotification(to_user=project.user, message=mess,
+                                                               challenge=challenge, from_user=tikedge_user)
+                challenge_notification.save()
+        response["status"] = True
+        response["count"] = FollowChallenge.objects.filter(challenge__project=project).count()
         return HttpResponse(json.dumps(response), status=201)
 
 

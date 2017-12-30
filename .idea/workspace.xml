@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/tasks_feed.py" afterPath="$PROJECT_DIR$/apps/social/tasks_feed.py" />
     </list>
     <ignored path="tikedge.iws" />
@@ -32,6 +33,28 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
     <option name="myUseModuleSdk" value="true" />
     <option name="myModuleName" value="tikedge" />
+  </component>
+  <component name="DockManager">
+    <window id="2">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/apps/social/models.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.39147288">
+                    <caret line="94" column="13" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
+                    <folding>
+                      <element signature="e#0#39#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -69,12 +92,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="99_ffmpeg.config" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.ebextensions/99_ffmpeg.config">
+      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.6666666">
-              <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-              <folding />
+            <state vertical-scroll-proportion="0.97590363">
+              <caret line="838" column="12" selection-start-line="838" selection-start-column="12" selection-end-line="838" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -89,23 +114,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/apps/social/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.555555">
-              <caret line="408" column="21" selection-start-line="408" selection-start-column="14" selection-end-line="408" selection-end-column="21" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5412371">
-              <caret line="364" column="42" selection-start-line="364" selection-start-column="42" selection-end-line="364" selection-end-column="42" />
+            <state vertical-scroll-proportion="-66.666664">
+              <caret line="365" column="44" selection-start-line="365" selection-start-column="44" selection-end-line="365" selection-end-column="44" />
               <folding>
                 <element signature="e#92#404#0" expanded="true" />
               </folding>
@@ -138,6 +151,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.555555">
+              <caret line="69" column="34" selection-start-line="69" selection-start-column="31" selection-end-line="69" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -203,7 +226,6 @@
         <option value="$PROJECT_DIR$/apps/social/search_module.py" />
         <option value="$PROJECT_DIR$/apps/tasks/modules.py" />
         <option value="$PROJECT_DIR$/apps/social/urls.py" />
-        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
         <option value="$PROJECT_DIR$/apps/tasks/urls.py" />
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
@@ -212,6 +234,7 @@
         <option value="$PROJECT_DIR$/scripts/install_ffmpeg.sh" />
         <option value="$PROJECT_DIR$/apps/social/models.py" />
         <option value="$PROJECT_DIR$/apps/social/tasks_feed.py" />
+        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
       </list>
     </option>
   </component>
@@ -221,9 +244,9 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-4" />
-    <option name="y" value="35" />
-    <option name="width" value="793" />
+    <option name="x" value="6" />
+    <option name="y" value="57" />
+    <option name="width" value="1159" />
     <option name="height" value="947" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -280,6 +303,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tikedge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="apps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tasks" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -752,12 +793,12 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="35" width="793" height="947" extended-state="0" />
+    <frame x="6" y="57" width="1159" height="947" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31557924" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21217547" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21475771" sideWeight="0.50271004" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21471652" sideWeight="0.50271004" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282636" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.053892214" sideWeight="0.41330892" order="8" side_tool="false" content_ui="tabs" />
@@ -1030,14 +1071,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="17" selection-start-line="48" selection-start-column="17" selection-end-line="48" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1054,16 +1087,6 @@
           <caret line="31" column="78" selection-start-line="31" selection-start-column="78" selection-end-line="31" selection-end-column="78" />
           <folding>
             <element signature="e#0#32#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1158" column="34" selection-start-line="1158" selection-start-column="34" selection-end-line="1158" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1148,14 +1171,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.222222">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.ebextensions/files/install_ffmpeg.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1204,10 +1219,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/models.py">
+    <entry file="file://$PROJECT_DIR$/.ebextensions/python.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.222222">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.555555">
-          <caret line="408" column="21" selection-start-line="408" selection-start-column="14" selection-end-line="408" selection-end-column="21" />
+          <caret line="69" column="34" selection-start-line="69" selection-start-column="31" selection-end-line="69" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39147288">
+          <caret line="94" column="13" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -1216,10 +1247,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5412371">
-          <caret line="364" column="42" selection-start-line="364" selection-start-column="42" selection-end-line="364" selection-end-column="42" />
+        <state vertical-scroll-proportion="-66.666664">
+          <caret line="365" column="44" selection-start-line="365" selection-start-column="44" selection-end-line="365" selection-end-column="44" />
           <folding>
             <element signature="e#92#404#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.97590363">
+          <caret line="838" column="12" selection-start-line="838" selection-start-column="12" selection-end-line="838" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>
