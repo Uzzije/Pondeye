@@ -390,18 +390,6 @@ class FollowChallenge(models.Model):
     challenge = models.ForeignKey(Challenge, blank=True, null=True)
     date_followed = models.DateTimeField(default=now)
 
-    def save(self, *args, **kwargs):
-        self.latest_follow = now()
-        if self.is_video_tasks:
-            self.is_picture_tasks = False
-        super(FollowChallenge, self).save(*args, **kwargs)
-
-    def get_count(self):
-        try:
-            return self.users.count()
-        except ValueError:
-            return 0
-
     class Meta:
         unique_together = ('users', 'challenge')
 
