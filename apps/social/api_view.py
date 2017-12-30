@@ -816,7 +816,7 @@ class ApiCreateFollow(CSRFExemptView):
         except ObjectDoesNotExist:
             challenge = Challenge.objects.get(project=project)
             if tikedge_user != project.user:
-                follow_obj = Follow(challenge=challenge, users=tikedge_user)
+                follow_obj = FollowChallenge(challenge=challenge, users=tikedge_user)
                 follow_obj.save()
                 response["status"] = True
                 mess = '%s %s is following %s.' % (tikedge_user.user.first_name,
