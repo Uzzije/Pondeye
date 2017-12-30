@@ -256,6 +256,7 @@ class ChallengeFeed(PondFeed):
             'created':utc_to_local(self.tasks.created, local_timezone=self.local_timezone).strftime("%B %d %Y %I:%M %p"),
             'name': self.task_owner_name,
             'profile_url':self.profile_url,
+            'id':self.tasks.project.id
         }
         return progress_dic
 
