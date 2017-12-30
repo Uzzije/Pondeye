@@ -37,8 +37,10 @@ class PondFeed:
         self.feed_user = self.get_user_tikedge().user
 
     def get_user_tikedge(self):
-        if self.type_of_feed is global_variables.VIDEO_SET or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+        if self.type_of_feed is global_variables.VIDEO_SET:
             return self.tasks.project.user
+        elif self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+            return self.tasks.challenge.project.user
         else:
             return self.tasks.project.user
 

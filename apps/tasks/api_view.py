@@ -357,7 +357,7 @@ class ApiNewChallenge(CSRFExemptView):
         tikedge_user = TikedgeUser.objects.get(user=user)
         challenged_user = TikedgeUser.objects.get(user__id=int(request.POST.get('challenged_user')))
         new_project = UserProject(name_of_project=name_of_project, is_live=True,
-                                  made_live=datetime.now(), user=tikedge_user, length_of_project=end_by)
+                                  made_live=datetime.now(), user=challenged_user, length_of_project=end_by)
         new_project.save()
         new_challenge = Challenge(project=new_project, challenged=challenged_user,
                                        challenger=tikedge_user)
