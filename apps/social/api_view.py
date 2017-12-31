@@ -3,7 +3,8 @@ from models import (Notification, Follow, VoucheMilestone, SeenMilestone,
                     SeenProject, Pond, PondRequest, PondProgressFeed,
                     PondMembership, User, ProgressPicture, ShoutOutEmailAndNumber,
                     ProgressPictureSet, ProgressImpressedCount, SeenProgress, VoucheProject, ProgressVideo,
-                    ProgressVideoSet, FriendshipNotification, FollowChallenge, Challenge, ChallengeNotification)
+                    ProgressVideoSet, FriendshipNotification, FollowChallenge, Challenge, ChallengeNotification,
+                    HighlightImpressedCount, RecentUploadImpressedCount)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
@@ -871,6 +872,78 @@ class ApiCreateImpressed(CSRFExemptView):
                                          type_of_notification=global_variables.PROGRESS_WAS_IMPRESSED)
                 impress_notif.save()
         response["count"] = impressed_count.get_count()
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiRecentUploadImpressed(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('')
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        progress_id = request.POST.get('progress_id')
+        progress = ProgressVideo.objects.get(id=int(progress_id))
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        try:
+            highlight = RecentUploadImpressedCount.objects.get(user=tikedge_user, progress=progress)
+            highlight.delete()
+        except ObjectDoesNotExist:
+            if tikedge_user != progress.challenge.project.user:
+                highlight = RecentUploadImpressedCount(user=tikedge_user, progress_set=progress)
+                highlight.save()
+                response["status"] = True
+                mess = '%s %s is impressed with the recent progress of %s.' % (tikedge_user.user.first_name,
+                                                   tikedge_user.user.last_name, progress.challenge.project.blurb)
+                challenge_notification = ChallengeNotification(to_user=progress.challenge.project.user,
+                                                               from_user=tikedge_user,
+                                                               message=mess,
+                                                               challenge=progress.challenge)
+                challenge_notification.save()
+        response["count"] = RecentUploadImpressedCount.objects.filter(progress_set=progress).count()
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiHighlightImpressed(CSRFExemptView):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('')
+
+    def post(self, request, *args, **kwargs):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        progress_set_id = request.POST.get('progress_set_id')
+        progress_set = ProgressVideoSet.objects.get(id=int(progress_set_id))
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        try:
+            highlight = HighlightImpressedCount.objects.get(user=tikedge_user, progress_set=progress_set)
+            highlight.delete()
+        except ObjectDoesNotExist:
+            if tikedge_user != progress_set.challenge.project.user:
+                highlight = HighlightImpressedCount(user=tikedge_user, progress_set=progress_set)
+                highlight.save()
+                response["status"] = True
+                mess = '%s %s is impressed with the accomplishment of %s.' % (tikedge_user.user.first_name,
+                                                   tikedge_user.user.last_name, progress_set.challenge.project.blurb)
+                challenge_notification = ChallengeNotification(to_user=progress_set.challenge.project.user,
+                                                               from_user=tikedge_user,
+                                                               message=mess,
+                                                               challenge=progress_set.challenge)
+                challenge_notification.save()
+        response["count"] = HighlightImpressedCount.objects.filter(progress_set=progress_set).count()
         return HttpResponse(json.dumps(response), status=201)
 
 

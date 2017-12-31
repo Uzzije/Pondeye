@@ -345,7 +345,8 @@ class VideoProgressFeed(PondFeed):
             'comments': self.comments(self.local_timezone),
             'seen': self.seens(),
             'follow': self.follow(),
-            'impressed': self.impress_count()
+            'impressed': self.impress_count(),
+            'progress_id': self.tasks.id
         }
         return progress_dic
 
@@ -377,7 +378,8 @@ class VideoProgressFeed(PondFeed):
                 'comments': self.comments(self.local_timezone),
                 'seen': self.seens(),
                 'follow': self.follow(),
-                'impressed': self.impress_count()
+                'impressed': self.impress_count(),
+                'progress_set_id': self.tasks.id
             }
         return progress_dic
 

@@ -14,7 +14,8 @@ from .api_view import ApiNewPondEntryView, ApiPictureUploadView, ApiCreateImpres
     ApiEditIndividualPondView, ApiEditPictureSetView, ApiEditPondView, ApiTodoFeed, ApiCreateFollow, ApiCreateVouch, \
     ApiMilestoneView, ApiProjectView, ApiMilestoneSeenCounter, ApiProjectSeenCounter, ApiGetPondList, ApiGetPond, \
     ApiPondRequestView, ApiGetSearchResult, ApiAddToPond, ApiDenyPondRequest, ApiNotificationView, ApiAcceptPondRequest,\
-    ApiGetNotification, ApiVideoUploadView, ApiFriendRequestView, ApiFriendAcceptRequestView, ApiFriendRejectRequestView
+    ApiGetNotification, ApiVideoUploadView, ApiFriendRequestView, ApiFriendAcceptRequestView, ApiFriendRejectRequestView,\
+    ApiHighlightImpressed, ApiRecentUploadImpressed
 
 urlpatterns = [
     url(r'^journal-feed/$', JournalEntriesView.as_view(), name='journal_entries'),
@@ -86,6 +87,8 @@ urlpatterns = [
     url(r'api/accept-friend-request',  ApiFriendAcceptRequestView.as_view(), name='api_friend_accept_request'),
     url(r'api/deny-friend-request',  ApiFriendRejectRequestView.as_view(), name='api_friend_accept_request'),
     url(r'api/get-friend-request',  ApiFriendRequestView.as_view(), name='api_get_accept_request'),
+    url(r'api/new-recent-upload-impression',  ApiRecentUploadImpressed.as_view(), name='api_recent_upload_impressed'),
+    url(r'api/new-highlight-impression',  ApiHighlightImpressed.as_view(), name='api_highlight_impressed')
 
 ]
 
