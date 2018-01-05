@@ -680,9 +680,13 @@ class ApiProfileView(CSRFExemptView):
         try:
             other_user = User.objects.get(id=int(other_user_id))
         except ValueError:
-            response["status"] = False
-            response["error"] = "Sorry, ponder no longer exist!"
-            return HttpResponse(json.dumps(response), status=201)
+            own_profile = request.GET.get("own_profile")
+            if own_profile:
+                other_user = user
+            else:
+                response["status"] = False
+                response["error"] = "Sorry, ponder no longer exist!"
+                return HttpResponse(json.dumps(response), status=201)
         tikedge_user = TikedgeUser.objects.get(user=other_user)
         requesting_user = TikedgeUser.objects.get(user=user)
 
@@ -713,7 +717,8 @@ class ApiProfileView(CSRFExemptView):
             'challenges_count':challenge_count,
             'challenges_completed': challenges_completed,
             'friend_count':friend_count,
-            'is_friend':Friend.objects.are_friends(user, other_user)
+            'is_friend':Friend.objects.are_friends(user, other_user),
+            'follow_count': get_all_follow_count(tikedge_user)
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)
