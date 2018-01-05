@@ -175,7 +175,7 @@ class ApiPictureUploadView(CSRFExemptView):
 
 '''
 
-
+'''
 class ApiVideoUploadView(CSRFExemptView):
 
     def post(self, request):
@@ -255,6 +255,76 @@ class ApiVideoUploadView(CSRFExemptView):
         response["status"] = True
         modules.new_goal_or_progress_added_notification_to_pond(progress_set.project, is_new_project=False)
         return HttpResponse(json.dumps(response), status=201)
+'''
+
+
+class ApiRecentUploadView(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        response["status"] = False
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        tikedge_user = TikedgeUser.objects.get(user=user)
+        progress_name = request.POST.get('progress_name')
+        if len(progress_name) > 250:
+            response["error"] = "Hey description of progress must be less that 250 characters!"
+            return HttpResponse(json.dumps(response), status=201)
+        dec_video_file = request.POST.get('picture')
+        vid_file = modules.get_video_from_base64(dec_video_file)
+        if not vid_file:
+            response["error"] = "Hey picture must be either video file! ", dec_video_file
+            return HttpResponse(json.dumps(response), status=201)
+        vid_name = "%s_%s" % (progress_name, vid_file.name)
+        video_mod = ProgressVideo(video_name=vid_name,
+                               video=vid_file, name_of_progress=progress_name)
+        video_mod.save()
+        modules.convert_to_mp4_file_for_file_object(video_mod)
+        project = UserProject.objects.get(id=int(request.POST.get("project_id")))
+        pond_members_id_str = request.POST.get("members_id")
+        pond_members_id_arr = pond_members_id_str.split(",")
+        progress_follower = FollowChallenge.objects.filter(challenge__project=project)
+        if len(pond_members_id_arr) > 0 and pond_members_id_str != "":
+            mess = "%s %s shared an experience with you for this goal: %s!" % (tikedge_user.user.first_name, tikedge_user.user.last_name,
+                                                               project.blurb)
+            for pond_id in pond_members_id_arr:
+                pond_user = User.objects.get(id=int(pond_id))
+                ponder = TikedgeUser.objects.get(user=pond_user)
+                video_mod.experience_with.add(ponder)
+                challenge_notification = ChallengeNotification(to_user=ponder,
+                                                               from_user=tikedge_user,
+                                                               message=mess,
+                                                               challenge=progress_follower.first().challenge
+                                                               )
+                challenge_notification.save()
+        video_mod.save()
+        for pr_follower in progress_follower:
+            mess = "%s %s added progress to %s!" % (tikedge_user.user.first_name, tikedge_user.user.last_name,
+                                                    project.blurb)
+            challenge_notification = ChallengeNotification(to_user=pr_follower.users,
+                                                           from_user=tikedge_user,
+                                                           message=mess,
+                                                           challenge=pr_follower.challenge
+                                                           )
+            challenge_notification.save()
+        email_shout_out_str = request.POST.get("shout_emails").split(",")
+        if email_shout_out_str:
+            for each_val in email_shout_out_str:
+                if isinstance(each_val, int):
+                    shout_info = ShoutOutEmailAndNumber(tikedge_user=tikedge_user, progress_video=video_mod,
+                                                        user_email_or_num=each_val, is_number=True,
+                                                        is_video_shout_outs=True)
+                else:
+                    shout_info = ShoutOutEmailAndNumber(tikedge_user=tikedge_user,progress_video=video_mod,
+                                                        user_email_or_num=each_val, is_video_shout_outs=True,
+                                                        is_number=False)
+                shout_info.save()
+        response["status"] = True
+        return HttpResponse(json.dumps(response), status=201)
 
 
 class ApiPictureUploadView(CSRFExemptView):
@@ -269,7 +339,7 @@ class ApiPictureUploadView(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         projects = task_modules.api_get_user_projects(user)
-        all_members = modules.get_all_pond_members(user)
+        all_members = modules.get_challengable_users(user)
         if projects:
             response['has_proj'] = True
             response["status"] = True
