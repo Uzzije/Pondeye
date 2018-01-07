@@ -13,7 +13,7 @@ from ..social.modules import get_journal_message, \
     resize_image, available_ponds_json, create_failed_notification, \
     create_failed_notification_proj_by_deletion, get_picture_from_base64, mark_progress_as_deleted, \
     new_goal_or_progress_added_notification_to_pond, upload_video_file, get_challengable_users, \
-    convert_to_mp4_file_for_file_object, get_video_from_base64
+    convert_to_mp4_file_for_file_object, get_video_from_base64, json_followers
 from modules import \
     time_has_past, convert_html_to_datetime,\
     get_todays_milestones_json, \
@@ -718,6 +718,8 @@ class ApiProfileView(CSRFExemptView):
             'challenges_completed': challenges_completed,
             'friend_count':friend_count,
             'is_friend':Friend.objects.are_friends(user, other_user),
+            'followers':json_followers(user),
+            'follower_count': len(json_followers(user))
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)

@@ -20,7 +20,7 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 import subprocess
 import os
-from friendship.models import Friend
+from friendship.models import Friend, Follow
 
 
 CURRENT_URL = global_variables.CURRENT_URL
@@ -93,6 +93,19 @@ def friend_request_to_json(friend_request, user):
         rq_dic["pk"] = each_request.pk
         friend_request_list.append(rq_dic)
     return friend_request_list
+
+
+def json_followers(user):
+    follow_list = []
+    follower = Follow.objects.followers(user)
+    for each_f in follower:
+        follow_list.append({
+            'username':each_f.follower.username,
+            'first_name':each_f.follower.first_name,
+            'last_name': each_f.follower.last_name,
+            'id': each_f.follower.id
+        })
+    return follow_list
 
 
 def get_challengable_users(user):
