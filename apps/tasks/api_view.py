@@ -718,7 +718,6 @@ class ApiProfileView(CSRFExemptView):
             'challenges_completed': challenges_completed,
             'friend_count':friend_count,
             'is_friend':Friend.objects.are_friends(user, other_user),
-            'follow_count': get_all_follow_count(tikedge_user)
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)

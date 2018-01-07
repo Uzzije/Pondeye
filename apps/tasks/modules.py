@@ -681,8 +681,8 @@ def user_total_goal_followers(tikedge_user):
     followers_list = []
     projects = tikedge_user.userproject_set.all()
     for each_proj in projects:
-        followers = Follow.objects.get(tasks=each_proj)
-        for each_followers  in followers.users.all():
+        followers = Follow.objects.filter(tasks=each_proj)
+        for each_followers in followers:
             if each_followers not in followers_list:
                 follow_count += 1
                 followers_list.append(each_followers)
