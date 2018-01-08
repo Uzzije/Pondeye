@@ -6,7 +6,7 @@ from .views import RegisterView, LoginView, HomeView, AddProject, LogoutView,\
 from .api_view import ApiLoginView, ApiRegistrationView, ApiGetPostInfo, \
     ApiNewMilestone, ApiProjectEditView, ApiMilestoneEditView, ApiChangePersonalInformationView, ApiProfileView,\
     ApiProfilePictureView, ApiCheckMilestoneDone, ApiCheckProjectDone, ApiCheckFailedProjectMilestoneView, \
-    ApiPasswordResetView, ApiSendResetPasswordCode,  ApiRunRanking, ApiNewChallenge
+    ApiPasswordResetView, ApiSendResetPasswordCode,  ApiRunRanking, ApiNewChallenge, ApiAllChallengeView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from django.conf.urls.static import static
@@ -43,7 +43,8 @@ urlpatterns = [
     url(r'^api/send-reset-pass-code', ApiSendResetPasswordCode.as_view(), name="api_pass_reset_code"),
     url(r'^api/reset-password', ApiPasswordResetView.as_view(), name="api_pass_reset_view"),
     url(r'^api/rank-all-users', ApiRunRanking.as_view(), name='api_run_ranking_algorithm'),
-    url(r'^api/create-new-challenge', ApiNewChallenge.as_view(), name='api_create_challenge')
+    url(r'^api/create-new-challenge', ApiNewChallenge.as_view(), name='api_create_challenge'),
+    url(r'api/get-all-challenge', ApiAllChallengeView.as_view(), name='api_all_challenge'),
 
 ]
 

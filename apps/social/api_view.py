@@ -16,7 +16,7 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 import json
 
 from django.db.models import Q
-from search_module import find_everything, search_result_jsonified
+from search_module import find_everything, search_result_jsonified, find_friends, find_project, initial_all_friends
 from image_modules import pondeye_image_filter
 from django.utils import timezone
 from friendship.models import Friend, FriendshipRequest
@@ -564,6 +564,74 @@ class ApiDeletePictureSet(CSRFExemptView):
             response = {'status':False}
         return HttpResponse(json.dumps(response))
 '''
+
+
+class ApiAllFriendsView(CSRFExemptView):
+
+    """
+        Api Call for Find Result
+    """
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        results = initial_all_friends(user)
+        response["status"] = True
+        print type(results)
+        response["result_list"] = search_result_jsonified(results)
+        return HttpResponse(json.dumps(response))
+
+
+class ApiFindFriendView(CSRFExemptView):
+
+    """
+        Api Call for Find Result
+    """
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        query_word = request.GET["query_word"]
+        results = find_friends(user, query_word)
+        response["status"] = True
+        print type(results)
+        response["result_list"] = search_result_jsonified(results)
+        return HttpResponse(json.dumps(response))
+
+
+class ApiFindProjectView(CSRFExemptView):
+
+    """
+        Api Call for Find Result
+    """
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        query_word = request.GET["query_word"]
+        results = find_project(user, query_word)
+        response["status"] = True
+        print type(results)
+        response["result_list"] = search_result_jsonified(results)
+        return HttpResponse(json.dumps(response))
 
 
 class ApiEditPictureSetView(CSRFExemptView):

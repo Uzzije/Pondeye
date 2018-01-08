@@ -2,6 +2,7 @@ from django.views.generic import View
 from friendship.models import Friend
 
 from models import User, TikedgeUser, UserProject,Milestone, TagNames
+from social.search_module import search_result_jsonified, find_friends, initial_all_challenge
 from tasks import begin_timeline_video
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
     Pond, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, Challenge, \
@@ -723,6 +724,28 @@ class ApiProfileView(CSRFExemptView):
         }
         response['user_details'] = profile_info
         return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiAllChallengeView(CSRFExemptView):
+
+    """
+        Api Call for Find Result
+    """
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        results = initial_all_challenge(user)
+        response["status"] = True
+        print type(results)
+        response["result_list"] = search_result_jsonified(results)
+        return HttpResponse(json.dumps(response))
 
 
 class ApiProfilePictureView(CSRFExemptView):
