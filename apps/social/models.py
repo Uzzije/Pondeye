@@ -210,6 +210,7 @@ class Challenge(models.Model):
     is_deleted = models.BooleanField(default=False)
     is_public = models.BooleanField(default=True)
     created = models.DateTimeField(default=now)
+    self_challenge = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % self.project.name_of_project

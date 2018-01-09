@@ -356,12 +356,18 @@ class ApiNewChallenge(CSRFExemptView):
             response["error"] = "It seems like your date input is in the past!"
             return HttpResponse(json.dumps(response), status=201)
         tikedge_user = TikedgeUser.objects.get(user=user)
-        challenged_user = TikedgeUser.objects.get(user__id=int(request.POST.get('challenged_user')))
+        challenge_id = int(request.POST.get('challenged_user'))
+        if challenge_id > 0:
+            challenged_user = TikedgeUser.objects.get(user__id=int(challenge_id))
+            self_challenge = False
+        else:
+            challenged_user = tikedge_user
+            self_challenge = True
         new_project = UserProject(name_of_project=name_of_project, is_live=True,
                                   made_live=datetime.now(), user=challenged_user, length_of_project=end_by)
         new_project.save()
         new_challenge = Challenge(project=new_project, challenged=challenged_user,
-                                       challenger=tikedge_user)
+                                       challenger=tikedge_user, self_challenge=self_challenge)
         new_challenge.save()
         has_video = request.POST.get('cha_vid')
         vid_file = get_video_from_base64(has_video)
