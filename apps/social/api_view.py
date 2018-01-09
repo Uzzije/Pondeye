@@ -4,7 +4,7 @@ from models import (Notification, Follow, VoucheMilestone, SeenMilestone,
                     PondMembership, User, ProgressPicture, ShoutOutEmailAndNumber,
                     ProgressPictureSet, ProgressImpressedCount, SeenProgress, VoucheProject, ProgressVideo,
                     ProgressVideoSet, FriendshipNotification, FollowChallenge, Challenge, ChallengeNotification,
-                    HighlightImpressedCount, RecentUploadImpressedCount)
+                    HighlightImpressedCount, RecentUploadImpressedCount, SeenRecentUpload)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
@@ -1152,7 +1152,7 @@ class ApiMilestoneView(CSRFExemptView):
         }
 
         return HttpResponse(json.dumps(response), status=201)
-
+'''
 
 class ApiProjectView(CSRFExemptView):
 
@@ -1166,7 +1166,8 @@ class ApiProjectView(CSRFExemptView):
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        project = UserProject.objects.get(id=int(proj_id))
+        challenge = Challenge.objects.get(id=int('ch_id'))
+        project = challenge.project
         project_name = project.name_of_project
         motivations = project.tags.all()
         print "motivations ", motivations
@@ -1195,6 +1196,7 @@ class ApiProjectView(CSRFExemptView):
             is_completed = None
         response = {
             'status':True,
+            'project_comments': recent_upload_comments_jsonified()
             'project_name':project_name,
             'user_first_name':project.user.user.first_name,
             'user_last_name':project.user.user.last_name,
@@ -1213,6 +1215,72 @@ class ApiProjectView(CSRFExemptView):
             'proj_id':project.id,
             'project_pic': task_modules.get_project_pic_info(project),
             'progresses': modules.get_picture_list_from_set(progress, timezone_=timezone_, indi_proj=True)
+        }
+        return HttpResponse(json.dumps(response), status=201)
+'''
+
+class ApiProjectView(CSRFExemptView):
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            req_user = User.objects.get(username=username)
+            proj_id = request.GET.get("proj_id")
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        challenge = Challenge.objects.get(id=int('ch_id'))
+        project = challenge.project
+        project_name = project.name_of_project
+        motivations = project.tags.all()
+        print "motivations ", motivations
+        modules.increment_project_view(req_user, project)
+        try:
+            seen_count = SeenProject.objects.get(tasks=project).get_count()
+        except ObjectDoesNotExist:
+            seen_count = 0
+        try:
+            follows = Follow.objects.get(tasks=project).users.count()
+        except ObjectDoesNotExist:
+            follows = 0
+        user_owns_proj = TikedgeUser.objects.get(user=req_user) == project.user
+        timezone_ = request.GET.get('timezone')
+        progress = ProgressPictureSet.objects.get(project=project)
+
+        public_status = "Goal is in Pond"
+        if project.is_public:
+            public_status = "Goal is Public"
+        if project.is_completed:
+            is_completed = "Completed!"
+        elif project.is_failed:
+            is_completed = "Failed!"
+        else:
+            is_completed = None
+        progress_set = ProgressVideoSet.objects.filter(challenge=challenge, is_deleted=False)
+        recent_upload = progress_set.list_of_progress_videos.filter(is_deleted=False).order_by('-created').first()
+        response = {
+            'status':True,
+            'project_comments': modules.challenge_comments_jsonified(challenge, timezone_),
+            'recent_comments': modules.recent_upload_comments_jsonified(recent_upload, timezone_),
+            'project_name':project_name,
+            'user_first_name':project.user.user.first_name,
+            'user_last_name':project.user.user.last_name,
+            'start_time':task_modules.utc_to_local(project.made_live, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
+            'end_time':task_modules.utc_to_local(project.length_of_project, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
+            'impress_count': RecentUploadImpressedCount.objects.filter(progresss_set=progress_set).count(),
+            'seen_count':seen_count,
+            'follow_count':FollowChallenge.objects.filter(challenge=challenge).count(),
+            'ru_upload_url': recent_upload.video.url,
+            'ru_upload_views': SeenRecentUpload.objects.filter(video=recent_upload).count(),
+            'public_status':public_status,
+            'tags':modules.motivation_for_project_app_view(motivations),
+            'user_owns_proj':user_owns_proj,
+            'is_completed':is_completed,
+            'is_failed':project.is_failed,
+            'is_completed_bool':project.is_completed,
+            'proj_id':project.id,
         }
         return HttpResponse(json.dumps(response), status=201)
 
