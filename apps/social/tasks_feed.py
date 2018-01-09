@@ -185,7 +185,7 @@ class PondFeed:
         if self.type_of_feed is global_variables.VIDEO_SET or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
             comments = CommentChallengeAcceptance.objects.filter(challenge=self.tasks.challenge).order_by('-created')
         elif self.type_of_feed is global_variables.CHALLENGED_ACCEPTED:
-            comments = CommentRecentUploads.objects.filter(challenge=self.tasks).order_by('-created')
+            comments = CommentRecentUploads.objects.filter(recent_upload=self.tasks).order_by('-created')
         else:
             comments = CommentRequestFeed.objects.filter(challenge=self.tasks).order_by('-created')
         for comm in comments:
@@ -193,7 +193,8 @@ class PondFeed:
                 'first_name':comm.tikedge_user.user.first_name,
                 'last_name':comm.tikedge_user.user.last_name,
                 'comment':comm.comment,
-                'date': utc_to_local(comm.created, local_timezone=timezone).strftime("%B %d %Y %I:%M %p")
+                'date': utc_to_local(comm.created, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
+                'id':comm.id
             }
             comments_list.append(com_dic)
         return comments_list

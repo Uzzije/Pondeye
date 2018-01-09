@@ -2,7 +2,8 @@ from ..tasks.models import TikedgeUser, UserProject
 from ..tasks.forms.form_module import get_current_datetime
 from .models import ProfilePictures, ProgressVideoSet, ChallengeNotification, FriendshipNotification, Challenge, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, PondSpecificProject, \
-     PondRequest, Pond, PondMembership, ProgressImpressedCount, PondProgressFeed, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank
+     PondRequest, Pond, PondMembership, ProgressImpressedCount, PondProgressFeed, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank, \
+    CommentChallengeAcceptance, CommentRecentUploads
 from django.db.models import Q
 from tasks_feed import NotificationFeed, AcceptanceFeed, RequestFeed
 from django.core.exceptions import ObjectDoesNotExist
@@ -162,6 +163,38 @@ def get_consistency_notification(user_obj):
         new_dic["name"] = notif.get_name()
         notif_list.append(new_dic)
     return notif_list
+
+
+def challenge_comments_jsonified(challenge, timezone='UTC'):
+    comments = CommentChallengeAcceptance.objects.filter(challenge=challenge, is_delete=False)
+    comments_list = []
+    for comm in comments:
+        com_dic = {
+            'first_name':comm.tikedge_user.user.first_name,
+            'last_name':comm.tikedge_user.user.last_name,
+            'comment':comm.comment,
+            'date': utc_to_local(comm.created, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
+            'id':comm.id
+        }
+        comments_list.append(com_dic)
+    return comments_list
+
+    pass
+
+
+def recent_upload_comments_jsonified(recent_upload, timezone='UTC'):
+    comments = CommentRecentUploads.objects.filter(recent_upload=recent_upload, is_delete=False)
+    comments_list = []
+    for comm in comments:
+        com_dic = {
+            'first_name':comm.tikedge_user.user.first_name,
+            'last_name':comm.tikedge_user.user.last_name,
+            'comment':comm.comment,
+            'date': utc_to_local(comm.created, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
+            'id':comm.id
+        }
+        comments_list.append(com_dic)
+    return comments_list
 
 
 def get_credibility_notification(user_obj):

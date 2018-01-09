@@ -158,6 +158,7 @@ class CommentChallengeAcceptance(models.Model):
     comment = models.TextField(default="", max_length=500)
     challenge = models.ForeignKey('Challenge', blank=True, null=True)
     created = models.DateTimeField(default=now)
+    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % self.challenge.project.name_of_project
@@ -168,6 +169,7 @@ class CommentRequestFeed(models.Model):
     comment = models.TextField(default="", max_length=500)
     challenge = models.ForeignKey('Challenge', blank=True, null=True)
     created = models.DateTimeField(default=now)
+    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % self.challenge.project.name_of_project
@@ -177,7 +179,9 @@ class CommentRecentUploads(models.Model):
     tikedge_user = models.ForeignKey(TikedgeUser, blank=True, null=True)
     comment = models.TextField(default="", max_length=500)
     challenge = models.ForeignKey('Challenge', blank=True, null=True)
+    recent_upload = models.ForeignKey('ProgressVideo', blank=True, null=True)
     created = models.DateTimeField(default=now)
+    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % self.challenge.project.name_of_project
@@ -188,6 +192,7 @@ class CommentVideoCelebrations(models.Model):
     comment = models.TextField(default="", max_length=500)
     challenge = models.ForeignKey('Challenge', blank=True, null=True)
     created = models.DateTimeField(default=now)
+    is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s' % self.challenge.project.name_of_project
