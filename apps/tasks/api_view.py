@@ -2,7 +2,7 @@ from django.views.generic import View
 from friendship.models import Friend
 
 from models import User, TikedgeUser, UserProject,Milestone, TagNames
-from social.search_module import search_result_jsonified, find_friends, initial_all_challenge
+from ..social.search_module import search_result_jsonified, find_friends, initial_all_challenge
 from tasks import begin_timeline_video
 from ..social.models import ProfilePictures, JournalPost, PondSpecificProject, \
     Pond, VoucheProject, Follow, SeenProject, WorkEthicRank, ProgressVideoSet, Challenge, \
