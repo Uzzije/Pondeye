@@ -117,7 +117,9 @@ def get_challengable_users(user):
             'name': '%s %s' % (each_friend.first_name, each_friend.last_name),
             'id': each_friend.id,
         }
+
         all_friends_list.append(all_friends_dic)
+    all_friends_list.append({'name':'For Self', 'id':-1})
     return all_friends_list
 
 
