@@ -569,19 +569,20 @@ class ApiDeletePictureSet(CSRFExemptView):
 class ApiAllFriendsView(CSRFExemptView):
 
     """
-        Api Call for Find Result
+        Api Call to Find Friends Result
     """
 
     def get(self, request):
         response = {}
         try:
             username = request.GET.get("username")
-            user = User.objects.get(username=username)
+            User.objects.get(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        results = initial_all_friends(user)
+        other_user = User.objects.get(request.GET.get("userId"))
+        results = initial_all_friends(other_user)
         response["status"] = True
         print type(results)
         response["result_list"] = search_result_jsonified(results)
@@ -1218,6 +1219,7 @@ class ApiProjectView(CSRFExemptView):
         }
         return HttpResponse(json.dumps(response), status=201)
 '''
+
 
 class ApiProjectView(CSRFExemptView):
 
