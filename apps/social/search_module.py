@@ -117,7 +117,7 @@ def get_query(query_string, search_fields):
 
 def initial_all_friends(user):
 	result_list = []
-	all_friends = Friend.objects.friends(user).value_list('id', flat=True)
+	all_friends = Friend.objects.friends(user)
 	#people_result = User.objects.filter(~Q(username=user.username), Q(id__in=all_friends),(Q(is_staff=False) | Q(is_superuser=False))).distinct()
 	for pip in all_friends:
 		search_obj = GeneralSearchFeed(pip, global_variables.PERSON_SEARCH)
