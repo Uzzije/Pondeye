@@ -742,12 +742,14 @@ class ApiAllChallengeView(CSRFExemptView):
         response = {}
         try:
             username = request.GET.get("username")
-            user = User.objects.get(username=username)
+            User.objects.get(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        results = initial_all_challenge(user)
+        other_user_id = int(request.GET.get("userId"))
+        other_user = User.objects.get(id=other_user_id)
+        results = initial_all_challenge(other_user)
         response["status"] = True
         print type(results)
         response["result_list"] = search_result_jsonified(results)
