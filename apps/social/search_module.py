@@ -117,11 +117,9 @@ def get_query(query_string, search_fields):
 
 def initial_all_friends(user):
 	result_list = []
-	tikege_user = TikedgeUser.objects.get(user=user)
 	all_friends = Friend.objects.friends(user).value_list('id', flat=True)
-	people_result = User.objects.filter(~Q(username=user.username), Q(id__in=all_friends),
-	                                                   (Q(is_staff=False) | Q(is_superuser=False))).distinct()
-	for pip in people_result:
+	#people_result = User.objects.filter(~Q(username=user.username), Q(id__in=all_friends),(Q(is_staff=False) | Q(is_superuser=False))).distinct()
+	for pip in all_friends:
 		search_obj = GeneralSearchFeed(pip, global_variables.PERSON_SEARCH)
 		result_list.append(search_obj)
 	sorted_list = sorted(result_list, key=lambda res: res.created)
