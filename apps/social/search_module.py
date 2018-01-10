@@ -118,20 +118,12 @@ def get_query(query_string, search_fields):
 def initial_all_friends(user):
 	result_list = []
 	tikege_user = TikedgeUser.objects.get(user=user)
-	challenge_result = Challenge.objects.filter(Q(is_deleted=False),
-	                                                             Q(project__user=tikege_user)).distinct()
-
-	for proj in challenge_result:
-		if not proj.is_public:
-			pond_spec = PondSpecificProject.objects.get(project=proj)
-			for each_pond in pond_spec.pond.all():
-				if tikege_user in each_pond.pond_members.all():
-					search_obj = GeneralSearchFeed(proj, global_variables.PERSON_SEARCH)
-					result_list.append(search_obj)
-					break
-		else:
-			search_obj = GeneralSearchFeed(proj, global_variables.PERSON_SEARCH)
-			result_list.append(search_obj)
+	all_friends = Friend.objects.friends(user).value_list('id', flat=True)
+	people_result = User.objects.filter(~Q(username=user.username), Q(id__in=all_friends),
+	                                                   (Q(is_staff=False) | Q(is_superuser=False))).distinct()
+	for pip in people_result:
+		search_obj = GeneralSearchFeed(pip, global_variables.PERSON_SEARCH)
+		result_list.append(search_obj)
 	sorted_list = sorted(result_list, key=lambda res: res.created)
 	return sorted_list
 
