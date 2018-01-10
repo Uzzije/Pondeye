@@ -747,7 +747,7 @@ def get_recent_challenge(user, requesting_user, is_live=True):
 
 
 def days_left(each_proj):
-    diff = django_timezone.now() - each_proj.project.made_live
+    diff = django_timezone.now() - each_proj.project.length_of_project
     diff_days = diff.days
     type_of = "Days"
     if diff_days <= 1:
@@ -756,7 +756,8 @@ def days_left(each_proj):
         if diff_days <= 1:
             type_of = "Minutes"
             diff_days = diff.seconds/60
-    return {'is_days':type_of, 'diff':diff_days, 'expiration_date':utc_to_local(each_proj.project.made_live, 'America/Chicago')}
+    return {'is_days':type_of, 'diff':diff_days, 'expiration_date':utc_to_local(each_proj.project.length_of_project,
+                                                                                'America/Chicago').strftime("%B %d %Y %I:%M %p")}
 
 
 def get_recent_challenge_json(challenge):
