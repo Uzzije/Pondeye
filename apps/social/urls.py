@@ -91,7 +91,7 @@ urlpatterns = [
     url(r'api/new-highlight-impression',  ApiHighlightImpressed.as_view(), name='api_highlight_impressed'),
     url(r'api/get-projects', ApiFindProjectView.as_view(), name='api_find_project'),
     url(r'api/get-friends', ApiFindFriendView.as_view(), name='api_find_friend'),
-    url(r'api/get-all-friends', ApiAllFriendsView.as_view(), name='api_all_projects'),
+    url(r'api/get-all-friends', ApiAllFriendsView.as_view(), name='api_all_friends'),
 
 ]
 

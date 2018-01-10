@@ -126,11 +126,11 @@ def initial_all_friends(user):
 			pond_spec = PondSpecificProject.objects.get(project=proj)
 			for each_pond in pond_spec.pond.all():
 				if tikege_user in each_pond.pond_members.all():
-					search_obj = GeneralSearchFeed(proj, global_variables.CHALLENGE_NAME_SEARCH)
+					search_obj = GeneralSearchFeed(proj, global_variables.PERSON_SEARCH)
 					result_list.append(search_obj)
 					break
 		else:
-			search_obj = GeneralSearchFeed(proj, global_variables.CHALLENGE_NAME_SEARCH)
+			search_obj = GeneralSearchFeed(proj, global_variables.PERSON_SEARCH)
 			result_list.append(search_obj)
 	sorted_list = sorted(result_list, key=lambda res: res.created)
 	return sorted_list
