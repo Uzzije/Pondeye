@@ -756,7 +756,9 @@ def days_left(each_proj):
         if diff_days <= 1:
             type_of = "Minutes"
             diff_days = diff.seconds/60
-    return {'is_days':type_of, 'diff':diff_days, 'expiration_date':utc_to_local(each_proj.project.length_of_project,
+    return {'is_days':type_of, 'diff':diff_days, 'now':utc_to_local(django_timezone.now(),
+                                                                                    'America/Chicago').strftime("%B %d %Y %I:%M %p"),
+            'expiration_date':utc_to_local(each_proj.project.length_of_project,
                                                                                 'America/Chicago').strftime("%B %d %Y %I:%M %p")}
 
 
