@@ -298,7 +298,7 @@ def search_result_jsonified(results):
 				'is_milestone': False,
 				'id':each_res.feed_object.id,
 				'owner_profile_pic':each_res.creator_profile_pic_url,
-				'blurb':each_res.feed_object.blurb
+				'blurb':each_res.feed_object.project.blurb
 			}
 			result_list.append(res_dic)
 		elif each_res.is_pond:
