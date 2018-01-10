@@ -747,16 +747,16 @@ def get_recent_challenge(user, requesting_user, is_live=True):
 
 
 def days_left(each_proj):
-    diff = datetime.now() - each_proj.project.made_live
+    diff = django_timezone.now() - each_proj.project.made_live
     diff_days = diff.days
     type_of = "Days"
     if diff_days <= 1:
         type_of = "Hours"
-        diff_days = diff_days.seconds/3600
+        diff_days = diff.seconds/3600
         if diff_days <= 1:
             type_of = "Minutes"
-            diff_days = diff_days.seconds/60
-    return {'is_days':type_of, 'diff':diff}
+            diff_days = diff.seconds/60
+    return {'is_days':type_of, 'diff':diff_days}
 
 
 def get_recent_challenge_json(challenge):
