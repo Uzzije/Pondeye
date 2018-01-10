@@ -756,7 +756,7 @@ def days_left(each_proj):
         if diff_days <= 1:
             type_of = "Minutes"
             diff_days = diff.seconds/60
-    return {'is_days':type_of, 'diff':diff_days}
+    return {'is_days':type_of, 'diff':diff_days, 'expiration_date':utc_to_local(each_proj.project.made_live, 'America/Chicago')}
 
 
 def get_recent_challenge_json(challenge):
@@ -768,7 +768,7 @@ def get_recent_challenge_json(challenge):
         project_list.append({
             'blurb':each_proj.project.blurb,
             'id':each_proj.id,
-            'is_live':each_proj.project.blurb,
+            'is_live':each_proj.project.is_live,
             'message':mess,
             'days_remaining':days_left(each_proj)
         })
