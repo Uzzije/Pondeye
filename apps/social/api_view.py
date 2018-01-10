@@ -581,7 +581,8 @@ class ApiAllFriendsView(CSRFExemptView):
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        other_user = User.objects.get(request.GET.get("userId"))
+        other_user_id = int(request.GET.get("userId"))
+        other_user = User.objects.get(id=other_user_id)
         results = initial_all_friends(other_user)
         response["status"] = True
         print type(results)
