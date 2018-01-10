@@ -747,7 +747,7 @@ def get_recent_challenge(user, requesting_user, is_live=True):
 
 
 def days_left(each_proj):
-    diff = django_timezone.now() - each_proj.project.length_of_project
+    diff = each_proj.project.length_of_project - django_timezone.now()
     diff_days = diff.days
     type_of = "Days"
     if diff_days <= 1:
