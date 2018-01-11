@@ -183,7 +183,7 @@ def challenge_comments_jsonified(challenge, timezone='UTC'):
 
 
 def recent_upload_comments_jsonified(recent_upload, timezone='UTC'):
-    comments = CommentRecentUploads.objects.filter(recent_upload=recent_upload, is_delete=False)
+    comments = CommentRecentUploads.objects.filter(recent_upload=recent_upload, is_deleted=False)
     comments_list = []
     for comm in comments:
         com_dic = {
