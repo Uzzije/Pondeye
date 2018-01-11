@@ -168,7 +168,7 @@ def get_consistency_notification(user_obj):
 
 
 def challenge_comments_jsonified(challenge, timezone='UTC'):
-    comments = CommentChallengeAcceptance.objects.filter(challenge=challenge, is_delete=False)
+    comments = CommentChallengeAcceptance.objects.filter(challenge=challenge, is_deleted=False)
     comments_list = []
     for comm in comments:
         com_dic = {
