@@ -285,6 +285,9 @@ class ApiRecentUploadView(CSRFExemptView):
         video_mod.save()
         modules.convert_to_mp4_file_for_file_object(video_mod)
         project = UserProject.objects.get(id=int(request.POST.get("project_id")))
+        if not project.made_progress:
+            project.made_progress = True
+        project.save()
         pond_members_id_str = request.POST.get("members_id")
         pond_members_id_arr = pond_members_id_str.split(",")
         progress_follower = FollowChallenge.objects.filter(challenge__project=project)
@@ -302,6 +305,9 @@ class ApiRecentUploadView(CSRFExemptView):
                                                                )
                 challenge_notification.save()
         video_mod.save()
+        progress_set = ProgressVideoSet.objects.get(challenge__project=project)
+        progress_set.list_of_progress_videos.add(video_mod)
+        progress_set.save()
         for pr_follower in progress_follower:
             mess = "%s %s added progress to %s!" % (tikedge_user.user.first_name, tikedge_user.user.last_name,
                                                     project.blurb)
