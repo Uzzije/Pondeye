@@ -279,12 +279,13 @@ class ApiRecentUploadView(CSRFExemptView):
         if not vid_file:
             response["error"] = "Hey picture must be either video file! ", dec_video_file
             return HttpResponse(json.dumps(response), status=201)
+        project = UserProject.objects.get(id=int(request.POST.get("project_id")))
+        challenge = Challenge.objects.get(project=project)
         vid_name = "%s_%s" % (progress_name, vid_file.name)
-        video_mod = ProgressVideo(video_name=vid_name,
+        video_mod = ProgressVideo(video_name=vid_name, challenge=challenge,
                                video=vid_file, name_of_progress=progress_name)
         video_mod.save()
         modules.convert_to_mp4_file_for_file_object(video_mod)
-        project = UserProject.objects.get(id=int(request.POST.get("project_id")))
         if not project.made_progress:
             project.made_progress = True
         project.save()
@@ -301,10 +302,9 @@ class ApiRecentUploadView(CSRFExemptView):
                 challenge_notification = ChallengeNotification(to_user=ponder,
                                                                from_user=tikedge_user,
                                                                message=mess,
-                                                               challenge=progress_follower.first().challenge
+                                                               challenge=challenge
                                                                )
                 challenge_notification.save()
-        video_mod.challenge = progress_follower.first().challenge
         video_mod.save()
         progress_set = ProgressVideoSet.objects.get(challenge__project=project)
         progress_set.list_of_progress_videos.add(video_mod)
