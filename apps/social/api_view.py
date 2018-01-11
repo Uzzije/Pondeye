@@ -1257,6 +1257,10 @@ class ApiProjectView(CSRFExemptView):
             is_completed = None
         progress_set = ProgressVideoSet.objects.get(challenge=challenge, is_deleted=False)
         recent_upload = progress_set.list_of_progress_videos.filter(is_deleted=False).order_by('-created').first()
+        if recent_upload.video:
+            video_url = recent_upload.video.url
+        else:
+            video_url = None
         response = {
             'status':True,
             'project_comments': modules.challenge_comments_jsonified(challenge, timezone_),
@@ -1269,7 +1273,7 @@ class ApiProjectView(CSRFExemptView):
             'impress_count': RecentUploadImpressedCount.objects.filter(progress=recent_upload).count(),
             'seen_count':seen_count,
             'follow_count':FollowChallenge.objects.filter(challenge=challenge).count(),
-            'ru_upload_url': recent_upload.video.url,
+            'ru_upload_url': video_url,
             'ru_upload_views': SeenRecentUpload.objects.filter(video=recent_upload).count(),
             'public_status':public_status,
             'tags':modules.motivation_for_project_app_view(motivations),
