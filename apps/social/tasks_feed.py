@@ -170,11 +170,11 @@ class PondFeed:
         return follows.count()
 
     def impress_count(self):
-        if self.type_of_feed is global_variables.VIDEO_SET:
-            seens = RecentUploadImpressedCount.objects.filter(progresss_set=self.tasks).count()
-            return seens
         if self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
-            seens = HighlightImpressedCount.objects.filter(progress=self.tasks).count()
+            seens = RecentUploadImpressedCount.objects.filter(progresss=self.tasks).count()
+            return seens
+        if self.type_of_feed is global_variables.VIDEO_SET:
+            seens = HighlightImpressedCount.objects.filter(progress_set=self.tasks).count()
             return seens
         return 0
 
@@ -378,7 +378,6 @@ class VideoProgressFeed(PondFeed):
                 'seen': self.seens(),
                 'follow': self.follow(),
                 'impressed': self.impress_count(),
-                'progress_set_id': self.tasks.id
             }
         return progress_dic
 
