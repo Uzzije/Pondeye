@@ -69,6 +69,7 @@ class ApiLoginView(CSRFExemptView):
         if user.username == "root":
             user.is_staff = True
             user.is_superuser = True
+        response_data['super_user'] = user.is_superuser
         return HttpResponse(json.dumps(response_data), status=201)
 
 
