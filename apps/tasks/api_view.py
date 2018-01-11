@@ -361,13 +361,18 @@ class ApiNewChallenge(CSRFExemptView):
         if challenge_id > 0:
             challenged_user = TikedgeUser.objects.get(user__id=int(challenge_id))
             self_challenge = False
+            accepted = False
+            dt_res = None
         else:
             challenged_user = tikedge_user
             self_challenge = True
+            accepted = True
+            dt_res = datetime.now()
         new_project = UserProject(name_of_project=name_of_project, is_live=True,
                                   made_live=datetime.now(), user=challenged_user, length_of_project=end_by)
         new_project.save()
-        new_challenge = Challenge(project=new_project, challenged=challenged_user,
+        new_challenge = Challenge(project=new_project, challenged=challenged_user, challenge_accepted=accepted,
+                                       date_responded=dt_res,
                                        challenger=tikedge_user, self_challenge=self_challenge)
         new_challenge.save()
         has_video = request.POST.get('cha_vid')
