@@ -1257,7 +1257,7 @@ class ApiProjectView(CSRFExemptView):
             is_completed = None
         progress_set = ProgressVideoSet.objects.get(challenge=challenge, is_deleted=False)
         recent_upload = progress_set.list_of_progress_videos.filter(is_deleted=False).order_by('-created').first()
-        if recent_upload.video:
+        if recent_upload:
             video_url = recent_upload.video.url
         else:
             video_url = None
