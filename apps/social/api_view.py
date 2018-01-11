@@ -1234,7 +1234,7 @@ class ApiProjectView(CSRFExemptView):
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        challenge = Challenge.objects.get(id=int('ch_id'))
+        challenge = Challenge.objects.get(id=int(request.GET.get('ch_id')))
         project = challenge.project
         project_name = project.name_of_project
         motivations = project.tags.all()
@@ -1244,14 +1244,8 @@ class ApiProjectView(CSRFExemptView):
             seen_count = SeenProject.objects.get(tasks=project).get_count()
         except ObjectDoesNotExist:
             seen_count = 0
-        try:
-            follows = Follow.objects.get(tasks=project).users.count()
-        except ObjectDoesNotExist:
-            follows = 0
         user_owns_proj = TikedgeUser.objects.get(user=req_user) == project.user
         timezone_ = request.GET.get('timezone')
-        progress = ProgressPictureSet.objects.get(project=project)
-
         public_status = "Goal is in Pond"
         if project.is_public:
             public_status = "Goal is Public"
