@@ -1255,7 +1255,7 @@ class ApiProjectView(CSRFExemptView):
             is_completed = "Failed!"
         else:
             is_completed = None
-        progress_set = ProgressVideoSet.objects.filter(challenge=challenge, is_deleted=False)
+        progress_set = ProgressVideoSet.objects.get(challenge=challenge, is_deleted=False)
         recent_upload = progress_set.list_of_progress_videos.filter(is_deleted=False).order_by('-created').first()
         response = {
             'status':True,
