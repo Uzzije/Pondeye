@@ -304,6 +304,7 @@ class ApiRecentUploadView(CSRFExemptView):
                                                                challenge=progress_follower.first().challenge
                                                                )
                 challenge_notification.save()
+        video_mod.challenge = progress_follower.first().challenge
         video_mod.save()
         progress_set = ProgressVideoSet.objects.get(challenge__project=project)
         progress_set.list_of_progress_videos.add(video_mod)
