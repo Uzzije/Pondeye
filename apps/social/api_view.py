@@ -1266,7 +1266,7 @@ class ApiProjectView(CSRFExemptView):
             'user_last_name':project.user.user.last_name,
             'start_time':task_modules.utc_to_local(project.made_live, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
             'end_time':task_modules.utc_to_local(project.length_of_project, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
-            'impress_count': RecentUploadImpressedCount.objects.filter(progresss_set=progress_set).count(),
+            'impress_count': RecentUploadImpressedCount.objects.filter(progress=recent_upload).count(),
             'seen_count':seen_count,
             'follow_count':FollowChallenge.objects.filter(challenge=challenge).count(),
             'ru_upload_url': recent_upload.video.url,
