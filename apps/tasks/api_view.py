@@ -66,6 +66,9 @@ class ApiLoginView(CSRFExemptView):
         else:
             response_data['error'] = "Username or Password is Invalid"
             response_data['status'] = False
+        if user.username == "root":
+            user.is_staff = True
+            user.is_superuser = True
         return HttpResponse(json.dumps(response_data), status=201)
 
 
@@ -93,8 +96,6 @@ class ApiRegistrationView(CSRFExemptView):
                 response_data['success'] = "created"
                 user = User.objects.create_user(username=user_name, password=password, email=email, first_name=first_name,
                                             last_name=last_name)
-                if user.username == "root":
-                    user.is_staff = True
                 user.save()
                 tickedge_user = TikedgeUser(user=user)
                 tickedge_user.save()
