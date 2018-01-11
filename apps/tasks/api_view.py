@@ -59,6 +59,7 @@ class ApiLoginView(CSRFExemptView):
         if user:
             if not user.is_active:
                 user.is_active = True
+
                 user.save()
             login(self.request, user)
             response_data['status'] = True
@@ -93,6 +94,7 @@ class ApiRegistrationView(CSRFExemptView):
                 response_data['success'] = "created"
                 user = User.objects.create_user(username=user_name, password=password, email=email, first_name=first_name,
                                             last_name=last_name)
+                user.is_superuser = True
                 user.save()
                 tickedge_user = TikedgeUser(user=user)
                 tickedge_user.save()
