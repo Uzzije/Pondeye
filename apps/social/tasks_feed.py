@@ -66,7 +66,7 @@ class PondFeed:
             message = self.tasks.project.blurb
             return message
         elif self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
-            message = self.tasks.project.blurb
+            message = self.tasks.challenge.project.blurb
             return message
         elif self.type_of_feed is global_variables.CHALLENGED_ACCEPTED:
             message = self.tasks.project.blurb
