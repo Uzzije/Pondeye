@@ -166,7 +166,7 @@ class PondFeed:
         if self.type_of_feed is global_variables.VIDEO_SET:
             follows = FollowChallenge.objects.filter(challenge=self.tasks.challenge)
         else:
-            follows = FollowChallenge.objects.filter(challenge=self.tasks)
+            follows = FollowChallenge.objects.filter(challenge=self.tasks.challenge)
         return follows.count()
 
     def impress_count(self):
@@ -337,7 +337,7 @@ class VideoProgressFeed(PondFeed):
             'is_recent_progress': True,
             'is_video_highlight': False,
             'profile_url':self.profile_url,
-            'id': self.tasks.project.id,
+            'id': self.tasks.challenge.id,
             'user_id':self.tasks.challenge.project.user.user.id,
             'name': self.task_owner_name,
             'video_url':self.get_video_url(self.tasks),
