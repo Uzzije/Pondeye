@@ -1054,7 +1054,7 @@ class ApiRecentUploadImpressed(CSRFExemptView):
                                                                message=mess,
                                                                challenge=progress.challenge)
                 challenge_notification.save()
-        response["count"] = RecentUploadImpressedCount.objects.filter(progress_set=progress).count()
+        response["count"] = RecentUploadImpressedCount.objects.filter(progress=progress).count()
         return HttpResponse(json.dumps(response), status=201)
 
 
