@@ -1040,7 +1040,7 @@ class ApiRecentUploadImpressed(CSRFExemptView):
         progress = ProgressVideo.objects.get(id=int(progress_id))
         tikedge_user = TikedgeUser.objects.get(user=user)
         try:
-            highlight = RecentUploadImpressedCount.objects.get(user=tikedge_user, progress=progress)
+            highlight = RecentUploadImpressedCount.objects.get(users=tikedge_user, progress=progress)
             highlight.delete()
         except ObjectDoesNotExist:
             if tikedge_user != progress.challenge.project.user:

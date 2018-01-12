@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/tasks_feed.py" afterPath="$PROJECT_DIR$/apps/social/tasks_feed.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
     </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,7 +52,7 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.444445">
+            <state vertical-scroll-proportion="-2.4074075">
               <caret line="72" column="44" selection-start-line="72" selection-start-column="44" selection-end-line="72" selection-end-column="44" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
@@ -74,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.037037">
-              <caret line="309" column="20" selection-start-line="309" selection-start-column="20" selection-end-line="309" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.3557252">
+              <caret line="1042" column="68" selection-start-line="1042" selection-start-column="68" selection-end-line="1042" selection-end-column="68" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -106,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tasks_feed.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7038123">
-              <caret line="173" column="68" selection-start-line="173" selection-start-column="68" selection-end-line="173" selection-end-column="68" />
+            <state vertical-scroll-proportion="127.77778">
+              <caret line="84" column="98" selection-start-line="84" selection-start-column="98" selection-end-line="84" selection-end-column="98" />
               <folding />
             </state>
           </provider>
@@ -213,8 +212,8 @@
         <option value="$PROJECT_DIR$/apps/social/modules.py" />
         <option value="$PROJECT_DIR$/apps/tasks/api_view.py" />
         <option value="$PROJECT_DIR$/apps/social/urls.py" />
-        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
         <option value="$PROJECT_DIR$/apps/social/tasks_feed.py" />
+        <option value="$PROJECT_DIR$/apps/social/api_view.py" />
       </list>
     </option>
   </component>
@@ -1257,16 +1256,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.444445">
-          <caret line="72" column="44" selection-start-line="72" selection-start-column="44" selection-end-line="72" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-15.62963">
@@ -1275,12 +1264,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
+    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.037037">
-          <caret line="309" column="20" selection-start-line="309" selection-start-column="20" selection-end-line="309" selection-end-column="20" />
+        <state vertical-scroll-proportion="127.77778">
+          <caret line="84" column="98" selection-start-line="84" selection-start-column="98" selection-end-line="84" selection-end-column="98" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/social/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.4074075">
+          <caret line="72" column="44" selection-start-line="72" selection-start-column="44" selection-end-line="72" selection-end-column="44" />
           <folding>
-            <element signature="e#0#37#0" expanded="true" />
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1293,11 +1290,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/social/tasks_feed.py">
+    <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7038123">
-          <caret line="173" column="68" selection-start-line="173" selection-start-column="68" selection-end-line="173" selection-end-column="68" />
-          <folding />
+        <state vertical-scroll-proportion="0.3557252">
+          <caret line="1042" column="68" selection-start-line="1042" selection-start-column="68" selection-end-line="1042" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
