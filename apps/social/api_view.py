@@ -1244,8 +1244,7 @@ class ApiSeenRecentUploadCounter(CSRFExemptView):
         progress_id = int(request.POST.get("prog_id"))
         progress = ProgressVideo.objects.get(id=progress_id)
         try:
-            seen_upload = SeenRecentUpload.objects.get(video=progress, tikedge_user=tikedge_user)
-            seen_upload.delete()
+            SeenRecentUpload.objects.get(video=progress, tikedge_user=tikedge_user)
         except ObjectDoesNotExist:
             seen_upload = SeenRecentUpload(video=progress, tikedge_user=tikedge_user)
             seen_upload.save()
