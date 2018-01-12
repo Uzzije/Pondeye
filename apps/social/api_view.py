@@ -4,7 +4,7 @@ from models import (Notification, Follow, VoucheMilestone, SeenMilestone,
                     PondMembership, User, ProgressPicture, ShoutOutEmailAndNumber,
                     ProgressPictureSet, ProgressImpressedCount, SeenProgress, VoucheProject, ProgressVideo,
                     ProgressVideoSet, FriendshipNotification, FollowChallenge, Challenge, ChallengeNotification,
-                    HighlightImpressedCount, RecentUploadImpressedCount, SeenRecentUpload)
+                    HighlightImpressedCount, RecentUploadImpressedCount, SeenRecentUpload, SeenVideoSet)
 from ..tasks.models import TikedgeUser, UserProject, Milestone, TagNames
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
@@ -1227,6 +1227,55 @@ class ApiProjectView(CSRFExemptView):
         }
         return HttpResponse(json.dumps(response), status=201)
 '''
+
+
+class ApiSeenRecentUploadCounter(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+            tikedge_user = TikedgeUser.objects.get(user=user)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        progress_id = int(request.POST.get("prog_id"))
+        progress = ProgressVideo.objects.get(id=progress_id)
+        try:
+            seen_upload = SeenRecentUpload.objects.get(video=progress, tikedge_user=tikedge_user)
+            seen_upload.delete()
+        except ObjectDoesNotExist:
+            seen_upload = SeenRecentUpload(video=progress, tikedge_user=tikedge_user)
+            seen_upload.save()
+        response['count'] = SeenRecentUpload.objects.filter(video=progress).count()
+        return HttpResponse(json.dumps(response), status=201)
+
+
+class ApiSeenHighlightCounter(CSRFExemptView):
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.POST.get("username")
+            user = User.objects.get(username=username)
+            tikedge_user = TikedgeUser.objects.get(user=user)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        progress_id = int(request.POST.get("prog_set_id"))
+        progress = ProgressVideoSet.objects.get(id=progress_id)
+        try:
+            seen_upload = SeenVideoSet.objects.get(video_set=progress, tikedge_user=tikedge_user)
+            seen_upload.delete()
+        except ObjectDoesNotExist:
+            seen_upload = SeenVideoSet(video_set=progress, tikedge_user=tikedge_user)
+            seen_upload.save()
+        response['count'] = SeenRecentUpload.objects.filter(video=progress).count()
+        return HttpResponse(json.dumps(response), status=201)
+
 
 
 class ApiProjectView(CSRFExemptView):
