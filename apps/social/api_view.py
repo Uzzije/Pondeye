@@ -1044,7 +1044,7 @@ class ApiRecentUploadImpressed(CSRFExemptView):
             highlight.delete()
         except ObjectDoesNotExist:
             if tikedge_user != progress.challenge.project.user:
-                highlight = RecentUploadImpressedCount(user=tikedge_user, progress_set=progress)
+                highlight = RecentUploadImpressedCount(user=tikedge_user, progress=progress)
                 highlight.save()
                 response["status"] = True
                 mess = '%s %s is impressed with the recent progress of %s.' % (tikedge_user.user.first_name,
