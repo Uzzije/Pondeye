@@ -76,8 +76,8 @@
       <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2870229">
-              <caret line="1039" column="65" selection-start-line="1039" selection-start-column="65" selection-end-line="1039" selection-end-column="65" />
+            <state vertical-scroll-proportion="0.44732824">
+              <caret line="1046" column="60" selection-start-line="1046" selection-start-column="60" selection-end-line="1046" selection-end-column="60" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -1292,8 +1292,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2870229">
-          <caret line="1039" column="65" selection-start-line="1039" selection-start-column="65" selection-end-line="1039" selection-end-column="65" />
+        <state vertical-scroll-proportion="0.44732824">
+          <caret line="1046" column="60" selection-start-line="1046" selection-start-column="60" selection-end-line="1046" selection-end-column="60" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
