@@ -276,7 +276,6 @@ def increment_milestone_view(user_obj, milestone):
     if user not in view.users.all():
         view.users.add(user)
         view.save()
-    print "Trying to view you!!!"
 
 
 def increment_project_view(user_obj, project):
@@ -289,7 +288,6 @@ def increment_project_view(user_obj, project):
     if user not in view.users.all():
         view.users.add(user)
         view.save()
-    print "Trying to view you!!!"
 
 
 def get_journal_message(type_of_message, milestone=None, project=None):

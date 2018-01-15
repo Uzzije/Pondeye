@@ -1276,7 +1276,6 @@ class ApiSeenHighlightCounter(CSRFExemptView):
         return HttpResponse(json.dumps(response), status=201)
 
 
-
 class ApiProjectView(CSRFExemptView):
 
     def get(self, request):
@@ -1284,7 +1283,7 @@ class ApiProjectView(CSRFExemptView):
         try:
             username = request.GET.get("username")
             req_user = User.objects.get(username=username)
-            proj_id = request.GET.get("proj_id")
+            tikedge_user = TikedgeUser.objects.get(user__username=username)
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Log back in and try again!"
@@ -1316,6 +1315,10 @@ class ApiProjectView(CSRFExemptView):
             video_url = recent_upload.video.url
         else:
             video_url = None
+        if project.is_completed:
+            highlight_url = progress_set.video_timeline.url
+        else:
+            highlight_url = None
         response = {
             'status':True,
             'project_comments': modules.challenge_comments_jsonified(challenge, timezone_),
@@ -1325,7 +1328,7 @@ class ApiProjectView(CSRFExemptView):
             'user_last_name':project.user.user.last_name,
             'start_time':task_modules.utc_to_local(project.made_live, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
             'end_time':task_modules.utc_to_local(project.length_of_project, local_timezone=timezone_).strftime("%B %d %Y %I:%M %p"),
-            'impress_count': RecentUploadImpressedCount.objects.filter(progress=recent_upload).count(),
+            'recent_impress_count': RecentUploadImpressedCount.objects.filter(progress=recent_upload).count(),
             'seen_count':seen_count,
             'follow_count':FollowChallenge.objects.filter(challenge=challenge).count(),
             'ru_upload_url': video_url,
@@ -1337,6 +1340,13 @@ class ApiProjectView(CSRFExemptView):
             'is_failed':project.is_failed,
             'is_completed_bool':project.is_completed,
             'proj_id':project.id,
+            'is_goal_owner': project.user == tikedge_user,
+            'has_recent': progress_set.video_timeline == None,
+            'has_highlight': progress_set.video_timeline,
+            'highlight_impress_count': HighlightImpressedCount.objects.filter(progress_set=progress_set).count(),
+            'highlight_view_count': SeenVideoSet.objects.filter(video_set=progress_set).count(),
+            'high_upload_url':highlight_url
+
         }
         return HttpResponse(json.dumps(response), status=201)
 
