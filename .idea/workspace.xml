@@ -52,8 +52,8 @@
       <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7279793">
-              <caret line="1341" column="33" selection-start-line="1341" selection-start-column="33" selection-end-line="1341" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.7085492">
+              <caret line="1340" column="53" selection-start-line="1340" selection-start-column="53" selection-end-line="1340" selection-end-column="53" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -219,7 +219,7 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="372" />
+    <option name="x" value="796" />
     <option name="y" value="24" />
     <option name="width" value="1130" />
     <option name="height" value="945" />
@@ -824,7 +824,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="372" y="24" width="1130" height="945" extended-state="0" />
+    <frame x="796" y="24" width="1130" height="945" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22150736" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
@@ -1263,8 +1263,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7279793">
-          <caret line="1341" column="33" selection-start-line="1341" selection-start-column="33" selection-end-line="1341" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.7085492">
+          <caret line="1340" column="53" selection-start-line="1340" selection-start-column="53" selection-end-line="1340" selection-end-column="53" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
