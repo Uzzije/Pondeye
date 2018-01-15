@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="" />
+    <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
+    </list>
     <ignored path="tikedge.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -50,8 +52,8 @@
       <file leaf-file-name="api_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6502591">
-              <caret line="1335" column="42" selection-start-line="1335" selection-start-column="42" selection-end-line="1335" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.68911916">
+              <caret line="1339" column="42" selection-start-line="1339" selection-start-column="42" selection-end-line="1339" selection-end-column="42" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -217,7 +219,7 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="355" />
+    <option name="x" value="372" />
     <option name="y" value="24" />
     <option name="width" value="1130" />
     <option name="height" value="945" />
@@ -822,7 +824,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="355" y="24" width="1130" height="945" extended-state="1" />
+    <frame x="372" y="24" width="1130" height="945" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22150736" sideWeight="0.75091577" order="0" side_tool="false" content_ui="tabs" />
@@ -1261,8 +1263,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6502591">
-          <caret line="1335" column="42" selection-start-line="1335" selection-start-column="42" selection-end-line="1335" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.68911916">
+          <caret line="1339" column="42" selection-start-line="1339" selection-start-column="42" selection-end-line="1339" selection-end-column="42" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
