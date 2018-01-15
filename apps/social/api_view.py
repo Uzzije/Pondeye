@@ -1318,7 +1318,7 @@ class ApiProjectView(CSRFExemptView):
         if project.is_completed:
             highlight_url = progress_set.video_timeline.url
         else:
-            highlight_url = None
+            highlight_url = False
         response = {
             'status':True,
             'project_comments': modules.challenge_comments_jsonified(challenge, timezone_),
@@ -1341,7 +1341,7 @@ class ApiProjectView(CSRFExemptView):
             'is_completed_bool':project.is_completed,
             'proj_id':project.id,
             'is_goal_owner': project.user == tikedge_user,
-            'has_recent': progress_set.video_timeline == None,
+            'has_recent': not highlight_url,
             'has_highlight': highlight_url,
             'highlight_impress_count': HighlightImpressedCount.objects.filter(progress_set=progress_set).count(),
             'highlight_view_count': SeenVideoSet.objects.filter(video_set=progress_set).count(),
