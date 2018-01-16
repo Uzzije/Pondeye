@@ -1692,8 +1692,8 @@ def make_timeline_video(progress_set):
         video = CompositeVideoClip([file_, txt_clip])
         video_clips.append(video)
     final_clips = concatenate_videoclips(video_clips)
-    final_clips_name = progress_set.project.name_of_project + randomword(12) + ".mp4"
-    temp_audio_name = progress_set.project.name_of_project + randomword(12) + ".mp3"
+    final_clips_name = progress_set.challenge.project.name_of_project + randomword(12) + ".mp4"
+    temp_audio_name = progress_set.challenge.project.name_of_project + randomword(12) + ".mp3"
     abs_path = os.path.join(os.path.abspath('/tmp/'), final_clips_name)
     abs_audio_name = os.path.join(os.path.abspath('/tmp/'), temp_audio_name)
     final_clips.write_videofile(abs_path, temp_audiofile=abs_audio_name)
