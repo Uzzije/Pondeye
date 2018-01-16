@@ -1272,7 +1272,7 @@ class ApiSeenHighlightCounter(CSRFExemptView):
         except ObjectDoesNotExist:
             seen_upload = SeenVideoSet(video_set=progress, tikedge_user=tikedge_user)
             seen_upload.save()
-        response['count'] = SeenVideoSet.objects.filter(video=progress).count()
+        response['count'] = SeenVideoSet.objects.filter(video_set=progress).count()
         return HttpResponse(json.dumps(response), status=201)
 
 
