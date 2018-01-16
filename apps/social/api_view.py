@@ -1342,7 +1342,7 @@ class ApiProjectView(CSRFExemptView):
             'proj_id':project.id,
             'is_goal_owner': project.user == tikedge_user,
             'has_recent': not highlight_url,
-            'has_highlight': highlight_url,
+            'has_highlight': project.is_completed,
             'highlight_impress_count': HighlightImpressedCount.objects.filter(progress_set=progress_set).count(),
             'highlight_view_count': SeenVideoSet.objects.filter(video_set=progress_set).count(),
             'high_upload_url':highlight_url,
