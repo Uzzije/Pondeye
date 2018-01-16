@@ -1683,14 +1683,34 @@ def upload_video_file(filepath, video_model):
     return random_name
 
 
+def days_difference(last_time, current_time):
+    if last_time:
+        diff = current_time - last_time
+        diff_days = diff.days
+        type_of = "Days"
+        if diff_days <= 1:
+            type_of = "Hours"
+            diff_days = diff.seconds/3600
+            if diff_days <= 1:
+                type_of = "Minutes"
+                diff_days = diff.seconds/60
+        str_diff = "%s %s later" % (diff_days, type_of)
+        return str_diff
+    else:
+        return ""
+
+
 def make_timeline_video(progress_set):
     video_clips = []
+    last_time = None
     for each_prog in progress_set.list_of_progress_videos.all():
         file_ = VideoFileClip(each_prog.video.url)
-        txt_clip = TextClip(each_prog.name_of_progress, fontsize=20, color='white')
-        txt_clip = txt_clip.set_pos(('center','top')).set_duration(file_.duration)
+        mess = days_difference(last_time, each_prog.current_time)
+        txt_clip = TextClip(mess, fontsize=40, color='white')
+        txt_clip = txt_clip.set_pos((45,150)).set_duration(file_.duration)
         video = CompositeVideoClip([file_, txt_clip])
         video_clips.append(video)
+        last_time = each_prog.last_updated
     final_clips = concatenate_videoclips(video_clips)
     final_clips_name = progress_set.challenge.project.name_of_project + randomword(12) + ".mp4"
     temp_audio_name = progress_set.challenge.project.name_of_project + randomword(12) + ".mp3"
@@ -1699,5 +1719,7 @@ def make_timeline_video(progress_set):
     final_clips.write_videofile(abs_path, temp_audiofile=abs_audio_name)
     f = open(abs_path)
     progress_set.video_timeline.save(abs_path, File(f))
+    # Get Followers of Challenge
+    # Create Notification for them
 
 

@@ -742,7 +742,8 @@ def get_recent_projects(user, requesting_user, is_live=True):
 
 def get_recent_challenge(user, requesting_user, is_live=True):
     tikedge_user = get_tikedge_user(user)
-    all_challenge = Challenge.objects.filter(Q(project__is_deleted=False), Q(project__is_live=is_live), Q(challenged=tikedge_user)).order_by('-created')
+    all_challenge = Challenge.objects.filter(Q(project__is_deleted=False), Q(project__is_live=is_live),
+                                             Q(challenged=tikedge_user)).order_by('-created')
     return get_recent_challenge_json(all_challenge)
 
 
