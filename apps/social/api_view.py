@@ -1268,7 +1268,6 @@ class ApiSeenHighlightCounter(CSRFExemptView):
         progress = ProgressVideoSet.objects.get(id=progress_id)
         try:
             seen_upload = SeenVideoSet.objects.get(video_set=progress, tikedge_user=tikedge_user)
-            seen_upload.delete()
         except ObjectDoesNotExist:
             seen_upload = SeenVideoSet(video_set=progress, tikedge_user=tikedge_user)
             seen_upload.save()
