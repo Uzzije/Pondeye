@@ -44,8 +44,8 @@ def set_reminder_for_non_committed_tasks(pk):
 @app.task
 def begin_timeline_video(proj_id):
     proj_stone = UserProject.objects.get(id=proj_id)
-    progress_set = ProgressVideoSet.objects.get(project=proj_stone)
-    logger.info("Creating New Highlight Video for this goal: %s" % progress_set.project.name_of_project)
+    progress_set = ProgressVideoSet.objects.get(challenge__project=proj_stone)
+    logger.info("Creating New Highlight Video for this goal: %s" % progress_set.challenge.project.name_of_project)
     """
     proj_stone.is_completed = True
     proj_stone.is_live = False
