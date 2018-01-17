@@ -1719,6 +1719,9 @@ def make_timeline_video(progress_set):
     final_clips.write_videofile(abs_path, temp_audiofile=abs_audio_name)
     f = open(abs_path)
     progress_set.video_timeline.save(abs_path, File(f))
+    progress_set.project.is_completed = True
+    progress_set.project.is_live = False
+    progress_set.project.save()
     # Get Followers of Challenge
     # Create Notification for them
 
