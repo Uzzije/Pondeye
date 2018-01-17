@@ -47,7 +47,6 @@ urlpatterns = [
     url(r'^new-ponder-request/$', NewPondRequestNotificationView.as_view(), name="new_ponder_request_notifications"),
     url(r'^get-notification/$', GetNotification.as_view(), name="get_main_notifications"),
     url(r'^failed-milestones/$', FailedMilestonesNotificationView.as_view(), name="failed_milestone_notification"),
-    url(r'^failed-projects/$', FailedProjectNotificationView.as_view(), name="failed_project_notification"),
     
     url(r'^all-ponds/$', PondView.as_view(), name="all_pond"),
     url(r'^pond/(?P<slug>[-\w\d\ ]+)/$', IndividualPondView.as_view(), name="individual_pond"),
