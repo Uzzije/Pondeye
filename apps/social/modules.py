@@ -1697,7 +1697,7 @@ def days_difference(last_time, current_time):
         str_diff = "%s %s later" % (diff_days, type_of)
         return str_diff
     else:
-        return ""
+        return "First Day"
 
 
 def make_timeline_video(progress_set):
