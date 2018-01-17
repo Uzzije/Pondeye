@@ -1707,7 +1707,7 @@ def make_timeline_video(progress_set):
         file_ = VideoFileClip(each_prog.video.url)
         mess = days_difference(last_time, each_prog.last_updated)
         txt_clip = TextClip(mess, fontsize=50, font='NewCenturySchlbk-BoldItalic', color='white')
-        txt_clip = txt_clip.set_pos((345,100)).set_duration(file_.duration)
+        txt_clip = txt_clip.set_pos((145,100)).set_duration(file_.duration)
         video = CompositeVideoClip([file_, txt_clip])
         video_clips.append(video)
         last_time = each_prog.last_updated
@@ -1719,11 +1719,10 @@ def make_timeline_video(progress_set):
     final_clips.write_videofile(abs_path, temp_audiofile=abs_audio_name)
     f = open(abs_path)
     progress_set.video_timeline.save(abs_path, File(f))
-    '''
     progress_set.project.is_completed = True
     progress_set.project.is_live = False
     progress_set.project.save()
-    '''
+    f.close()
     # Get Followers of Challenge
     # Create Notification for them
 
