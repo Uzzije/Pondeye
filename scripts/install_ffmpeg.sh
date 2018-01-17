@@ -121,3 +121,5 @@ cp $HOME/bin/ytasm /usr/bin/
 ffmpeg -version
 
 yum install ImageMagick
+
+cat policy.txt > /etc/ImageMagick/policy.xml
