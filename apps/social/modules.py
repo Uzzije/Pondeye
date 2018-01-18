@@ -1676,12 +1676,14 @@ def convert_to_mp4_file_for_file_object(video):
             vid_name = "%s_%s" % (video.name_of_progress, str(new_mp4_path))
             video.video_name = vid_name
             video.save()
+            path_object.close()
 
 
 def upload_video_file(filepath, video_model):
     data = open(filepath)
     random_name = randomword(15) + str(filepath)
     video_model.video.save(random_name, data, save=False)
+    data.close()
     return random_name
 
 
