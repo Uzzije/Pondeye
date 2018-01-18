@@ -124,8 +124,10 @@ class ProgressVideoSet(models.Model):
         vid_count = self.video_set_count()
         if vid_count > 0:
             self.challenge.project.made_progress = True
+            self.is_empty = False
         else:
             self.challenge.project.made_progress = False
+            self.is_empty = True
         super(ProgressVideoSet, self).save(*args, **kwargs)
 
 
