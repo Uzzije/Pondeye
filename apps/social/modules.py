@@ -1654,9 +1654,11 @@ def get_video_from_base64(data):
 
 
 def convert_video_to_mp4(non_mp4_file, output_filename):
-    process = subprocess.Popen(['ffmpeg', '-i', non_mp4_file, output_filename], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen(['ffmpeg', '-i', non_mp4_file, output_filename],
+                               stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     process.stdin.write('Y')
     has_error = process.communicate()[0]
+    process.stdout.close()
     if has_error:
         return False
     return True
@@ -1719,9 +1721,9 @@ def make_timeline_video(progress_set):
     final_clips.write_videofile(abs_path, temp_audiofile=abs_audio_name)
     f = open(abs_path)
     progress_set.video_timeline.save(abs_path, File(f))
-    progress_set.project.is_completed = True
-    progress_set.project.is_live = False
-    progress_set.project.save()
+    progress_set.challenge.project.is_completed = True
+    progress_set.challenge.project.is_live = False
+    progress_set.challenge.project.save()
     f.close()
     # Get Followers of Challenge
     # Create Notification for them
