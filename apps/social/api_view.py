@@ -1076,11 +1076,11 @@ class ApiHighlightImpressed(CSRFExemptView):
         progress_set = ProgressVideoSet.objects.get(id=int(progress_set_id))
         tikedge_user = TikedgeUser.objects.get(user=user)
         try:
-            highlight = HighlightImpressedCount.objects.get(user=tikedge_user, progress_set=progress_set)
+            highlight = HighlightImpressedCount.objects.get(users=tikedge_user, progress_set=progress_set)
             highlight.delete()
         except ObjectDoesNotExist:
             if tikedge_user != progress_set.challenge.project.user:
-                highlight = HighlightImpressedCount(user=tikedge_user, progress_set=progress_set)
+                highlight = HighlightImpressedCount(users=tikedge_user, progress_set=progress_set)
                 highlight.save()
                 response["status"] = True
                 mess = '%s %s is impressed with the accomplishment of %s.' % (tikedge_user.user.first_name,
