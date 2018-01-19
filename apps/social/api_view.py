@@ -1345,10 +1345,10 @@ class ApiProjectView(CSRFExemptView):
             'highlight_impress_count': HighlightImpressedCount.objects.filter(progress_set=progress_set).count(),
             'highlight_view_count': SeenVideoSet.objects.filter(video_set=progress_set).count(),
             'high_upload_url':highlight_url,
-            'progress_id': recent_upload.id,
-            'progress_set_id': progress_set.id
-
         }
+        if recent_upload:
+            response['progress_id'] = recent_upload.id
+            response['progress_set_id'] = progress_set.id
         return HttpResponse(json.dumps(response), status=201)
 
 
