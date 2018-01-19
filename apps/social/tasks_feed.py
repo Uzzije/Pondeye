@@ -166,7 +166,7 @@ class PondFeed:
         if self.type_of_feed is global_variables.VIDEO_SET:
             follows = FollowChallenge.objects.filter(challenge=self.tasks.challenge)
         else:
-            follows = FollowChallenge.objects.filter(challenge=self.tasks.challenge)
+            follows = FollowChallenge.objects.filter(challenge=self.tasks)
         return follows.count()
 
     def impress_count(self):
