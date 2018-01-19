@@ -163,7 +163,7 @@ class PondFeed:
         return count
 
     def follow(self):
-        if self.type_of_feed is global_variables.VIDEO_SET:
+        if self.type_of_feed is global_variables.VIDEO_SET or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
             follows = FollowChallenge.objects.filter(challenge=self.tasks.challenge)
         else:
             follows = FollowChallenge.objects.filter(challenge=self.tasks)
