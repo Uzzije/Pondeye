@@ -51,3 +51,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
 
 # Asycronous stuff for aws
 BROKER_URL = os.environ['BROKER_URL']
+AWS_QUERYSTRING_AUTH = False
