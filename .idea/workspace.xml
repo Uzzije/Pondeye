@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_concatanates.mp4" afterPath="$PROJECT_DIR$/test_concatanates.mp4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
     </list>
     <ignored path="tikedge.iws" />
@@ -123,8 +122,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8197932">
-              <caret line="1683" column="24" selection-start-line="1683" selection-start-column="24" selection-end-line="1683" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.37666175">
+              <caret line="1663" column="22" selection-start-line="1663" selection-start-column="22" selection-end-line="1663" selection-end-column="22" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -1261,8 +1260,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8197932">
-          <caret line="1683" column="24" selection-start-line="1683" selection-start-column="24" selection-end-line="1683" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.37666175">
+          <caret line="1663" column="22" selection-start-line="1663" selection-start-column="22" selection-end-line="1663" selection-end-column="22" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>

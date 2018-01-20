@@ -1658,9 +1658,10 @@ def get_video_from_base64(data):
 
 
 def convert_video_to_mp4(non_mp4_file, output_filename):
-    print "Entering convert video to mp4 function"
-    process = subprocess.Popen(['ffmpeg', '-i', non_mp4_file, 'scale=720:-1', output_filename],
+    print "Entering convert video to mp4 function\n"
+    process = subprocess.Popen(['ffmpeg', '-i', non_mp4_file, output_filename],
                                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print non_mp4_file
     process.stdin.write('Y')
     has_error = process.communicate()[0]
     process.stdout.close()
