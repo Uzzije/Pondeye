@@ -21,6 +21,8 @@ from image_modules import pondeye_image_filter
 from django.utils import timezone
 from friendship.models import Friend, FriendshipRequest
 from friendship import exceptions
+import logging
+
 
 
 class CSRFExemptView(View):
@@ -275,7 +277,9 @@ class ApiRecentUploadView(CSRFExemptView):
             response["error"] = "Hey description of progress must be less that 250 characters!"
             return HttpResponse(json.dumps(response), status=201)
         dec_video_file = request.POST.get('picture')
+        print "About to enter base 64 to video converter!"
         vid_file = modules.get_video_from_base64(dec_video_file)
+        print "Don converting to video from base 44"
         if not vid_file:
             response["error"] = "Hey picture must be either video file! ", dec_video_file
             return HttpResponse(json.dumps(response), status=201)
@@ -1340,7 +1344,7 @@ class ApiProjectView(CSRFExemptView):
             'is_completed_bool':project.is_completed,
             'proj_id':project.id,
             'is_goal_owner': project.user == tikedge_user,
-            'has_recent': not highlight_url,
+            'has_recent': recent_upload and not project.is_completed,
             'has_highlight': project.is_completed,
             'highlight_impress_count': HighlightImpressedCount.objects.filter(progress_set=progress_set).count(),
             'highlight_view_count': SeenVideoSet.objects.filter(video_set=progress_set).count(),

@@ -1644,6 +1644,7 @@ def get_video_from_base64(data):
     :return:
     """
     if isinstance(data, basestring) and data.startswith('data:video'):
+        print "Entering get video from base 64 function"
         # base64 encoded image - decode
         format, imgstr = data.split(';base64,')  # format ~= data:image/X,
         ext = format.split('/')[-1]  # guess file extension [data:video, quicktime]
@@ -1651,16 +1652,19 @@ def get_video_from_base64(data):
             ext = 'mov'
         ran_word = randomword(12)
         data = ContentFile(base64.b64decode(imgstr), name='temp' + ran_word + '.' + ext)
+        print "Done with get video from base64 function"
         return data
     return False
 
 
 def convert_video_to_mp4(non_mp4_file, output_filename):
+    print "Entering convert video to mp4 function"
     process = subprocess.Popen(['ffmpeg', '-i', non_mp4_file, output_filename],
                                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     process.stdin.write('Y')
     has_error = process.communicate()[0]
     process.stdout.close()
+    print "Leaving convert video to mp4 function"
     if has_error:
         return False
     return True
