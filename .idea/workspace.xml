@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e68a9670-05c1-455c-a0cf-698b7f20dd80" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/api_view.py" afterPath="$PROJECT_DIR$/apps/social/api_view.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apps/social/modules.py" afterPath="$PROJECT_DIR$/apps/social/modules.py" />
     </list>
     <ignored path="tikedge.iws" />
@@ -122,8 +121,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7533235">
-              <caret line="1666" column="48" selection-start-line="1666" selection-start-column="48" selection-end-line="1666" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.6646972">
+              <caret line="1669" column="17" selection-start-line="1669" selection-start-column="17" selection-end-line="1669" selection-end-column="17" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -229,7 +228,7 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="697" />
+    <option name="x" value="337" />
     <option name="y" value="23" />
     <option name="width" value="1664" />
     <option name="height" value="877" />
@@ -806,7 +805,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="697" y="23" width="1664" height="877" extended-state="0" />
+    <frame x="337" y="23" width="1664" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13933416" sideWeight="0.743083" order="0" side_tool="false" content_ui="tabs" />
@@ -1260,8 +1259,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7533235">
-          <caret line="1666" column="48" selection-start-line="1666" selection-start-column="48" selection-end-line="1666" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.6646972">
+          <caret line="1669" column="17" selection-start-line="1669" selection-start-column="17" selection-end-line="1669" selection-end-column="17" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
