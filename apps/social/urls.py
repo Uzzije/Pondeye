@@ -16,7 +16,7 @@ from .api_view import ApiNewPondEntryView, ApiPictureUploadView, ApiCreateImpres
     ApiPondRequestView, ApiGetSearchResult, ApiAddToPond, ApiDenyPondRequest, ApiNotificationView, ApiAcceptPondRequest,\
     ApiGetNotification, ApiFriendRequestView, ApiFriendAcceptRequestView, ApiFriendRejectRequestView,\
     ApiHighlightImpressed, ApiRecentUploadImpressed, ApiFindProjectView, ApiFindFriendView,  ApiAllFriendsView,\
-    ApiRecentUploadView, ApiSeenRecentUploadCounter,  ApiSeenHighlightCounter, ApiSearchByTags
+    ApiRecentUploadView, ApiSeenRecentUploadCounter,  ApiSeenHighlightCounter
 
 urlpatterns = [
     url(r'^journal-feed/$', JournalEntriesView.as_view(), name='journal_entries'),
