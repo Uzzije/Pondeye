@@ -16,7 +16,8 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 import json
 
 from django.db.models import Q
-from search_module import find_everything, search_result_jsonified, find_friends, find_project, initial_all_friends
+from search_module import find_everything, search_result_jsonified, find_friends, find_project, initial_all_friends, \
+    find_tags
 from image_modules import pondeye_image_filter
 from django.utils import timezone
 from friendship.models import Friend, FriendshipRequest
@@ -1612,12 +1613,38 @@ class ApiGetSearchResult(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         query_word = request.GET["query_word"]
-        results = find_everything(user, query_word)
+        tag_search = request.GET["tag_search"]
+        if tag_search:
+            results = find_tags(user, query_word)
+        else:
+            results = find_everything(user, query_word)
         response["status"] = True
         print type(results)
         response["result_list"] = search_result_jsonified(results)
         return HttpResponse(json.dumps(response))
 
+'''
+class ApiSearchByTags(CSRFExemptView):
+    """
+        Api Call for Search Result
+    """
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        query_word = request.GET["query_word"]
+        results = find_tags(user, query_word)
+        response["status"] = True
+        print type(results)
+        response["result_list"] = search_result_jsonified(results)
+        return HttpResponse(json.dumps(response))
+'''
 
 class ApiAddToPond(CSRFExemptView):
 

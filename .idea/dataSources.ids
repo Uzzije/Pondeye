@@ -585,3285 +585,3471 @@ model</columns>
       <table id="88" parent="1" name="social_seenchallenge"/>
       <table id="89" parent="1" name="social_seenrecentupload"/>
       <table id="90" parent="1" name="social_seenvideoset"/>
-      <column id="91" parent="2" name="id">
+      <table id="91" parent="1" name="social_challengenotification"/>
+      <table id="92" parent="1" name="social_friendshipnotification"/>
+      <table id="93" parent="1" name="social_highlightimpressedcount"/>
+      <table id="94" parent="1" name="social_recentuploadimpressedcount"/>
+      <column id="95" parent="2" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="92" parent="2" name="name">
+      <column id="96" parent="2" name="name">
         <mandatory>1</mandatory>
         <data-type>varchar(80)</data-type>
       </column>
-      <index id="93" parent="2" name="name">
+      <index id="97" parent="2" name="name">
         <columns>name</columns>
         <unique>1</unique>
       </index>
-      <key id="94" parent="2" name="name">
+      <key id="98" parent="2" name="name">
         <columns>name</columns>
         <underlying-index>name</underlying-index>
       </key>
-      <key id="95" parent="2" name="PRIMARY">
+      <key id="99" parent="2" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="96" parent="3" name="id">
+      <column id="100" parent="3" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="97" parent="3" name="group_id">
+      <column id="101" parent="3" name="group_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="98" parent="3" name="permission_id">
+      <column id="102" parent="3" name="permission_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="99" parent="3" name="group_id">
+      <index id="103" parent="3" name="group_id">
         <columns>group_id
 permission_id</columns>
         <unique>1</unique>
       </index>
-      <key id="100" parent="3" name="group_id">
+      <key id="104" parent="3" name="group_id">
         <columns>group_id
 permission_id</columns>
         <underlying-index>group_id</underlying-index>
       </key>
-      <key id="101" parent="3" name="PRIMARY">
+      <key id="105" parent="3" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="102" parent="3" name="auth_group_permission_group_id_689710a9a73b7457_fk_auth_group_id">
+      <foreign-key id="106" parent="3" name="auth_group_permission_group_id_689710a9a73b7457_fk_auth_group_id">
         <columns>group_id</columns>
         <ref-key>auth_group.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="103" parent="3" name="auth_group__permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id">
+      <foreign-key id="107" parent="3" name="auth_group__permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id">
         <columns>permission_id</columns>
         <ref-key>auth_permission.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="104" parent="4" name="id">
+      <column id="108" parent="4" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="105" parent="4" name="name">
+      <column id="109" parent="4" name="name">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="106" parent="4" name="content_type_id">
+      <column id="110" parent="4" name="content_type_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="107" parent="4" name="codename">
+      <column id="111" parent="4" name="codename">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <index id="108" parent="4" name="content_type_id">
+      <index id="112" parent="4" name="content_type_id">
         <columns>content_type_id
 codename</columns>
         <unique>1</unique>
       </index>
-      <key id="109" parent="4" name="content_type_id">
+      <key id="113" parent="4" name="content_type_id">
         <columns>content_type_id
 codename</columns>
         <underlying-index>content_type_id</underlying-index>
       </key>
-      <key id="110" parent="4" name="PRIMARY">
+      <key id="114" parent="4" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="111" parent="4" name="auth__content_type_id_508cf46651277a81_fk_django_content_type_id">
+      <foreign-key id="115" parent="4" name="auth__content_type_id_508cf46651277a81_fk_django_content_type_id">
         <columns>content_type_id</columns>
         <ref-key>django_content_type.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="112" parent="5" name="id">
+      <column id="116" parent="5" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="113" parent="5" name="password">
+      <column id="117" parent="5" name="password">
         <mandatory>1</mandatory>
         <data-type>varchar(128)</data-type>
       </column>
-      <column id="114" parent="5" name="last_login">
+      <column id="118" parent="5" name="last_login">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="115" parent="5" name="is_superuser">
+      <column id="119" parent="5" name="is_superuser">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="116" parent="5" name="username">
+      <column id="120" parent="5" name="username">
         <mandatory>1</mandatory>
         <data-type>varchar(30)</data-type>
       </column>
-      <column id="117" parent="5" name="first_name">
+      <column id="121" parent="5" name="first_name">
         <mandatory>1</mandatory>
         <data-type>varchar(30)</data-type>
       </column>
-      <column id="118" parent="5" name="last_name">
+      <column id="122" parent="5" name="last_name">
         <mandatory>1</mandatory>
         <data-type>varchar(30)</data-type>
       </column>
-      <column id="119" parent="5" name="email">
+      <column id="123" parent="5" name="email">
         <mandatory>1</mandatory>
         <data-type>varchar(254)</data-type>
       </column>
-      <column id="120" parent="5" name="is_staff">
+      <column id="124" parent="5" name="is_staff">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="121" parent="5" name="is_active">
+      <column id="125" parent="5" name="is_active">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="122" parent="5" name="date_joined">
+      <column id="126" parent="5" name="date_joined">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <index id="123" parent="5" name="username">
+      <index id="127" parent="5" name="username">
         <columns>username</columns>
         <unique>1</unique>
       </index>
-      <key id="124" parent="5" name="PRIMARY">
+      <key id="128" parent="5" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="125" parent="5" name="username">
+      <key id="129" parent="5" name="username">
         <columns>username</columns>
         <underlying-index>username</underlying-index>
       </key>
-      <column id="126" parent="6" name="id">
+      <column id="130" parent="6" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="127" parent="6" name="user_id">
+      <column id="131" parent="6" name="user_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="128" parent="6" name="group_id">
+      <column id="132" parent="6" name="group_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="129" parent="6" name="user_id">
+      <index id="133" parent="6" name="user_id">
         <columns>user_id
 group_id</columns>
         <unique>1</unique>
       </index>
-      <key id="130" parent="6" name="PRIMARY">
+      <key id="134" parent="6" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="131" parent="6" name="user_id">
+      <key id="135" parent="6" name="user_id">
         <columns>user_id
 group_id</columns>
         <underlying-index>user_id</underlying-index>
       </key>
-      <foreign-key id="132" parent="6" name="auth_user_groups_group_id_33ac548dcf5f8e37_fk_auth_group_id">
+      <foreign-key id="136" parent="6" name="auth_user_groups_group_id_33ac548dcf5f8e37_fk_auth_group_id">
         <columns>group_id</columns>
         <ref-key>auth_group.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="133" parent="6" name="auth_user_groups_user_id_4b5ed4ffdb8fd9b0_fk_auth_user_id">
+      <foreign-key id="137" parent="6" name="auth_user_groups_user_id_4b5ed4ffdb8fd9b0_fk_auth_user_id">
         <columns>user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="134" parent="7" name="id">
+      <column id="138" parent="7" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="135" parent="7" name="user_id">
+      <column id="139" parent="7" name="user_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="136" parent="7" name="permission_id">
+      <column id="140" parent="7" name="permission_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="137" parent="7" name="user_id">
+      <index id="141" parent="7" name="user_id">
         <columns>user_id
 permission_id</columns>
         <unique>1</unique>
       </index>
-      <key id="138" parent="7" name="PRIMARY">
+      <key id="142" parent="7" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="139" parent="7" name="user_id">
+      <key id="143" parent="7" name="user_id">
         <columns>user_id
 permission_id</columns>
         <underlying-index>user_id</underlying-index>
       </key>
-      <foreign-key id="140" parent="7" name="auth_user_user_permissi_user_id_7f0938558328534a_fk_auth_user_id">
+      <foreign-key id="144" parent="7" name="auth_user_user_permissi_user_id_7f0938558328534a_fk_auth_user_id">
         <columns>user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="141" parent="7" name="auth_user_u_permission_id_384b62483d7071f0_fk_auth_permission_id">
+      <foreign-key id="145" parent="7" name="auth_user_u_permission_id_384b62483d7071f0_fk_auth_permission_id">
         <columns>permission_id</columns>
         <ref-key>auth_permission.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="142" parent="8" name="id">
+      <column id="146" parent="8" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="143" parent="8" name="task_id">
+      <column id="147" parent="8" name="task_id">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="144" parent="8" name="status">
+      <column id="148" parent="8" name="status">
         <mandatory>1</mandatory>
         <data-type>varchar(50)</data-type>
       </column>
-      <column id="145" parent="8" name="result">
+      <column id="149" parent="8" name="result">
         <data-type>longtext</data-type>
       </column>
-      <column id="146" parent="8" name="date_done">
+      <column id="150" parent="8" name="date_done">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="147" parent="8" name="traceback">
+      <column id="151" parent="8" name="traceback">
         <data-type>longtext</data-type>
       </column>
-      <column id="148" parent="8" name="hidden">
+      <column id="152" parent="8" name="hidden">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="149" parent="8" name="meta">
+      <column id="153" parent="8" name="meta">
         <data-type>longtext</data-type>
       </column>
-      <index id="150" parent="8" name="task_id">
+      <index id="154" parent="8" name="task_id">
         <columns>task_id</columns>
         <unique>1</unique>
       </index>
-      <key id="151" parent="8" name="PRIMARY">
+      <key id="155" parent="8" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="152" parent="8" name="task_id">
+      <key id="156" parent="8" name="task_id">
         <columns>task_id</columns>
         <underlying-index>task_id</underlying-index>
       </key>
-      <column id="153" parent="9" name="id">
+      <column id="157" parent="9" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="154" parent="9" name="taskset_id">
+      <column id="158" parent="9" name="taskset_id">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="155" parent="9" name="result">
+      <column id="159" parent="9" name="result">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="156" parent="9" name="date_done">
+      <column id="160" parent="9" name="date_done">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="157" parent="9" name="hidden">
+      <column id="161" parent="9" name="hidden">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <index id="158" parent="9" name="taskset_id">
+      <index id="162" parent="9" name="taskset_id">
         <columns>taskset_id</columns>
         <unique>1</unique>
       </index>
-      <key id="159" parent="9" name="PRIMARY">
+      <key id="163" parent="9" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="160" parent="9" name="taskset_id">
+      <key id="164" parent="9" name="taskset_id">
         <columns>taskset_id</columns>
         <underlying-index>taskset_id</underlying-index>
       </key>
-      <column id="161" parent="10" name="id">
+      <column id="165" parent="10" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="162" parent="10" name="action_time">
+      <column id="166" parent="10" name="action_time">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="163" parent="10" name="object_id">
+      <column id="167" parent="10" name="object_id">
         <data-type>longtext</data-type>
       </column>
-      <column id="164" parent="10" name="object_repr">
+      <column id="168" parent="10" name="object_repr">
         <mandatory>1</mandatory>
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="165" parent="10" name="action_flag">
+      <column id="169" parent="10" name="action_flag">
         <mandatory>1</mandatory>
         <data-type>smallint(5) unsigned</data-type>
       </column>
-      <column id="166" parent="10" name="change_message">
+      <column id="170" parent="10" name="change_message">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="167" parent="10" name="content_type_id">
+      <column id="171" parent="10" name="content_type_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="168" parent="10" name="user_id">
+      <column id="172" parent="10" name="user_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <key id="169" parent="10" name="PRIMARY">
+      <key id="173" parent="10" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="170" parent="10" name="django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id">
+      <foreign-key id="174" parent="10" name="django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id">
         <columns>user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="171" parent="10" name="djang_content_type_id_697914295151027a_fk_django_content_type_id">
+      <foreign-key id="175" parent="10" name="djang_content_type_id_697914295151027a_fk_django_content_type_id">
         <columns>content_type_id</columns>
         <ref-key>django_content_type.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="172" parent="11" name="id">
+      <column id="176" parent="11" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="173" parent="11" name="title">
+      <column id="177" parent="11" name="title">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="174" parent="11" name="url">
+      <column id="178" parent="11" name="url">
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="175" parent="11" name="css_class">
+      <column id="179" parent="11" name="css_class">
         <mandatory>1</mandatory>
         <data-type>varchar(20)</data-type>
       </column>
-      <column id="176" parent="11" name="start">
+      <column id="180" parent="11" name="start">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="177" parent="11" name="end">
+      <column id="181" parent="11" name="end">
         <data-type>datetime(6)</data-type>
       </column>
-      <key id="178" parent="11" name="PRIMARY">
+      <key id="182" parent="11" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="179" parent="12" name="id">
+      <column id="183" parent="12" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="180" parent="12" name="app_label">
+      <column id="184" parent="12" name="app_label">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="181" parent="12" name="model">
+      <column id="185" parent="12" name="model">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <index id="182" parent="12" name="django_content_type_app_label_45f3b1d93ec8c61c_uniq">
+      <index id="186" parent="12" name="django_content_type_app_label_45f3b1d93ec8c61c_uniq">
         <columns>app_label
 model</columns>
         <unique>1</unique>
       </index>
-      <key id="183" parent="12" name="django_content_type_app_label_45f3b1d93ec8c61c_uniq">
+      <key id="187" parent="12" name="django_content_type_app_label_45f3b1d93ec8c61c_uniq">
         <columns>app_label
 model</columns>
         <underlying-index>django_content_type_app_label_45f3b1d93ec8c61c_uniq</underlying-index>
       </key>
-      <key id="184" parent="12" name="PRIMARY">
+      <key id="188" parent="12" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="185" parent="13" name="id">
+      <column id="189" parent="13" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="186" parent="13" name="app">
+      <column id="190" parent="13" name="app">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="187" parent="13" name="name">
+      <column id="191" parent="13" name="name">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="188" parent="13" name="applied">
+      <column id="192" parent="13" name="applied">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <key id="189" parent="13" name="PRIMARY">
+      <key id="193" parent="13" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="190" parent="14" name="session_key">
+      <column id="194" parent="14" name="session_key">
         <mandatory>1</mandatory>
         <data-type>varchar(40)</data-type>
       </column>
-      <column id="191" parent="14" name="session_data">
+      <column id="195" parent="14" name="session_data">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="192" parent="14" name="expire_date">
+      <column id="196" parent="14" name="expire_date">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <key id="193" parent="14" name="PRIMARY">
+      <key id="197" parent="14" name="PRIMARY">
         <columns>session_key</columns>
         <primary>1</primary>
       </key>
-      <column id="194" parent="15" name="id">
+      <column id="198" parent="15" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="195" parent="15" name="minute">
+      <column id="199" parent="15" name="minute">
         <mandatory>1</mandatory>
         <data-type>varchar(64)</data-type>
       </column>
-      <column id="196" parent="15" name="hour">
+      <column id="200" parent="15" name="hour">
         <mandatory>1</mandatory>
         <data-type>varchar(64)</data-type>
       </column>
-      <column id="197" parent="15" name="day_of_week">
+      <column id="201" parent="15" name="day_of_week">
         <mandatory>1</mandatory>
         <data-type>varchar(64)</data-type>
       </column>
-      <column id="198" parent="15" name="day_of_month">
+      <column id="202" parent="15" name="day_of_month">
         <mandatory>1</mandatory>
         <data-type>varchar(64)</data-type>
       </column>
-      <column id="199" parent="15" name="month_of_year">
+      <column id="203" parent="15" name="month_of_year">
         <mandatory>1</mandatory>
         <data-type>varchar(64)</data-type>
       </column>
-      <key id="200" parent="15" name="PRIMARY">
+      <key id="204" parent="15" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="201" parent="16" name="id">
+      <column id="205" parent="16" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="202" parent="16" name="every">
+      <column id="206" parent="16" name="every">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="203" parent="16" name="period">
+      <column id="207" parent="16" name="period">
         <mandatory>1</mandatory>
         <data-type>varchar(24)</data-type>
       </column>
-      <key id="204" parent="16" name="PRIMARY">
+      <key id="208" parent="16" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="205" parent="17" name="id">
+      <column id="209" parent="17" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="206" parent="17" name="name">
+      <column id="210" parent="17" name="name">
         <mandatory>1</mandatory>
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="207" parent="17" name="task">
+      <column id="211" parent="17" name="task">
         <mandatory>1</mandatory>
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="208" parent="17" name="args">
-        <mandatory>1</mandatory>
-        <data-type>longtext</data-type>
-      </column>
-      <column id="209" parent="17" name="kwargs">
+      <column id="212" parent="17" name="args">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="210" parent="17" name="queue">
+      <column id="213" parent="17" name="kwargs">
+        <mandatory>1</mandatory>
+        <data-type>longtext</data-type>
+      </column>
+      <column id="214" parent="17" name="queue">
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="211" parent="17" name="exchange">
+      <column id="215" parent="17" name="exchange">
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="212" parent="17" name="routing_key">
+      <column id="216" parent="17" name="routing_key">
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="213" parent="17" name="expires">
+      <column id="217" parent="17" name="expires">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="214" parent="17" name="enabled">
+      <column id="218" parent="17" name="enabled">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="215" parent="17" name="last_run_at">
+      <column id="219" parent="17" name="last_run_at">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="216" parent="17" name="total_run_count">
+      <column id="220" parent="17" name="total_run_count">
         <mandatory>1</mandatory>
         <data-type>int(10) unsigned</data-type>
       </column>
-      <column id="217" parent="17" name="date_changed">
+      <column id="221" parent="17" name="date_changed">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="218" parent="17" name="description">
+      <column id="222" parent="17" name="description">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="219" parent="17" name="crontab_id">
+      <column id="223" parent="17" name="crontab_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="220" parent="17" name="interval_id">
+      <column id="224" parent="17" name="interval_id">
         <data-type>int(11)</data-type>
       </column>
-      <index id="221" parent="17" name="name">
+      <index id="225" parent="17" name="name">
         <columns>name</columns>
         <unique>1</unique>
       </index>
-      <key id="222" parent="17" name="name">
+      <key id="226" parent="17" name="name">
         <columns>name</columns>
         <underlying-index>name</underlying-index>
       </key>
-      <key id="223" parent="17" name="PRIMARY">
+      <key id="227" parent="17" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="224" parent="17" name="djcel_crontab_id_1d8228f5b44b680a_fk_djcelery_crontabschedule_id">
+      <foreign-key id="228" parent="17" name="djcel_crontab_id_1d8228f5b44b680a_fk_djcelery_crontabschedule_id">
         <columns>crontab_id</columns>
         <ref-key>djcelery_crontabschedule.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="225" parent="17" name="djc_interval_id_20cfc1cad060dfad_fk_djcelery_intervalschedule_id">
+      <foreign-key id="229" parent="17" name="djc_interval_id_20cfc1cad060dfad_fk_djcelery_intervalschedule_id">
         <columns>interval_id</columns>
         <ref-key>djcelery_intervalschedule.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="226" parent="18" name="ident">
+      <column id="230" parent="18" name="ident">
         <mandatory>1</mandatory>
         <data-type>smallint(6)</data-type>
       </column>
-      <column id="227" parent="18" name="last_update">
+      <column id="231" parent="18" name="last_update">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <key id="228" parent="18" name="PRIMARY">
+      <key id="232" parent="18" name="PRIMARY">
         <columns>ident</columns>
         <primary>1</primary>
       </key>
-      <column id="229" parent="19" name="id">
+      <column id="233" parent="19" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="230" parent="19" name="state">
+      <column id="234" parent="19" name="state">
         <mandatory>1</mandatory>
         <data-type>varchar(64)</data-type>
       </column>
-      <column id="231" parent="19" name="task_id">
+      <column id="235" parent="19" name="task_id">
         <mandatory>1</mandatory>
         <data-type>varchar(36)</data-type>
       </column>
-      <column id="232" parent="19" name="name">
+      <column id="236" parent="19" name="name">
         <data-type>varchar(200)</data-type>
       </column>
-      <column id="233" parent="19" name="tstamp">
+      <column id="237" parent="19" name="tstamp">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="234" parent="19" name="args">
+      <column id="238" parent="19" name="args">
         <data-type>longtext</data-type>
       </column>
-      <column id="235" parent="19" name="kwargs">
+      <column id="239" parent="19" name="kwargs">
         <data-type>longtext</data-type>
       </column>
-      <column id="236" parent="19" name="eta">
+      <column id="240" parent="19" name="eta">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="237" parent="19" name="expires">
+      <column id="241" parent="19" name="expires">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="238" parent="19" name="result">
+      <column id="242" parent="19" name="result">
         <data-type>longtext</data-type>
       </column>
-      <column id="239" parent="19" name="traceback">
+      <column id="243" parent="19" name="traceback">
         <data-type>longtext</data-type>
       </column>
-      <column id="240" parent="19" name="runtime">
+      <column id="244" parent="19" name="runtime">
         <data-type>double</data-type>
       </column>
-      <column id="241" parent="19" name="retries">
+      <column id="245" parent="19" name="retries">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="242" parent="19" name="hidden">
+      <column id="246" parent="19" name="hidden">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="243" parent="19" name="worker_id">
+      <column id="247" parent="19" name="worker_id">
         <data-type>int(11)</data-type>
       </column>
-      <index id="244" parent="19" name="task_id">
+      <index id="248" parent="19" name="task_id">
         <columns>task_id</columns>
         <unique>1</unique>
       </index>
-      <key id="245" parent="19" name="PRIMARY">
+      <key id="249" parent="19" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="246" parent="19" name="task_id">
+      <key id="250" parent="19" name="task_id">
         <columns>task_id</columns>
         <underlying-index>task_id</underlying-index>
       </key>
-      <foreign-key id="247" parent="19" name="djcelery_t_worker_id_30050731b1c3d3d9_fk_djcelery_workerstate_id">
+      <foreign-key id="251" parent="19" name="djcelery_t_worker_id_30050731b1c3d3d9_fk_djcelery_workerstate_id">
         <columns>worker_id</columns>
         <ref-key>djcelery_workerstate.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="248" parent="20" name="id">
+      <column id="252" parent="20" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="249" parent="20" name="hostname">
+      <column id="253" parent="20" name="hostname">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="250" parent="20" name="last_heartbeat">
+      <column id="254" parent="20" name="last_heartbeat">
         <data-type>datetime(6)</data-type>
       </column>
-      <index id="251" parent="20" name="hostname">
+      <index id="255" parent="20" name="hostname">
         <columns>hostname</columns>
         <unique>1</unique>
       </index>
-      <key id="252" parent="20" name="hostname">
+      <key id="256" parent="20" name="hostname">
         <columns>hostname</columns>
         <underlying-index>hostname</underlying-index>
       </key>
-      <key id="253" parent="20" name="PRIMARY">
+      <key id="257" parent="20" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="254" parent="21" name="id">
+      <column id="258" parent="21" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="255" parent="21" name="created">
+      <column id="259" parent="21" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="256" parent="21" name="followee_id">
+      <column id="260" parent="21" name="followee_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="257" parent="21" name="follower_id">
+      <column id="261" parent="21" name="follower_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="258" parent="21" name="friendship_follow_follower_id_2b443acfd70dc6f2_uniq">
+      <index id="262" parent="21" name="friendship_follow_follower_id_2b443acfd70dc6f2_uniq">
         <columns>follower_id
 followee_id</columns>
         <unique>1</unique>
       </index>
-      <key id="259" parent="21" name="friendship_follow_follower_id_2b443acfd70dc6f2_uniq">
+      <key id="263" parent="21" name="friendship_follow_follower_id_2b443acfd70dc6f2_uniq">
         <columns>follower_id
 followee_id</columns>
         <underlying-index>friendship_follow_follower_id_2b443acfd70dc6f2_uniq</underlying-index>
       </key>
-      <key id="260" parent="21" name="PRIMARY">
+      <key id="264" parent="21" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="261" parent="21" name="friendship_follow_followee_id_2621c57729465500_fk_auth_user_id">
+      <foreign-key id="265" parent="21" name="friendship_follow_followee_id_2621c57729465500_fk_auth_user_id">
         <columns>followee_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="262" parent="21" name="friendship_follow_follower_id_6e5fec366aed8b51_fk_auth_user_id">
+      <foreign-key id="266" parent="21" name="friendship_follow_follower_id_6e5fec366aed8b51_fk_auth_user_id">
         <columns>follower_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="263" parent="22" name="id">
+      <column id="267" parent="22" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="264" parent="22" name="created">
+      <column id="268" parent="22" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="265" parent="22" name="from_user_id">
+      <column id="269" parent="22" name="from_user_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="266" parent="22" name="to_user_id">
+      <column id="270" parent="22" name="to_user_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="267" parent="22" name="friendship_friend_from_user_id_7e220ffab2de5191_uniq">
+      <index id="271" parent="22" name="friendship_friend_from_user_id_7e220ffab2de5191_uniq">
         <columns>from_user_id
 to_user_id</columns>
         <unique>1</unique>
       </index>
-      <key id="268" parent="22" name="friendship_friend_from_user_id_7e220ffab2de5191_uniq">
+      <key id="272" parent="22" name="friendship_friend_from_user_id_7e220ffab2de5191_uniq">
         <columns>from_user_id
 to_user_id</columns>
         <underlying-index>friendship_friend_from_user_id_7e220ffab2de5191_uniq</underlying-index>
       </key>
-      <key id="269" parent="22" name="PRIMARY">
+      <key id="273" parent="22" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="270" parent="22" name="friendship_friend_from_user_id_1605dd1d4cacad5d_fk_auth_user_id">
+      <foreign-key id="274" parent="22" name="friendship_friend_from_user_id_1605dd1d4cacad5d_fk_auth_user_id">
         <columns>from_user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="271" parent="22" name="friendship_friend_to_user_id_64f9e29f3693f87a_fk_auth_user_id">
+      <foreign-key id="275" parent="22" name="friendship_friend_to_user_id_64f9e29f3693f87a_fk_auth_user_id">
         <columns>to_user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="272" parent="23" name="id">
+      <column id="276" parent="23" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="273" parent="23" name="message">
+      <column id="277" parent="23" name="message">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="274" parent="23" name="created">
+      <column id="278" parent="23" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="275" parent="23" name="rejected">
+      <column id="279" parent="23" name="rejected">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="276" parent="23" name="viewed">
+      <column id="280" parent="23" name="viewed">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="277" parent="23" name="from_user_id">
-        <mandatory>1</mandatory>
-        <data-type>int(11)</data-type>
-      </column>
-      <column id="278" parent="23" name="to_user_id">
+      <column id="281" parent="23" name="from_user_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="279" parent="23" name="friendship_friendshiprequest_from_user_id_3c603c62d905af57_uniq">
+      <column id="282" parent="23" name="to_user_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <index id="283" parent="23" name="friendship_friendshiprequest_from_user_id_3c603c62d905af57_uniq">
         <columns>from_user_id
 to_user_id</columns>
         <unique>1</unique>
       </index>
-      <key id="280" parent="23" name="friendship_friendshiprequest_from_user_id_3c603c62d905af57_uniq">
+      <key id="284" parent="23" name="friendship_friendshiprequest_from_user_id_3c603c62d905af57_uniq">
         <columns>from_user_id
 to_user_id</columns>
         <underlying-index>friendship_friendshiprequest_from_user_id_3c603c62d905af57_uniq</underlying-index>
       </key>
-      <key id="281" parent="23" name="PRIMARY">
+      <key id="285" parent="23" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="282" parent="23" name="friendship_friendshi_to_user_id_1f94e03450d90840_fk_auth_user_id">
+      <foreign-key id="286" parent="23" name="friendship_friendshi_to_user_id_1f94e03450d90840_fk_auth_user_id">
         <columns>to_user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="283" parent="23" name="friendship_friends_from_user_id_33cf097af26322dd_fk_auth_user_id">
+      <foreign-key id="287" parent="23" name="friendship_friends_from_user_id_33cf097af26322dd_fk_auth_user_id">
         <columns>from_user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="284" parent="24" name="id">
+      <column id="288" parent="24" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="285" parent="24" name="latest_follow">
+      <column id="289" parent="24" name="latest_follow">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="286" parent="24" name="is_video_tasks">
+      <column id="290" parent="24" name="is_video_tasks">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="287" parent="24" name="is_picture_tasks">
+      <column id="291" parent="24" name="is_picture_tasks">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="288" parent="24" name="tasks_id">
+      <column id="292" parent="24" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="289" parent="24" name="video_tasks_id">
+      <column id="293" parent="24" name="video_tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="290" parent="24" name="PRIMARY">
+      <key id="294" parent="24" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="291" parent="24" name="social_follow_tasks_id_51c532361d140ab9_fk_tasks_userproject_id">
+      <foreign-key id="295" parent="24" name="social_follow_tasks_id_51c532361d140ab9_fk_tasks_userproject_id">
         <columns>tasks_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="292" parent="24" name="socia_video_tasks_id_355c0d69ad752177_fk_social_progressvideo_id">
+      <foreign-key id="296" parent="24" name="socia_video_tasks_id_355c0d69ad752177_fk_social_progressvideo_id">
         <columns>video_tasks_id</columns>
         <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="293" parent="25" name="id">
+      <column id="297" parent="25" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="294" parent="25" name="follow_id">
+      <column id="298" parent="25" name="follow_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="295" parent="25" name="tikedgeuser_id">
+      <column id="299" parent="25" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="296" parent="25" name="follow_id">
+      <index id="300" parent="25" name="follow_id">
         <columns>follow_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="297" parent="25" name="follow_id">
+      <key id="301" parent="25" name="follow_id">
         <columns>follow_id
 tikedgeuser_id</columns>
         <underlying-index>follow_id</underlying-index>
       </key>
-      <key id="298" parent="25" name="PRIMARY">
+      <key id="302" parent="25" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="299" parent="25" name="social_follow_use_follow_id_322f68a862f6559e_fk_social_follow_id">
+      <foreign-key id="303" parent="25" name="social_follow_use_follow_id_322f68a862f6559e_fk_social_follow_id">
         <columns>follow_id</columns>
         <ref-key>social_follow.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="300" parent="25" name="social_f_tikedgeuser_id_6bc5d3135b5f1836_fk_tasks_tikedgeuser_id">
+      <foreign-key id="304" parent="25" name="social_f_tikedgeuser_id_6bc5d3135b5f1836_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="301" parent="26" name="id">
+      <column id="305" parent="26" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="302" parent="26" name="user_id">
+      <column id="306" parent="26" name="user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="303" parent="26" name="PRIMARY">
+      <key id="307" parent="26" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="304" parent="26" name="social_friends_user_id_1ebad12b86d41cc2_fk_tasks_tikedgeuser_id">
+      <foreign-key id="308" parent="26" name="social_friends_user_id_1ebad12b86d41cc2_fk_tasks_tikedgeuser_id">
         <columns>user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="305" parent="27" name="id">
+      <column id="309" parent="27" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="306" parent="27" name="friends_id">
+      <column id="310" parent="27" name="friends_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="307" parent="27" name="tikedgeuser_id">
+      <column id="311" parent="27" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="308" parent="27" name="friends_id">
+      <index id="312" parent="27" name="friends_id">
         <columns>friends_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="309" parent="27" name="friends_id">
+      <key id="313" parent="27" name="friends_id">
         <columns>friends_id
 tikedgeuser_id</columns>
         <underlying-index>friends_id</underlying-index>
       </key>
-      <key id="310" parent="27" name="PRIMARY">
+      <key id="314" parent="27" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="311" parent="27" name="social_friends__friends_id_3ceb8e8781c7e76d_fk_social_friends_id">
+      <foreign-key id="315" parent="27" name="social_friends__friends_id_3ceb8e8781c7e76d_fk_social_friends_id">
         <columns>friends_id</columns>
         <ref-key>social_friends.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="312" parent="27" name="social_f_tikedgeuser_id_687571ed9e67a670_fk_tasks_tikedgeuser_id">
+      <foreign-key id="316" parent="27" name="social_f_tikedgeuser_id_687571ed9e67a670_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="313" parent="28" name="id">
+      <column id="317" parent="28" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="314" parent="28" name="type_of_notification">
+      <column id="318" parent="28" name="type_of_notification">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="315" parent="28" name="created">
+      <column id="319" parent="28" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="316" parent="28" name="read">
+      <column id="320" parent="28" name="read">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="317" parent="28" name="name_of_notification">
+      <column id="321" parent="28" name="name_of_notification">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="318" parent="28" name="id_of_object">
+      <column id="322" parent="28" name="id_of_object">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="319" parent="28" name="date_read">
+      <column id="323" parent="28" name="date_read">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="320" parent="28" name="friend_request_id">
+      <column id="324" parent="28" name="friend_request_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="321" parent="28" name="project_update_id">
+      <column id="325" parent="28" name="project_update_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="322" parent="28" name="user_id">
+      <column id="326" parent="28" name="user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="323" parent="28" name="PRIMARY">
+      <key id="327" parent="28" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="324" parent="28" name="a1fa6cfbb8316bb7af0adf53d6e148e2">
+      <foreign-key id="328" parent="28" name="a1fa6cfbb8316bb7af0adf53d6e148e2">
         <columns>friend_request_id</columns>
         <ref-key>friendship_friendshiprequest.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="325" parent="28" name="social_notification_user_id_5663aa865a8136bb_fk_auth_user_id">
+      <foreign-key id="329" parent="28" name="social_notification_user_id_5663aa865a8136bb_fk_auth_user_id">
         <columns>user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="326" parent="28" name="socia_project_update_id_7ff7c5b47e6d7dcb_fk_tasks_userproject_id">
+      <foreign-key id="330" parent="28" name="socia_project_update_id_7ff7c5b47e6d7dcb_fk_tasks_userproject_id">
         <columns>project_update_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="327" parent="29" name="id">
+      <column id="331" parent="29" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="328" parent="29" name="image_name">
+      <column id="332" parent="29" name="image_name">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="329" parent="29" name="profile_pics">
+      <column id="333" parent="29" name="profile_pics">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="330" parent="29" name="cropping">
+      <column id="334" parent="29" name="cropping">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="331" parent="29" name="date_uploaded">
+      <column id="335" parent="29" name="date_uploaded">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="332" parent="29" name="is_deleted">
+      <column id="336" parent="29" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="333" parent="29" name="tikedge_user_id">
+      <column id="337" parent="29" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="334" parent="29" name="PRIMARY">
+      <key id="338" parent="29" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="335" parent="29" name="social_p_tikedge_user_id_82482fb6ca9285f_fk_tasks_tikedgeuser_id">
+      <foreign-key id="339" parent="29" name="social_p_tikedge_user_id_82482fb6ca9285f_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="336" parent="30" name="id">
+      <column id="340" parent="30" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="337" parent="30" name="slug">
+      <column id="341" parent="30" name="slug">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="338" parent="30" name="user_id">
+      <column id="342" parent="30" name="user_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="339" parent="30" name="user_id">
+      <index id="343" parent="30" name="user_id">
         <columns>user_id</columns>
         <unique>1</unique>
       </index>
-      <key id="340" parent="30" name="PRIMARY">
+      <key id="344" parent="30" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="341" parent="30" name="user_id">
+      <key id="345" parent="30" name="user_id">
         <columns>user_id</columns>
         <underlying-index>user_id</underlying-index>
       </key>
-      <foreign-key id="342" parent="30" name="tasks_tikedgeuser_user_id_1ffdff06eb27d9df_fk_auth_user_id">
+      <foreign-key id="346" parent="30" name="tasks_tikedgeuser_user_id_1ffdff06eb27d9df_fk_auth_user_id">
         <columns>user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="343" parent="31" name="id">
+      <column id="347" parent="31" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="344" parent="31" name="name_of_project">
+      <column id="348" parent="31" name="name_of_project">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="345" parent="31" name="is_failed">
+      <column id="349" parent="31" name="is_failed">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="346" parent="31" name="is_live">
+      <column id="350" parent="31" name="is_live">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="347" parent="31" name="length_of_project">
+      <column id="351" parent="31" name="length_of_project">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="348" parent="31" name="created">
+      <column id="352" parent="31" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="349" parent="31" name="made_live">
+      <column id="353" parent="31" name="made_live">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="350" parent="31" name="slug">
+      <column id="354" parent="31" name="slug">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="351" parent="31" name="blurb">
+      <column id="355" parent="31" name="blurb">
         <mandatory>1</mandatory>
         <data-type>varchar(150)</data-type>
       </column>
-      <column id="352" parent="31" name="is_completed">
+      <column id="356" parent="31" name="is_completed">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="353" parent="31" name="is_public">
+      <column id="357" parent="31" name="is_public">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="354" parent="31" name="is_deleted">
+      <column id="358" parent="31" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="355" parent="31" name="last_update">
+      <column id="359" parent="31" name="last_update">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="356" parent="31" name="user_id">
+      <column id="360" parent="31" name="user_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="357" parent="31" name="made_progress">
+      <column id="361" parent="31" name="made_progress">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <key id="358" parent="31" name="PRIMARY">
+      <key id="362" parent="31" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="359" parent="31" name="tasks_userproje_user_id_19a0b15e846095ad_fk_tasks_tikedgeuser_id">
+      <foreign-key id="363" parent="31" name="tasks_userproje_user_id_19a0b15e846095ad_fk_tasks_tikedgeuser_id">
         <columns>user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="360" parent="32" name="id">
+      <column id="364" parent="32" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="361" parent="32" name="tasks_id">
+      <column id="365" parent="32" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="362" parent="32" name="PRIMARY">
+      <key id="366" parent="32" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="363" parent="32" name="social_buildcredm_tasks_id_5ab3134789f3632_fk_tasks_milestone_id">
+      <foreign-key id="367" parent="32" name="social_buildcredm_tasks_id_5ab3134789f3632_fk_tasks_milestone_id">
         <columns>tasks_id</columns>
         <ref-key>tasks_milestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="364" parent="33" name="id">
+      <column id="368" parent="33" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="365" parent="33" name="buildcredmilestone_id">
+      <column id="369" parent="33" name="buildcredmilestone_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="366" parent="33" name="tikedgeuser_id">
+      <column id="370" parent="33" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="367" parent="33" name="buildcredmilestone_id">
+      <index id="371" parent="33" name="buildcredmilestone_id">
         <columns>buildcredmilestone_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="368" parent="33" name="buildcredmilestone_id">
+      <key id="372" parent="33" name="buildcredmilestone_id">
         <columns>buildcredmilestone_id
 tikedgeuser_id</columns>
         <underlying-index>buildcredmilestone_id</underlying-index>
       </key>
-      <key id="369" parent="33" name="PRIMARY">
+      <key id="373" parent="33" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="370" parent="33" name="d24bd1d7d64b3f7c8b5d245e29fc415c">
+      <foreign-key id="374" parent="33" name="d24bd1d7d64b3f7c8b5d245e29fc415c">
         <columns>buildcredmilestone_id</columns>
         <ref-key>social_buildcredmilestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="371" parent="33" name="social_b_tikedgeuser_id_323cf97150b01a1b_fk_tasks_tikedgeuser_id">
+      <foreign-key id="375" parent="33" name="social_b_tikedgeuser_id_323cf97150b01a1b_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="372" parent="34" name="id">
+      <column id="376" parent="34" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="373" parent="34" name="latest_letDown">
+      <column id="377" parent="34" name="latest_letDown">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="374" parent="34" name="tasks_id">
+      <column id="378" parent="34" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="375" parent="34" name="PRIMARY">
+      <key id="379" parent="34" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="376" parent="34" name="social_letdownmi_tasks_id_447d8e0722afd9e3_fk_tasks_milestone_id">
+      <foreign-key id="380" parent="34" name="social_letdownmi_tasks_id_447d8e0722afd9e3_fk_tasks_milestone_id">
         <columns>tasks_id</columns>
         <ref-key>tasks_milestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="377" parent="35" name="id">
+      <column id="381" parent="35" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="378" parent="35" name="letdownmilestone_id">
+      <column id="382" parent="35" name="letdownmilestone_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="379" parent="35" name="tikedgeuser_id">
+      <column id="383" parent="35" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="380" parent="35" name="letdownmilestone_id">
+      <index id="384" parent="35" name="letdownmilestone_id">
         <columns>letdownmilestone_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="381" parent="35" name="letdownmilestone_id">
+      <key id="385" parent="35" name="letdownmilestone_id">
         <columns>letdownmilestone_id
 tikedgeuser_id</columns>
         <underlying-index>letdownmilestone_id</underlying-index>
       </key>
-      <key id="382" parent="35" name="PRIMARY">
+      <key id="386" parent="35" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="383" parent="35" name="f765e4c70d0a6a92656e205f95d3452c">
+      <foreign-key id="387" parent="35" name="f765e4c70d0a6a92656e205f95d3452c">
         <columns>letdownmilestone_id</columns>
         <ref-key>social_letdownmilestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="384" parent="35" name="social_le_tikedgeuser_id_d9e5c3f8b2df59c_fk_tasks_tikedgeuser_id">
+      <foreign-key id="388" parent="35" name="social_le_tikedgeuser_id_d9e5c3f8b2df59c_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="385" parent="36" name="id">
+      <column id="389" parent="36" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="386" parent="36" name="image_name">
+      <column id="390" parent="36" name="image_name">
         <mandatory>1</mandatory>
         <data-type>varchar(300)</data-type>
       </column>
-      <column id="387" parent="36" name="milestone_pics">
+      <column id="391" parent="36" name="milestone_pics">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="388" parent="36" name="cropping">
+      <column id="392" parent="36" name="cropping">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="389" parent="36" name="date_uploaded">
+      <column id="393" parent="36" name="date_uploaded">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="390" parent="36" name="last_edited">
+      <column id="394" parent="36" name="last_edited">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="391" parent="36" name="is_before">
+      <column id="395" parent="36" name="is_before">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="392" parent="36" name="tikedge_user_id">
+      <column id="396" parent="36" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="393" parent="36" name="PRIMARY">
+      <key id="397" parent="36" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="394" parent="36" name="social__tikedge_user_id_337e57b8f5d666f3_fk_tasks_tikedgeuser_id">
+      <foreign-key id="398" parent="36" name="social__tikedge_user_id_337e57b8f5d666f3_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="395" parent="37" name="id">
+      <column id="399" parent="37" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="396" parent="37" name="is_deleted">
+      <column id="400" parent="37" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="397" parent="37" name="last_updated">
+      <column id="401" parent="37" name="last_updated">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="398" parent="37" name="after_picture_id">
+      <column id="402" parent="37" name="after_picture_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="399" parent="37" name="before_picture_id">
+      <column id="403" parent="37" name="before_picture_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="400" parent="37" name="milestone_id">
+      <column id="404" parent="37" name="milestone_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="401" parent="37" name="tikedge_user_id">
+      <column id="405" parent="37" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="402" parent="37" name="PRIMARY">
+      <key id="406" parent="37" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="403" parent="37" name="social_pictur_milestone_id_7766397b91fc52e_fk_tasks_milestone_id">
+      <foreign-key id="407" parent="37" name="social_pictur_milestone_id_7766397b91fc52e_fk_tasks_milestone_id">
         <columns>milestone_id</columns>
         <ref-key>tasks_milestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="404" parent="37" name="social_pic_after_picture_id_12c0ea7fbe7579f_fk_social_picture_id">
+      <foreign-key id="408" parent="37" name="social_pic_after_picture_id_12c0ea7fbe7579f_fk_social_picture_id">
         <columns>after_picture_id</columns>
         <ref-key>social_picture.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="405" parent="37" name="social_p_before_picture_id_17b854a7d7ece345_fk_social_picture_id">
+      <foreign-key id="409" parent="37" name="social_p_before_picture_id_17b854a7d7ece345_fk_social_picture_id">
         <columns>before_picture_id</columns>
         <ref-key>social_picture.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="406" parent="37" name="social__tikedge_user_id_6331fd6c6962375e_fk_tasks_tikedgeuser_id">
+      <foreign-key id="410" parent="37" name="social__tikedge_user_id_6331fd6c6962375e_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="407" parent="38" name="id">
+      <column id="411" parent="38" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="408" parent="38" name="tasks_id">
+      <column id="412" parent="38" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="409" parent="38" name="PRIMARY">
+      <key id="413" parent="38" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="410" parent="38" name="social_seenmiles_tasks_id_589fa6dee84814d8_fk_tasks_milestone_id">
+      <foreign-key id="414" parent="38" name="social_seenmiles_tasks_id_589fa6dee84814d8_fk_tasks_milestone_id">
         <columns>tasks_id</columns>
         <ref-key>tasks_milestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="411" parent="39" name="id">
+      <column id="415" parent="39" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="412" parent="39" name="seenmilestone_id">
+      <column id="416" parent="39" name="seenmilestone_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="413" parent="39" name="tikedgeuser_id">
+      <column id="417" parent="39" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="414" parent="39" name="seenmilestone_id">
+      <index id="418" parent="39" name="seenmilestone_id">
         <columns>seenmilestone_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="415" parent="39" name="PRIMARY">
+      <key id="419" parent="39" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="416" parent="39" name="seenmilestone_id">
+      <key id="420" parent="39" name="seenmilestone_id">
         <columns>seenmilestone_id
 tikedgeuser_id</columns>
         <underlying-index>seenmilestone_id</underlying-index>
       </key>
-      <foreign-key id="417" parent="39" name="social_s_tikedgeuser_id_1dd11e3e7c7c7777_fk_tasks_tikedgeuser_id">
+      <foreign-key id="421" parent="39" name="social_s_tikedgeuser_id_1dd11e3e7c7c7777_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="418" parent="39" name="soc_seenmilestone_id_59450b3904ba707c_fk_social_seenmilestone_id">
+      <foreign-key id="422" parent="39" name="soc_seenmilestone_id_59450b3904ba707c_fk_social_seenmilestone_id">
         <columns>seenmilestone_id</columns>
         <ref-key>social_seenmilestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="419" parent="40" name="id">
+      <column id="423" parent="40" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="420" parent="40" name="tasks_id">
+      <column id="424" parent="40" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="421" parent="40" name="PRIMARY">
+      <key id="425" parent="40" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="422" parent="40" name="social_seenpic_tasks_id_5144633994c119d7_fk_social_pictureset_id">
+      <foreign-key id="426" parent="40" name="social_seenpic_tasks_id_5144633994c119d7_fk_social_pictureset_id">
         <columns>tasks_id</columns>
         <ref-key>social_pictureset.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="423" parent="41" name="id">
+      <column id="427" parent="41" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="424" parent="41" name="seenpictureset_id">
+      <column id="428" parent="41" name="seenpictureset_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="425" parent="41" name="tikedgeuser_id">
+      <column id="429" parent="41" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="426" parent="41" name="seenpictureset_id">
+      <index id="430" parent="41" name="seenpictureset_id">
         <columns>seenpictureset_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="427" parent="41" name="PRIMARY">
+      <key id="431" parent="41" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="428" parent="41" name="seenpictureset_id">
+      <key id="432" parent="41" name="seenpictureset_id">
         <columns>seenpictureset_id
 tikedgeuser_id</columns>
         <underlying-index>seenpictureset_id</underlying-index>
       </key>
-      <foreign-key id="429" parent="41" name="social_s_tikedgeuser_id_58a649d31e75b986_fk_tasks_tikedgeuser_id">
+      <foreign-key id="433" parent="41" name="social_s_tikedgeuser_id_58a649d31e75b986_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="430" parent="41" name="s_seenpictureset_id_42d2a180bc3332be_fk_social_seenpictureset_id">
+      <foreign-key id="434" parent="41" name="s_seenpictureset_id_42d2a180bc3332be_fk_social_seenpictureset_id">
         <columns>seenpictureset_id</columns>
         <ref-key>social_seenpictureset.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="431" parent="42" name="id">
+      <column id="435" parent="42" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="432" parent="42" name="tasks_id">
+      <column id="436" parent="42" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="433" parent="42" name="PRIMARY">
+      <key id="437" parent="42" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="434" parent="42" name="social_seenpro_tasks_id_329ae76400364543_fk_tasks_userproject_id">
+      <foreign-key id="438" parent="42" name="social_seenpro_tasks_id_329ae76400364543_fk_tasks_userproject_id">
         <columns>tasks_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="435" parent="43" name="id">
+      <column id="439" parent="43" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="436" parent="43" name="seenproject_id">
+      <column id="440" parent="43" name="seenproject_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="437" parent="43" name="tikedgeuser_id">
+      <column id="441" parent="43" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="438" parent="43" name="seenproject_id">
+      <index id="442" parent="43" name="seenproject_id">
         <columns>seenproject_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="439" parent="43" name="PRIMARY">
+      <key id="443" parent="43" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="440" parent="43" name="seenproject_id">
+      <key id="444" parent="43" name="seenproject_id">
         <columns>seenproject_id
 tikedgeuser_id</columns>
         <underlying-index>seenproject_id</underlying-index>
       </key>
-      <foreign-key id="441" parent="43" name="social_se_tikedgeuser_id_a2c91ce110ced6e_fk_tasks_tikedgeuser_id">
+      <foreign-key id="445" parent="43" name="social_se_tikedgeuser_id_a2c91ce110ced6e_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="442" parent="43" name="social__seenproject_id_4054452d435c7f50_fk_social_seenproject_id">
+      <foreign-key id="446" parent="43" name="social__seenproject_id_4054452d435c7f50_fk_social_seenproject_id">
         <columns>seenproject_id</columns>
         <ref-key>social_seenproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="443" parent="44" name="id">
+      <column id="447" parent="44" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="444" parent="44" name="latest_vouch">
+      <column id="448" parent="44" name="latest_vouch">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="445" parent="44" name="tasks_id">
+      <column id="449" parent="44" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="446" parent="44" name="PRIMARY">
+      <key id="450" parent="44" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="447" parent="44" name="social_vouchemil_tasks_id_37b36cc772b7646d_fk_tasks_milestone_id">
+      <foreign-key id="451" parent="44" name="social_vouchemil_tasks_id_37b36cc772b7646d_fk_tasks_milestone_id">
         <columns>tasks_id</columns>
         <ref-key>tasks_milestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="448" parent="45" name="id">
+      <column id="452" parent="45" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="449" parent="45" name="vouchemilestone_id">
+      <column id="453" parent="45" name="vouchemilestone_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="450" parent="45" name="tikedgeuser_id">
+      <column id="454" parent="45" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="451" parent="45" name="vouchemilestone_id">
+      <index id="455" parent="45" name="vouchemilestone_id">
         <columns>vouchemilestone_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="452" parent="45" name="PRIMARY">
+      <key id="456" parent="45" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="453" parent="45" name="vouchemilestone_id">
+      <key id="457" parent="45" name="vouchemilestone_id">
         <columns>vouchemilestone_id
 tikedgeuser_id</columns>
         <underlying-index>vouchemilestone_id</underlying-index>
       </key>
-      <foreign-key id="454" parent="45" name="D2a9e0a95f6e1b4941570fe2145fb6bd">
+      <foreign-key id="458" parent="45" name="D2a9e0a95f6e1b4941570fe2145fb6bd">
         <columns>vouchemilestone_id</columns>
         <ref-key>social_vouchemilestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="455" parent="45" name="social_v_tikedgeuser_id_4a81ba62f489aaf8_fk_tasks_tikedgeuser_id">
+      <foreign-key id="459" parent="45" name="social_v_tikedgeuser_id_4a81ba62f489aaf8_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="456" parent="46" name="id">
+      <column id="460" parent="46" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="457" parent="46" name="name_of_milestone">
+      <column id="461" parent="46" name="name_of_milestone">
         <mandatory>1</mandatory>
         <data-type>varchar(600)</data-type>
       </column>
-      <column id="458" parent="46" name="reminder">
+      <column id="462" parent="46" name="reminder">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="459" parent="46" name="done_by">
+      <column id="463" parent="46" name="done_by">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="460" parent="46" name="is_active">
+      <column id="464" parent="46" name="is_active">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="461" parent="46" name="is_failed">
+      <column id="465" parent="46" name="is_failed">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="462" parent="46" name="current_working_on_milestone">
+      <column id="466" parent="46" name="current_working_on_milestone">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="463" parent="46" name="created_date">
+      <column id="467" parent="46" name="created_date">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="464" parent="46" name="slug">
+      <column id="468" parent="46" name="slug">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="465" parent="46" name="blurb">
+      <column id="469" parent="46" name="blurb">
         <mandatory>1</mandatory>
         <data-type>varchar(150)</data-type>
       </column>
-      <column id="466" parent="46" name="is_completed">
+      <column id="470" parent="46" name="is_completed">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="467" parent="46" name="is_deleted">
+      <column id="471" parent="46" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="468" parent="46" name="last_update">
+      <column id="472" parent="46" name="last_update">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="469" parent="46" name="project_id">
+      <column id="473" parent="46" name="project_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="470" parent="46" name="user_id">
+      <column id="474" parent="46" name="user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="471" parent="46" name="PRIMARY">
+      <key id="475" parent="46" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="472" parent="46" name="tasks_milestone_user_id_39f43af9e68f95b3_fk_tasks_tikedgeuser_id">
+      <foreign-key id="476" parent="46" name="tasks_milestone_user_id_39f43af9e68f95b3_fk_tasks_tikedgeuser_id">
         <columns>user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="473" parent="46" name="tasks_milest_project_id_24b23fd25f0c726c_fk_tasks_userproject_id">
+      <foreign-key id="477" parent="46" name="tasks_milest_project_id_24b23fd25f0c726c_fk_tasks_userproject_id">
         <columns>project_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="474" parent="47" name="id">
+      <column id="478" parent="47" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="475" parent="47" name="name_of_tag">
+      <column id="479" parent="47" name="name_of_tag">
         <mandatory>1</mandatory>
         <data-type>varchar(300)</data-type>
       </column>
-      <key id="476" parent="47" name="PRIMARY">
+      <key id="480" parent="47" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="477" parent="48" name="id">
+      <column id="481" parent="48" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="478" parent="48" name="userproject_id">
+      <column id="482" parent="48" name="userproject_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="479" parent="48" name="tagnames_id">
+      <column id="483" parent="48" name="tagnames_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="480" parent="48" name="userproject_id">
+      <index id="484" parent="48" name="userproject_id">
         <columns>userproject_id
 tagnames_id</columns>
         <unique>1</unique>
       </index>
-      <key id="481" parent="48" name="PRIMARY">
+      <key id="485" parent="48" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="482" parent="48" name="userproject_id">
+      <key id="486" parent="48" name="userproject_id">
         <columns>userproject_id
 tagnames_id</columns>
         <underlying-index>userproject_id</underlying-index>
       </key>
-      <foreign-key id="483" parent="48" name="tasks_userproje_tagnames_id_c0e04fe4de90b79_fk_tasks_tagnames_id">
+      <foreign-key id="487" parent="48" name="tasks_userproje_tagnames_id_c0e04fe4de90b79_fk_tasks_tagnames_id">
         <columns>tagnames_id</columns>
         <ref-key>tasks_tagnames.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="484" parent="48" name="tasks_us_userproject_id_4dd12612083a36be_fk_tasks_userproject_id">
+      <foreign-key id="488" parent="48" name="tasks_us_userproject_id_4dd12612083a36be_fk_tasks_userproject_id">
         <columns>userproject_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="485" parent="49" name="id">
+      <column id="489" parent="49" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="486" parent="49" name="comment">
+      <column id="490" parent="49" name="comment">
         <mandatory>1</mandatory>
         <data-type>varchar(2000)</data-type>
       </column>
-      <column id="487" parent="49" name="is_deleted">
+      <column id="491" parent="49" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="488" parent="49" name="journal_post_id">
+      <column id="492" parent="49" name="journal_post_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="489" parent="49" name="PRIMARY">
+      <key id="493" parent="49" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="490" parent="49" name="social__journal_post_id_e241987a899da55_fk_social_journalpost_id">
+      <foreign-key id="494" parent="49" name="social__journal_post_id_e241987a899da55_fk_social_journalpost_id">
         <columns>journal_post_id</columns>
         <ref-key>social_journalpost.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="491" parent="50" name="id">
+      <column id="495" parent="50" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="492" parent="50" name="entry_blurb">
+      <column id="496" parent="50" name="entry_blurb">
         <mandatory>1</mandatory>
         <data-type>varchar(240)</data-type>
       </column>
-      <column id="493" parent="50" name="day_entry">
+      <column id="497" parent="50" name="day_entry">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="494" parent="50" name="day_created">
+      <column id="498" parent="50" name="day_created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="495" parent="50" name="event_type">
+      <column id="499" parent="50" name="event_type">
         <mandatory>1</mandatory>
         <data-type>varchar(20)</data-type>
       </column>
-      <column id="496" parent="50" name="is_deleted">
+      <column id="500" parent="50" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="497" parent="50" name="is_picture_set">
+      <column id="501" parent="50" name="is_picture_set">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="498" parent="50" name="is_milestone_entry">
+      <column id="502" parent="50" name="is_milestone_entry">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="499" parent="50" name="is_project_entry">
+      <column id="503" parent="50" name="is_project_entry">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="500" parent="50" name="slug">
+      <column id="504" parent="50" name="slug">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="501" parent="50" name="milestone_entry_id">
+      <column id="505" parent="50" name="milestone_entry_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="502" parent="50" name="new_project_entry_id">
+      <column id="506" parent="50" name="new_project_entry_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="503" parent="50" name="picture_set_entry_id">
+      <column id="507" parent="50" name="picture_set_entry_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="504" parent="50" name="user_id">
+      <column id="508" parent="50" name="user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="505" parent="50" name="PRIMARY">
+      <key id="509" parent="50" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="506" parent="50" name="social_journalp_user_id_4edf17c0e418e972_fk_tasks_tikedgeuser_id">
+      <foreign-key id="510" parent="50" name="social_journalp_user_id_4edf17c0e418e972_fk_tasks_tikedgeuser_id">
         <columns>user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="507" parent="50" name="social_milestone_entry_id_2b42f3c17e882595_fk_tasks_milestone_id">
+      <foreign-key id="511" parent="50" name="social_milestone_entry_id_2b42f3c17e882595_fk_tasks_milestone_id">
         <columns>milestone_entry_id</columns>
         <ref-key>tasks_milestone.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="508" parent="50" name="so_new_project_entry_id_235985ff3e4b9663_fk_tasks_userproject_id">
+      <foreign-key id="512" parent="50" name="so_new_project_entry_id_235985ff3e4b9663_fk_tasks_userproject_id">
         <columns>new_project_entry_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="509" parent="50" name="so_picture_set_entry_id_725354ea0162aaa0_fk_social_pictureset_id">
+      <foreign-key id="513" parent="50" name="so_picture_set_entry_id_725354ea0162aaa0_fk_social_pictureset_id">
         <columns>picture_set_entry_id</columns>
         <ref-key>social_pictureset.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="510" parent="51" name="id">
+      <column id="514" parent="51" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="511" parent="51" name="name_of_pond">
+      <column id="515" parent="51" name="name_of_pond">
         <mandatory>1</mandatory>
         <data-type>varchar(250)</data-type>
       </column>
-      <column id="512" parent="51" name="date_created">
+      <column id="516" parent="51" name="date_created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="513" parent="51" name="date_deleted">
+      <column id="517" parent="51" name="date_deleted">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="514" parent="51" name="slug">
+      <column id="518" parent="51" name="slug">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="515" parent="51" name="purpose">
+      <column id="519" parent="51" name="purpose">
         <mandatory>1</mandatory>
         <data-type>varchar(110)</data-type>
       </column>
-      <column id="516" parent="51" name="blurb">
+      <column id="520" parent="51" name="blurb">
         <mandatory>1</mandatory>
         <data-type>varchar(51)</data-type>
       </column>
-      <column id="517" parent="51" name="is_deleted">
+      <column id="521" parent="51" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="518" parent="51" name="pond_creator_id">
+      <column id="522" parent="51" name="pond_creator_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="519" parent="51" name="PRIMARY">
+      <key id="523" parent="51" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="520" parent="51" name="social__pond_creator_id_54e2c91ec30308a0_fk_tasks_tikedgeuser_id">
+      <foreign-key id="524" parent="51" name="social__pond_creator_id_54e2c91ec30308a0_fk_tasks_tikedgeuser_id">
         <columns>pond_creator_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="521" parent="52" name="id">
+      <column id="525" parent="52" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="522" parent="52" name="pond_id">
+      <column id="526" parent="52" name="pond_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="523" parent="52" name="tikedgeuser_id">
+      <column id="527" parent="52" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="524" parent="52" name="pond_id">
+      <index id="528" parent="52" name="pond_id">
         <columns>pond_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="525" parent="52" name="pond_id">
+      <key id="529" parent="52" name="pond_id">
         <columns>pond_id
 tikedgeuser_id</columns>
         <underlying-index>pond_id</underlying-index>
       </key>
-      <key id="526" parent="52" name="PRIMARY">
+      <key id="530" parent="52" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="527" parent="52" name="social_pond_pond_memb_pond_id_525c2910e0fecb52_fk_social_pond_id">
+      <foreign-key id="531" parent="52" name="social_pond_pond_memb_pond_id_525c2910e0fecb52_fk_social_pond_id">
         <columns>pond_id</columns>
         <ref-key>social_pond.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="528" parent="52" name="social_po_tikedgeuser_id_66347ed87bccb16_fk_tasks_tikedgeuser_id">
+      <foreign-key id="532" parent="52" name="social_po_tikedgeuser_id_66347ed87bccb16_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="529" parent="53" name="id">
+      <column id="533" parent="53" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="530" parent="53" name="pond_id">
+      <column id="534" parent="53" name="pond_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="531" parent="53" name="tagnames_id">
+      <column id="535" parent="53" name="tagnames_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="532" parent="53" name="pond_id">
+      <index id="536" parent="53" name="pond_id">
         <columns>pond_id
 tagnames_id</columns>
         <unique>1</unique>
       </index>
-      <key id="533" parent="53" name="pond_id">
+      <key id="537" parent="53" name="pond_id">
         <columns>pond_id
 tagnames_id</columns>
         <underlying-index>pond_id</underlying-index>
       </key>
-      <key id="534" parent="53" name="PRIMARY">
+      <key id="538" parent="53" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="535" parent="53" name="social_pond_tags_pond_id_77fefb0768187f84_fk_social_pond_id">
+      <foreign-key id="539" parent="53" name="social_pond_tags_pond_id_77fefb0768187f84_fk_social_pond_id">
         <columns>pond_id</columns>
         <ref-key>social_pond.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="536" parent="53" name="social_pond_ta_tagnames_id_4a45df0b6aedf087_fk_tasks_tagnames_id">
+      <foreign-key id="540" parent="53" name="social_pond_ta_tagnames_id_4a45df0b6aedf087_fk_tasks_tagnames_id">
         <columns>tagnames_id</columns>
         <ref-key>tasks_tagnames.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="537" parent="54" name="id">
+      <column id="541" parent="54" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="538" parent="54" name="date_joined">
+      <column id="542" parent="54" name="date_joined">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="539" parent="54" name="date_removed">
+      <column id="543" parent="54" name="date_removed">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="540" parent="54" name="pond_id">
+      <column id="544" parent="54" name="pond_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="541" parent="54" name="user_id">
+      <column id="545" parent="54" name="user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="542" parent="54" name="PRIMARY">
+      <key id="546" parent="54" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="543" parent="54" name="social_pondmembership_pond_id_4cd6452ee1467ec9_fk_social_pond_id">
+      <foreign-key id="547" parent="54" name="social_pondmembership_pond_id_4cd6452ee1467ec9_fk_social_pond_id">
         <columns>pond_id</columns>
         <ref-key>social_pond.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="544" parent="54" name="social_pondmembe_user_id_a2e08722c868d93_fk_tasks_tikedgeuser_id">
+      <foreign-key id="548" parent="54" name="social_pondmembe_user_id_a2e08722c868d93_fk_tasks_tikedgeuser_id">
         <columns>user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="545" parent="55" name="id">
+      <column id="549" parent="55" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="546" parent="55" name="date_requested">
+      <column id="550" parent="55" name="date_requested">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="547" parent="55" name="date_response">
+      <column id="551" parent="55" name="date_response">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="548" parent="55" name="request_accepted">
+      <column id="552" parent="55" name="request_accepted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="549" parent="55" name="request_denied">
+      <column id="553" parent="55" name="request_denied">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="550" parent="55" name="request_responded_to">
+      <column id="554" parent="55" name="request_responded_to">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="551" parent="55" name="member_that_responded_id">
+      <column id="555" parent="55" name="member_that_responded_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="552" parent="55" name="pond_id">
+      <column id="556" parent="55" name="pond_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="553" parent="55" name="user_id">
+      <column id="557" parent="55" name="user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="554" parent="55" name="PRIMARY">
+      <key id="558" parent="55" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="555" parent="55" name="f3199de1afdddbe686c853f673d96845">
+      <foreign-key id="559" parent="55" name="f3199de1afdddbe686c853f673d96845">
         <columns>member_that_responded_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="556" parent="55" name="social_pondrequest_pond_id_4c8a8a7dcbaef033_fk_social_pond_id">
+      <foreign-key id="560" parent="55" name="social_pondrequest_pond_id_4c8a8a7dcbaef033_fk_social_pond_id">
         <columns>pond_id</columns>
         <ref-key>social_pond.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="557" parent="55" name="social_pondrequ_user_id_39871de368f4fd71_fk_tasks_tikedgeuser_id">
+      <foreign-key id="561" parent="55" name="social_pondrequ_user_id_39871de368f4fd71_fk_tasks_tikedgeuser_id">
         <columns>user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="558" parent="56" name="id">
+      <column id="562" parent="56" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="559" parent="56" name="project_id">
+      <column id="563" parent="56" name="project_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="560" parent="56" name="PRIMARY">
+      <key id="564" parent="56" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="561" parent="56" name="social_ponds_project_id_12476faab460c9b8_fk_tasks_userproject_id">
+      <foreign-key id="565" parent="56" name="social_ponds_project_id_12476faab460c9b8_fk_tasks_userproject_id">
         <columns>project_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="562" parent="57" name="id">
+      <column id="566" parent="57" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="563" parent="57" name="pondspecificproject_id">
+      <column id="567" parent="57" name="pondspecificproject_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="564" parent="57" name="pond_id">
+      <column id="568" parent="57" name="pond_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="565" parent="57" name="pondspecificproject_id">
+      <index id="569" parent="57" name="pondspecificproject_id">
         <columns>pondspecificproject_id
 pond_id</columns>
         <unique>1</unique>
       </index>
-      <key id="566" parent="57" name="pondspecificproject_id">
+      <key id="570" parent="57" name="pondspecificproject_id">
         <columns>pondspecificproject_id
 pond_id</columns>
         <underlying-index>pondspecificproject_id</underlying-index>
       </key>
-      <key id="567" parent="57" name="PRIMARY">
+      <key id="571" parent="57" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="568" parent="57" name="D6dff19621433dd1a3817a1ab2e4461c">
+      <foreign-key id="572" parent="57" name="D6dff19621433dd1a3817a1ab2e4461c">
         <columns>pondspecificproject_id</columns>
         <ref-key>social_pondspecificproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="569" parent="57" name="social_pondspecificpr_pond_id_642dcd82d40c9796_fk_social_pond_id">
+      <foreign-key id="573" parent="57" name="social_pondspecificpr_pond_id_642dcd82d40c9796_fk_social_pond_id">
         <columns>pond_id</columns>
         <ref-key>social_pond.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="570" parent="58" name="id">
+      <column id="574" parent="58" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="571" parent="58" name="email">
+      <column id="575" parent="58" name="email">
         <mandatory>1</mandatory>
         <data-type>varchar(150)</data-type>
       </column>
-      <key id="572" parent="58" name="PRIMARY">
+      <key id="576" parent="58" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="573" parent="59" name="id">
+      <column id="577" parent="59" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="574" parent="59" name="consistency_rank">
+      <column id="578" parent="59" name="consistency_rank">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="575" parent="59" name="correct_vouching_rank">
+      <column id="579" parent="59" name="correct_vouching_rank">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="576" parent="59" name="work_ethic_rank">
+      <column id="580" parent="59" name="work_ethic_rank">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="577" parent="59" name="tikedge_user_id">
+      <column id="581" parent="59" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="578" parent="59" name="PRIMARY">
+      <key id="582" parent="59" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="579" parent="59" name="social__tikedge_user_id_12ff20b782ee8bc7_fk_tasks_tikedgeuser_id">
+      <foreign-key id="583" parent="59" name="social__tikedge_user_id_12ff20b782ee8bc7_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="580" parent="60" name="id">
+      <column id="584" parent="60" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="581" parent="60" name="token">
+      <column id="585" parent="60" name="token">
         <mandatory>1</mandatory>
         <data-type>varchar(12)</data-type>
       </column>
-      <column id="582" parent="60" name="was_used">
+      <column id="586" parent="60" name="was_used">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="583" parent="60" name="is_active">
+      <column id="587" parent="60" name="is_active">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="584" parent="60" name="user_id">
+      <column id="588" parent="60" name="user_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <key id="585" parent="60" name="PRIMARY">
+      <key id="589" parent="60" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="586" parent="60" name="tasks_passwordreset_user_id_6373d633343ac32f_fk_auth_user_id">
+      <foreign-key id="590" parent="60" name="tasks_passwordreset_user_id_6373d633343ac32f_fk_auth_user_id">
         <columns>user_id</columns>
         <ref-key>auth_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="587" parent="61" name="id">
+      <column id="591" parent="61" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="588" parent="61" name="latest_letDown">
+      <column id="592" parent="61" name="latest_letDown">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="589" parent="61" name="tasks_id">
+      <column id="593" parent="61" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="590" parent="61" name="PRIMARY">
+      <key id="594" parent="61" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="591" parent="61" name="social_letdownp_tasks_id_8d6c589e7c4cf1a_fk_tasks_userproject_id">
+      <foreign-key id="595" parent="61" name="social_letdownp_tasks_id_8d6c589e7c4cf1a_fk_tasks_userproject_id">
         <columns>tasks_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="592" parent="62" name="id">
+      <column id="596" parent="62" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="593" parent="62" name="letdownproject_id">
+      <column id="597" parent="62" name="letdownproject_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="594" parent="62" name="tikedgeuser_id">
+      <column id="598" parent="62" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="595" parent="62" name="letdownproject_id">
+      <index id="599" parent="62" name="letdownproject_id">
         <columns>letdownproject_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="596" parent="62" name="letdownproject_id">
+      <key id="600" parent="62" name="letdownproject_id">
         <columns>letdownproject_id
 tikedgeuser_id</columns>
         <underlying-index>letdownproject_id</underlying-index>
       </key>
-      <key id="597" parent="62" name="PRIMARY">
+      <key id="601" parent="62" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="598" parent="62" name="social_l_tikedgeuser_id_3709be285b4bd953_fk_tasks_tikedgeuser_id">
+      <foreign-key id="602" parent="62" name="social_l_tikedgeuser_id_3709be285b4bd953_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="599" parent="62" name="s_letdownproject_id_5d0de411e09084a6_fk_social_letdownproject_id">
+      <foreign-key id="603" parent="62" name="s_letdownproject_id_5d0de411e09084a6_fk_social_letdownproject_id">
         <columns>letdownproject_id</columns>
         <ref-key>social_letdownproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="600" parent="63" name="id">
+      <column id="604" parent="63" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="601" parent="63" name="latest_impressed">
+      <column id="605" parent="63" name="latest_impressed">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="602" parent="63" name="is_video_tasks">
+      <column id="606" parent="63" name="is_video_tasks">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="603" parent="63" name="is_picture_tasks">
+      <column id="607" parent="63" name="is_picture_tasks">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="604" parent="63" name="tasks_id">
+      <column id="608" parent="63" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="605" parent="63" name="video_tasks_id">
+      <column id="609" parent="63" name="video_tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="606" parent="63" name="PRIMARY">
+      <key id="610" parent="63" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="607" parent="63" name="social_pr_tasks_id_371d84036fd86d04_fk_social_progresspicture_id">
+      <foreign-key id="611" parent="63" name="social_pr_tasks_id_371d84036fd86d04_fk_social_progresspicture_id">
         <columns>tasks_id</columns>
         <ref-key>social_progresspicture.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="608" parent="63" name="socia_video_tasks_id_53f2e04856cef5f2_fk_social_progressvideo_id">
+      <foreign-key id="612" parent="63" name="socia_video_tasks_id_53f2e04856cef5f2_fk_social_progressvideo_id">
         <columns>video_tasks_id</columns>
         <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="609" parent="64" name="id">
+      <column id="613" parent="64" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="610" parent="64" name="progressimpressedcount_id">
+      <column id="614" parent="64" name="progressimpressedcount_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="611" parent="64" name="tikedgeuser_id">
+      <column id="615" parent="64" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="612" parent="64" name="progressimpressedcount_id">
+      <index id="616" parent="64" name="progressimpressedcount_id">
         <columns>progressimpressedcount_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="613" parent="64" name="PRIMARY">
+      <key id="617" parent="64" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="614" parent="64" name="progressimpressedcount_id">
+      <key id="618" parent="64" name="progressimpressedcount_id">
         <columns>progressimpressedcount_id
 tikedgeuser_id</columns>
         <underlying-index>progressimpressedcount_id</underlying-index>
       </key>
-      <foreign-key id="615" parent="64" name="c129be40f76279f28c68062187cd140b">
+      <foreign-key id="619" parent="64" name="c129be40f76279f28c68062187cd140b">
         <columns>progressimpressedcount_id</columns>
         <ref-key>social_progressimpressedcount.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="616" parent="64" name="social_pr_tikedgeuser_id_b7ea8754b2ac88f_fk_tasks_tikedgeuser_id">
+      <foreign-key id="620" parent="64" name="social_pr_tikedgeuser_id_b7ea8754b2ac88f_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="617" parent="65" name="id">
+      <column id="621" parent="65" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="618" parent="65" name="image_name">
+      <column id="622" parent="65" name="image_name">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="619" parent="65" name="picture">
+      <column id="623" parent="65" name="picture">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="620" parent="65" name="name_of_progress">
+      <column id="624" parent="65" name="name_of_progress">
         <data-type>longtext</data-type>
       </column>
-      <column id="621" parent="65" name="is_deleted">
+      <column id="625" parent="65" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="622" parent="65" name="last_updated">
+      <column id="626" parent="65" name="last_updated">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="623" parent="65" name="created">
+      <column id="627" parent="65" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="624" parent="65" name="blurb">
+      <column id="628" parent="65" name="blurb">
         <mandatory>1</mandatory>
         <data-type>varchar(150)</data-type>
       </column>
-      <key id="625" parent="65" name="PRIMARY">
+      <key id="629" parent="65" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="626" parent="66" name="id">
+      <column id="630" parent="66" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="627" parent="66" name="is_deleted">
+      <column id="631" parent="66" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="628" parent="66" name="last_updated">
+      <column id="632" parent="66" name="last_updated">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="629" parent="66" name="created">
+      <column id="633" parent="66" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="630" parent="66" name="is_empty">
+      <column id="634" parent="66" name="is_empty">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="631" parent="66" name="project_id">
+      <column id="635" parent="66" name="project_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="632" parent="66" name="PRIMARY">
+      <key id="636" parent="66" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="633" parent="66" name="social_progr_project_id_698d0bd2f1842d88_fk_tasks_userproject_id">
+      <foreign-key id="637" parent="66" name="social_progr_project_id_698d0bd2f1842d88_fk_tasks_userproject_id">
         <columns>project_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="634" parent="67" name="id">
+      <column id="638" parent="67" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="635" parent="67" name="progresspictureset_id">
+      <column id="639" parent="67" name="progresspictureset_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="636" parent="67" name="progresspicture_id">
+      <column id="640" parent="67" name="progresspicture_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="637" parent="67" name="progresspictureset_id">
+      <index id="641" parent="67" name="progresspictureset_id">
         <columns>progresspictureset_id
 progresspicture_id</columns>
         <unique>1</unique>
       </index>
-      <key id="638" parent="67" name="PRIMARY">
+      <key id="642" parent="67" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="639" parent="67" name="progresspictureset_id">
+      <key id="643" parent="67" name="progresspictureset_id">
         <columns>progresspictureset_id
 progresspicture_id</columns>
         <underlying-index>progresspictureset_id</underlying-index>
       </key>
-      <foreign-key id="640" parent="67" name="D53c4e6f6af09b0d72f35a764772c8a7">
+      <foreign-key id="644" parent="67" name="D53c4e6f6af09b0d72f35a764772c8a7">
         <columns>progresspicture_id</columns>
         <ref-key>social_progresspicture.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="641" parent="67" name="D78c6b1d00e28488481966482be77601">
+      <foreign-key id="645" parent="67" name="D78c6b1d00e28488481966482be77601">
         <columns>progresspictureset_id</columns>
         <ref-key>social_progresspictureset.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="642" parent="68" name="id">
+      <column id="646" parent="68" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="643" parent="68" name="image_name">
+      <column id="647" parent="68" name="image_name">
         <mandatory>1</mandatory>
         <data-type>varchar(300)</data-type>
       </column>
-      <column id="644" parent="68" name="date_uploaded">
+      <column id="648" parent="68" name="date_uploaded">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="645" parent="68" name="last_edited">
+      <column id="649" parent="68" name="last_edited">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="646" parent="68" name="is_before">
+      <column id="650" parent="68" name="is_before">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="647" parent="68" name="picture">
+      <column id="651" parent="68" name="picture">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="648" parent="68" name="is_deleted">
+      <column id="652" parent="68" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="649" parent="68" name="project_id">
+      <column id="653" parent="68" name="project_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="650" parent="68" name="PRIMARY">
+      <key id="654" parent="68" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="651" parent="68" name="social_proje_project_id_5d1458cf715d440c_fk_tasks_userproject_id">
+      <foreign-key id="655" parent="68" name="social_proje_project_id_5d1458cf715d440c_fk_tasks_userproject_id">
         <columns>project_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="652" parent="69" name="id">
+      <column id="656" parent="69" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="653" parent="69" name="is_video_tasks">
-        <mandatory>1</mandatory>
-        <data-type>tinyint(1)</data-type>
-      </column>
-      <column id="654" parent="69" name="is_picture_tasks">
+      <column id="657" parent="69" name="is_video_tasks">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="655" parent="69" name="tasks_id">
+      <column id="658" parent="69" name="is_picture_tasks">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(1)</data-type>
+      </column>
+      <column id="659" parent="69" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="656" parent="69" name="video_tasks_id">
+      <column id="660" parent="69" name="video_tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="657" parent="69" name="PRIMARY">
+      <key id="661" parent="69" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="658" parent="69" name="social_se_tasks_id_57bcbd191001057a_fk_social_progresspicture_id">
+      <foreign-key id="662" parent="69" name="social_se_tasks_id_57bcbd191001057a_fk_social_progresspicture_id">
         <columns>tasks_id</columns>
         <ref-key>social_progresspicture.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="659" parent="69" name="socia_video_tasks_id_520cf4057bf06e98_fk_social_progressvideo_id">
+      <foreign-key id="663" parent="69" name="socia_video_tasks_id_520cf4057bf06e98_fk_social_progressvideo_id">
         <columns>video_tasks_id</columns>
         <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="660" parent="70" name="id">
+      <column id="664" parent="70" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="661" parent="70" name="seenprogress_id">
+      <column id="665" parent="70" name="seenprogress_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="662" parent="70" name="tikedgeuser_id">
+      <column id="666" parent="70" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="663" parent="70" name="seenprogress_id">
+      <index id="667" parent="70" name="seenprogress_id">
         <columns>seenprogress_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="664" parent="70" name="PRIMARY">
+      <key id="668" parent="70" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="665" parent="70" name="seenprogress_id">
+      <key id="669" parent="70" name="seenprogress_id">
         <columns>seenprogress_id
 tikedgeuser_id</columns>
         <underlying-index>seenprogress_id</underlying-index>
       </key>
-      <foreign-key id="666" parent="70" name="social_s_tikedgeuser_id_5e7a43d583fa687d_fk_tasks_tikedgeuser_id">
+      <foreign-key id="670" parent="70" name="social_s_tikedgeuser_id_5e7a43d583fa687d_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="667" parent="70" name="socia_seenprogress_id_5c4994162a60aa3e_fk_social_seenprogress_id">
+      <foreign-key id="671" parent="70" name="socia_seenprogress_id_5c4994162a60aa3e_fk_social_seenprogress_id">
         <columns>seenprogress_id</columns>
         <ref-key>social_seenprogress.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="668" parent="71" name="id">
+      <column id="672" parent="71" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="669" parent="71" name="latest_vouch">
+      <column id="673" parent="71" name="latest_vouch">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="670" parent="71" name="is_video_tasks">
+      <column id="674" parent="71" name="is_video_tasks">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="671" parent="71" name="is_picture_tasks">
+      <column id="675" parent="71" name="is_picture_tasks">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="672" parent="71" name="tasks_id">
+      <column id="676" parent="71" name="tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="673" parent="71" name="video_tasks_id">
+      <column id="677" parent="71" name="video_tasks_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="674" parent="71" name="PRIMARY">
+      <key id="678" parent="71" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="675" parent="71" name="social_vouchep_tasks_id_199921141c2ccbba_fk_tasks_userproject_id">
+      <foreign-key id="679" parent="71" name="social_vouchep_tasks_id_199921141c2ccbba_fk_tasks_userproject_id">
         <columns>tasks_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="676" parent="71" name="socia_video_tasks_id_4d2a909696cf74d8_fk_social_progressvideo_id">
+      <foreign-key id="680" parent="71" name="socia_video_tasks_id_4d2a909696cf74d8_fk_social_progressvideo_id">
         <columns>video_tasks_id</columns>
         <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="677" parent="72" name="id">
+      <column id="681" parent="72" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="678" parent="72" name="voucheproject_id">
+      <column id="682" parent="72" name="voucheproject_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="679" parent="72" name="tikedgeuser_id">
+      <column id="683" parent="72" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="680" parent="72" name="voucheproject_id">
+      <index id="684" parent="72" name="voucheproject_id">
         <columns>voucheproject_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="681" parent="72" name="PRIMARY">
+      <key id="685" parent="72" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="682" parent="72" name="voucheproject_id">
+      <key id="686" parent="72" name="voucheproject_id">
         <columns>voucheproject_id
 tikedgeuser_id</columns>
         <underlying-index>voucheproject_id</underlying-index>
       </key>
-      <foreign-key id="683" parent="72" name="social_v_tikedgeuser_id_2540dec782f1955d_fk_tasks_tikedgeuser_id">
+      <foreign-key id="687" parent="72" name="social_v_tikedgeuser_id_2540dec782f1955d_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="684" parent="72" name="soci_voucheproject_id_15b401196cc820c_fk_social_voucheproject_id">
+      <foreign-key id="688" parent="72" name="soci_voucheproject_id_15b401196cc820c_fk_social_voucheproject_id">
         <columns>voucheproject_id</columns>
         <ref-key>social_voucheproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="685" parent="73" name="id">
+      <column id="689" parent="73" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="686" parent="73" name="name_of_feed">
+      <column id="690" parent="73" name="name_of_feed">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="687" parent="73" name="is_picture_feed">
+      <column id="691" parent="73" name="is_picture_feed">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="688" parent="73" name="is_video_feed">
+      <column id="692" parent="73" name="is_video_feed">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="689" parent="73" name="pond_id">
+      <column id="693" parent="73" name="pond_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="690" parent="73" name="progress_picture_id">
+      <column id="694" parent="73" name="progress_picture_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="691" parent="73" name="progress_video_id">
+      <column id="695" parent="73" name="progress_video_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="692" parent="73" name="project_id">
+      <column id="696" parent="73" name="project_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="693" parent="73" name="PRIMARY">
+      <key id="697" parent="73" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="694" parent="73" name="D3c0f337b04e6ef7733623c75106684c">
+      <foreign-key id="698" parent="73" name="D3c0f337b04e6ef7733623c75106684c">
         <columns>progress_picture_id</columns>
         <ref-key>social_progresspicture.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="695" parent="73" name="social_pondprogressfe_pond_id_2243235c6304db04_fk_social_pond_id">
+      <foreign-key id="699" parent="73" name="social_pondprogressfe_pond_id_2243235c6304db04_fk_social_pond_id">
         <columns>pond_id</columns>
         <ref-key>social_pond.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="696" parent="73" name="social_pondp_project_id_4c485fce86c2c57f_fk_tasks_userproject_id">
+      <foreign-key id="700" parent="73" name="social_pondp_project_id_4c485fce86c2c57f_fk_tasks_userproject_id">
         <columns>project_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="697" parent="73" name="so_progress_video_id_211fbed26c590ed6_fk_social_progressvideo_id">
+      <foreign-key id="701" parent="73" name="so_progress_video_id_211fbed26c590ed6_fk_social_progressvideo_id">
         <columns>progress_video_id</columns>
         <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="698" parent="74" name="id">
+      <column id="702" parent="74" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="699" parent="74" name="progresspicture_id">
+      <column id="703" parent="74" name="progresspicture_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="700" parent="74" name="tikedgeuser_id">
+      <column id="704" parent="74" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="701" parent="74" name="progresspicture_id">
+      <index id="705" parent="74" name="progresspicture_id">
         <columns>progresspicture_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="702" parent="74" name="PRIMARY">
+      <key id="706" parent="74" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="703" parent="74" name="progresspicture_id">
+      <key id="707" parent="74" name="progresspicture_id">
         <columns>progresspicture_id
 tikedgeuser_id</columns>
         <underlying-index>progresspicture_id</underlying-index>
       </key>
-      <foreign-key id="704" parent="74" name="f405597a5485c683081ee60bb086d88f">
+      <foreign-key id="708" parent="74" name="f405597a5485c683081ee60bb086d88f">
         <columns>progresspicture_id</columns>
         <ref-key>social_progresspicture.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="705" parent="74" name="social_p_tikedgeuser_id_2949cbd7380f697e_fk_tasks_tikedgeuser_id">
+      <foreign-key id="709" parent="74" name="social_p_tikedgeuser_id_2949cbd7380f697e_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="706" parent="75" name="id">
+      <column id="710" parent="75" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="707" parent="75" name="user_email_or_num">
+      <column id="711" parent="75" name="user_email_or_num">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="708" parent="75" name="created">
+      <column id="712" parent="75" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="709" parent="75" name="is_email">
+      <column id="713" parent="75" name="is_email">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="710" parent="75" name="is_number">
+      <column id="714" parent="75" name="is_number">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="711" parent="75" name="is_video_shout_outs">
+      <column id="715" parent="75" name="is_video_shout_outs">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="712" parent="75" name="email_or_text_sent">
+      <column id="716" parent="75" name="email_or_text_sent">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="713" parent="75" name="sent_date">
+      <column id="717" parent="75" name="sent_date">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="714" parent="75" name="user_responded">
+      <column id="718" parent="75" name="user_responded">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="715" parent="75" name="date_of_response">
+      <column id="719" parent="75" name="date_of_response">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="716" parent="75" name="type_of_response">
+      <column id="720" parent="75" name="type_of_response">
         <mandatory>1</mandatory>
         <data-type>varchar(250)</data-type>
       </column>
-      <column id="717" parent="75" name="progress_picture_id">
+      <column id="721" parent="75" name="progress_picture_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="718" parent="75" name="progress_video_id">
+      <column id="722" parent="75" name="progress_video_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="719" parent="75" name="tikedge_user_id">
+      <column id="723" parent="75" name="tikedge_user_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <key id="720" parent="75" name="PRIMARY">
+      <key id="724" parent="75" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="721" parent="75" name="b802938c2091785ae892c55a65373919">
+      <foreign-key id="725" parent="75" name="b802938c2091785ae892c55a65373919">
         <columns>progress_picture_id</columns>
         <ref-key>social_progresspicture.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="722" parent="75" name="social_s_tikedge_user_id_96e71116b355781_fk_tasks_tikedgeuser_id">
+      <foreign-key id="726" parent="75" name="social_s_tikedge_user_id_96e71116b355781_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="723" parent="75" name="so_progress_video_id_27d9b5791656aec9_fk_social_progressvideo_id">
+      <foreign-key id="727" parent="75" name="so_progress_video_id_27d9b5791656aec9_fk_social_progressvideo_id">
         <columns>progress_video_id</columns>
         <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="724" parent="76" name="id">
+      <column id="728" parent="76" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="725" parent="76" name="video_name">
+      <column id="729" parent="76" name="video_name">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="726" parent="76" name="video">
+      <column id="730" parent="76" name="video">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="727" parent="76" name="name_of_progress">
+      <column id="731" parent="76" name="name_of_progress">
         <data-type>longtext</data-type>
       </column>
-      <column id="728" parent="76" name="is_deleted">
+      <column id="732" parent="76" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="729" parent="76" name="last_updated">
+      <column id="733" parent="76" name="last_updated">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="730" parent="76" name="created">
+      <column id="734" parent="76" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="731" parent="76" name="blurb">
+      <column id="735" parent="76" name="blurb">
         <mandatory>1</mandatory>
         <data-type>varchar(150)</data-type>
       </column>
-      <column id="732" parent="76" name="challenge_id">
+      <column id="736" parent="76" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="733" parent="76" name="PRIMARY">
+      <key id="737" parent="76" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="734" parent="76" name="social_progr_challenge_id_4b997d2c8715b26_fk_social_challenge_id">
+      <foreign-key id="738" parent="76" name="social_progr_challenge_id_4b997d2c8715b26_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="735" parent="77" name="id">
+      <column id="739" parent="77" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="736" parent="77" name="progressvideo_id">
+      <column id="740" parent="77" name="progressvideo_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="737" parent="77" name="tikedgeuser_id">
+      <column id="741" parent="77" name="tikedgeuser_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="738" parent="77" name="progressvideo_id">
+      <index id="742" parent="77" name="progressvideo_id">
         <columns>progressvideo_id
 tikedgeuser_id</columns>
         <unique>1</unique>
       </index>
-      <key id="739" parent="77" name="PRIMARY">
+      <key id="743" parent="77" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="740" parent="77" name="progressvideo_id">
+      <key id="744" parent="77" name="progressvideo_id">
         <columns>progressvideo_id
 tikedgeuser_id</columns>
         <underlying-index>progressvideo_id</underlying-index>
       </key>
-      <foreign-key id="741" parent="77" name="social_p_tikedgeuser_id_2e1f73a8b5d75dbd_fk_tasks_tikedgeuser_id">
+      <foreign-key id="745" parent="77" name="social_p_tikedgeuser_id_2e1f73a8b5d75dbd_fk_tasks_tikedgeuser_id">
         <columns>tikedgeuser_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="742" parent="77" name="soci_progressvideo_id_bf2555b9d0f65d9_fk_social_progressvideo_id">
+      <foreign-key id="746" parent="77" name="soci_progressvideo_id_bf2555b9d0f65d9_fk_social_progressvideo_id">
         <columns>progressvideo_id</columns>
         <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="743" parent="78" name="id">
+      <column id="747" parent="78" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="744" parent="78" name="is_deleted">
+      <column id="748" parent="78" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="745" parent="78" name="last_updated">
+      <column id="749" parent="78" name="last_updated">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="746" parent="78" name="created">
+      <column id="750" parent="78" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="747" parent="78" name="is_empty">
+      <column id="751" parent="78" name="is_empty">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="748" parent="78" name="video_timeline">
+      <column id="752" parent="78" name="video_timeline">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="749" parent="78" name="challenge_id">
+      <column id="753" parent="78" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="750" parent="78" name="PRIMARY">
+      <key id="754" parent="78" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="751" parent="78" name="social_prog_challenge_id_2c249b4d39c0e2eb_fk_social_challenge_id">
+      <foreign-key id="755" parent="78" name="social_prog_challenge_id_2c249b4d39c0e2eb_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="752" parent="79" name="id">
+      <column id="756" parent="79" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="753" parent="79" name="challenge_responded">
-        <mandatory>1</mandatory>
-        <data-type>tinyint(1)</data-type>
-      </column>
-      <column id="754" parent="79" name="challenge_accepted">
+      <column id="757" parent="79" name="challenge_responded">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="755" parent="79" name="challenge_rejected">
+      <column id="758" parent="79" name="challenge_accepted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="756" parent="79" name="challenged_id">
+      <column id="759" parent="79" name="challenge_rejected">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(1)</data-type>
+      </column>
+      <column id="760" parent="79" name="challenged_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="757" parent="79" name="challenger_id">
+      <column id="761" parent="79" name="challenger_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="758" parent="79" name="project_id">
+      <column id="762" parent="79" name="project_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="759" parent="79" name="created">
+      <column id="763" parent="79" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="760" parent="79" name="date_responded">
+      <column id="764" parent="79" name="date_responded">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="761" parent="79" name="is_deleted">
+      <column id="765" parent="79" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="762" parent="79" name="is_public">
+      <column id="766" parent="79" name="is_public">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <key id="763" parent="79" name="PRIMARY">
+      <column id="767" parent="79" name="self_challenge">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(1)</data-type>
+      </column>
+      <key id="768" parent="79" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="764" parent="79" name="social_chall_project_id_6afb12df903d3dd7_fk_tasks_userproject_id">
+      <foreign-key id="769" parent="79" name="social_chall_project_id_6afb12df903d3dd7_fk_tasks_userproject_id">
         <columns>project_id</columns>
         <ref-key>tasks_userproject.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="765" parent="79" name="social_cha_challenged_id_94a319dfec5a4d6_fk_tasks_tikedgeuser_id">
+      <foreign-key id="770" parent="79" name="social_cha_challenged_id_94a319dfec5a4d6_fk_tasks_tikedgeuser_id">
         <columns>challenged_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="766" parent="79" name="social_ch_challenger_id_54cd3e5d7e907ebc_fk_tasks_tikedgeuser_id">
+      <foreign-key id="771" parent="79" name="social_ch_challenger_id_54cd3e5d7e907ebc_fk_tasks_tikedgeuser_id">
         <columns>challenger_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="767" parent="80" name="id">
+      <column id="772" parent="80" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="768" parent="80" name="number">
+      <column id="773" parent="80" name="number">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="769" parent="80" name="created">
+      <column id="774" parent="80" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="770" parent="80" name="challenge_id">
+      <column id="775" parent="80" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="771" parent="80" name="tikedge_user_id">
+      <column id="776" parent="80" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="772" parent="80" name="PRIMARY">
+      <key id="777" parent="80" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="773" parent="80" name="social_chal_challenge_id_2d0c83f2aebefbce_fk_social_challenge_id">
+      <foreign-key id="778" parent="80" name="social_chal_challenge_id_2d0c83f2aebefbce_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="774" parent="80" name="social__tikedge_user_id_68f21da35a6aa557_fk_tasks_tikedgeuser_id">
+      <foreign-key id="779" parent="80" name="social__tikedge_user_id_68f21da35a6aa557_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="775" parent="81" name="id">
+      <column id="780" parent="81" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="776" parent="81" name="video_name">
+      <column id="781" parent="81" name="video_name">
         <mandatory>1</mandatory>
         <data-type>varchar(300)</data-type>
       </column>
-      <column id="777" parent="81" name="date_uploaded">
+      <column id="782" parent="81" name="date_uploaded">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="778" parent="81" name="last_edited">
+      <column id="783" parent="81" name="last_edited">
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="779" parent="81" name="video">
+      <column id="784" parent="81" name="video">
         <mandatory>1</mandatory>
         <data-type>varchar(100)</data-type>
       </column>
-      <column id="780" parent="81" name="is_deleted">
+      <column id="785" parent="81" name="is_deleted">
         <mandatory>1</mandatory>
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="781" parent="81" name="challenge_id">
+      <column id="786" parent="81" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="782" parent="81" name="PRIMARY">
+      <key id="787" parent="81" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="783" parent="81" name="social_chal_challenge_id_7b220c7166ff5be5_fk_social_challenge_id">
+      <foreign-key id="788" parent="81" name="social_chal_challenge_id_7b220c7166ff5be5_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="784" parent="82" name="id">
+      <column id="789" parent="82" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="785" parent="82" name="comment">
+      <column id="790" parent="82" name="comment">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="786" parent="82" name="created">
+      <column id="791" parent="82" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="787" parent="82" name="challenge_id">
+      <column id="792" parent="82" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="788" parent="82" name="tikedge_user_id">
+      <column id="793" parent="82" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="789" parent="82" name="PRIMARY">
+      <column id="794" parent="82" name="is_deleted">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(1)</data-type>
+      </column>
+      <key id="795" parent="82" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="790" parent="82" name="social_comme_challenge_id_5c545b6ddfc1efe_fk_social_challenge_id">
+      <foreign-key id="796" parent="82" name="social_comme_challenge_id_5c545b6ddfc1efe_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="791" parent="82" name="social__tikedge_user_id_747e9eebcb3a9fd9_fk_tasks_tikedgeuser_id">
+      <foreign-key id="797" parent="82" name="social__tikedge_user_id_747e9eebcb3a9fd9_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="792" parent="83" name="id">
+      <column id="798" parent="83" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="793" parent="83" name="comment">
+      <column id="799" parent="83" name="comment">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="794" parent="83" name="created">
+      <column id="800" parent="83" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="795" parent="83" name="challenge_id">
+      <column id="801" parent="83" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="796" parent="83" name="tikedge_user_id">
+      <column id="802" parent="83" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="797" parent="83" name="PRIMARY">
+      <column id="803" parent="83" name="is_deleted">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(1)</data-type>
+      </column>
+      <column id="804" parent="83" name="recent_upload_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <key id="805" parent="83" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="798" parent="83" name="social_comm_challenge_id_5005b1edb9813671_fk_social_challenge_id">
+      <foreign-key id="806" parent="83" name="social_comm_challenge_id_5005b1edb9813671_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="799" parent="83" name="social__tikedge_user_id_32d078d0dc66affa_fk_tasks_tikedgeuser_id">
+      <foreign-key id="807" parent="83" name="social__tikedge_user_id_32d078d0dc66affa_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="800" parent="84" name="id">
+      <foreign-key id="808" parent="83" name="soc_recent_upload_id_3cc28701cd580d2f_fk_social_progressvideo_id">
+        <columns>recent_upload_id</columns>
+        <ref-key>social_progressvideo.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="809" parent="84" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="801" parent="84" name="comment">
+      <column id="810" parent="84" name="comment">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="802" parent="84" name="created">
+      <column id="811" parent="84" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="803" parent="84" name="challenge_id">
+      <column id="812" parent="84" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="804" parent="84" name="tikedge_user_id">
+      <column id="813" parent="84" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="805" parent="84" name="PRIMARY">
+      <column id="814" parent="84" name="is_deleted">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(1)</data-type>
+      </column>
+      <key id="815" parent="84" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="806" parent="84" name="social_comm_challenge_id_1e68d2c04206aad3_fk_social_challenge_id">
+      <foreign-key id="816" parent="84" name="social_comm_challenge_id_1e68d2c04206aad3_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="807" parent="84" name="social__tikedge_user_id_3e6a56af0e59adaa_fk_tasks_tikedgeuser_id">
+      <foreign-key id="817" parent="84" name="social__tikedge_user_id_3e6a56af0e59adaa_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="808" parent="85" name="id">
+      <column id="818" parent="85" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="809" parent="85" name="comment">
+      <column id="819" parent="85" name="comment">
         <mandatory>1</mandatory>
         <data-type>longtext</data-type>
       </column>
-      <column id="810" parent="85" name="created">
+      <column id="820" parent="85" name="created">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="811" parent="85" name="challenge_id">
+      <column id="821" parent="85" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="812" parent="85" name="tikedge_user_id">
+      <column id="822" parent="85" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <key id="813" parent="85" name="PRIMARY">
+      <column id="823" parent="85" name="is_deleted">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(1)</data-type>
+      </column>
+      <key id="824" parent="85" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="814" parent="85" name="social_comme_challenge_id_90599d9807d5cb8_fk_social_challenge_id">
+      <foreign-key id="825" parent="85" name="social_comme_challenge_id_90599d9807d5cb8_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="815" parent="85" name="social__tikedge_user_id_7f1ce7253a65a61f_fk_tasks_tikedgeuser_id">
+      <foreign-key id="826" parent="85" name="social__tikedge_user_id_7f1ce7253a65a61f_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="816" parent="86" name="id">
+      <column id="827" parent="86" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="817" parent="86" name="date_followed">
+      <column id="828" parent="86" name="date_followed">
         <mandatory>1</mandatory>
         <data-type>datetime(6)</data-type>
       </column>
-      <column id="818" parent="86" name="challenge_id">
+      <column id="829" parent="86" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="819" parent="86" name="users_id">
+      <column id="830" parent="86" name="users_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="820" parent="86" name="social_followchallenge_users_id_5537b22d7b5a496f_uniq">
+      <index id="831" parent="86" name="social_followchallenge_users_id_5537b22d7b5a496f_uniq">
         <columns>users_id
 challenge_id</columns>
         <unique>1</unique>
       </index>
-      <key id="821" parent="86" name="PRIMARY">
+      <key id="832" parent="86" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="822" parent="86" name="social_followchallenge_users_id_5537b22d7b5a496f_uniq">
+      <key id="833" parent="86" name="social_followchallenge_users_id_5537b22d7b5a496f_uniq">
         <columns>users_id
 challenge_id</columns>
         <underlying-index>social_followchallenge_users_id_5537b22d7b5a496f_uniq</underlying-index>
       </key>
-      <foreign-key id="823" parent="86" name="social_followc_users_id_5b67d62dbb7130a3_fk_tasks_tikedgeuser_id">
+      <foreign-key id="834" parent="86" name="social_followc_users_id_5b67d62dbb7130a3_fk_tasks_tikedgeuser_id">
         <columns>users_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="824" parent="86" name="social_follo_challenge_id_1eb3a86c77e5988_fk_social_challenge_id">
+      <foreign-key id="835" parent="86" name="social_follo_challenge_id_1eb3a86c77e5988_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="825" parent="87" name="id">
+      <column id="836" parent="87" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="826" parent="87" name="progressvideoset_id">
+      <column id="837" parent="87" name="progressvideoset_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="827" parent="87" name="progressvideo_id">
+      <column id="838" parent="87" name="progressvideo_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="828" parent="87" name="progressvideoset_id">
+      <index id="839" parent="87" name="progressvideoset_id">
         <columns>progressvideoset_id
 progressvideo_id</columns>
         <unique>1</unique>
       </index>
-      <key id="829" parent="87" name="PRIMARY">
+      <key id="840" parent="87" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="830" parent="87" name="progressvideoset_id">
+      <key id="841" parent="87" name="progressvideoset_id">
         <columns>progressvideoset_id
 progressvideo_id</columns>
         <underlying-index>progressvideoset_id</underlying-index>
       </key>
-      <foreign-key id="831" parent="87" name="D47dfb495f6459b41c1c65cddda15e70">
+      <foreign-key id="842" parent="87" name="D47dfb495f6459b41c1c65cddda15e70">
         <columns>progressvideoset_id</columns>
         <ref-key>social_progressvideoset.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="832" parent="87" name="soc_progressvideo_id_4c6349c8c749bc18_fk_social_progressvideo_id">
+      <foreign-key id="843" parent="87" name="soc_progressvideo_id_4c6349c8c749bc18_fk_social_progressvideo_id">
         <columns>progressvideo_id</columns>
         <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="833" parent="88" name="id">
+      <column id="844" parent="88" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="834" parent="88" name="challenge_id">
+      <column id="845" parent="88" name="challenge_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="835" parent="88" name="tikedge_user_id">
+      <column id="846" parent="88" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <index id="836" parent="88" name="social_seenchallenge_tikedge_user_id_f1332f844d0885f_uniq">
+      <index id="847" parent="88" name="social_seenchallenge_tikedge_user_id_f1332f844d0885f_uniq">
         <columns>tikedge_user_id
 challenge_id</columns>
         <unique>1</unique>
       </index>
-      <key id="837" parent="88" name="PRIMARY">
+      <key id="848" parent="88" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="838" parent="88" name="social_seenchallenge_tikedge_user_id_f1332f844d0885f_uniq">
+      <key id="849" parent="88" name="social_seenchallenge_tikedge_user_id_f1332f844d0885f_uniq">
         <columns>tikedge_user_id
 challenge_id</columns>
         <underlying-index>social_seenchallenge_tikedge_user_id_f1332f844d0885f_uniq</underlying-index>
       </key>
-      <foreign-key id="839" parent="88" name="social_seen_challenge_id_78366f43465b2df8_fk_social_challenge_id">
+      <foreign-key id="850" parent="88" name="social_seen_challenge_id_78366f43465b2df8_fk_social_challenge_id">
         <columns>challenge_id</columns>
         <ref-key>social_challenge.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="840" parent="88" name="social__tikedge_user_id_21917d144c4b90df_fk_tasks_tikedgeuser_id">
+      <foreign-key id="851" parent="88" name="social__tikedge_user_id_21917d144c4b90df_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="841" parent="89" name="id">
+      <column id="852" parent="89" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="842" parent="89" name="tikedge_user_id">
+      <column id="853" parent="89" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="843" parent="89" name="video_id">
+      <column id="854" parent="89" name="video_id">
         <data-type>int(11)</data-type>
       </column>
-      <index id="844" parent="89" name="social_seenrecentupload_tikedge_user_id_5d0b0dbae66e8d85_uniq">
+      <index id="855" parent="89" name="social_seenrecentupload_tikedge_user_id_5d0b0dbae66e8d85_uniq">
         <columns>tikedge_user_id
 video_id</columns>
         <unique>1</unique>
       </index>
-      <key id="845" parent="89" name="PRIMARY">
+      <key id="856" parent="89" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="846" parent="89" name="social_seenrecentupload_tikedge_user_id_5d0b0dbae66e8d85_uniq">
+      <key id="857" parent="89" name="social_seenrecentupload_tikedge_user_id_5d0b0dbae66e8d85_uniq">
         <columns>tikedge_user_id
 video_id</columns>
         <underlying-index>social_seenrecentupload_tikedge_user_id_5d0b0dbae66e8d85_uniq</underlying-index>
       </key>
-      <foreign-key id="847" parent="89" name="social_seen_video_id_56067506e183351a_fk_social_progressvideo_id">
+      <foreign-key id="858" parent="89" name="social_seen_video_id_56067506e183351a_fk_social_progressvideo_id">
         <columns>video_id</columns>
         <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="848" parent="89" name="social__tikedge_user_id_7b8b11ba6b1fc103_fk_tasks_tikedgeuser_id">
+      <foreign-key id="859" parent="89" name="social__tikedge_user_id_7b8b11ba6b1fc103_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="849" parent="90" name="id">
+      <column id="860" parent="90" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="850" parent="90" name="tikedge_user_id">
+      <column id="861" parent="90" name="tikedge_user_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="851" parent="90" name="video_set_id">
+      <column id="862" parent="90" name="video_set_id">
         <data-type>int(11)</data-type>
       </column>
-      <index id="852" parent="90" name="social_seenvideoset_tikedge_user_id_20ba86a7d0370b2d_uniq">
+      <index id="863" parent="90" name="social_seenvideoset_tikedge_user_id_20ba86a7d0370b2d_uniq">
         <columns>tikedge_user_id
 video_set_id</columns>
         <unique>1</unique>
       </index>
-      <key id="853" parent="90" name="PRIMARY">
+      <key id="864" parent="90" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="854" parent="90" name="social_seenvideoset_tikedge_user_id_20ba86a7d0370b2d_uniq">
+      <key id="865" parent="90" name="social_seenvideoset_tikedge_user_id_20ba86a7d0370b2d_uniq">
         <columns>tikedge_user_id
 video_set_id</columns>
         <underlying-index>social_seenvideoset_tikedge_user_id_20ba86a7d0370b2d_uniq</underlying-index>
       </key>
-      <foreign-key id="855" parent="90" name="social__tikedge_user_id_611734ffc88c1154_fk_tasks_tikedgeuser_id">
+      <foreign-key id="866" parent="90" name="social__tikedge_user_id_611734ffc88c1154_fk_tasks_tikedgeuser_id">
         <columns>tikedge_user_id</columns>
         <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="856" parent="90" name="socia_video_set_id_169b53045145e52_fk_social_progressvideoset_id">
+      <foreign-key id="867" parent="90" name="socia_video_set_id_169b53045145e52_fk_social_progressvideoset_id">
         <columns>video_set_id</columns>
         <ref-key>social_progressvideoset.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="868" parent="91" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="869" parent="91" name="message">
+        <mandatory>1</mandatory>
+        <data-type>longtext</data-type>
+      </column>
+      <column id="870" parent="91" name="read">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(1)</data-type>
+      </column>
+      <column id="871" parent="91" name="created">
+        <mandatory>1</mandatory>
+        <data-type>datetime(6)</data-type>
+      </column>
+      <column id="872" parent="91" name="date_read">
+        <data-type>datetime(6)</data-type>
+      </column>
+      <column id="873" parent="91" name="challenge_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="874" parent="91" name="from_user_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="875" parent="91" name="to_user_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <key id="876" parent="91" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="877" parent="91" name="social_chall_to_user_id_2f7c5f45ba737710_fk_tasks_tikedgeuser_id">
+        <columns>to_user_id</columns>
+        <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="878" parent="91" name="social_chal_challenge_id_54a6a255c6c7ca06_fk_social_challenge_id">
+        <columns>challenge_id</columns>
+        <ref-key>social_challenge.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="879" parent="91" name="social_cha_from_user_id_52b9fc9f458ec40d_fk_tasks_tikedgeuser_id">
+        <columns>from_user_id</columns>
+        <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="880" parent="92" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="881" parent="92" name="message">
+        <mandatory>1</mandatory>
+        <data-type>longtext</data-type>
+      </column>
+      <column id="882" parent="92" name="read">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(1)</data-type>
+      </column>
+      <column id="883" parent="92" name="created">
+        <mandatory>1</mandatory>
+        <data-type>datetime(6)</data-type>
+      </column>
+      <column id="884" parent="92" name="date_read">
+        <data-type>datetime(6)</data-type>
+      </column>
+      <column id="885" parent="92" name="from_user_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="886" parent="92" name="to_user_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <key id="887" parent="92" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="888" parent="92" name="social_frien_to_user_id_1c8117649c9ebab4_fk_tasks_tikedgeuser_id">
+        <columns>to_user_id</columns>
+        <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="889" parent="92" name="social_frie_from_user_id_527ae47e5c9f8d1_fk_tasks_tikedgeuser_id">
+        <columns>from_user_id</columns>
+        <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="890" parent="93" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="891" parent="93" name="created">
+        <mandatory>1</mandatory>
+        <data-type>datetime(6)</data-type>
+      </column>
+      <column id="892" parent="93" name="progress_set_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="893" parent="93" name="users_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <key id="894" parent="93" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="895" parent="93" name="social_highlight_users_id_aba717d3f7160c_fk_tasks_tikedgeuser_id">
+        <columns>users_id</columns>
+        <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="896" parent="93" name="s_progress_set_id_69623d18cec79ea1_fk_social_progressvideoset_id">
+        <columns>progress_set_id</columns>
+        <ref-key>social_progressvideoset.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="897" parent="94" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="898" parent="94" name="created">
+        <mandatory>1</mandatory>
+        <data-type>datetime(6)</data-type>
+      </column>
+      <column id="899" parent="94" name="progress_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="900" parent="94" name="users_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <key id="901" parent="94" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="902" parent="94" name="social_recentu_users_id_1cdf775d3506b347_fk_tasks_tikedgeuser_id">
+        <columns>users_id</columns>
+        <ref-key>tasks_tikedgeuser.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="903" parent="94" name="social_r_progress_id_4309c94c508ac031_fk_social_progressvideo_id">
+        <columns>progress_id</columns>
+        <ref-key>social_progressvideo.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>

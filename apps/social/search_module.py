@@ -36,7 +36,7 @@ class GeneralSearchFeed:
 	def get_profile_pic(self):
 		if self.type_of_result == global_variables.POND_SEARCH_NAME:
 			tikedge_user = self.feed_object.pond_creator
-		elif (self.type_of_result == global_variables.CHALLENGE_NAME_SEARCH\
+		elif (self.type_of_result == global_variables.CHALLENGE_NAME_SEARCH
 				or self.type_of_result == global_variables.MILESTONE_NAME_SEARCH):
 			tikedge_user = self.feed_object.project.user
 		else:
@@ -166,6 +166,30 @@ def find_project(user, query_word):
 	result_list = []
 	query = str(query_word)
 	projects = get_query(query, ['project__name_of_project', 'project__tags__name_of_tag'])
+	print query, " projddd"
+	tikege_user = TikedgeUser.objects.get(user=user)
+	challenge_result = Challenge.objects.filter(projects).filter(Q(is_deleted=False),
+	                                                             Q(project__user=tikege_user)).distinct()
+
+	for proj in challenge_result:
+		if not proj.is_public:
+			pond_spec = PondSpecificProject.objects.get(project=proj)
+			for each_pond in pond_spec.pond.all():
+				if tikege_user in each_pond.pond_members.all():
+					search_obj = GeneralSearchFeed(proj, global_variables.CHALLENGE_NAME_SEARCH)
+					result_list.append(search_obj)
+					break
+		else:
+			search_obj = GeneralSearchFeed(proj, global_variables.CHALLENGE_NAME_SEARCH)
+			result_list.append(search_obj)
+	sorted_list = sorted(result_list, key=lambda res: res.created)
+	return sorted_list
+
+
+def find_tags(user, query_word):
+	result_list = []
+	query = str(query_word)
+	projects = get_query(query, ['project__tags__name_of_tag'])
 	print query, " projddd"
 	tikege_user = TikedgeUser.objects.get(user=user)
 	challenge_result = Challenge.objects.filter(projects).filter(Q(is_deleted=False),
