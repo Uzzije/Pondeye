@@ -1616,7 +1616,7 @@ class ApiGetSearchResult(CSRFExemptView):
             return HttpResponse(json.dumps(response), status=201)
         query_word = request.GET["query_word"]
         tag_search = request.GET["tag_search"]
-        if tag_search:
+        if tag_search == "false":
             print "Tag Search ", tag_search
             results = find_tags(user, query_word)
         else:
