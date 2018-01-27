@@ -215,7 +215,7 @@ class PondFeed:
     def task_owner_profile_pic_url(self):
         try:
             profile_picture = ProfilePictures.objects.get(tikedge_user=self.tikedge_user)
-            return self.url_domain+profile_picture.profile_pics.url
+            return profile_picture.profile_pics.url
         except (AttributeError, ValueError, ObjectDoesNotExist):
             return None
 
