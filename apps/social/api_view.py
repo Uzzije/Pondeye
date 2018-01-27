@@ -1617,8 +1617,10 @@ class ApiGetSearchResult(CSRFExemptView):
         query_word = request.GET["query_word"]
         tag_search = request.GET["tag_search"]
         if tag_search:
+            print "Tag Search"
             results = find_tags(user, query_word)
         else:
+            print "Everything Search"
             results = find_everything(user, query_word)
         response["status"] = True
         print type(results)
