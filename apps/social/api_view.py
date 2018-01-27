@@ -1354,6 +1354,7 @@ class ApiProjectView(CSRFExemptView):
         if recent_upload:
             response['progress_id'] = recent_upload.id
             response['progress_set_id'] = progress_set.id
+            response['recent_upload_name'] = recent_upload.name_of_progress
         return HttpResponse(json.dumps(response), status=201)
 
 
