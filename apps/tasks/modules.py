@@ -841,8 +841,7 @@ def get_profile_pic_json(tikedge_user):
     except ObjectDoesNotExist:
         has_prof_pic = None
     if has_prof_pic:
-        pic_url  = CURRENT_URL + has_prof_pic.profile_pics.url
-        return pic_url
+        return has_prof_pic.profile_pics.url
     return None
 
 
