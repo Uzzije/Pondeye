@@ -1350,7 +1350,7 @@ class ApiProjectView(CSRFExemptView):
             'highlight_impress_count': HighlightImpressedCount.objects.filter(progress_set=progress_set).count(),
             'highlight_view_count': SeenVideoSet.objects.filter(video_set=progress_set).count(),
             'high_upload_url':highlight_url,
-            'profile_url':get_profile_pic_json(tikedge_user)
+            'profile_url': task_modules.get_profile_pic_json(tikedge_user)
         }
         if recent_upload:
             response['progress_id'] = recent_upload.id
@@ -1616,7 +1616,7 @@ class ApiGetSearchResult(CSRFExemptView):
             return HttpResponse(json.dumps(response), status=201)
         query_word = request.GET["query_word"]
         tag_search = request.GET["tag_search"]
-        if tag_search == "false":
+        if tag_search:
             print "Tag Search ", tag_search
             results = find_tags(user, query_word)
         else:
