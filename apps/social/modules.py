@@ -1717,8 +1717,8 @@ def make_timeline_video(progress_set):
     for each_prog in progress_set.list_of_progress_videos.all():
         file_ = VideoFileClip(each_prog.video.url)
         mess = days_difference(last_time, each_prog.last_updated)
-        txt_clip = TextClip(mess, fontsize=50, font='NewCenturySchlbk-BoldItalic', color='white')
-        txt_clip = txt_clip.set_pos((145,100)).set_duration(file_.duration)
+        txt_clip = TextClip(mess, fontsize=24, font='NewCenturySchlbk-BoldItalic', color='white')
+        txt_clip = txt_clip.set_pos(('center','top')).set_duration(file_.duration)
         video = CompositeVideoClip([file_, txt_clip])
         video_clips.append(video)
         last_time = each_prog.last_updated
