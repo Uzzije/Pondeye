@@ -1684,6 +1684,7 @@ def convert_to_mp4_file_for_file_object(video):
             video.video_name = vid_name
             video.save()
             path_object.close()
+            os.remove(new_mp4_path)
 
 
 def upload_video_file(filepath, video_model):
@@ -1717,7 +1718,7 @@ def make_timeline_video(progress_set):
     for each_prog in progress_set.list_of_progress_videos.all():
         file_ = VideoFileClip(each_prog.video.url)
         mess = days_difference(last_time, each_prog.last_updated)
-        txt_clip = TextClip(mess, fontsize=12, font='NewCenturySchlbk-BoldItalic', color='white')
+        txt_clip = TextClip(mess, fontsize=20, font='NewCenturySchlbk-BoldItalic', color='white')
         txt_clip = txt_clip.set_pos(('left','top')).set_duration(file_.duration)
         video = CompositeVideoClip([file_, txt_clip])
         video_clips.append(video)
