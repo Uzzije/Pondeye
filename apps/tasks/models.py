@@ -49,6 +49,7 @@ class UserProject(models.Model):
     is_deleted = models.BooleanField(default=False)
     last_update = models.DateTimeField(default=now)
     made_progress = models.BooleanField(default=False)
+    cc_job_began = models.BooleanField(default=False, verbose_name="Job to create highlight has began")
 
     def save(self, *args, **kwargs):
         if len(self.name_of_project) > 150:

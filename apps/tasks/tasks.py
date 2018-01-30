@@ -51,6 +51,8 @@ def begin_timeline_video(proj_id):
     proj_stone.is_live = False
     proj_stone.save()
     """
+    proj_stone.cc_job_began = True
+    proj_stone.save()
     make_timeline_video(progress_set)
 
 

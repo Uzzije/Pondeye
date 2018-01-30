@@ -1350,7 +1350,8 @@ class ApiProjectView(CSRFExemptView):
             'highlight_impress_count': HighlightImpressedCount.objects.filter(progress_set=progress_set).count(),
             'highlight_view_count': SeenVideoSet.objects.filter(video_set=progress_set).count(),
             'high_upload_url':highlight_url,
-            'profile_url': task_modules.get_profile_pic_json(tikedge_user)
+            'profile_url': task_modules.get_profile_pic_json(tikedge_user),
+            'cc_proj_began': project.cc_job_began
         }
         if recent_upload:
             response['progress_id'] = recent_upload.id

@@ -1722,7 +1722,7 @@ def make_timeline_video(progress_set):
         video = CompositeVideoClip([file_, txt_clip])
         video_clips.append(video)
         last_time = each_prog.last_updated
-    final_clips = concatenate_videoclips(video_clips)
+    final_clips = concatenate_videoclips(video_clips, method='compose')
     final_clips_name = progress_set.challenge.project.name_of_project + randomword(12) + ".mp4"
     temp_audio_name = progress_set.challenge.project.name_of_project + randomword(12) + ".mp3"
     abs_path = os.path.join(os.path.abspath('/tmp/'), final_clips_name)
