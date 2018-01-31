@@ -1314,7 +1314,8 @@ class ApiProjectView(CSRFExemptView):
         else:
             is_completed = None
         progress_set = ProgressVideoSet.objects.get(challenge=challenge, is_deleted=False)
-        recent_upload = progress_set.list_of_progress_videos.filter(is_deleted=False).order_by('-created').first()
+        recent_uploads = progress_set.list_of_progress_videos.filter(is_deleted=False).order_by('-created')
+        recent_upload = recent_uploads.first()
         if recent_upload:
             video_url = recent_upload.video.url
         else:
@@ -1351,12 +1352,13 @@ class ApiProjectView(CSRFExemptView):
             'highlight_view_count': SeenVideoSet.objects.filter(video_set=progress_set).count(),
             'high_upload_url':highlight_url,
             'profile_url': task_modules.get_profile_pic_json(tikedge_user),
-            'cc_proj_began': project.cc_job_began
+            'cc_proj_began': project.cc_job_began,
         }
         if recent_upload:
             response['progress_id'] = recent_upload.id
             response['progress_set_id'] = progress_set.id
             response['recent_upload_name'] = recent_upload.name_of_progress
+            response['progress'] = recent_uploads.values_list('name_of_progress', flat=True)
         return HttpResponse(json.dumps(response), status=201)
 
 
