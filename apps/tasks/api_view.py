@@ -98,6 +98,7 @@ class ApiRegistrationView(CSRFExemptView):
                 tickedge_user.save()
                 work_ethic_rank = WorkEthicRank(tikedge_user=tickedge_user)
                 work_ethic_rank.save()
+                response_data['user_id'] = user.id
          response = HttpResponse(json.dumps(response_data), status=201)
          return response
 
@@ -691,7 +692,7 @@ class ApiProfileView(CSRFExemptView):
         other_user_id = request.GET.get("other_user_id")
         try:
             other_user = User.objects.get(id=int(other_user_id))
-        except ValueError:
+        except (ValueError, ObjectDoesNotExist):
             own_profile = request.GET.get("own_profile")
             if own_profile:
                 other_user = user
