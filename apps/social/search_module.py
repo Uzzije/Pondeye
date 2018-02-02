@@ -217,7 +217,7 @@ def find_everything(user, query_word):
 	people_result = User.objects.filter(people).filter(~Q(username=user.username),
 	                                                   (Q(is_staff=False) | Q(is_superuser=False))).distinct()
 	projects = get_query(query, ['project__name_of_project', 'project__tags__name_of_tag'])
-	print query, " projddd"
+	print "people result ", people_result
 	tikege_user = TikedgeUser.objects.get(user=user)
 	challenge_result = Challenge.objects.filter(projects).filter(Q(is_deleted=False)).distinct()
 	'''
