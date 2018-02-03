@@ -1686,6 +1686,7 @@ def convert_to_mp4_file_for_file_object(video):
             path_object.close()
             os.remove(new_mp4_path)
 
+
 def upload_video_file(filepath, video_model):
     data = open(filepath)
     random_name = randomword(15) + str(filepath)

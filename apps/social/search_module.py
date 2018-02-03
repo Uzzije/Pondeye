@@ -162,13 +162,17 @@ def find_friends(user, query_word):
 	return sorted_list
 
 
-def find_project(user, query_word):
+def find_project(user, query_word, public_projects):
 	result_list = []
 	query = str(query_word)
 	projects = get_query(query, ['project__name_of_project', 'project__tags__name_of_tag'])
 	print query, " projddd"
 	tikege_user = TikedgeUser.objects.get(user=user)
-	challenge_result = Challenge.objects.filter(projects).filter(Q(is_deleted=False),
+	if public_projects:
+		challenge_result = Challenge.objects.filter(projects).filter(Q(is_deleted=False),Q(is_public=public_projects),
+	                                                             Q(project__user=tikege_user)).distinct()
+	else:
+		challenge_result = Challenge.objects.filter(projects).filter(Q(is_deleted=False),
 	                                                             Q(project__user=tikege_user)).distinct()
 
 	for proj in challenge_result:

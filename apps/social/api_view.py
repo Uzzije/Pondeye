@@ -641,7 +641,8 @@ class ApiFindProjectView(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         query_word = request.GET["query_word"]
-        results = find_project(user, query_word)
+        public_projects = request.GET["public_projects"]
+        results = find_project(user, query_word, public_projects)
         response["status"] = True
         print type(results)
         response["result_list"] = search_result_jsonified(results)
