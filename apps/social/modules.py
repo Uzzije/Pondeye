@@ -1715,7 +1715,7 @@ def get_grade(user):
     projects = UserProject.objects.filter(is_deleted=False, user__user=user)
     failed = projects.filter(is_failed=True)
     if projects.count() > 0:
-        grade  = ((projects - failed)/projects) * 100
+        grade = ((projects.count() - failed.count())/projects) * 100
         if grade > 80:
             return 'A'
         elif grade > 70:
