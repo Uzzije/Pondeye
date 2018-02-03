@@ -1712,7 +1712,7 @@ def days_difference(last_time, current_time):
         return "First Day"
 
 def get_grade(user):
-    projects = UserProject.object.filter(is_deleted=False, user__user=user)
+    projects = UserProject.objects.filter(is_deleted=False, user__user=user)
     failed = projects.filter(is_failed=True)
     if projects.count() > 0:
         grade  = ((projects - failed)/projects) * 100
