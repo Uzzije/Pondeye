@@ -447,7 +447,7 @@ class ApiProjectEditView(CSRFExemptView):
                 'time':modules.utc_to_local(each_proj.length_of_project, local_timezone=timezone).strftime("%B %d %Y %I:%M %p"),
                 'proj_pic_id': project_pic['pic_id'],
                 'proj_pic_url': project_pic['url'],
-                'has_pic':project_pic['has_pic']
+                'has_pic':project_pic['has_pic'],
 
             })
         response["status"] = True
@@ -492,19 +492,23 @@ class ApiProjectEditView(CSRFExemptView):
             proj_id = request.POST.get("proj_id")
             project = UserProject.objects.get(id=int(proj_id))
             project.is_deleted = True
+            challenge = Challenge.objects.get(project=project)
+            challenge.is_deleted = True
+            challenge.save()
+            '''
             journal = JournalPost.objects.get(new_project_entry=project)
             journal.is_deleted = True
             journal.save()
             if (not project.is_completed) and project.made_live:
                 mark_progress_as_deleted(project)
-                '''
+
                 for each_proj in project.milestone_set.filter(is_deleted=False, is_active=True):
                     create_failed_notification(each_proj)
                     each_proj.is_live = False
                     each_proj.save()
-                '''
                 project.save()
             create_failed_notification_proj_by_deletion(project)
+            '''
             response = {"status":True}
         if 'delete_pic_id' in request.POST:
             pic_id = request.POST.get("delete_pic_id")

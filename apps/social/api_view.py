@@ -602,6 +602,25 @@ class ApiAllFriendsView(CSRFExemptView):
         return HttpResponse(json.dumps(response))
 
 
+class ApiRemoveFriendView(CSRFExemptView):
+    """
+        Api Call to Remove Result
+    """
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+            other_user = User.objects.get(id=int(request.GET.get("resId")))
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        Friend.objects.remove_friend(user, other_user)
+        return HttpResponse(json.dumps(response))
+
+
 class ApiFindFriendView(CSRFExemptView):
 
     """
