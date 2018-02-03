@@ -1711,6 +1711,23 @@ def days_difference(last_time, current_time):
     else:
         return "First Day"
 
+def get_grade(user):
+    projects = UserProject.object.filter(is_deleted=False, user__user=user)
+    failed = projects.filter(is_failed=True)
+    if projects.count() > 0:
+        grade  = ((projects - failed)/projects) * 100
+        if grade > 80:
+            return 'A'
+        elif grade > 70:
+            return 'B'
+        elif grade > 60:
+            return 'C'
+        elif grade > 50:
+            return 'D'
+        else:
+            return 'F'
+    else:
+        return 'C'
 
 def make_timeline_video(progress_set):
     video_clips = []
@@ -1737,5 +1754,6 @@ def make_timeline_video(progress_set):
     f.close()
     # Get Followers of Challenge
     # Create Notification for them
+
 
 
