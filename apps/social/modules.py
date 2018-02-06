@@ -1745,7 +1745,7 @@ def make_timeline_video(progress_set):
     temp_audio_name = progress_set.challenge.project.name_of_project + randomword(12) + ".aac"
     abs_path = os.path.join(os.path.abspath('/tmp/'), final_clips_name)
     abs_audio_name = os.path.join(os.path.abspath('/tmp/'), temp_audio_name)
-    final_clips.write_videofile(abs_path, codec='mpeg4', audio_codec="aac", temp_audiofile=abs_audio_name)
+    final_clips.write_videofile(abs_path, audio_codec="aac", temp_audiofile=abs_audio_name)
     f = open(abs_path)
     progress_set.video_timeline.save(abs_path, File(f))
     progress_set.challenge.project.is_completed = True
