@@ -3,7 +3,7 @@ from ..tasks.forms.form_module import get_current_datetime
 from .models import ProfilePictures, ProgressVideoSet, ChallengeNotification, FriendshipNotification, Challenge, \
     Notification, VoucheMilestone, SeenMilestone, SeenProject, Follow, PondSpecificProject, \
      PondRequest, Pond, PondMembership, ProgressImpressedCount, PondProgressFeed, ProgressPictureSet, VoucheProject, LetDownProject, WorkEthicRank, \
-    CommentChallengeAcceptance, CommentRecentUploads
+    CommentChallengeAcceptance, CommentRecentUploads, FollowChallenge
 from django.db.models import Q
 from tasks_feed import NotificationFeed, AcceptanceFeed, RequestFeed
 from django.core.exceptions import ObjectDoesNotExist
@@ -355,7 +355,7 @@ def get_users_feed(user):
     return sorted_list
 
 
-def get_users_feed_json(user, local_timezone='UTC', start_range=0, end_range=12):
+def get_users_feed_json(user, local_timezone='UTC', start_range=0, end_range=global_variables.FEED_INDEX):
     challenges = Challenge.objects.filter(Q(is_deleted=False),
                                           Q(is_public=True)).order_by('-created')
     challenge_request = challenges.filter(Q(project__is_completed=False), Q(project__made_progress=False))
@@ -1711,6 +1711,7 @@ def days_difference(last_time, current_time):
     else:
         return "First Day"
 
+
 def get_grade(user):
     projects = UserProject.objects.filter(is_deleted=False, user__user=user)
     failed = projects.filter(is_failed=True)
@@ -1728,6 +1729,7 @@ def get_grade(user):
             return 'F'
     else:
         return 'C'
+
 
 def make_timeline_video(progress_set):
     video_clips = []
@@ -1752,8 +1754,30 @@ def make_timeline_video(progress_set):
     progress_set.challenge.project.is_live = False
     progress_set.challenge.project.save()
     f.close()
+    send_completed_notification(progress_set.challenge)
     # Get Followers of Challenge
     # Create Notification for them
+
+
+def send_completed_notification(challenge):
+    followers = FollowChallenge.object.filter(challenge=challenge)
+    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.tikedge_user.user.last_name)
+    message = '%s successfully completed %s.' % (name, challenge.project.name_of_project)
+    for follower in followers:
+        new_notif = ChallengeNotification(to_user=follower.tikedge_user,
+                                          from_user=challenge.tikedge_user, mess=message, challenge=challenge)
+        new_notif.save()
+
+
+def send_new_video_notification(challenge):
+    followers = FollowChallenge.object.filter(challenge=challenge)
+    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.tikedge_user.user.last_name)
+    message = '%s made progress on %s.' % (name, challenge.project.name_of_project)
+    for follower in followers:
+        new_notif = ChallengeNotification(to_user=follower.tikedge_user,
+                                          from_user=challenge.tikedge_user, mess=message, challenge=challenge)
+        new_notif.save()
+
 
 
 

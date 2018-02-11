@@ -25,7 +25,6 @@ from friendship import exceptions
 import logging
 
 
-
 class CSRFExemptView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
@@ -286,6 +285,7 @@ class ApiRecentUploadView(CSRFExemptView):
             return HttpResponse(json.dumps(response), status=201)
         project = UserProject.objects.get(id=int(request.POST.get("project_id")))
         challenge = Challenge.objects.get(project=project)
+        modules.send_new_video_notification(challenge)
         vid_name = "%s_%s" % (progress_name, vid_file.name)
         video_mod = ProgressVideo(video_name=vid_name, challenge=challenge,
                                video=vid_file, name_of_progress=progress_name)
@@ -843,10 +843,18 @@ class ApiTodoFeed(CSRFExemptView):
         except ObjectDoesNotExist:
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
+
         timezone = request.GET.get('timezone')
-        all_feeds = modules.get_users_feed_json(user, local_timezone=timezone)
+        start = request.GET.get('start')
+        end = request.GET.get('end')
+        if start and end:
+            all_feeds = modules.get_users_feed_json(user, local_timezone=timezone,
+                                                    start_range=int(start), end_range=int(end))
+        else:
+            all_feeds = modules.get_users_feed_json(user, local_timezone=timezone)
         response["status"] = True
         response["all_feeds"] = all_feeds
+        response['index'] = global_variables.FEED_INDEX
         return HttpResponse(json.dumps(response), status=201)
 
 
