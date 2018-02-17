@@ -401,7 +401,7 @@ def get_request_challenges(challenges, local_timezone='UTC'):
     """
     feed_list = []
     for challenge in challenges:
-        if challenge.challenge_responded:
+        if challenge.challenge_responded and challenge.challenge_accepted:
             challenge_feed = AcceptanceFeed(challenge, local_timezone=local_timezone)
         else:
             challenge_feed = RequestFeed(challenge, local_timezone=local_timezone)
