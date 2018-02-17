@@ -268,7 +268,9 @@ class ChallengeFeed(PondFeed):
             'profile_url':self.profile_url,
             'id':self.tasks.project.id,
             'user_id':self.tasks.project.user.user.id,
-            'self_challenge':self.self_challenge
+            'self_challenge':self.self_challenge,
+            'challenger_id':self.challenger_id,
+            'challenged_id':self.challenged_id
         }
         return progress_dic
 
