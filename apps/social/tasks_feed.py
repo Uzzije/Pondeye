@@ -6,7 +6,7 @@ from models import ProfilePictures,\
     BuildCredMilestone, VoucheProject, \
     FollowChallenge, SeenChallenge, ChallengeVideo, \
     CommentChallengeAcceptance, CommentRecentUploads, CommentRequestFeed, SeenVideoSet, SeenRecentUpload, \
-    ChallengeRating, HighlightImpressedCount, RecentUploadImpressedCount
+    ChallengeRating, HighlightImpressedCount, RecentUploadImpressedCount, CommentVideoCelebrations
 from friendship.models import FriendshipRequest
 from django.db.models import Q
 import global_variables
@@ -187,10 +187,12 @@ class PondFeed:
 
     def comments(self, timezone):
         comments_list = []
-        if self.type_of_feed is global_variables.VIDEO_SET or self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
-            comments = CommentChallengeAcceptance.objects.filter(challenge=self.tasks.challenge).order_by('-created')
+        if self.type_of_feed is global_variables.RECENT_VIDEO_UPLOAD:
+            comments = CommentRecentUploads.objects.filter(challenge=self.tasks.challenge).order_by('-created')
+        elif self.type_of_feed is global_variables.VIDEO_SET:
+            comments = CommentVideoCelebrations.objects.filter(challenge=self.tasks.challenge).order_by('-created')
         elif self.type_of_feed is global_variables.CHALLENGED_ACCEPTED:
-            comments = CommentRecentUploads.objects.filter(recent_upload=self.tasks).order_by('-created')
+            comments = CommentChallengeAcceptance.objects.filter(challenge=self.tasks).order_by('-created')
         else:
             comments = CommentRequestFeed.objects.filter(challenge=self.tasks).order_by('-created')
         for comm in comments:
