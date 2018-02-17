@@ -12,6 +12,7 @@ from django.db.models import Q
 import global_variables
 from ..tasks.modules import utc_to_local
 from django.core.exceptions import ObjectDoesNotExist
+from abc import abstractmethod
 
 
 class PondFeed:
@@ -33,6 +34,8 @@ class PondFeed:
         self.created = self.get_date_created()
         self.profile_url = self.task_owner_profile_pic_url()
         self.feed_user = self.get_user_tikedge().user
+        self.self_challenge = self.is_self_challenge()
+
 
     def get_user_tikedge(self):
         if self.type_of_feed is global_variables.VIDEO_SET:
@@ -54,6 +57,10 @@ class PondFeed:
             return True
         else:
             return False
+
+    @abstractmethod
+    def is_self_challenge(self):
+        pass
 
     def is_project_feed(self):
         if self.type_of_feed is global_variables.PROJECT:
@@ -258,9 +265,13 @@ class ChallengeFeed(PondFeed):
             'name': self.task_owner_name,
             'profile_url':self.profile_url,
             'id':self.tasks.project.id,
-            'user_id':self.tasks.project.user.user.id
+            'user_id':self.tasks.project.user.user.id,
+            'self_challenge':self.self_challenge
         }
         return progress_dic
+
+    def is_self_challenge(self):
+        return self.tasks.self_challenge
 
     def get_challenge_video_url(self, tasks):
         try:
@@ -327,6 +338,9 @@ class VideoProgressFeed(PondFeed):
         else:
             return self.recent_upload()
 
+    def is_self_challenge(self):
+        return self.tasks.challenge.self_challenge
+
     def recent_upload(self):
         created_sec = int(self.created.strftime('%s'))
         progress_dic = {
@@ -346,7 +360,8 @@ class VideoProgressFeed(PondFeed):
             'seen': self.seens(),
             'follow': self.follow(),
             'impressed': self.impress_count(),
-            'progress_id': self.tasks.id
+            'progress_id': self.tasks.id,
+            'self_challenge':self.self_challenge
         }
         return progress_dic
 
@@ -379,6 +394,7 @@ class VideoProgressFeed(PondFeed):
                 'seen': self.seens(),
                 'follow': self.follow(),
                 'impressed': self.impress_count(),
+                'self_challenge':self.self_challenge
             }
         return progress_dic
 

@@ -336,7 +336,6 @@ def get_users_feed(user):
     for each_proj in pond_specific_project:
         project_feed.append(each_proj.project)
     for each_proj_feed in project_feed:
-        print "Project Name %s \n" % each_proj_feed.name_of_project
         feed = PondFeed(each_proj_feed, type_of_feed=global_variables.PROJECT, url_domain=CURRENT_URL)
         list_of_feed.append(feed)
         milestone_feed = each_proj_feed.milestone_set.filter(Q(is_deleted=False)).order_by('-created_date').distinct()
@@ -366,7 +365,7 @@ def get_users_feed_json(user, local_timezone='UTC', start_range=0, end_range=glo
         video_feed_list.extend(challenge_request_list)
     else:
         video_feed_list = challenge_request_list
-    sorted_list = sorted(video_feed_list[start_range:end_range], key=lambda x: x['created_sec'], reverse=True)
+    sorted_list = sorted(video_feed_list, key=lambda x: x['created_sec'], reverse=True)[start_range:end_range]
     return sorted_list
 
 
