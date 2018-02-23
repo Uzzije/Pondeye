@@ -607,17 +607,76 @@ class ApiRemoveFriendView(CSRFExemptView):
         Api Call to Remove Result
     """
 
-    def get(self, request):
+    def post(self, request):
         response = {}
         try:
-            username = request.GET.get("username")
-            user = User.objects.get(username=username)
-            other_user = User.objects.get(id=int(request.GET.get("resId")))
+            username = request.GET.post("username")
+            user = User.objects.post(username=username)
+            other_user = User.objects.post(id=int(request.GET.get("resId")))
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         Friend.objects.remove_friend(user, other_user)
+        return HttpResponse(json.dumps(response))
+
+
+class ApiAcceptChallengeView(CSRFExemptView):
+    """
+        Api Call to Remove Result
+    """
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.GET.post("username")
+            user = User.objects.post(username=username)
+            other_user = User.objects.post(id=int(request.GET.get("resId")))
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        ch_id = int(request.POST.get('ch_id'))
+        try:
+            challenge = Challenge.objects.get(id=ch_id)
+            challenge.challenge_responded = True
+            challenge.challenge_rejected = True
+            modules.send_challenge_rejected_notification(challenge)
+            challenge.date_responded = timezone.now()
+            challenge.save()
+        except ObjectDoesNotExist:
+            response['status'] = False
+            response['error'] = "Challenge Request No Longer Available"
+        return HttpResponse(json.dumps(response))
+
+
+class ApiRejectChallengeView(CSRFExemptView):
+    """
+        Api Call to Remove Result
+    """
+
+    def post(self, request):
+        response = {}
+        try:
+            username = request.GET.post("username")
+            user = User.objects.post(username=username)
+            other_user = User.objects.post(id=int(request.GET.get("resId")))
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        ch_id = int(request.POST.get('ch_id'))
+        try:
+            challenge = Challenge.objects.get(id=ch_id)
+            challenge.challenge_responded = True
+            challenge.challenge_accepted = True
+            modules.send_challenge_accepted_notification(challenge)
+            challenge.date_responded = timezone.now()
+            challenge.save()
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response['error'] = "Challenge Request No Longer Available"
+            return HttpResponse(json.dumps(response), status=201)
         return HttpResponse(json.dumps(response))
 
 

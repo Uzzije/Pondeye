@@ -769,6 +769,28 @@ class ApiAllChallengeView(CSRFExemptView):
         return HttpResponse(json.dumps(response))
 
 
+class ApiAllChallengeRequestView(CSRFExemptView):
+
+    """
+        Api Call for Find Result
+    """
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        timezone = request.POST.get('timezone')
+        all_challenge_request = modules.get_challenge_request(user, local_timezone=timezone)
+        response["status"] = True
+        response["requests"] = all_challenge_request
+        return HttpResponse(json.dumps(response))
+
+
 class ApiProfilePictureView(CSRFExemptView):
 
     def post(self, request):

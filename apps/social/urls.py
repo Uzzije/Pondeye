@@ -16,7 +16,8 @@ from .api_view import ApiNewPondEntryView, ApiPictureUploadView, ApiCreateImpres
     ApiPondRequestView, ApiGetSearchResult, ApiAddToPond, ApiDenyPondRequest, ApiNotificationView, ApiAcceptPondRequest,\
     ApiGetNotification, ApiFriendRequestView, ApiFriendAcceptRequestView, ApiFriendRejectRequestView,\
     ApiHighlightImpressed, ApiRecentUploadImpressed, ApiFindProjectView, ApiFindFriendView,  ApiAllFriendsView,\
-    ApiRecentUploadView, ApiSeenRecentUploadCounter,  ApiSeenHighlightCounter, ApiRemoveFriendView
+    ApiRecentUploadView, ApiSeenRecentUploadCounter,  ApiSeenHighlightCounter, ApiRemoveFriendView, \
+    ApiRejectChallengeView, ApiAcceptChallengeView
 
 urlpatterns = [
     url(r'^journal-feed/$', JournalEntriesView.as_view(), name='journal_entries'),
@@ -95,6 +96,8 @@ urlpatterns = [
     url(r'api/recent-upload-count', ApiSeenRecentUploadCounter.as_view(), name='api_recent_upload_seen'),
     url(r'api/highlight-upload-count', ApiSeenHighlightCounter.as_view(), name='api_highlight_seen'),
     url(r'api/remove-friend', ApiRemoveFriendView.as_view(), name="api_remove_friend"),
+    url(r'api/remove-friend', ApiAcceptChallengeView.as_view(), name="api_accept_challenge"),
+    url(r'api/remove-friend', ApiRejectChallengeView.as_view(), name="api_reject_challenge"),
 ]
 
 

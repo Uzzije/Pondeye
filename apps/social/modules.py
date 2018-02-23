@@ -1760,7 +1760,7 @@ def make_timeline_video(progress_set):
 
 def send_completed_notification(challenge):
     followers = FollowChallenge.object.filter(challenge=challenge)
-    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.tikedge_user.user.last_name)
+    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.challenged.user.last_name)
     message = '%s successfully completed %s.' % (name, challenge.project.name_of_project)
     for follower in followers:
         new_notif = ChallengeNotification(to_user=follower.tikedge_user,
@@ -1770,12 +1770,29 @@ def send_completed_notification(challenge):
 
 def send_new_video_notification(challenge):
     followers = FollowChallenge.object.filter(challenge=challenge)
-    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.tikedge_user.user.last_name)
+    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.challenged.user.last_name)
     message = '%s made progress on %s.' % (name, challenge.project.name_of_project)
     for follower in followers:
         new_notif = ChallengeNotification(to_user=follower.tikedge_user,
                                           from_user=challenge.tikedge_user, mess=message, challenge=challenge)
         new_notif.save()
+
+
+def send_challenge_rejected_notification(challenge):
+    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.challenged.user.last_name)
+    message = '%s rejected your challenge: %s.' % (name, challenge.project.name_of_project)
+    new_notif = ChallengeNotification(to_user=challenge.challenger,
+                                      from_user=challenge.challenged, mess=message, challenge=challenge)
+    new_notif.save()
+
+
+def send_challenge_accepted_notification(challenge):
+    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.challenged.user.last_name)
+    message = '%s accepted your challenge: %s.' % (name, challenge.project.name_of_project)
+    new_notif = ChallengeNotification(to_user=challenge.challenger,
+                                      from_user=challenge.challenged, mess=message, challenge=challenge)
+    new_notif.save()
+
 
 
 
