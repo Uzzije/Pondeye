@@ -867,7 +867,7 @@ def reset_forget_password(user, token):
 
 
 def get_challenge_request(user, local_timezone='UTC'):
-    all_challenge = Challenge.objects.filter(tikedge_user__user=user, challenge_responded=False)
+    all_challenge = Challenge.objects.filter(challenged__user=user, challenge_responded=False)
     ch_list = []
     for each_c in all_challenge:
         ch_req = {}
