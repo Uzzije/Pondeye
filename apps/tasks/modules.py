@@ -875,11 +875,12 @@ def get_challenge_request(user, local_timezone='UTC'):
         ch_req['challenger_fn'] = each_c.challenger.user.first_name
         ch_req['challenger_ln'] = each_c.challenger.user.last_name
         ch_req['challenger_name'] = each_c.project.name_of_project
-        ch_req['dt_created'] = each_c.created
+        ch_req['dt_created'] = int(each_c.created.strftime("%s"))
         ch_req['created'] = utc_to_local(each_c.created, local_timezone=local_timezone).strftime("%B %d %Y %I:%M %p")
         ch_req['challenger_id'] = each_c.challenger.user.id
         ch_list.append(ch_req)
-        sorted(ch_list, key=lambda x: x['dt_created'], reverse=True)
+    sorted(ch_list, key=lambda x: x['dt_created'], reverse=True)
+
     return ch_list
 
 
