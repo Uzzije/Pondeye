@@ -106,8 +106,8 @@
       <file leaf-file-name="modules.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8217054">
-              <caret line="883" column="18" selection-start-line="883" selection-start-column="18" selection-end-line="883" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.78294575">
+              <caret line="881" column="81" selection-start-line="881" selection-start-column="81" selection-end-line="881" selection-end-column="81" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
@@ -1191,14 +1191,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="757" column="12" selection-start-line="757" selection-start-column="12" selection-end-line="757" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/apps/social/modules.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-781.6667">
@@ -1219,10 +1211,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/apps/tasks/api_view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="757" column="12" selection-start-line="757" selection-start-column="12" selection-end-line="757" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/apps/tasks/modules.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8217054">
-          <caret line="883" column="18" selection-start-line="883" selection-start-column="18" selection-end-line="883" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.78294575">
+          <caret line="881" column="81" selection-start-line="881" selection-start-column="81" selection-end-line="881" selection-end-column="81" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
           </folding>
