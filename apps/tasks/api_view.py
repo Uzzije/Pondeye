@@ -785,6 +785,7 @@ class ApiAllChallengeRequestView(CSRFExemptView):
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
         timezone = request.POST.get('timezone')
+        print "timezone ", timezone
         all_challenge_request = modules.get_challenge_request(user, local_timezone=timezone)
         response["status"] = True
         response["requests"] = all_challenge_request
