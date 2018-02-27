@@ -631,6 +631,7 @@ class ApiAcceptChallengeView(CSRFExemptView):
         try:
             username = request.POST.get("username")
             User.objects.get(username=username)
+            response["status"] = True
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Log back in and try again!"
@@ -639,7 +640,7 @@ class ApiAcceptChallengeView(CSRFExemptView):
         try:
             challenge = Challenge.objects.get(id=ch_id)
             challenge.challenge_responded = True
-            challenge.challenge_rejected = True
+            challenge.challenge_accepted = True
             modules.send_challenge_rejected_notification(challenge)
             challenge.date_responded = timezone.now()
             challenge.save()
@@ -659,6 +660,7 @@ class ApiRejectChallengeView(CSRFExemptView):
         try:
             username = request.POST.get("username")
             User.objects.get(username=username)
+            response["status"] = True
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Log back in and try again!"
@@ -667,7 +669,7 @@ class ApiRejectChallengeView(CSRFExemptView):
         try:
             challenge = Challenge.objects.get(id=ch_id)
             challenge.challenge_responded = True
-            challenge.challenge_accepted = True
+            challenge.challenge_rejected = True
             modules.send_challenge_accepted_notification(challenge)
             challenge.date_responded = timezone.now()
             challenge.save()
