@@ -629,7 +629,7 @@ class ApiAcceptChallengeView(CSRFExemptView):
     def post(self, request):
         response = {}
         try:
-            username = request.POST.post("username")
+            username = request.POST.get("username")
             User.objects.post(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
@@ -657,7 +657,7 @@ class ApiRejectChallengeView(CSRFExemptView):
     def post(self, request):
         response = {}
         try:
-            username = request.POST.post("username")
+            username = request.POST.get("username")
             User.objects.post(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
