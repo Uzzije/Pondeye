@@ -630,13 +630,12 @@ class ApiAcceptChallengeView(CSRFExemptView):
         response = {}
         try:
             username = request.GET.post("username")
-            user = User.objects.post(username=username)
-            other_user = User.objects.post(id=int(request.GET.get("resId")))
+            User.objects.post(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        ch_id = int(request.POST.get('ch_id'))
+        ch_id = int(request.POST.get('ch_Id'))
         try:
             challenge = Challenge.objects.get(id=ch_id)
             challenge.challenge_responded = True
@@ -659,13 +658,12 @@ class ApiRejectChallengeView(CSRFExemptView):
         response = {}
         try:
             username = request.GET.post("username")
-            user = User.objects.post(username=username)
-            other_user = User.objects.post(id=int(request.GET.get("resId")))
+            User.objects.post(username=username)
         except ObjectDoesNotExist:
             response["status"] = False
             response["error"] = "Log back in and try again!"
             return HttpResponse(json.dumps(response), status=201)
-        ch_id = int(request.POST.get('ch_id'))
+        ch_id = int(request.POST.get('ch_Id'))
         try:
             challenge = Challenge.objects.get(id=ch_id)
             challenge.challenge_responded = True

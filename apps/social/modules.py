@@ -1779,7 +1779,7 @@ def send_new_video_notification(challenge):
 
 
 def send_challenge_rejected_notification(challenge):
-    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.challenged.user.last_name)
+    name = '%s %s' % (challenge.challenged.user.first_name, challenge.challenged.user.last_name)
     message = '%s rejected your challenge: %s.' % (name, challenge.project.name_of_project)
     new_notif = ChallengeNotification(to_user=challenge.challenger,
                                       from_user=challenge.challenged, mess=message, challenge=challenge)
@@ -1787,7 +1787,7 @@ def send_challenge_rejected_notification(challenge):
 
 
 def send_challenge_accepted_notification(challenge):
-    name = '%s %s' % (challenge.tikedge_user.user.first_name, challenge.challenged.user.last_name)
+    name = '%s %s' % (challenge.challenged.user.first_name, challenge.challenged.user.last_name)
     message = '%s accepted your challenge: %s.' % (name, challenge.project.name_of_project)
     new_notif = ChallengeNotification(to_user=challenge.challenger,
                                       from_user=challenge.challenged, mess=message, challenge=challenge)
