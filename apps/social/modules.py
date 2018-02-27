@@ -1782,7 +1782,7 @@ def send_challenge_rejected_notification(challenge):
     name = '%s %s' % (challenge.challenged.user.first_name, challenge.challenged.user.last_name)
     message = '%s rejected your challenge: %s.' % (name, challenge.project.name_of_project)
     new_notif = ChallengeNotification(to_user=challenge.challenger,
-                                      from_user=challenge.challenged, mess=message, challenge=challenge)
+                                      from_user=challenge.challenged, message=message, challenge=challenge)
     new_notif.save()
 
 
@@ -1790,7 +1790,7 @@ def send_challenge_accepted_notification(challenge):
     name = '%s %s' % (challenge.challenged.user.first_name, challenge.challenged.user.last_name)
     message = '%s accepted your challenge: %s.' % (name, challenge.project.name_of_project)
     new_notif = ChallengeNotification(to_user=challenge.challenger,
-                                      from_user=challenge.challenged, mess=message, challenge=challenge)
+                                      from_user=challenge.challenged, message=message, challenge=challenge)
     new_notif.save()
 
 
