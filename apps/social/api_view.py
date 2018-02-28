@@ -17,7 +17,7 @@ import json
 
 from django.db.models import Q
 from search_module import find_everything, search_result_jsonified, find_friends, find_project, initial_all_friends, \
-    find_tags
+    find_tags, discover_jsonified
 from image_modules import pondeye_image_filter
 from django.utils import timezone
 from friendship.models import Friend, FriendshipRequest
@@ -1687,6 +1687,26 @@ class ApiFriendRejectRequestView(CSRFExemptView):
         except ObjectDoesNotExist, exceptions.AlreadyExistsError:
             response['status'] = False
             pass
+        return HttpResponse(json.dumps(response))
+
+
+class ApiGetDiscover(CSRFExemptView):
+    """
+        Api Call for Search Result
+    """
+
+    def get(self, request):
+        response = {}
+        try:
+            username = request.GET.get("username")
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            response["status"] = False
+            response["error"] = "Log back in and try again!"
+            return HttpResponse(json.dumps(response), status=201)
+        first_index = int(request.GET.get("firstIndex"))
+        end_index = int(request.GET.get("endIndex"))
+        response["result_list"] = discover_jsonified(user, first_index=first_index, end_index=end_index)
         return HttpResponse(json.dumps(response))
 
 

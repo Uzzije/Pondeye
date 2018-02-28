@@ -17,7 +17,7 @@ from .api_view import ApiNewPondEntryView, ApiPictureUploadView, ApiCreateImpres
     ApiGetNotification, ApiFriendRequestView, ApiFriendAcceptRequestView, ApiFriendRejectRequestView,\
     ApiHighlightImpressed, ApiRecentUploadImpressed, ApiFindProjectView, ApiFindFriendView,  ApiAllFriendsView,\
     ApiRecentUploadView, ApiSeenRecentUploadCounter,  ApiSeenHighlightCounter, ApiRemoveFriendView, \
-    ApiRejectChallengeView, ApiAcceptChallengeView
+    ApiRejectChallengeView, ApiAcceptChallengeView, ApiGetDiscover
 
 urlpatterns = [
     url(r'^journal-feed/$', JournalEntriesView.as_view(), name='journal_entries'),
@@ -35,6 +35,7 @@ urlpatterns = [
 
     url(r'^tag-search/(?P<word>[-\w\d\ ]+)/$', TagSearchView.as_view(), name="tag_search"),
     url(r'search-results/$', SearchResultsView.as_view(), name="search_everything"),
+    url(r'discover-result/$', ApiGetDiscover.as_view(), name="discover_everything"),
 
     url(r'^notifications/$', NotificationsViews.as_view(), name="notifications"),
     url(r'^journal-thoughts/(?P<slug>[-\w\d\ ]+)/$', JournalCommentListView.as_view(), name="journal_post_comments"),

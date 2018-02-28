@@ -331,3 +331,34 @@ def search_result_jsonified(results):
 			}
 			result_list.append(res_dic)
 	return result_list
+
+
+def rank_completed_projects(user, first_index, end_index):
+	challenges = Challenge.object.filter(Q(project__is_completed=True), Q(is_deleted=False))
+	challenge_list = []
+	for items in challenges:
+		rank = items.follow_challenge_set.count()*global_variables.FOLLOW_CHALLENGE_WEIGHT \
+		       + items.progress_impressed_count.count()*global_variables.PROGRESS_WAS_IMPRESSED_WEIGHT + \
+		       int(items.created.strftime('%s')/global_variables.TIME_CREATED_WEIGHT)
+		challenge_list.append(
+			{
+				'ch_object':items,
+				'rank':rank
+			}
+		)
+	sorted_list = sorted(challenge_list, key=lambda res: res['rank'])[first_index:end_index]
+	return sorted_list
+
+
+def discover_jsonified(user, first_index=0, end_index=6):
+	challenges = rank_completed_projects(user, first_index=first_index, end_index=end_index)
+	result_list = []
+	for each_challenge in challenges:
+		gn_srch = GeneralSearchFeed(each_challenge['ch_object'], global_variables.CHALLENGE_NAME_SEARCH)
+		result_list.append(gn_srch)
+	json_result = search_result_jsonified(result_list)
+	return json_result
+
+
+
+
