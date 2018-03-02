@@ -1692,7 +1692,7 @@ class ApiFriendRejectRequestView(CSRFExemptView):
 
 class ApiGetDiscover(CSRFExemptView):
     """
-        Api Call for Search Result
+        Api Call for Discover Result
     """
 
     def get(self, request):
